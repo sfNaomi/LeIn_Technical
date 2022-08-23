@@ -10,6 +10,9 @@
             "id": "04t8d000000YbTpAAK"
         }
     ],
+    "apexPrePush": [
+        "scripts/anonymous-apex/enableMarketingUser.apex"
+    ],
     "profile": "AG Barr Profile",
     "permsetGroups": [
         "Administrator"

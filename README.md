@@ -24,7 +24,18 @@
     $ sfdx force:source:deploy -x package/package.xml -u targetOrg
     $ sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u targetOrg
     ```
-  
 
 * [CI-SFDX-Plugin](https://www.npmjs.com/package/ci-sfdx-plugin) - set of commands making CI and dev's life easier when using scratch orgs.
   * Install the plugin, update configuration in `ciconfig.json` and npm scripts in `package.json` for your new project following steps on the plugin's homepage.
+  * See plugin's page for help.
+    ```sh
+    # install our custom sfdx plugin
+    $ sfdx plugins:install ci-sfdx-plugin
+    
+    # update the plugin
+    $ sfdx plugins:install ci-sfdx-plugin@latest
+    
+    # run scratch org init script for your OS
+    $ npm run sfci:init --alias=orgAlias
+    $ npm run sfci:init:win --alias=orgAlias
+    ```
