@@ -32,6 +32,9 @@
             "enableEnhancedPermsetMgmt": true,
             "enableEnhancedProfileMgmt": true,
             "enableNewProfileUI": true
+        },
+        "surveySettings": {
+            "enableSurvey": true
         }
     }
 }
