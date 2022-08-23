@@ -2,8 +2,12 @@
     "projectName": "ag-barr",
     "packageIds": [
         {
-            "name": "Rollup Helper",
-            "id": "04t6f000000syg6AAA"
+            "name": "Aforza Consumer Goods",
+            "id": "04t4J000001d2P5QAI"
+        },
+        {
+            "name": "Aforza Analytics",
+            "id": "04t8d000000YbTpAAK"
         }
     ],
     "profile": "AG Barr Profile",
