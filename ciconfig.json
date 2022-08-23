@@ -1,0 +1,13 @@
+{
+    "projectName": "ag-barr",
+    "packageIds": [
+        {
+            "name": "Rollup Helper",
+            "id": "04t6f000000syg6AAA"
+        }
+    ],
+    "profile": "AG Barr Profile",
+    "permsetGroups": [
+        "Administrator"
+    ]
+}

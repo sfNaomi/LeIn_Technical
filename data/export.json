@@ -1,0 +1,15 @@
+{
+  "apiVersion": "53.0",
+  "objects": [
+    {
+      "query": "SELECT Name, Description, ParentId, Phone, Website FROM Account",
+      "operation": "Upsert",
+      "externalId": "Name"
+    },
+    {
+      "query": "SELECT Name, AccountId, Email, FirstName, LastName, MobilePhone, Phone FROM Contact",
+      "operation": "Upsert",
+      "externalId": "Name"
+    }
+  ]
+}

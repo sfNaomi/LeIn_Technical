@@ -1,0 +1,37 @@
+{
+    "orgName": "AG Barr",
+    "edition": "Enterprise",
+    "adminEmail": "svatopluk.sejkora@bearingpoint.com",
+    "country": "UK",
+    "language": "en_US",
+    "features": [
+        "LightningSalesConsole",
+        "LightningServiceConsole",
+        "MarketingUser",
+        "SalesUser",
+        "ServiceCloud",
+        "ServiceUser"
+    ],
+    "settings": {
+        "apexSettings": {
+            "enableDisableParallelApexTesting": true
+        },
+        "communitiesSettings": {
+            "enableNetworksEnabled": true
+        },
+        "chatterSettings": {
+            "enableChatter": true
+        },
+        "languageSettings": {
+            "enableTranslationWorkbench": true
+        },
+        "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+        },
+        "userManagementSettings": {
+            "enableEnhancedPermsetMgmt": true,
+            "enableEnhancedProfileMgmt": true,
+            "enableNewProfileUI": true
+        }
+    }
+}
