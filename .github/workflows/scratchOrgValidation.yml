@@ -14,7 +14,7 @@ jobs:
     scratch-org-validation:
         runs-on: ubuntu-latest
         env:
-            SCRATCH_NAME: 'validation-'+ ${{ github.event.repository.name }}
+            SCRATCH_NAME: 'validation-'${{ github.event.repository.name }}
         steps:
             # Install Salesforce CLI.
             - name: 'Install Salesforce CLI'
