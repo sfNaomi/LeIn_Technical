@@ -9,7 +9,7 @@ on:
         branches:
             - 'develop'
 
-# Jobs to be executed.
+# Jobs to be executed .
 jobs:
     scratch-org-validation:
         runs-on: ubuntu-latest
