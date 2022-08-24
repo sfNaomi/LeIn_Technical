@@ -34,7 +34,7 @@ jobs:
               env:
                   JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
               shell: bash
-              run: echo "$JWT" | base64 --decode > ${HOME}/keys/server.key
+              run: echo "$JWT" | base64 --decode > ${HOME}/server.key
 
             # Authenticate dev hub
             -   name: 'Authenticate Dev Hub'
@@ -42,7 +42,7 @@ jobs:
                     SFDX_PATH: 'https://login.salesforce.com'
                     SF_USERNAME: 'admin@agbarr.aforza.org'
                 shell: bash
-                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile keys/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
+                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile /server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 
             # Checkout the source code
             - name: Checkout source code
