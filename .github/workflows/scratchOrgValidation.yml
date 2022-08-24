@@ -34,8 +34,7 @@ jobs:
               env:
                   JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
               shell: bash
-              run: |
-                    echo "$JWT" | base64 --decode > ${HOME}/keys/server.key
+              run: echo "$JWT" | base64 --decode > ${HOME}/keys/server.key
 
             # Authenticate dev hub
             -   name: 'Authenticate Dev Hub'
