@@ -13,6 +13,8 @@ on:
 jobs:
     scratch-org-validation:
         runs-on: ubuntu-latest
+        env:
+            SCRATCH_NAME: 'validation-'+ ${{ github.event.repository.name }}
         steps:
             # Install Salesforce CLI.
             - name: 'Install Salesforce CLI'
@@ -47,3 +49,16 @@ jobs:
             # Checkout the source code
             - name: Checkout source code
               uses: actions/checkout@v2
+
+            # Create scratch org and push
+            -   name: 'Create scratch org and push'
+                run: npm run sfci:init --alias=$SCRATCH_NAME
+
+            # Run Tests in scratch org
+            -   name: 'Run Tests in scratch org'
+                run: sfdx ci:apex:test:run
+
+            # Delete scratch org
+            -   name: 'Delete scratch org'
+                if: always()
+                run: sfdx force:org:delete -p -u $SCRATCH_NAME
