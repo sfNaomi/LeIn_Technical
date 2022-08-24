@@ -1,0 +1,49 @@
+# Unique name for this workflow
+name: Scratch Org Validation
+
+# Definition when the workflow should run
+on:
+    workflow_dispatch:
+    pull_request:
+        types: [opened, edited, synchronize]
+        branches:
+            - 'develop'
+
+# Jobs to be executed.
+jobs:
+    scratch-org-validation:
+        runs-on: ubuntu-latest
+        steps:
+            # Install Salesforce CLI.
+            - name: 'Install Salesforce CLI'
+              run: |
+                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                  mkdir ~/sfdx
+                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                  ~/sfdx/bin/sfdx version
+
+            # Install sfdx plugin
+            - name: 'Install plugin'
+              shell: bash
+              run: |
+                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@0.1.2
+
+            # Obtain JWT certificate for DEVHUB
+            - name: 'Obtain JWT certificate from secrets'
+              env:
+                  JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
+                  run: |
+                      echo "$JWT" | base64 --decode > ${HOME}/keys/server.key
+
+            # Authenticate dev hub
+            -   name: 'Authenticate Dev Hub'
+                env:
+                    SFDX_PATH: 'https://login.salesforce.com'
+                    SF_USERNAME: 'admin@agbarr.aforza.org'
+                shell: bash
+                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile keys/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
+
+            # Checkout the source code
+            - name: Checkout source code
+              uses: actions/checkout@v2
