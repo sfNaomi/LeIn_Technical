@@ -29,7 +29,8 @@ jobs:
             - name: 'Install plugin'
               shell: bash
               run: |
-                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@0.1.2
+                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
+                  printf 'y\n' | sfdx plugins:install sfdmu@latest
 
             # Obtain JWT certificate for DEVHUB
             - name: 'Obtain JWT certificate from secrets'
