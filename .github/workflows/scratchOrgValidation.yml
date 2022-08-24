@@ -42,7 +42,7 @@ jobs:
                     SFDX_PATH: 'https://login.salesforce.com'
                     SF_USERNAME: 'admin@agbarr.aforza.org'
                 shell: bash
-                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile /server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
+                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 
             # Checkout the source code
             - name: Checkout source code
