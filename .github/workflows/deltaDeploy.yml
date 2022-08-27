@@ -47,6 +47,7 @@ jobs:
                     ls
                     
                     echo "::set-output name=LINES::$(wc -l < package/package.xml)"
+                    echo "FOO=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
             -   name: test
@@ -54,8 +55,8 @@ jobs:
                 run: |
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
-                    echo ${{ steps.version.outputs.LINES }}
-                    if [${{ steps.version.outputs.LINES }}.trim() = "3"]
+                    echo "${{ env.FOO }}"
+                    if [${{ env.FOO }}.trim() = "3"]
                     then
                         echo true
                     fi
