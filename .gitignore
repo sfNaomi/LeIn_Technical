@@ -26,10 +26,6 @@ data/logs/
 data/source/
 data/target/
 
-# SFDX-Git-Delta
-package/
-destructiveChanges/
-
 manifest/
 stage/
 lib/
