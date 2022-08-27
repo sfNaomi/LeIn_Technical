@@ -46,6 +46,9 @@ jobs:
                     echo pwd
                     echo ${GITHUB_WORKSPACE}
                     
+                    echo cd ~
+                    echo ls
+                    
                     PACKAGE_LINES=sh "wc -l < /home/runner/package/package.xml"
                     less -FX package/package.xml
             
