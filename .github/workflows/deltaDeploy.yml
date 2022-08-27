@@ -46,12 +46,17 @@ jobs:
                     pwd
                     ls
                     
-                    PACKAGE_LINES=sh "wc -l < package/package.xml"
-                    less -FX package/package.xml
-            
+                    echo "::set-output name=LINES::$(wc -l < package/package.xml)"
+                    echo less -FX package/package.xml
+
+            -   name: test
+                with:
+                    lines: ${{ steps.version.outputs.LINES }}
+                shell: bash
+                run: |
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
-                    if [$PACKAGE_LINES.trim() = "3"] 
-                        then
+                    if [lines.trim() = "3"]
+                    then
                         echo true
                     fi
