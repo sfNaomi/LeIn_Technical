@@ -35,7 +35,7 @@ jobs:
 
             # Checkout the source code
             -   name: Checkout source code
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
 
             # prepare delta
             -   name: Prepare Delta
@@ -43,8 +43,8 @@ jobs:
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
-                    packageLines = wc -l < package/package.xml
-                    less -FX package/package.xml
+                    echo packageLines = wc -l < package/package.xml
+                    echo less -FX package/package.xml
             
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
