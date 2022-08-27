@@ -45,7 +45,7 @@ jobs:
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
-                    echo "SKIP_REMAINING_STAGES=false >> $GITHUB_ENV"
+                    echo "SKIP_REMAINING_STAGES=$(false) >> $GITHUB_ENV"
 
             -   name: test
                 shell: bash
@@ -54,9 +54,9 @@ jobs:
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
                     echo "${{ env.LINES }}"
                     echo "${{ env.SKIP_REMAINING_STAGES }}"
-                    if [${{ env.LINES }} = "3"]
+                    if [${{ env.LINES }} = 3]
                     then
-                        echo "SKIP_REMAINING_STAGES=true >> $GITHUB_ENV"
+                        echo "SKIP_REMAINING_STAGES=$(true) >> $GITHUB_ENV"
                     fi
             -   name: test2
                 run: echo "${{ env.SKIP_REMAINING_STAGES }}"
