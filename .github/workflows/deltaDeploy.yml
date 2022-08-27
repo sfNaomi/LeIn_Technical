@@ -50,12 +50,11 @@ jobs:
                     echo less -FX package/package.xml
 
             -   name: test
-                with:
-                    lines: ${{ steps.version.outputs.LINES }}
+                shell: bash
                 run: |
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
-                    if [lines.trim() = "3"]
+                    if [${{ steps.version.outputs.LINES }}.trim() = "3"]
                     then
                         echo true
                     fi
