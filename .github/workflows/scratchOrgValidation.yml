@@ -8,6 +8,8 @@ on:
         types: [opened, edited, synchronize]
         branches:
             - 'develop'
+            - 'staging'
+            - 'main'
 
 # Jobs to be executed .
 jobs:
