@@ -9,10 +9,12 @@ on:
         branches:
             - 'develop'
 
-# Jobs to be executed.
+# Jobs to be executed .
 jobs:
     scratch-org-validation:
         runs-on: ubuntu-latest
+        env:
+            SCRATCH_NAME: ${{ github.event.repository.name }}
         steps:
             # Install Salesforce CLI.
             - name: 'Install Salesforce CLI'
@@ -27,14 +29,15 @@ jobs:
             - name: 'Install plugin'
               shell: bash
               run: |
-                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@0.1.2
+                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
+                  printf 'y\n' | sfdx plugins:install sfdmu@latest
 
             # Obtain JWT certificate for DEVHUB
             - name: 'Obtain JWT certificate from secrets'
               env:
                   JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
-                  run: |
-                      echo "$JWT" | base64 --decode > ${HOME}/keys/server.key
+              shell: bash
+              run: echo "$JWT" | base64 --decode > ${HOME}/server.key
 
             # Authenticate dev hub
             -   name: 'Authenticate Dev Hub'
@@ -42,8 +45,21 @@ jobs:
                     SFDX_PATH: 'https://login.salesforce.com'
                     SF_USERNAME: 'admin@agbarr.aforza.org'
                 shell: bash
-                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile keys/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
+                run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile ${HOME}/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 
             # Checkout the source code
             - name: Checkout source code
               uses: actions/checkout@v2
+
+            # Create scratch org and push
+            -   name: 'Create scratch org and push'
+                run: npm run sfci:init --alias=$SCRATCH_NAME
+
+#            # Run Tests in scratch org
+#            -   name: 'Run Tests in scratch org'
+#                run: sfdx ci:apex:test:run
+
+            # Delete scratch org
+            -   name: 'Delete scratch org'
+                if: always()
+                run: sfdx force:org:delete -p -u $SCRATCH_NAME
