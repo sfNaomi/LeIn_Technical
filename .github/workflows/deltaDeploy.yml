@@ -43,11 +43,11 @@ jobs:
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
-                    packageLines = returnStdout:true, script: wc -l < package/package.xml
+                    packageLines = wc -l < package/package.xml
                     less -FX package/package.xml
             
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
-                    if (packageLines.trim() == "3") {
+                    if ($packageLines.trim() == "3") {
                         skipRemainingStages = true
                     }
