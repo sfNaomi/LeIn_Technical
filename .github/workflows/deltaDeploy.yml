@@ -49,9 +49,9 @@ jobs:
                     less -FX package/package.xml
 
             -   name: Deploy to Target Org
-                if: env.SKIP_REMAINING_STAGES != 3
+                if: env.LINES != 3
                 run: echo "${{ env.SKIP_REMAINING_STAGES }}"
 
             -   name: test if run
-                if: env.SKIP_REMAINING_STAGES == 3
+                if: env.LINES == 3
                 run: echo "muhehehe"
