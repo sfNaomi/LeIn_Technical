@@ -48,19 +48,10 @@ jobs:
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
-            -   name: Check if there is something to deploy
-                shell: bash
-                run: |
-                    if [${{ env.LINES }}=3]
-                    then
-                        echo "in if"
-                        echo "SKIP_REMAINING_STAGES=true" >> $GITHUB_ENV
-                    fi
-
             -   name: Deploy to Target Org
-                if: env.SKIP_REMAINING_STAGES == 'false'
+                if: env.SKIP_REMAINING_STAGES != 3
                 run: echo "${{ env.SKIP_REMAINING_STAGES }}"
 
             -   name: test if run
-                if: env.SKIP_REMAINING_STAGES == 'true'
+                if: env.SKIP_REMAINING_STAGES == 3
                 run: echo "muhehehe"
