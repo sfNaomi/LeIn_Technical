@@ -1,4 +1,4 @@
-name: deploy deltas to Sandbox
+name: Deploy Deltas to Sandbox
 
 # Definition when the workflow should run
 on:
@@ -8,6 +8,7 @@ on:
                 type: string
                 required: true
                 description: Id of Commit, Last successfully deployed
+                default: HEAD^
     push:
         branches:
             - develop
