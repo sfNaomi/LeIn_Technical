@@ -50,10 +50,3 @@ jobs:
                     if (packageLines.trim() == "3") {
                         skipRemainingStages = true
                     }
-
-            # Write commit id to secret to be used for next run
-            -   uses: gliech/create-github-secret-action@v1
-                with:
-                    name: FRONT_DOOR_PASSWORD
-                    value: Eternia
-                    pa_token: ${{ secrets.PA_TOKEN }}
