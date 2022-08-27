@@ -44,7 +44,7 @@ jobs:
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
                     echo dir
-                    PACKAGE_LINES=sh "wc -l < package/package.xml"
+                    PACKAGE_LINES=sh "wc -l < ${HOME}/package/package.xml"
                     less -FX package/package.xml
             
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
