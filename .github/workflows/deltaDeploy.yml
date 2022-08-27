@@ -26,7 +26,6 @@ jobs:
                     tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
                     echo "$HOME/sfdx/bin" >> $GITHUB_PATH
                     ~/sfdx/bin/sfdx version
-                    echo "${GITHUB_SHA}"
 
             # Install sfdx plugin
             -   name: 'Install plugin'
@@ -42,9 +41,10 @@ jobs:
             -   name: Prepare Delta
                 shell: bash
                 run: |
-                    sh "sfdx sgd:source:delta --to HEAD --from HEAD^ --output ."
-                    packageLines = sh returnStdout:true, script: "wc -l < package/package.xml"
-                    sh "less -FX package/package.xml"
+                    echo Last Commit to which the delta is prepared: "${GITHUB_SHA}"
+                    sfdx sgd:source:delta --to HEAD --from HEAD^ --output .
+                    packageLines = returnStdout:true, script: wc -l < package/package.xml
+                    less -FX package/package.xml
             
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
