@@ -48,6 +48,7 @@ jobs:
                     cd ~
                     cd package
                     pwd
+                    ls
                     
                     PACKAGE_LINES=sh "wc -l < /home/runner/package/package.xml"
                     less -FX package/package.xml
