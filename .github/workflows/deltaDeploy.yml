@@ -7,8 +7,7 @@ on:
             last-successful-commit-id:
                 type: string
                 required: true
-                description: Id of Commit, Last successfully deployed
-                default: HEAD^
+                description: Id of Last Successfully Deployed Commit
     push:
         branches:
             - develop
