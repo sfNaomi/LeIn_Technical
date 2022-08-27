@@ -1,0 +1,59 @@
+name: deploy deltas to Sandbox
+
+# Definition when the workflow should run
+on:
+    workflow_dispatch:
+        inputs:
+            last-successful-commit-id:
+                type: string
+                required: true
+                description: Id of Commit, Last successfully deployed
+    push:
+        branches:
+            - develop
+
+# Jobs to be executed.
+jobs:
+    deployment:
+        runs-on: ubuntu-latest
+        steps:
+            # Install Salesforce CLI.
+            -   name: 'Install Salesforce CLI'
+                run: |
+                    wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                    mkdir ~/sfdx
+                    tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                    echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                    ~/sfdx/bin/sfdx version
+                    echo $env:GITHUB_SHA
+
+            # Install sfdx plugin
+            -   name: 'Install plugin'
+                shell: bash
+                run: |
+                    printf 'y\n' | sfdx plugins:install sfdx-git-delta@latest
+
+            # Checkout the source code
+            -   name: Checkout source code
+                uses: actions/checkout@v2
+
+            # prepare delta
+            -   name: Prepare Delta
+                shell: bash
+                run: |
+                    sh "sfdx sgd:source:delta --to HEAD --from HEAD^ --output ."
+                    packageLines = sh returnStdout:true, script: "wc -l < package/package.xml"
+                    sh "less -FX package/package.xml"
+            
+                    // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
+                    // but it is empty except couple lines). Skipping deploy to have proper ending to the script
+                    if (packageLines.trim() == "3") {
+                        skipRemainingStages = true
+                    }
+
+            # Write commit id to secret to be used for next run
+            -   uses: gliech/create-github-secret-action@v1
+                with:
+                    name: FRONT_DOOR_PASSWORD
+                    value: Eternia
+                    pa_token: ${{ secrets.PA_TOKEN }}
