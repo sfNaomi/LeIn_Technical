@@ -51,8 +51,6 @@ jobs:
             -   name: test
                 shell: bash
                 run: |
-                    // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
-                    // but it is empty except couple lines). Skipping deploy to have proper ending to the script
                     echo "${{ env.LINES }}"
                     echo "${{ env.SKIP_REMAINING_STAGES }}"
                     if [${{ env.LINES }} = 3]
