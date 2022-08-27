@@ -42,7 +42,9 @@ jobs:
                 shell: bash
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
-                    sfdx sgd:source:delta --to HEAD --from HEAD --output ${HOME}/
+                    sfdx sgd:source:delta --to HEAD --from HEAD-1 --output ${HOME}/
+                    echo pwd
+                    echo ${GITHUB_WORKSPACE}
                     PACKAGE_LINES=sh "wc -l < ${HOME}/package/package.xml"
                     less -FX package/package.xml
             
