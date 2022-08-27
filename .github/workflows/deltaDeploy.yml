@@ -43,20 +43,20 @@ jobs:
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
-                    pwd
-                    ls
-                    
-                    echo "::set-output name=LINES::$(wc -l < package/package.xml)"
-                    echo "FOO=$(wc -l < package/package.xml)" >> $GITHUB_ENV
+                    echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
+                    echo "SKIP_REMAINING_STAGES=false >> $GITHUB_ENV"
 
             -   name: test
                 shell: bash
                 run: |
                     // 3 is a value for a situation when there are no SF related changes (git delta still creates package.xml file
                     // but it is empty except couple lines). Skipping deploy to have proper ending to the script
-                    echo "${{ env.FOO }}"
-                    if [${{ env.FOO }}.trim() = "3"]
+                    echo "${{ env.LINES }}"
+                    echo "${{ env.SKIP_REMAINING_STAGES }}"
+                    if [${{ env.LINES }} = "3"]
                     then
-                        echo true
+                        echo "SKIP_REMAINING_STAGES=true >> $GITHUB_ENV"
                     fi
+            -   name: test2
+                run: echo "${{ env.SKIP_REMAINING_STAGES }}"
