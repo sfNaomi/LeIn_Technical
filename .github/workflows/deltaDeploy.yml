@@ -43,11 +43,10 @@ jobs:
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     sfdx sgd:source:delta --to HEAD --from HEAD --output ~/
-                    echo pwd
                     echo ${GITHUB_WORKSPACE}
                     
                     cd ~
-                    ls
+                    cd package
                     pwd
                     
                     PACKAGE_LINES=sh "wc -l < /home/runner/package/package.xml"
