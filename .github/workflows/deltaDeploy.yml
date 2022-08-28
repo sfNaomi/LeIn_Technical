@@ -64,5 +64,5 @@ jobs:
 
             -   name: get values
                 run: |
-                    less -FX ${{ env.JSON }}
+                    less ${{ env.JSON }}
                     echo "${{ fromJson(env.JSON) }}"
