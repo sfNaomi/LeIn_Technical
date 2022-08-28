@@ -48,10 +48,11 @@ jobs:
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
+            # Deploy to target ORG
             -   name: Deploy to Target Org
                 if: env.LINES != 3
                 run: echo "${{ env.SKIP_REMAINING_STAGES }}"
 
             -   name: test if run
                 if: env.LINES == 3
-                run: echo "muhehehe"
+                run: echo "Name of the branch $GITHUB_REF_NAME"
