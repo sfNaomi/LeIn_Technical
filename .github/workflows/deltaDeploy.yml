@@ -66,9 +66,9 @@ jobs:
                     content="${content//$'\r'/'%0D'}"
                     # end of optional handling for multi line json
                     echo "::set-output name=json::$content"
-                    echo "JSON=$(content)" >> $GITHUB_ENV
+                    echo "JSON=$content" >> $GITHUB_ENV
 
             -   name: get values
                 run: |
-                    echo "${{fromJson(steps.get_env_data.outputs.json)}}"
                     echo "${{ env.JSON }}"
+                    echo "${{fromJson(steps.get_env_data.outputs.json)}}"
