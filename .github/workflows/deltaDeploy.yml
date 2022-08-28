@@ -69,4 +69,4 @@ jobs:
 
             -   name: get values
                 run: |
-                    echo "${{fromJson(steps.set_var.outputs.json)}}"
+                    echo "${{fromJson(steps.get_env_data.outputs.json)}}"
