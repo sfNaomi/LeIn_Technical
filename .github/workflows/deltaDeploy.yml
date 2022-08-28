@@ -65,7 +65,7 @@ jobs:
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
-                    sfdx force:auth:jwt:grant --clientid ${settings.work_on_deploy_script.clientId} -u ${settings.work_on_deploy_script.username} --jwtkeyfile ${HOME}/server.key --instanceurl ${settings.work_on_deploy_script.instanceUrl}
+                    sfdx force:auth:jwt:grant --clientid ${env.settings.work_on_deploy_script.clientId} -u ${env.settings.work_on_deploy_script.username} --jwtkeyfile ${HOME}/server.key --instanceurl ${env.settings.work_on_deploy_script.instanceUrl}
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${configMap.username}
                     
                     
