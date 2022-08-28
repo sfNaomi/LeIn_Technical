@@ -1,0 +1,12 @@
+{
+    "default": {
+        "devhubUsername": "svatopluk.sejkora@bearingpoint.com",
+        "devhubConsumerKey": "aaaaa",
+        "devhubJwtKeySecretName": "ssssss"
+    },
+    "master": {
+        "username": "svatopluk.sejkora@bearingpoint.com",
+        "consumerKey": "aaaaaa",
+        "jwtKeySecretName": "bbbbbb"
+    }
+}
