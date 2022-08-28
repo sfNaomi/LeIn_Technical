@@ -57,12 +57,11 @@ jobs:
                 if: env.LINES == 3
                 run: echo "Name of the branch $GITHUB_REF_NAME"
 
-            -   name: test JSON work
-                run: |
-                    content="$(cat .github/settings/repositoryConfig.json)"
-                    echo "JSON=$content" >> $GITHUB_ENV
+            -   name: JSON to variables
+                uses: antifree/json-to-variables@v1.0.1
+                with:
+                    filename: '.github/settings/repositoryConfig.json'
+                    prefix: test
 
-            -   name: get values
-                run: |
-                    less ${{ env.JSON }}
-                    echo "${{ fromJson(env.JSON) }}"
+            -   name: Show output
+                run: echo "The time was ${{ env.test_value }}, ${{ env.test_array_0_value }}, ${{ env.test_obj_value1 }}"
