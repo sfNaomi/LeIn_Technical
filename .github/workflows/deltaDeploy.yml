@@ -60,4 +60,4 @@ jobs:
                 if: env.LINES == 3
                 run: |
                     echo "${{ env.SKIP_REMAINING_STAGES }}"
-                    echo "The time was ${{ env.settings_GITHUB_REF_NAME_username }}, ${{ env.settings_GITHUB_REF_NAME_consumerKey }}, ${{ env.settings_GITHUB_REF_NAME_jwtKeySecretName }}"
+                    echo "The time was ${{ env.settings_ + env.GITHUB_REF_NAME + _username }}"
