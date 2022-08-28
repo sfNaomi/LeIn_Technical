@@ -60,6 +60,7 @@ jobs:
             -   name: test JSON work
                 run: |
                     content="$(cat .github/settings/repositoryConfig.json)"
+                    less -FX .github/settings/repositoryConfig.json
                     # the following lines are only required for multi line json
                     content="${content//'%'/'%25'}"
                     content="${content//$'\n'/'%0A'}"
@@ -70,4 +71,4 @@ jobs:
 
             -   name: get values
                 run: |
-                    echo "${{fromJson(env.JSON)}}"
+                    less -FX ${{ env.JSON }}
