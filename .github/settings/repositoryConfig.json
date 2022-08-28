@@ -4,7 +4,7 @@
         "devhubConsumerKey": "aaaaa",
         "devhubJwtKeySecretName": "ssssss"
     },
-    "master": {
+    "work_on_deploy_script": {
         "username": "svatopluk.sejkora@bearingpoint.com",
         "consumerKey": "aaaaaa",
         "jwtKeySecretName": "bbbbbb"

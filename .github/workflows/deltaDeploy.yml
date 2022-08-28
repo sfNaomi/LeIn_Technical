@@ -48,20 +48,16 @@ jobs:
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
-            # Deploy to target ORG
-            -   name: Deploy to Target Org
-                if: env.LINES != 3
-                run: echo "${{ env.SKIP_REMAINING_STAGES }}"
-
-            -   name: test if run
-                if: env.LINES == 3
-                run: echo "Name of the branch $GITHUB_REF_NAME"
-
+            # Obtain data stored in JSON to load all values
             -   name: JSON to variables
                 uses: antifree/json-to-variables@v1.0.1
                 with:
                     filename: '.github/settings/repositoryConfig.json'
-                    prefix: test
+                    prefix: settings
 
-            -   name: Show output
-                run: echo "The time was ${{ env.test_value }}, ${{ env.test_array_0_value }}, ${{ env.test_obj_value1 }}"
+            # Deploy to target ORG
+            -   name: Deploy to Target Org
+                if: env.LINES != 3
+                run: |
+                    echo "${{ env.SKIP_REMAINING_STAGES }}"
+                    echo "The time was ${{ env.settings_$GITHUB_REF_NAME_username }}, ${{ env.settings_$GITHUB_REF_NAME_consumerKey }}, ${{ env.settings_$GITHUB_REF_NAME_jwtKeySecretName }}"
