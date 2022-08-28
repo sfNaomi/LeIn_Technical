@@ -1,12 +1,7 @@
 {
-    "default": {
-        "devhubUsername": "svatopluk.sejkora@bearingpoint.com",
-        "devhubConsumerKey": "aaaaa",
-        "devhubJwtKeySecretName": "ssssss"
-    },
     "work_on_deploy_script": {
-        "username": "svatopluk.sejkora@bearingpoint.com",
-        "consumerKey": "aaaaaa",
-        "jwtKeySecretName": "bbbbbb"
+        "username": "admin@agbarr.aforza.org.qa",
+        "clientId": "3MVG9LlLrkcRhGHZ75_1zzxBX1vP5z1K2K7oDWeggf_Qtc9ldcV2c6Q9J2RmB0h6MxqOFLFFGAIB2Q8JL3DKm",
+        "instanceUrl": "test.salesforce.com"
     }
 }

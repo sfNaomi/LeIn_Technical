@@ -55,9 +55,19 @@ jobs:
                     filename: '.github/settings/repositoryConfig.json'
                     prefix: settings
 
-            # Deploy to target ORG
+            # Deploy to QA
             -   name: Deploy to Target Org
-                if: env.LINES == 3
+                env:
+                    JWT: ${{ secrets.QA_CERTIFICATE }}
+                shell: bash
+                if: env.LINES == 3 && GITHUB_REF_NAME == 'work_on_deploy_script'
                 run: |
+                    echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
-                    echo ${{ format('{0}_{1}_{2}', 'env.settings', github.ref.name, 'username') }}
+                    
+                    sfdx force:auth:jwt:grant --clientid ${settings.work_on_deploy_script.clientId} -u ${settings.work_on_deploy_script.username} --jwtkeyfile ${HOME}/server.key --instanceurl ${settings.work_on_deploy_script.instanceUrl}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${configMap.username}
+                    
+                    
+                                  
+            
