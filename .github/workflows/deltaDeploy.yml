@@ -66,7 +66,7 @@ jobs:
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ env.settings_work_on_deploy_script_clientId }} -u ${{ env.settings_work_on_deploy_script_username }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ env.settings_work_on_deploy_script_instanceUrl }}
-                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${env.settings_work_on_deploy_script_username}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_work_on_deploy_script_username }}
                     
                                   
             
