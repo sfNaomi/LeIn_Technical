@@ -59,6 +59,5 @@ jobs:
             -   name: Deploy to Target Org
                 if: env.LINES == 3
                 run: |
-                    echo "${{ env.SKIP_REMAINING_STAGES }}"
-                    echo ${{ format('env.settings_{0}__username', env.GITHUB_REF_NAME) }}
-                    echo "The time was ${{ format('env.settings_{0}__username', env.GITHUB_REF_NAME) }}"
+                    echo ${{ format('env.settings_{0}__username', GITHUB_REF_NAME) }}
+                    echo "The time was ${{ format('env.settings_{0}__username', GITHUB_REF_NAME) }}"
