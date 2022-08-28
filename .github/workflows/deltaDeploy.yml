@@ -59,7 +59,7 @@ jobs:
 
             -   name: test JSON work
                 run: |
-                    content=`cat ./.github/settings/repositoryConfig.json`
+                    content="$(cat .github/settings/repositoryConfig.json)"
                     # the following lines are only required for multi line json
                     content="${content//'%'/'%25'}"
                     content="${content//$'\n'/'%0A'}"
