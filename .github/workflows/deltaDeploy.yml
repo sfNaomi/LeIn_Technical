@@ -60,7 +60,7 @@ jobs:
                 env:
                     JWT: ${{ secrets.QA_CERTIFICATE }}
                 shell: bash
-                if: env.LINES == 3 && ${GITHUB_REF_NAME} == 'work_on_deploy_script'
+                if: env.LINES == 3 && github.ref_name == 'work_on_deploy_script'
                 run: |
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
