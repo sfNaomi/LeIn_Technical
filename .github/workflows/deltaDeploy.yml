@@ -59,5 +59,6 @@ jobs:
             -   name: Deploy to Target Org
                 if: env.LINES == 3
                 run: |
-                    echo ${{ format('{0}_{1}_{2}', 'env.settings', GITHUB_REF_NAME, 'username') }}
-                    # echo "The time was ${{ format('env.settings_{0}__username', GITHUB_REF_NAME) }}"
+                    echo "running on branch ${GITHUB_REF_NAME}"
+                    echo ${{ format('{0}_{1}_{2}', 'env.settings', ${GITHUB_REF_NAME}, 'username') }}
+                    # echo "The time was ${{ format('{0}_{1}_{2}', 'env.settings', ${GITHUB_REF_NAME}, 'username') }}"
