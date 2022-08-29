@@ -63,9 +63,9 @@ jobs:
                     echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.output1}}                    
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
     
-                    sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.output1 }} --output .
+                    sfdx sgd:source:delta --to "HEAD" --from ${{needs.getLastSuccessCommit.outputs.output1}} --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
-                    less -FX package/package.xml
+                    cat package/package.xml
 
             # Obtain data stored in JSON to load all values
             -   name: Load JSON Settings
