@@ -17,8 +17,24 @@ env:
 
 # Jobs to be executed.
 jobs:
+    get-last-success-commit:
+        runs-on: ubuntu-latest
+        name: Obtaining Last Successful Commit SHA
+        outputs:
+            commit-sha: ${{ steps.step1.outputs.commit }}
+        steps:
+            - uses: bahmutov/npm-install@v1.4.5
+            - uses: nrwl/last-successful-commit-action@v1
+              id: last_successful_commit
+              with:
+                  branch: github.ref_name
+                  workflow_id: 'deltaDeploy.yml'
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+            - run: echo "::set-output name=commit::${{ steps.last_successful_commit.outputs.commit_hash }}"
+
     deployment:
         runs-on: ubuntu-latest
+        needs: get-last-success-commit
         steps:
             # Install Salesforce CLI.
             -   name: 'Install Salesforce CLI'
@@ -41,14 +57,8 @@ jobs:
 
             # prepare delta
             -   name: Prepare Delta
-            -   uses: bahmutov/npm-install@v1.4.5
-            -   uses: nrwl/last-successful-commit-action@v1
-                id: last_successful_commit
-                with:
-                      branch: github.ref_name
-                      workflow_id: 'deltaDeploy.yml'
-                      github_token: ${{ secrets.GITHUB_TOKEN }}
-            -   run: |
+                run: |
+                    echo " do we have it? ${{needs.get-last-success-commit.outputs.commit-sha}}"
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     echo "secret from output? ${{ steps.last_successful_commit.outputs.commit_hash }}"
     
