@@ -19,7 +19,7 @@ jobs:
         runs-on: ubuntu-latest
         name: Obtaining Last Successful Commit SHA
         outputs:
-            output1: ${{ steps.step1.outputs.commit }}
+            output1: ${{ steps.step2.outputs.commit }}
         steps:
             - uses: actions/setup-node@v3
               with:
@@ -31,6 +31,7 @@ jobs:
                   workflow_id: 'deltaDeploy.yml'
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: Export value
+              id: step2
               run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
 
     deployment:
@@ -40,6 +41,7 @@ jobs:
             # Install Salesforce CLI.
             -   name: 'Install Salesforce CLI'
                 run: |
+                    echo ${{needs.getLastSuccessCommit.outputs.output1}}    
                     wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
                     mkdir ~/sfdx
                     tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
