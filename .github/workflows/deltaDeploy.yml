@@ -41,21 +41,20 @@ jobs:
 
             # prepare delta
             -   name: Prepare Delta
-                    - uses: actions/checkout@v1
-                    - uses: bahmutov/npm-install@v1.4.5
-                    - uses: nrwl/last-successful-commit-action@v1
-                    id: last_successful_commit
-                    with:
-                          branch: github.ref_name
-                          workflow_id: 'deltaDeploy.yml'
-                          github_token: ${{ secrets.GITHUB_TOKEN }}
-                    run: |
-                        echo Last Commit to which the delta is prepared: ${{ github.sha }}
-                        echo "secret from output? ${{ steps.last_successful_commit.outputs.commit_hash }}"
+            -   uses: bahmutov/npm-install@v1.4.5
+            -   uses: nrwl/last-successful-commit-action@v1
+                id: last_successful_commit
+                with:
+                      branch: github.ref_name
+                      workflow_id: 'deltaDeploy.yml'
+                      github_token: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    echo Last Commit to which the delta is prepared: ${{ github.sha }}
+                    echo "secret from output? ${{ steps.last_successful_commit.outputs.commit_hash }}"
     
-                        sfdx sgd:source:delta --to HEAD --from ${{ steps.last_successful_commit.outputs.commit_hash }} --output .
-                        echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
-                        less -FX package/package.xml
+                    sfdx sgd:source:delta --to HEAD --from ${{ steps.last_successful_commit.outputs.commit_hash }} --output .
+                    echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
+                    less -FX package/package.xml
 
             # Obtain data stored in JSON to load all values
             -   name: Load JSON Settings
