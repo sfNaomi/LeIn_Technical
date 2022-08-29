@@ -12,8 +12,6 @@ on:
         branches:
             - develop
             - work_on_deploy_script
-env:
-    SKIP_REMAINING_STAGES: false
 
 # Jobs to be executed.
 jobs:
@@ -21,7 +19,7 @@ jobs:
         runs-on: ubuntu-latest
         name: Obtaining Last Successful Commit SHA
         outputs:
-            commit-sha: ${{ steps.last_successful_commit.outputs.commit }}
+            commit: ${{ steps.last_successful_commit.outputs.commit }}
         steps:
             - uses: nrwl/last-successful-commit-action@v1
               id: last_successful_commit
@@ -57,10 +55,10 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo " do we have it? ${{ needs.get-last-success-commit.outputs.commit-sha }}"
+                    echo " do we have it? ${{ needs.get-last-success-commit.outputs.commit }}"
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
     
-                    sfdx sgd:source:delta --to HEAD --from ${{ needs.get-last-success-commit.outputs.commit-sha }} --output .
+                    sfdx sgd:source:delta --to HEAD --from ${{ needs.get-last-success-commit.outputs.commit }} --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
