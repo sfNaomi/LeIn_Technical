@@ -78,7 +78,7 @@ jobs:
                     prefix: settings
 
             # Deploy to QA
-            -   name: Deploy to Target Org
+            -   name: Deploy to QA
                 env:
                     JWT: ${{ secrets.QA_CERTIFICATE }}
                 shell: bash
