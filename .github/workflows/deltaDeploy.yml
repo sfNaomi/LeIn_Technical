@@ -31,7 +31,7 @@ jobs:
                   workflow_id: 'deltaDeploy.yml'
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: Export value
-              run: echo "::set-output name=commit::${{ steps.last_successful_commit.outputs.commit_hash }}"
+              run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
 
     deployment:
         runs-on: ubuntu-latest
