@@ -62,8 +62,10 @@ jobs:
                 run: |
                     echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.output1}}                    
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
+                    
+                    commit={{needs.getLastSuccessCommit.outputs.output1}}
     
-                    sfdx sgd:source:delta --to "HEAD" --from ${{needs.getLastSuccessCommit.outputs.output1}} --output .
+                    sfdx sgd:source:delta --to "HEAD" --from $commit --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     cat package/package.xml
 
