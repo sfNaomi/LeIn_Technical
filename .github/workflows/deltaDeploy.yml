@@ -15,38 +15,17 @@ on:
 
 # Jobs to be executed.
 jobs:
-
-
-
-    job1:
-        runs-on: ubuntu-latest
-        # Map a step output to a job output
-        outputs:
-            output1: ${{ steps.step1.outputs.test }}
-            output2: ${{ steps.step2.outputs.test }}
-        steps:
-            -   id: step1
-                run: echo "::set-output name=test::hello"
-            -   id: step2
-                run: echo "::set-output name=test::world"
-
-    job2:
-        runs-on: ubuntu-latest
-        needs: job1
-        steps:
-            -   run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
-
-    get-last-success-commit:
+    getLastSuccessCommit:
         runs-on: ubuntu-latest
         name: Obtaining Last Successful Commit SHA
         outputs:
-            commit: ${{ steps.last_successful_commit.outputs.commit }}
+            output1: ${{ steps.step1.outputs.commit }}
         steps:
             - uses: actions/setup-node@v3
               with:
                   node-version: 16
             - uses: nrwl/last-successful-commit-action@v1
-              id: last_successful_commit
+              id: step1
               with:
                   branch: ${{ github.ref_name }}
                   workflow_id: 'deltaDeploy.yml'
@@ -56,7 +35,7 @@ jobs:
 
     deployment:
         runs-on: ubuntu-latest
-        needs: get-last-success-commit
+        needs: getLastSuccessCommit
         steps:
             # Install Salesforce CLI.
             -   name: 'Install Salesforce CLI'
@@ -80,7 +59,7 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo " do we have it? ${{ needs.get-last-success-commit.outputs.commit }}"
+                    echo ${{needs.getLastSuccessCommit.outputs.output1}}                    
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
     
                     sfdx sgd:source:delta --to HEAD --from ${{ needs.get-last-success-commit.outputs.commit }} --output .
