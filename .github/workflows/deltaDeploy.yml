@@ -27,7 +27,7 @@ jobs:
             - uses: nrwl/last-successful-commit-action@v1
               id: last_successful_commit
               with:
-                  branch: ${{ GITHUB_REF_NAME }}
+                  branch: ${{ github.ref_name }}
                   workflow_id: 'deltaDeploy.yml'
                   github_token: ${{ secrets.GITHUB_TOKEN }}
             - name: Export value
