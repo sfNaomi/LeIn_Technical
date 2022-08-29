@@ -21,7 +21,7 @@ jobs:
         runs-on: ubuntu-latest
         name: Obtaining Last Successful Commit SHA
         outputs:
-            commit-sha: ${{ steps.step1.outputs.commit }}
+            commit-sha: ${{ steps.last_successful_commit.outputs.commit }}
         steps:
             - uses: nrwl/last-successful-commit-action@v1
               id: last_successful_commit
@@ -57,11 +57,10 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo " do we have it? ${{needs.get-last-success-commit.outputs.commit-sha}}"
+                    echo " do we have it? ${{ needs.get-last-success-commit.outputs.commit-sha }}"
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
-                    echo "secret from output? ${{ steps.last_successful_commit.outputs.commit_hash }}"
     
-                    sfdx sgd:source:delta --to HEAD --from ${{ steps.last_successful_commit.outputs.commit_hash }} --output .
+                    sfdx sgd:source:delta --to HEAD --from ${{ needs.get-last-success-commit.outputs.commit-sha }} --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
