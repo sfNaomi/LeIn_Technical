@@ -39,20 +39,25 @@ jobs:
             -   name: Checkout source code
                 uses: actions/checkout@v3
 
+            -   name: Get Last Commit Secret Name
+                uses: ASzc/change-string-case-action@v2
+                with:
+                    string: ${{ secrets[format('{0}_{1}', github.ref_name, 'LAST_COMMIT')] }}
+
+            -   name: Show
+                run: echo ${{ steps.string.outputs.lowercase }}
+
             # prepare delta
             -   name: Prepare Delta
                 shell: bash
                 env:
-                    LAST_COMMIT: ${{ format('{0}{1}.{2}_{3}{4}', '${{ ', 'secrets', github.ref_name, 'last_commit', ' }}')}}
+                    LAST_COMMIT: ${{ secrets[format('{0}_{1}', github.ref_name, 'LAST_COMMIT')] }}
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     echo "$LAST_COMMIT"
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
-                    
-                    
-                    format('{{ Hello {0} {1} {2}! }}', 'Mona', 'the', 'Octocat')
 
             # Obtain data stored in JSON to load all values
             -   name: Load JSON Settings
