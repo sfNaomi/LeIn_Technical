@@ -45,7 +45,7 @@ jobs:
                     string: ${{ secrets[format('{0}_{1}', github.ref_name, 'LAST_COMMIT')] }}
 
             -   name: Show
-                run: echo ${{ steps.string.outputs.lowercase }}
+                run: echo ${{ steps.string.outputs.uppercase }}
 
             # prepare delta
             -   name: Prepare Delta
