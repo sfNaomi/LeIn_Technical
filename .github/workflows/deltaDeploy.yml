@@ -43,7 +43,7 @@ jobs:
             -   name: Prepare Delta
                 shell: bash
                 env:
-                    LAST_COMMIT: ${{ 'format({0}.{1}_{2}', 'secrets', github.ref_name, 'last_commit')}}
+                    LAST_COMMIT: ${{ format('{0}.{1}_{2}', 'secrets', github.ref_name, 'last_commit')}}
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     echo "$LAST_COMMIT"
