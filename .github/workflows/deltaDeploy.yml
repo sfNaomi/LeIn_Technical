@@ -52,10 +52,10 @@ jobs:
                     LAST_COMMIT: ${{ secrets[format('{0}_{1}', github.ref_name, 'LAST_COMMIT')] }}
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
-                    echo "secret from output? ${{ steps.lastCommit.outputs.uppercase }}"
+                    echo "secret from output? ${{ steps.lastCommit.outputs.lowercase }}"
 
                     echo "secret $LAST_COMMIT"
-                    sfdx sgd:source:delta --to HEAD --from ${{ steps.lastCommit.outputs.uppercase }} --output .
+                    sfdx sgd:source:delta --to HEAD --from ${{ steps.lastCommit.outputs.lowercase }} --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
