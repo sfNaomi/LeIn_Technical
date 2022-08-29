@@ -42,14 +42,17 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 shell: bash
+                env:
+                    LAST_COMMIT: ${{ format({0}.{1}_{2}, 'secrets', github.ref_name, 'last_commit')}}
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
+                    echo "$LAST_COMMIT"
                     sfdx sgd:source:delta --to HEAD --from HEAD --output .
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     less -FX package/package.xml
 
             # Obtain data stored in JSON to load all values
-            -   name: JSON to variables
+            -   name: Load JSON Settings
                 uses: antifree/json-to-variables@v1.0.1
                 with:
                     filename: '.github/settings/repositoryConfig.json'
@@ -60,12 +63,12 @@ jobs:
                 env:
                     JWT: ${{ secrets.QA_CERTIFICATE }}
                 shell: bash
-                if: env.LINES == 3 && github.ref_name == 'work_on_deploy_script'
+                if: env.LINES != 3 && github.ref_name == 'qa'
                 run: |
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
-                    sfdx force:auth:jwt:grant --clientid ${{ env.settings_work_on_deploy_script_clientId }} -u ${{ env.settings_work_on_deploy_script_username }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ env.settings_work_on_deploy_script_instanceUrl }}
+                    sfdx force:auth:jwt:grant --clientid ${{ env.settings_develop_clientId }} -u ${{ env.settings_develop_username }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ env.settings_develop_instanceUrl }}
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_work_on_deploy_script_username }}
                     
                                   
