@@ -43,7 +43,7 @@ jobs:
             -   name: Prepare Delta
                 shell: bash
                 env:
-                    LAST_COMMIT: ${{ format({0}.{1}_{2}, 'secrets', github.ref_name, 'last_commit')}}
+                    LAST_COMMIT: ${{ 'format({0}.{1}_{2}', 'secrets', github.ref_name, 'last_commit')}}
                 run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     echo "$LAST_COMMIT"
@@ -69,7 +69,7 @@ jobs:
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ env.settings_develop_clientId }} -u ${{ env.settings_develop_username }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ env.settings_develop_instanceUrl }}
-                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_work_on_deploy_script_username }}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
                     
                                   
             
