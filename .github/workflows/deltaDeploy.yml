@@ -48,7 +48,7 @@ jobs:
                       branch: github.ref_name
                       workflow_id: 'deltaDeploy.yml'
                       github_token: ${{ secrets.GITHUB_TOKEN }}
-                run: |
+            -   run: |
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
                     echo "secret from output? ${{ steps.last_successful_commit.outputs.commit_hash }}"
     
