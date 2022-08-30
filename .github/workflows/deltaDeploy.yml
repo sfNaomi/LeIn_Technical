@@ -34,8 +34,9 @@ jobs:
               id: step2
               run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
 
-    deployment:
+    Deployment:
         runs-on: ubuntu-latest
+        name: Deployment
         needs: getLastSuccessCommit
         steps:
             # Install Salesforce CLI.
@@ -76,6 +77,19 @@ jobs:
                     filename: '.github/settings/repositoryConfig.json'
                     prefix: settings
 
+            -   name: Load settings 2
+                id: get_env_data
+                run: |
+                    JSON=$(.github/settings/repositoryConfig.json)
+                    JSON="${JSON//$'\n'/''}"
+                    JSON="${JSON//$'\r'/''}"
+                    JSON="${JSON//$'\s+'/''}"
+                    echo "JSON=$JSON"
+                    echo "::set-output name=deployment_env::$JSON"
+            -   name: "Set env data"
+                run: |
+                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).port}}
+                    echo "$PORT"
             # Deploy to QA
             -   name: Deploy to QA
                 env:
