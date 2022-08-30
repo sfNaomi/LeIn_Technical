@@ -92,7 +92,7 @@ jobs:
                     aaa=${{ format('{0}{1}.{2}', 'fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username') }}
                     echo "$aaa"
                     PORT=${{ fromJson(steps.get_env_data.outputs.deployment_env).develop.username }}
-                    PORT2=${{ $aaa }}
+                    PORT2=${{ aaa }}
                     echo "$PORT"
                     echo "$PORT2"
 
