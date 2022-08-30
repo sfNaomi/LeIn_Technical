@@ -20,7 +20,7 @@ jobs:
         name: Obtaining Last Successful Commit SHA
         outputs:
             output1: ${{ steps.step2.outputs.commit }}
-            userName: ${{ steps.step3.outputs.}}
+            userName: ${{ steps.step3.outputs.userName}}
         steps:
             -   uses: actions/setup-node@v3
                 with:
