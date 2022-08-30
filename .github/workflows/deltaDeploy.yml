@@ -40,7 +40,7 @@ jobs:
 
             -   name: Load App
                 id: step3
-                uses: .github/node/app.js
+                uses: ./.github/actions/parseJSON
                 with:
                     branch: ${{ github.ref_name }}
 

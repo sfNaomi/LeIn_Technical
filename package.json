@@ -1,6 +1,6 @@
 {
     "name": "ag-barr",
-    "main": ".github/node/app.js",
+    "main": ".github/actions/parseJSON/index.js",
     "version": "0.1.0",
     "license": "MIT",
     "private": true,
