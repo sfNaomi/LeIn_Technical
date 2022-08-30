@@ -90,6 +90,7 @@ jobs:
             -   name: Testic
                 run: |
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env) }}
+                    echo "$JSON"
                     echo "is this going to work? ${JSON.work_on_deploy_script.username}"
                     
                     aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
@@ -110,6 +111,7 @@ jobs:
                     PORT2=${{fromJson(steps.get_env_data.outputs.deployment_env).github.ref_name.username}}
                     echo "$PORT"
                     echo "$PORT2"
+                    
                     
                     
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
