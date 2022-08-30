@@ -6,17 +6,9 @@ const fs = require('fs');
 
 try {
     const branch = core.getInput("branch");
-    let file;
-    fs.readFile('.github/settings/repositoryConfig.json', 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-        }
-        console.log(data);
-        file = data;
-    });
+    let rawData = fs.readFileSync('.github/settings/repositoryConfig.json');
+    let data = JSON.parse(rawData);
 
-    //const object = JSON.parse(file);
-    //console.log(object);
 
     //core.setOutput("username", lastSuccessCommitHash);
     //core.setOutput("clientId", lastSuccessCommitHash);
