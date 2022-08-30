@@ -20,6 +20,7 @@ jobs:
         name: Obtaining Last Successful Commit SHA
         outputs:
             output1: ${{ steps.step2.outputs.commit }}
+            userName: ${{ steps.step3.outputs.}}
         steps:
             -   uses: actions/setup-node@v3
                 with:
@@ -30,17 +31,20 @@ jobs:
                     branch: ${{ github.ref_name }}
                     workflow_id: 'deltaDeploy.yml'
                     github_token: ${{ secrets.GITHUB_TOKEN }}
-            -   name: Export value
-                id: step2
-                run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
-
             -   name: Checkout
                 uses: actions/checkout@v3
 
             -   name: Load App
-                run: | 
+                id: step3
+                run: |
                     npm install @actions/core
-                    node .github/node/app.js
+                    node .github/node/app.js  
+
+            -   name: Export value
+                id: step2
+                run: |
+                    echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
+                    echo "::set-output name=userName::${{ steps.step1.outputs.userName }}"
 
     Deployment:
         runs-on: ubuntu-latest
@@ -100,6 +104,7 @@ jobs:
 
             -   name: Testic
                 run: |
+                    echo "${{ needs.getLastSuccessCommit.outputs.userName }}"
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env).work_on_deploy_script }}
                     
                     aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
