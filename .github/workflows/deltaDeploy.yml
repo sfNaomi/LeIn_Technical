@@ -48,7 +48,7 @@ jobs:
                 id: step2
                 run: |
                     echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
-                    echo "::set-output name=userName::${{ steps.step1.outputs.userName }}"
+                    echo "::set-output name=userName::${{ steps.step3.outputs.userName }}"
 
     Deployment:
         runs-on: ubuntu-latest
