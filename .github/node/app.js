@@ -8,6 +8,7 @@ try {
     const branch = core.getInput("branch");
     let rawData = fs.readFileSync('.github/settings/repositoryConfig.json');
     let data = JSON.parse(rawData);
+    console.log(data);
 
 
     //core.setOutput("username", lastSuccessCommitHash);
