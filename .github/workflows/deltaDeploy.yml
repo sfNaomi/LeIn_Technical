@@ -93,7 +93,7 @@ jobs:
                 shell: bash
                 if: env.LINES != 3 && github.ref_name == 'qa'
                 run: |
-                    gitak=${{ GITHUB_REF_NAME }}
+                    gitak=${{ github.ref_name }}
                     aaa=${{ format('{0}.{1}.{2}', '.', $gitak, '.username') }}
                     PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
                     PORT2=${{fromJson(steps.get_env_data.outputs.deployment_env).$aaa}}
