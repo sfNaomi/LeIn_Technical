@@ -86,12 +86,21 @@ jobs:
                     JSON="${JSON//$'\s+'/''}"
                     echo "JSON=$JSON"
                     echo "::set-output name=deployment_env::$JSON"
+
+            -   name: Testic
+                run: |
+                    aaa=${{ format('{0}.{1}.{2}', '.', github.ref_name, '.username') }}
+                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
+                    PORT2=${{fromJson(steps.get_env_data.outputs.deployment_env).github.ref_name.username}}
+                    echo "$PORT"
+                    echo "$PORT2"
+
             # Deploy to QA
             -   name: Deploy to QA
                 env:
                     JWT: ${{ secrets.QA_CERTIFICATE }}
                 shell: bash
-                if: env.LINES == 3 && github.ref_name == 'qa'
+                if: env.LINES != 3 && github.ref_name == 'qa'
                 run: |
                     aaa=${{ format('{0}.{1}.{2}', '.', github.ref_name, '.username') }}
                     PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
