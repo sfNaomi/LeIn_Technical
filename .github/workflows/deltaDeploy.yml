@@ -21,18 +21,24 @@ jobs:
         outputs:
             output1: ${{ steps.step2.outputs.commit }}
         steps:
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-            - uses: nrwl/last-successful-commit-action@v1
-              id: step1
-              with:
-                  branch: ${{ github.ref_name }}
-                  workflow_id: 'deltaDeploy.yml'
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-            - name: Export value
-              id: step2
-              run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
+            -   uses: nrwl/last-successful-commit-action@v1
+                id: step1
+                with:
+                    branch: ${{ github.ref_name }}
+                    workflow_id: 'deltaDeploy.yml'
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Export value
+                id: step2
+                run: echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
+
+            -   name: Checkout
+                uses: actions/checkout@v3
+
+            -   name: Load App
+                run: node .github/node/app.js
 
     Deployment:
         runs-on: ubuntu-latest
@@ -89,10 +95,6 @@ jobs:
                     JSON="${JSON//$'\s+'/''}"
                     echo "JSON=$JSON"
                     echo "::set-output name=deployment_env::$JSON"
-
-            -   name: load app
-                run : node .github/node/app.js
-
 
             -   name: Testic
                 run: |
