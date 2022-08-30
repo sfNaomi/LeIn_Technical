@@ -88,7 +88,7 @@ jobs:
                     echo "::set-output name=deployment_env::$JSON"
             -   name: "Set env data"
                 run: |
-                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).port}}
+                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
                     echo "$PORT"
             # Deploy to QA
             -   name: Deploy to QA
