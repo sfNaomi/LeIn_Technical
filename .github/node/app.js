@@ -15,8 +15,8 @@ try {
         file = data;
     });
 
-    const object = JSON.parse(file);
-    console.log(object);
+    //const object = JSON.parse(file);
+    //console.log(object);
 
     //core.setOutput("username", lastSuccessCommitHash);
     //core.setOutput("clientId", lastSuccessCommitHash);
