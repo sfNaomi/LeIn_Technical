@@ -37,22 +37,10 @@ jobs:
             -   name: install dependencies
                 run: npm install @actions/core
 
-            -   name: Checkout
-                uses: actions/checkout@v3
-
-            -   name: Load App
-                id: step3
-                uses: ./.github/actions/parseJSON
-                with:
-                    branch: ${{ github.ref_name }}
-
             -   name: Export value
                 id: step2
                 run: |
                     echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
-                    echo "::set-output name=userName::${{ steps.step3.outputs.userName }}"
-                    echo "::set-output name=clientId::${{ steps.step3.outputs.clientId }}"
-                    echo "::set-output name=instanceUrl::${{ steps.step3.outputs.instanceUrl }}"
 
     Deployment:
         runs-on: ubuntu-latest
@@ -93,33 +81,21 @@ jobs:
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     cat package/package.xml
 
-            # Obtain data stored in JSON to load all values
-            -   name: Load JSON Settings
-                uses: antifree/json-to-variables@v1.0.1
+            -   name: Load App
+                id: step3
+            -   uses: actions/setup-node@v3
                 with:
-                    filename: '.github/settings/repositoryConfig.json'
-                    prefix: settings
+                    node-version: 16
+            -   uses: ./.github/actions/parseJSON
+                with:
+                    branch: ${{ github.ref_name }}
 
-            -   name: Load settings 2
-                id: get_env_data
-                run: |
-                    JSON=$(cat .github/settings/repositoryConfig.json)
-                    JSON="${JSON//$'\n'/''}"
-                    JSON="${JSON//$'\r'/''}"
-                    JSON="${JSON//$'\s+'/''}"
-                    echo "JSON=$JSON"
-                    echo "::set-output name=deployment_env::$JSON"
-
-            -   name: Testic
-                run: |
-                    echo "${{ needs.getLastSuccessCommit.outputs.userName }}"
-                    JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env).work_on_deploy_script }}
-                    
-                    aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
-                    PORT=${{ fromJson(steps.get_env_data.outputs.deployment_env).develop.username }}
-                    echo "PORT2=$aaa"
-                    echo "$PORT"
-                    echo "$PORT2"
+            - name: testic2
+              run: |
+                  echo "${{ steps.step3.outputs.userName }}"
+                  echo "${{ steps.step3.outputs.clientId }}"
+                  echo "${{ steps.step3.outputs.instanceUrl }}"
+              
 
             # Deploy to QA
             -   name: Deploy to QA
