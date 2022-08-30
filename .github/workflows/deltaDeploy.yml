@@ -90,7 +90,7 @@ jobs:
             -   name: Testic
                 run: |
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env) }}
-                    echo "is this going to work? ${work_on_deploy_script.username}"
+                    echo "is this going to work? ${JSON.work_on_deploy_script.username}"
                     
                     aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
                     PORT=${{ fromJson(steps.get_env_data.outputs.deployment_env).develop.username }}
