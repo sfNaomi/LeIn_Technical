@@ -73,6 +73,7 @@ jobs:
 
                     sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.last_commit }} --output . -i .sgdignore
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
+                    echo "LINES_DESTRUCTIVE=$(wc -l < destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
                     cat package/package.xml
 
             # Run JavaScript Action to parse JSON and do other decisions
@@ -89,7 +90,7 @@ jobs:
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
                     JWT_PROD: ${{ secrets.PROD_CERTIFICATE }}
                 shell: bash
-                if: env.LINES != 3 && github.ref_name == 'qa'
+                if: env.LINES != 3
                 run: |
                     echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
                     echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
@@ -104,4 +105,14 @@ jobs:
                     sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
                                   
-            
+            # check destructive changes
+            -   name: Check Destructive Changes
+                shell: bash
+                if: env.LINES_DESTRUCTIVE == 3
+                run: |
+                    cat destructiveChanges/destructiveChanges.xml
+
+            # Nothing to Deploy
+            - name: Nothing to Deploy
+              if: env.LINES == 3
+              run: echo "There is nothing to deploy as the package.xml is empty"
