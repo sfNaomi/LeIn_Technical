@@ -91,7 +91,7 @@ jobs:
                 env:
                     JWT: ${{ secrets.QA_CERTIFICATE }}
                 shell: bash
-                if: env.LINES != 3 && github.ref_name == 'qa'
+                if: env.LINES == 3 && github.ref_name == 'qa'
                 run: |
                     aaa=${{ format('{0}.{1}.{2}', '.', github.ref_name, '.username') }}
                     PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
