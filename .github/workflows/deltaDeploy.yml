@@ -80,7 +80,7 @@ jobs:
             -   name: Load settings 2
                 id: get_env_data
                 run: |
-                    JSON=$(.github/settings/repositoryConfig.json)
+                    JSON=$(cat .github/settings/repositoryConfig.json)
                     JSON="${JSON//$'\n'/''}"
                     JSON="${JSON//$'\r'/''}"
                     JSON="${JSON//$'\s+'/''}"
