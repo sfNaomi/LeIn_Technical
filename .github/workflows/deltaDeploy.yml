@@ -86,10 +86,6 @@ jobs:
                     JSON="${JSON//$'\s+'/''}"
                     echo "JSON=$JSON"
                     echo "::set-output name=deployment_env::$JSON"
-            -   name: "Set env data"
-                run: |
-                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
-                    echo "$PORT"
             # Deploy to QA
             -   name: Deploy to QA
                 env:
@@ -97,6 +93,13 @@ jobs:
                 shell: bash
                 if: env.LINES != 3 && github.ref_name == 'qa'
                 run: |
+                    aaa=${{ format('{0}.{1}.{2}', '.', GITHUB_REF_NAME, '.username') }}
+                    PORT=${{fromJson(steps.get_env_data.outputs.deployment_env).develop.username}}
+                    PORT2=${{fromJson(steps.get_env_data.outputs.deployment_env).$aaa}}
+                    echo "$PORT"
+                    echo "$PORT2"
+                    
+                    
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
