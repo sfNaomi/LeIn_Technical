@@ -17,9 +17,6 @@ IlluminatedCloud/
 .sfdx/
 .sf/
 
-# node
-node_modules/
-
 # SFDX-Data-Move-Utility
 data/binary_cache/
 data/logs/
