@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission set which grants the specific level of access that Sales Support and Support users need to the Account object, RTs and fields</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Account Support Access</label>
+</PermissionSet>

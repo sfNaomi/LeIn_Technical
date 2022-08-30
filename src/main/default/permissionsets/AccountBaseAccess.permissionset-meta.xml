@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permission set which grants the base level of access - Read for Account object, Read And Edit on all Account fields</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Account Base Access</label>
+</PermissionSet>
