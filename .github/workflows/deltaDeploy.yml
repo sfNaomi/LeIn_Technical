@@ -88,12 +88,12 @@ jobs:
                     echo "::set-output name=deployment_env::$JSON"
 
             -   name: Testic
-                env:
-                    bbb: ${{ fromJson(steps.get_env_data.outputs.deployment_env).${{ github.ref_name }}.username }}
                 run: |
-                    echo "${{ env.bbb }}"
-                    aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
+                    
                     PORT=${{ fromJson(steps.get_env_data.outputs.deployment_env).develop.username }}
+                    JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env) }}
+                    echo "$JSON"
+                    username=$JSON.github.ref_name
                     echo "PORT2=$aaa"
                     echo "$PORT"
                     echo "$PORT2"
