@@ -89,8 +89,9 @@ jobs:
                     JSON="${JSON//$'\s+'/''}"
                     echo "JSON=$JSON"
                     echo "::set-output name=deployment_env::$JSON"
+
             -   name: load app
-                run : node app.js
+                run : node .github/node/app.js
 
 
             -   name: Testic
