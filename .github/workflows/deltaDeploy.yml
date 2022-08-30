@@ -88,6 +88,8 @@ jobs:
                     echo "::set-output name=deployment_env::$JSON"
 
             -   name: Testic
+                env:
+                    jooo: ${{ fromJson(steps.get_env_data.outputs.deployment_env).github.ref_name.username }}
                 run: |
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env).work_on_deploy_script }}
                     
