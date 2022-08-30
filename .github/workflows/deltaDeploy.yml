@@ -108,9 +108,10 @@ jobs:
             # check destructive changes
             -   name: Check Destructive Changes
                 shell: bash
-                if: env.LINES_DESTRUCTIVE == 3
+                if: env.LINES_DESTRUCTIVE != 3
                 run: |
                     cat destructiveChanges/destructiveChanges.xml
+                    echo "Please deploy destructive changes manually"
 
             # Nothing to Deploy
             - name: Nothing to Deploy
