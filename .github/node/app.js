@@ -10,7 +10,9 @@ try {
     let data = JSON.parse(rawData);
     console.log(data);
 
-    core.setOutput("userName", data[branch].userName);
+    const branchData = data[branch];
+
+    core.setOutput("userName", branchData.userName);
     //core.setOutput("clientId", lastSuccessCommitHash);
     //core.setOutput("instanceUrl", lastSuccessCommitHash);
 
