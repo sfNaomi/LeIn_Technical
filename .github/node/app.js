@@ -10,6 +10,7 @@ try {
     let data = JSON.parse(rawData);
     console.log(data);
 
+    console.log(branch);
     const branchData = data[branch];
 
     core.setOutput("userName", branchData.userName);

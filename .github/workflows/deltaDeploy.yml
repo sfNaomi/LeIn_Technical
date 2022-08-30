@@ -31,14 +31,15 @@ jobs:
                     branch: ${{ github.ref_name }}
                     workflow_id: 'deltaDeploy.yml'
                     github_token: ${{ secrets.GITHUB_TOKEN }}
+                run: npm install @actions/core
             -   name: Checkout
                 uses: actions/checkout@v3
 
             -   name: Load App
                 id: step3
-                run: |
-                    npm install @actions/core
-                    node .github/node/app.js  
+                uses: .github/node/app.js
+                with:
+                    branch: ${{ github.ref_name }}
 
             -   name: Export value
                 id: step2
