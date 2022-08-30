@@ -1,5 +1,6 @@
 {
     "name": "ag-barr",
+    "main": ".github/node/app.js",
     "version": "0.1.0",
     "license": "MIT",
     "private": true,

@@ -39,6 +39,9 @@ jobs:
         name: Deployment
         needs: getLastSuccessCommit
         steps:
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
             # Install Salesforce CLI.
             -   name: 'Install Salesforce CLI'
                 run: |
@@ -86,12 +89,12 @@ jobs:
                     JSON="${JSON//$'\s+'/''}"
                     echo "JSON=$JSON"
                     echo "::set-output name=deployment_env::$JSON"
+            -   name: load app
+                run : node app.js
+
 
             -   name: Testic
-                env:
-                    jooo: ${{ fromJson(steps.get_env_data.outputs.deployment_env).github.ref_name.username }}
                 run: |
-                    echo "${{ env.jooo }}"
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env).work_on_deploy_script }}
                     
                     aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
