@@ -19,28 +19,22 @@ jobs:
         runs-on: ubuntu-latest
         name: Obtaining Last Successful Commit SHA
         outputs:
-            output1: ${{ steps.step2.outputs.commit }}
-            userName: ${{ steps.step3.outputs.userName}}
-            clientId: ${{ steps.step3.outputs.clientId}}
-            instanceUrl: ${{ steps.step3.outputs.instanceUrl}}
+            last_commit: ${{ steps.export_value.outputs.commit }}
         steps:
             -   uses: actions/setup-node@v3
                 with:
                     node-version: 16
             -   uses: nrwl/last-successful-commit-action@v1
-                id: step1
+                id: last_commit
                 with:
                     branch: ${{ github.ref_name }}
                     workflow_id: 'deltaDeploy.yml'
                     github_token: ${{ secrets.GITHUB_TOKEN }}
 
-            -   name: install dependencies
-                run: npm install @actions/core
-
             -   name: Export value
-                id: step2
+                id: export_value
                 run: |
-                    echo "::set-output name=commit::${{ steps.step1.outputs.commit_hash }}"
+                    echo "::set-output name=commit::${{ steps.last_commit.outputs.commit_hash }}"
 
     Deployment:
         runs-on: ubuntu-latest
@@ -74,27 +68,22 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.output1}}                    
+                    echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.last_commit}}                    
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
 
-                    sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.output1 }} --output . -i .sgdignore
+                    sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.last_commit }} --output . -i .sgdignore
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     cat package/package.xml
 
-            -   name: Load App
-                id: step3
+            # Run JavaScript Action to parse JSON and do other decisions
+            -   name: Prepare Credentials and Certificates
+                id: credentials-preparation
                 uses: ./.github/actions/parseJSON
                 with:
                     branch: ${{ github.ref_name }}
-            -   name: testic2
-                run: |
-                    echo "${{ steps.step3.outputs.userName }}"
-                    echo "${{ steps.step3.outputs.clientId }}"
-                    echo "${{ steps.step3.outputs.instanceUrl }}"
-                    echo "${{ steps.step3.outputs.certificatePath }}"
 
-            # Deploy to QA
-            -   name: Deploy to QA
+            # Deploy
+            -   name: Deploy to ${{ github.ref_name }}
                 env:
                     JWT_QA: ${{ secrets.QA_CERTIFICATE }}
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
@@ -107,7 +96,12 @@ jobs:
                     echo "$JWT_PROD" | base64 --decode > ${HOME}/prod.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
-                    sfdx force:auth:jwt:grant --clientid ${{ steps.step3.outputs.clientId  }} -u ${{ steps.step3.outputs.userName }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ steps.step3.outputs.instanceUrl }}
+                    echo "${{ steps.credentials-preparation.outputs.userName }}"
+                    echo "${{ steps.credentials-preparation.outputs.clientId }}"
+                    echo "${{ steps.credentials-preparation.outputs.instanceUrl }}"
+                    echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
+                    
+                    sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
                                   
             
