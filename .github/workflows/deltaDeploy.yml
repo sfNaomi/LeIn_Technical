@@ -91,6 +91,7 @@ jobs:
                 env:
                     jooo: ${{ fromJson(steps.get_env_data.outputs.deployment_env).github.ref_name.username }}
                 run: |
+                    echo "${{ env.jooo }}"
                     JSON=${{ fromJson(steps.get_env_data.outputs.deployment_env).work_on_deploy_script }}
                     
                     aaa=${{ format('{0}{1}.{2}', '${{ fromJson(steps.get_env_data.outputs.deployment_env).', github.ref_name, 'username }}') }}
