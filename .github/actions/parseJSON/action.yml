@@ -4,6 +4,9 @@ inputs:
     branch:  # id of input
         description: 'name of the branch for which values from JSON should be obtained'
         required: true
+    certificate:
+        description: ''
+        required: true
 outputs:
     userName:
         description: 'userName'

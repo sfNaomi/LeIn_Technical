@@ -86,13 +86,13 @@ jobs:
                 uses: ./.github/actions/parseJSON
                 with:
                     branch: ${{ github.ref_name }}
+                    certificate: ${{ secrets.CERTIFICATE }}
 
-            - name: testic2
-              run: |
-                  echo "${{ steps.step3.outputs.userName }}"
-                  echo "${{ steps.step3.outputs.clientId }}"
-                  echo "${{ steps.step3.outputs.instanceUrl }}"
-              
+            -   name: testic2
+                run: |
+                    echo "${{ steps.step3.outputs.userName }}"
+                    echo "${{ steps.step3.outputs.clientId }}"
+                    echo "${{ steps.step3.outputs.instanceUrl }}"
 
             # Deploy to QA
             -   name: Deploy to QA
@@ -104,7 +104,7 @@ jobs:
                     echo "$JWT" | base64 --decode > ${HOME}/server.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
-                    sfdx force:auth:jwt:grant --clientid ${{ needs.getLastSuccessCommit.outputs.clientId }} -u ${{ needs.getLastSuccessCommit.outputs.userName }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ needs.getLastSuccessCommit.outputs.instanceUrl }}
+                    sfdx force:auth:jwt:grant --clientid ${{ steps.step3.outputs.clientId  }} -u ${{ steps.step3.outputs.userName }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ steps.step3.outputs.instanceUrl }}
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
                                   
             
