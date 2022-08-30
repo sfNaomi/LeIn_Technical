@@ -10,6 +10,9 @@ try {
     let certificates = JSON.parse(certificateRaw);
     console.log(certificates);
 
+    const decodedStringAtoB = atob(certificates.develop);
+    console.log(decodedStringAtoB);
+
     const branchData = data[branch];
 
     core.setOutput('userName', branchData.userName);
