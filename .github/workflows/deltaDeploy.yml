@@ -86,22 +86,25 @@ jobs:
                 uses: ./.github/actions/parseJSON
                 with:
                     branch: ${{ github.ref_name }}
-                    certificate: ${{ secrets.CERTIFICATE }}
-
             -   name: testic2
                 run: |
                     echo "${{ steps.step3.outputs.userName }}"
                     echo "${{ steps.step3.outputs.clientId }}"
                     echo "${{ steps.step3.outputs.instanceUrl }}"
+                    echo "${{ steps.step3.outputs.certificatePath }}"
 
             # Deploy to QA
             -   name: Deploy to QA
                 env:
-                    JWT: ${{ secrets.QA_CERTIFICATE }}
+                    JWT_QA: ${{ secrets.QA_CERTIFICATE }}
+                    JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
+                    JWT_PROD: ${{ secrets.PROD_CERTIFICATE }}
                 shell: bash
                 if: env.LINES != 3 && github.ref_name == 'qa'
                 run: |
-                    echo "$JWT" | base64 --decode > ${HOME}/server.key
+                    echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
+                    echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
+                    echo "$JWT_PROD" | base64 --decode > ${HOME}/prod.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ steps.step3.outputs.clientId  }} -u ${{ steps.step3.outputs.userName }} --jwtkeyfile ${HOME}/server.key --instanceurl ${{ steps.step3.outputs.instanceUrl }}
