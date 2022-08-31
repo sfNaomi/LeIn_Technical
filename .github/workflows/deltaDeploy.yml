@@ -70,6 +70,7 @@ jobs:
                         echo "::set-output name=fromCommit::$initialCommit"
                     else
                         echo "::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}"
+                    fi
 
             # prepare delta
             -   name: Prepare Delta
