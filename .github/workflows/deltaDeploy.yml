@@ -64,7 +64,7 @@ jobs:
                 id: check-success-commit
                 shell: bash
                 run: |
-                    if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" != "" ]; then
+                    if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" == "" ]; then
                         firstCommitFull=$(git log ${{ github.ref_name }} --oneline | tail -1)
                         firstCommit="${firstCommitFull:0:7}"
                         echo "::set-output name=fromCommit::${firstCommit}"
