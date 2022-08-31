@@ -67,7 +67,7 @@ jobs:
                 run: |
                     if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" != "" ]; then
                         echo git log ${{ github.ref_name }} --oneline | tail -1
-                        initialCommit=${git log ${{ github.ref_name }} --oneline | tail -1};
+                        initialCommit= git log ${{ github.ref_name }} --oneline | tail -1
                         echo "${initialCommit}"
                         echo ::set-output name=fromCommit::${initialCommit}
                     else
