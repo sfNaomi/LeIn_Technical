@@ -59,13 +59,26 @@ jobs:
                 with:
                     fetch-depth: 0
 
+            # check if there was successful commit
+            -   name: Check if Last Successful Commit is present
+                id: check-success-commit
+                shell: bash
+                run: |
+                    if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" != "" ]; then
+                        firstCommitFull=$(git log ${{ github.ref_name }} --oneline | tail -1)
+                        firstCommit="${firstCommitFull:0:7}"
+                        echo "::set-output name=fromCommit::${firstCommit}"
+                    else
+                        echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
+                    fi
+
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.last_commit}}                    
+                    echo Last successful commit used: ${{ steps.check-success-commit.outputs.fromCommit }}                   
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
 
-                    sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.last_commit }} --output . -i .sgdignore
+                    sfdx sgd:source:delta --to "HEAD" --from ${{ steps.check-success-commit.outputs.fromCommit }}  --output . -i .sgdignore
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     echo "LINES_DESTRUCTIVE=$(wc -l < destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
                     cat package/package.xml
@@ -97,7 +110,7 @@ jobs:
                     echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
-                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ steps.credentials-preparation.outputs.userName }}
                                   
             # check destructive changes
             -   name: Check Destructive Changes
