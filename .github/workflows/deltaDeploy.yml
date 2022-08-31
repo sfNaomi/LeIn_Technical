@@ -69,7 +69,7 @@ jobs:
                         outcome=$(git log ${{ github.ref_name }} --oneline | tail -1)
                         short="${outcome:0:7}"
                         echo "${short}"
-                        echo ::set-output name=fromCommit::
+                        echo "::set-output name=fromCommit::${short}"
                     else
                         echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
                     fi
