@@ -6,7 +6,6 @@ on:
     push:
         branches:
             - develop
-            - work_on_deploy_script
 
 # Jobs to be executed.
 jobs:
