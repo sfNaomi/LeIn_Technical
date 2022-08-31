@@ -66,7 +66,10 @@ jobs:
                 shell: bash
                 run: |
                     if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" != "" ]; then
-                        echo ::set-output name=fromCommit::&{git log ${ github.ref_name } --oneline | tail -1:0:7}
+                        outcome=git log ${ github.ref_name } --oneline | tail -1
+                        short="${outcome:0:7}"
+                        echo "${short}"
+                        echo ::set-output name=fromCommit::
                     else
                         echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
                     fi
