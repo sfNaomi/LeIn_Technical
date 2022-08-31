@@ -66,10 +66,9 @@ jobs:
                 shell: bash
                 run: |
                     if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" != "" ]; then
-                        outcome=$(git log ${{ github.ref_name }} --oneline | tail -1)
-                        short="${outcome:0:7}"
-                        echo "${short}"
-                        echo "::set-output name=fromCommit::${short}"
+                        firstCommitFull=$(git log ${{ github.ref_name }} --oneline | tail -1)
+                        firstCommit="${firstCommitFull:0:7}"
+                        echo "::set-output name=fromCommit::${firstCommit}"
                     else
                         echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
                     fi
@@ -112,7 +111,7 @@ jobs:
                     echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
-                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ steps.credentials-preparation.outputs.userName }}
                                   
             # check destructive changes
             -   name: Check Destructive Changes
