@@ -1,0 +1,113 @@
+name: Deploy Deltas to Sandbox
+
+# Definition when the workflow should run
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - develop
+
+# Jobs to be executed.
+jobs:
+    getLastSuccessCommit:
+        runs-on: ubuntu-latest
+        name: Obtaining Last Successful Commit SHA
+        outputs:
+            last_commit: ${{ steps.export_value.outputs.commit }}
+        steps:
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
+            -   uses: nrwl/last-successful-commit-action@v1
+                id: last_commit
+                with:
+                    branch: ${{ github.ref_name }}
+                    workflow_id: 'deltaDeploy.yml'
+                    github_token: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Export value
+                id: export_value
+                run: |
+                    echo "::set-output name=commit::${{ steps.last_commit.outputs.commit_hash }}"
+
+    Deployment:
+        runs-on: ubuntu-latest
+        name: Deployment
+        needs: getLastSuccessCommit
+        steps:
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
+            # Install Salesforce CLI.
+            -   name: 'Install Salesforce CLI'
+                run: |
+                    wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                    mkdir ~/sfdx
+                    tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                    echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                    ~/sfdx/bin/sfdx version
+
+            # Install sfdx plugin
+            -   name: 'Install plugin'
+                shell: bash
+                run: |
+                    printf 'y\n' | sfdx plugins:install sfdx-git-delta@latest
+
+            # Checkout the source code
+            -   name: Checkout source code
+                uses: actions/checkout@v3
+                with:
+                    fetch-depth: 0
+
+            # prepare delta
+            -   name: Prepare Delta
+                run: |
+                    echo Last successful commit used: ${{needs.getLastSuccessCommit.outputs.last_commit}}                    
+                    echo Last Commit to which the delta is prepared: ${{ github.sha }}
+
+                    sfdx sgd:source:delta --to "HEAD" --from ${{ needs.getLastSuccessCommit.outputs.last_commit }} --output . -i .sgdignore
+                    echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
+                    echo "LINES_DESTRUCTIVE=$(wc -l < destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
+                    cat package/package.xml
+
+            # Run JavaScript Action to parse JSON and do other decisions
+            -   name: Prepare Credentials and Certificates
+                id: credentials-preparation
+                uses: ./.github/actions/parseJSON
+                with:
+                    branch: ${{ github.ref_name }}
+
+            # Deploy
+            -   name: Deploy to ${{ github.ref_name }}
+                env:
+                    JWT_QA: ${{ secrets.QA_CERTIFICATE }}
+                    JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
+                    JWT_PROD: ${{ secrets.PROD_CERTIFICATE }}
+                shell: bash
+                if: env.LINES != 3
+                run: |
+                    echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
+                    echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
+                    echo "$JWT_PROD" | base64 --decode > ${HOME}/prod.key
+                    echo "running on branch ${GITHUB_REF_NAME}"
+                    
+                    echo "${{ steps.credentials-preparation.outputs.userName }}"
+                    echo "${{ steps.credentials-preparation.outputs.clientId }}"
+                    echo "${{ steps.credentials-preparation.outputs.instanceUrl }}"
+                    echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
+                    
+                    sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ env.settings_develop_username }}
+                                  
+            # check destructive changes
+            -   name: Check Destructive Changes
+                shell: bash
+                if: env.LINES_DESTRUCTIVE != 3
+                run: |
+                    cat destructiveChanges/destructiveChanges.xml
+                    echo "Please deploy destructive changes manually"
+
+            # Nothing to Deploy
+            - name: Nothing to Deploy
+              if: env.LINES == 3
+              run: echo "There is nothing to deploy as the package.xml is empty"
