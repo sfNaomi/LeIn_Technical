@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>UniquePrimaryContactOnAccountValidationErrorMessage</fullName>
+        <categories>Trigger, Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unique Primary Contact on Account Validation Error Message</shortDescription>
+        <value>There is already a primary contact defined for this account. Please uncheck field &quot;Primary Contact&quot; to be able to save the contact.</value>
+    </labels>
+</CustomLabels>
