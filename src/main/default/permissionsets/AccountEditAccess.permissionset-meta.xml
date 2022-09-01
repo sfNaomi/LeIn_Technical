@@ -3,4 +3,17 @@
     <description>Permission set which grants an extended level of access to account - Edit on Account object</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account Edit Access</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

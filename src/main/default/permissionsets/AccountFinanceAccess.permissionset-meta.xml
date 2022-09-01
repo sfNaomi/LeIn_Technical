@@ -3,4 +3,17 @@
     <description>Permission set which grants the specific level of access that Finance users need to the Account object, RTs and fields</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account Finance Access</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permission set which grants the specific level of access that Field Sales users need to the Account object, RTs and fields</description>
+    <description>Base access permission for Contact. Contains Read access</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account Field Sales Access</label>
+    <label>Contact Edit Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Account</object>
+        <object>Contact</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>standard-Account</tab>
+        <tab>standard-Contact</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
