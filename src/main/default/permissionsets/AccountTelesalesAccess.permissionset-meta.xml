@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Permission set which grants an extended level of access to account - Edit on Account object</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account Edit Access</label>
+    <label>Account Telesales Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
