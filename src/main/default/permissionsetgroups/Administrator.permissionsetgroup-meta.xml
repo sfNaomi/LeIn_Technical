@@ -7,6 +7,7 @@
     <permissionSets>CreateAndEditReports</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
+    <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>
