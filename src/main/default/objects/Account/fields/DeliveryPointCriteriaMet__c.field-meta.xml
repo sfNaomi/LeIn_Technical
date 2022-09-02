@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Does the Delivery point meet the criteria for sign up? E.g. Adequate parking</inlineHelpText>
     <label>Delivery Point Criteria Met?</label>
-    <required>true</required>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
