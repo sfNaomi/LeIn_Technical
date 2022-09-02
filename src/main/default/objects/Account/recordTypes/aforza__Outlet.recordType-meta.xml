@@ -411,20 +411,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PreferredCallTimeTelesales__c</picklist>
-        <values>
-            <fullName>TBC</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PreferredVisitTime__c</picklist>
-        <values>
-            <fullName>TBC</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>PricedUnpricedInvoice__c</picklist>
         <values>
             <fullName>Priced</fullName>
