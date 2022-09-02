@@ -232,7 +232,19 @@
     <picklistValues>
         <picklist>Depot__c</picklist>
         <values>
-            <fullName>TBC</fullName>
+            <fullName>Cumbernauld</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dagenham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wednesbury</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moston</fullName>
             <default>false</default>
         </values>
     </picklistValues>
