@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Which Depot Will Service This Customer?</inlineHelpText>
     <label>Depot</label>
-    <required>false</required>
+    <required>true</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
