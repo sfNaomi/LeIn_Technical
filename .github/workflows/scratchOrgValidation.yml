@@ -14,6 +14,7 @@ on:
 # Jobs to be executed .
 jobs:
     scratch-org-validation:
+        name: Scratch Org Validation
         runs-on: ubuntu-latest
         env:
             SCRATCH_NAME: ${{ github.event.repository.name }}

@@ -6,6 +6,7 @@ on:
     push:
         branches:
             - develop
+            - interfaces
 
 # Jobs to be executed.
 jobs:
