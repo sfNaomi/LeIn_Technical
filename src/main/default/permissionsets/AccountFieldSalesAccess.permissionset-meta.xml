@@ -98,6 +98,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.DirectDebitSetUp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.ExternalDBID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,6 +124,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.FormalCreditCheckAgreed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.IncreaseToStandardCreditRequired__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
