@@ -1,0 +1,26 @@
+{
+    "develop": {
+        "userName": "admin@agbarr.aforza.org.qa",
+        "clientId": "3MVG9LlLrkcRhGHZ75_1zzxBX1vP5z1K2K7oDWeggf_Qtc9ldcV2c6Q9J2RmB0h6MxqOFLFFGAIB2Q8JL3DKm",
+        "instanceUrl": "https://test.salesforce.com",
+        "runDestructive": true
+    },
+    "interfaces": {
+        "userName": "admin@agbarr.aforza.org.interfaces",
+        "clientId": "3MVG9rKhT8ocoxGmytzWIaa6opHEPTN2o.ZfXsnmrUAFCBx4u9lW.lL82F17JCkz009E9tv91EqTqtwtuP_aM",
+        "instanceUrl": "https://test.salesforce.com",
+        "runDestructive": true
+    },
+    "staging": {
+        "userName": "admin@agbarr.aforza.org.uat",
+        "clientId": "3MVG9LlLrkcRhGHZ75_1zzxBX1nHSTbRSA0XHgFBumviGAurK5FOEVSNGD_MKldmswwBav0e_TpgCD_t2Ye8s",
+        "instanceUrl": "https://test.salesforce.com",
+        "runDestructive": true
+    },
+    "main": {
+        "userName": "admin@agbarr.aforza.org",
+        "clientId": "3MVG9DREgiBqN9WnX6bDiTmd6M0BZk90lb6KO2QmndzM5IjqTsvJmg48XrbEDGpFHvb9ypvsURqXMfg76u1yu",
+        "instanceUrl": "https://login.salesforce.com",
+        "runDestructive": false
+    }
+}

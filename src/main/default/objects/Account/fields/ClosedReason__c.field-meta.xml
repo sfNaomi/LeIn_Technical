@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ClosedReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Closed Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bad Debt</fullName>
+                <default>false</default>
+                <label>Bad Debt</label>
+            </value>
+            <value>
+                <fullName>Buyer is uncontactable</fullName>
+                <default>false</default>
+                <label>Buyer is uncontactable</label>
+            </value>
+            <value>
+                <fullName>Buying from C&amp;C / Wholesaler</fullName>
+                <default>false</default>
+                <label>Buying from C&amp;C / Wholesaler</label>
+            </value>
+            <value>
+                <fullName>Can&apos;t make min order</fullName>
+                <default>false</default>
+                <label>Can&apos;t make min order</label>
+            </value>
+            <value>
+                <fullName>Change of owner</fullName>
+                <default>false</default>
+                <label>Change of owner</label>
+            </value>
+            <value>
+                <fullName>Closed down</fullName>
+                <default>false</default>
+                <label>Closed down</label>
+            </value>
+            <value>
+                <fullName>Service grievance</fullName>
+                <default>false</default>
+                <label>Service grievance</label>
+            </value>
+            <value>
+                <fullName>Lost contact</fullName>
+                <default>false</default>
+                <label>Lost contact</label>
+            </value>
+            <value>
+                <fullName>No order 26+ weeks</fullName>
+                <default>false</default>
+                <label>No order 26+ weeks</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

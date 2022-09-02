@@ -14,6 +14,7 @@ on:
 # Jobs to be executed .
 jobs:
     scratch-org-validation:
+        name: Scratch Org Validation
         runs-on: ubuntu-latest
         env:
             SCRATCH_NAME: ${{ github.event.repository.name }}
@@ -51,15 +52,15 @@ jobs:
 
             # Checkout the source code
             - name: Checkout source code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             # Create scratch org and push
             -   name: 'Create scratch org and push'
                 run: npm run sfci:init --alias=$SCRATCH_NAME
 
-#            # Run Tests in scratch org
-#            -   name: 'Run Tests in scratch org'
-#                run: sfdx ci:apex:test:run
+            # Run Tests in scratch org
+            -   name: 'Run Tests in scratch org'
+                run: sfdx ci:apex:test:run
 
             # Delete scratch org
             -   name: 'Delete scratch org'
