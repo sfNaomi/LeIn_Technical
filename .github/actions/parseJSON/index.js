@@ -31,6 +31,7 @@ try {
     core.setOutput('clientId', branchData.clientId);
     core.setOutput('instanceUrl', branchData.instanceUrl);
     core.setOutput('certificatePath', certificatePath);
+    core.setOutput('runDestructive', branchData.runDestructive);
 
 } catch (e) {
     core.setFailed(e.message);

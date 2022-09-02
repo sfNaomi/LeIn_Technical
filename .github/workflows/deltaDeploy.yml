@@ -124,6 +124,14 @@ jobs:
                     cat destructiveChanges/destructiveChanges.xml
                     echo "Please deploy destructive changes manually"
 
+            # deploy destructive changes
+            -   name: Deploy Destructive Changes
+                shell: bash
+                if: steps.credentials-preparation.outputs.runDestructive && env.LINES_DESTRUCTIVE == 3
+                run: |
+                    sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
+                    sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u ${{ steps.credentials-preparation.outputs.userName }}
+
             # Nothing to Deploy
             - name: Nothing to Deploy
               if: env.LINES == 3
