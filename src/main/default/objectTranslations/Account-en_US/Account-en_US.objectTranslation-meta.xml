@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <layouts>
-        <layout>Account Layout</layout>
-        <sections>
-            <label><!-- Financial Information --></label>
-            <section>Financial Information</section>
-        </sections>
-        <sections>
-            <label><!-- Outlet Information --></label>
-            <section>Outlet Information</section>
-        </sections>
-        <sections>
-            <label><!-- Policies --></label>
-            <section>Policies</section>
-        </sections>
-        <sections>
-            <label><!-- SLA Information --></label>
-            <section>SLA Information</section>
-        </sections>
-        <sections>
-            <label><!-- Visit Information --></label>
-            <section>Visit Information</section>
-        </sections>
-    </layouts>
-    <layouts>
         <layout>Customer Account Page</layout>
         <sections>
             <label><!-- Additional Store Information --></label>
