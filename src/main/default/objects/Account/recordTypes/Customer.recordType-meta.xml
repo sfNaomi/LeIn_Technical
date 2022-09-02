@@ -240,11 +240,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Wednesbury</fullName>
+            <fullName>Moston</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Moston</fullName>
+            <fullName>Wednesbury</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -262,19 +262,150 @@
     <picklistValues>
         <picklist>FieldSalesRegion__c</picklist>
         <values>
-            <fullName>TBC</fullName>
+            <fullName>England North</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>England South</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scotland East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scotland West</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FieldSalesTerritory__c</picklist>
         <values>
-            <fullName>TBC</fullName>
+            <fullName>Beds%2FHerts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Birmingham East</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Birmingham West</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cheshire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coventry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devon %26 Cornwall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Durham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Essex</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hants</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leeds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>London Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>London NE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>London NW</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>London SE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>London West</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M4 Corridor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M62 Corridor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manchester N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manchester S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merseyside</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Middlesbrough</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newcastle E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newcastle W</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nottingham</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sheffield</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Surrey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wales</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FormalCreditCheckAgreed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IncreaseToStandardCreditRequired__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
