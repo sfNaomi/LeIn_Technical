@@ -33,6 +33,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.BillToAccounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.BillToReference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -69,6 +74,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.CreditStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.CustomerAccountNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
