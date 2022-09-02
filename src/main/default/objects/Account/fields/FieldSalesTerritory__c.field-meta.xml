@@ -11,9 +11,144 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBC</fullName>
+                <fullName>Birmingham East</fullName>
                 <default>false</default>
-                <label>TBC</label>
+                <label>Birmingham East</label>
+            </value>
+            <value>
+                <fullName>Birmingham West</fullName>
+                <default>false</default>
+                <label>Birmingham West</label>
+            </value>
+            <value>
+                <fullName>M62 Corridor</fullName>
+                <default>false</default>
+                <label>M62 Corridor</label>
+            </value>
+            <value>
+                <fullName>Cheshire</fullName>
+                <default>false</default>
+                <label>Cheshire</label>
+            </value>
+            <value>
+                <fullName>Durham</fullName>
+                <default>false</default>
+                <label>Durham</label>
+            </value>
+            <value>
+                <fullName>Newcastle W</fullName>
+                <default>false</default>
+                <label>Newcastle W</label>
+            </value>
+            <value>
+                <fullName>Leeds</fullName>
+                <default>false</default>
+                <label>Leeds</label>
+            </value>
+            <value>
+                <fullName>Manchester N</fullName>
+                <default>false</default>
+                <label>Manchester N</label>
+            </value>
+            <value>
+                <fullName>Manchester S</fullName>
+                <default>false</default>
+                <label>Manchester S</label>
+            </value>
+            <value>
+                <fullName>Merseyside</fullName>
+                <default>false</default>
+                <label>Merseyside</label>
+            </value>
+            <value>
+                <fullName>Middlesbrough</fullName>
+                <default>false</default>
+                <label>Middlesbrough</label>
+            </value>
+            <value>
+                <fullName>Newcastle E</fullName>
+                <default>false</default>
+                <label>Newcastle E</label>
+            </value>
+            <value>
+                <fullName>Nottingham</fullName>
+                <default>false</default>
+                <label>Nottingham</label>
+            </value>
+            <value>
+                <fullName>Sheffield</fullName>
+                <default>false</default>
+                <label>Sheffield</label>
+            </value>
+            <value>
+                <fullName>Beds/Herts</fullName>
+                <default>false</default>
+                <label>Beds/Herts</label>
+            </value>
+            <value>
+                <fullName>Coventry</fullName>
+                <default>false</default>
+                <label>Coventry</label>
+            </value>
+            <value>
+                <fullName>Essex</fullName>
+                <default>false</default>
+                <label>Essex</label>
+            </value>
+            <value>
+                <fullName>Hants</fullName>
+                <default>false</default>
+                <label>Hants</label>
+            </value>
+            <value>
+                <fullName>Kent</fullName>
+                <default>false</default>
+                <label>Kent</label>
+            </value>
+            <value>
+                <fullName>London Central</fullName>
+                <default>false</default>
+                <label>London Central</label>
+            </value>
+            <value>
+                <fullName>London NE</fullName>
+                <default>false</default>
+                <label>London NE</label>
+            </value>
+            <value>
+                <fullName>London NW</fullName>
+                <default>false</default>
+                <label>London NW</label>
+            </value>
+            <value>
+                <fullName>London SE</fullName>
+                <default>false</default>
+                <label>London SE</label>
+            </value>
+            <value>
+                <fullName>London West</fullName>
+                <default>false</default>
+                <label>London West</label>
+            </value>
+            <value>
+                <fullName>M4 Corridor</fullName>
+                <default>false</default>
+                <label>M4 Corridor</label>
+            </value>
+            <value>
+                <fullName>Surrey</fullName>
+                <default>false</default>
+                <label>Surrey</label>
+            </value>
+            <value>
+                <fullName>Wales</fullName>
+                <default>false</default>
+                <label>Wales</label>
+            </value>
+            <value>
+                <fullName>Devon &amp; Cornwall</fullName>
+                <default>false</default>
+                <label>Devon &amp; Cornwall</label>
             </value>
         </valueSetDefinition>
     </valueSet>

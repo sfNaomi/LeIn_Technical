@@ -11,9 +11,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBC</fullName>
+                <fullName>Scotland East</fullName>
                 <default>false</default>
-                <label>TBC</label>
+                <label>Scotland East</label>
+            </value>
+            <value>
+                <fullName>Scotland West</fullName>
+                <default>false</default>
+                <label>Scotland West</label>
+            </value>
+            <value>
+                <fullName>England North</fullName>
+                <default>false</default>
+                <label>England North</label>
+            </value>
+            <value>
+                <fullName>England South</fullName>
+                <default>false</default>
+                <label>England South</label>
             </value>
         </valueSetDefinition>
     </valueSet>

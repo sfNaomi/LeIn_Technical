@@ -12,9 +12,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBC</fullName>
+                <fullName>Cumbernauld</fullName>
                 <default>false</default>
-                <label>TBC</label>
+                <label>Cumbernauld</label>
+            </value>
+            <value>
+                <fullName>Dagenham</fullName>
+                <default>false</default>
+                <label>Dagenham</label>
+            </value>
+            <value>
+                <fullName>Wednesbury</fullName>
+                <default>false</default>
+                <label>Wednesbury</label>
+            </value>
+            <value>
+                <fullName>Moston</fullName>
+                <default>false</default>
+                <label>Moston</label>
             </value>
         </valueSetDefinition>
     </valueSet>
