@@ -13,6 +13,8 @@ outputs:
         description: 'URL of the instance'
     certificatePath:
         description: 'path to the certificate key'
+    runDestructive:
+        description: 'should the destructive changes be deployed'
 runs:
     using: 'node16'
     main: 'index.js'
