@@ -97,12 +97,14 @@ jobs:
                     JWT_QA: ${{ secrets.QA_CERTIFICATE }}
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
                     JWT_PROD: ${{ secrets.PROD_CERTIFICATE }}
+                    JWT_INTERFACES: ${{ secrets.INTERFACES_CERTIFICATE }}
                 shell: bash
                 if: env.LINES != 3
                 run: |
                     echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
                     echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
                     echo "$JWT_PROD" | base64 --decode > ${HOME}/prod.key
+                    echo "$JWT_INTERFACES" | base64 --decode > ${HOME}/interfaces.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     
                     echo "${{ steps.credentials-preparation.outputs.userName }}"
