@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>List of features for administrators. No object access should be here, only standard features. Custom features should be handled via separate PS.</description>
+    <description>List of features for administrators. No object access should be here, only standard features. Custom features should be handled via separate PS. </description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Admin Features</label>
     <license>Salesforce</license>
