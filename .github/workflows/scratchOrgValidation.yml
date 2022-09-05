@@ -57,7 +57,7 @@ jobs:
             -   name: 'Add Permissions for Scratch'
                 shell: bash
                 run: |
-                    permissions="<userPermissions>\n<enabled>true</enabled>\n<name>ManageCssUsers</name>\n</userPermissions>"
+                    permissions="</userPermissions><userPermissions>\n<enabled>true</enabled>\n<name>ManageCssUsers</name>"
                     fileWc=$(wc -l "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml")
                     lines=$(echo $fileWc|cut -d' ' -f1)
                     sed -i ${lines%% *}"i\ ${permissions}" "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml"
