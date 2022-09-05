@@ -32,15 +32,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Packs_Per_Case__c</field>
+                <field>PacksPerCase__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Pack_Size__c</field>
+                <field>PackSize__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Pack_Price__c</field>
+                <field>PackPrice__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -48,11 +48,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Drink_Type__c</field>
+                <field>DrinkType__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Packaging_Type__c</field>
+                <field>PackagingType__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -66,7 +66,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Hight_Dimension__c</field>
+                <field>HeightDimension__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -74,11 +74,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Outer_Pack_Code__c</field>
+                <field>OuterPackCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Inner_Pack_Code__c</field>
+                <field>InnerPackCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -86,7 +86,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Weight_Unit__c</field>
+                <field>WeightUnit__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -99,13 +99,13 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DRS_SKU_Code__c</field>
+                <field>DRSSKUCode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DRS_Gross_Pack__c</field>
+                <field>DRSGrossPack__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -118,20 +118,20 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Price_Marked_Pack__c</field>
+                <field>PriceMarkedPack__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Loyalty_Product__c</field>
+                <field>LoyaltyProduct__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Score_weightage__c</field>
+                <field>ScoreWeightage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

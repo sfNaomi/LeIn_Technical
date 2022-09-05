@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Tax_Code__c</field>
+                <field>TaxCode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

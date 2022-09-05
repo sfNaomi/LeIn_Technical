@@ -3,7 +3,7 @@
     <description>Access to Price Book. Read only to all fields.</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Pricebook2.Tax_Code__c</field>
+        <field>Pricebook2.TaxCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

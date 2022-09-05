@@ -3,7 +3,7 @@
     <fullName>aforza__Product_Default</fullName>
     <fields>ProductCode</fields>
     <fields>Family</fields>
-    <fields>Off_Sale__c</fields>
+    <fields>OffSale__c</fields>
     <fields>IsActive</fields>
     <fields>aforza__Endorsed_Message__c</fields>
     <label>Product Default</label>

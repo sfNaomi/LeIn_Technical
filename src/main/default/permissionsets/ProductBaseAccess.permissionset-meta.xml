@@ -3,32 +3,32 @@
     <description>Includes View to all fields plus Read access to Product object.</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.DRS_Gross_Pack__c</field>
+        <field>Product2.DRSGrossPack__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.DRS_SKU_Code__c</field>
+        <field>Product2.DRSSKUCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Drink_Type__c</field>
+        <field>Product2.DrinkType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Hight_Dimension__c</field>
+        <field>Product2.HeightDimension__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Inner_Pack_Code__c</field>
+        <field>Product2.InnerPackCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Loyalty_Product__c</field>
+        <field>Product2.LoyaltyProduct__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -38,42 +38,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Off_Sale__c</field>
+        <field>Product2.OffSale__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Outer_Pack_Code__c</field>
+        <field>Product2.OuterPackCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Pack_Price__c</field>
+        <field>Product2.PackPrice__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Pack_Size__c</field>
+        <field>Product2.PackSize__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Packaging_Type__c</field>
+        <field>Product2.PackagingType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Packs_Per_Case__c</field>
+        <field>Product2.PacksPerCase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Price_Marked_Pack__c</field>
+        <field>Product2.PriceMarkedPack__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Product_Category__c</field>
+        <field>Product2.ProductCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -83,12 +83,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Score_weightage__c</field>
+        <field>Product2.ScoreWeightage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.Product_Status__c</field>
+        <field>Product2.ProductStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -98,7 +98,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.Weight_Unit__c</field>
+        <field>Product2.WeightUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
