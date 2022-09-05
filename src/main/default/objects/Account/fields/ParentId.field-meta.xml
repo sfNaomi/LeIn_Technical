@@ -3,11 +3,11 @@
     <fullName>ParentId</fullName>
     <lookupFilter>
         <active>true</active>
-        <errorMessage>Only Delivery Point type Accounts can be selected.</errorMessage>
+        <errorMessage>Only Account of type Customer can be selected.</errorMessage>
         <filterItems>
             <field>Account.RecordType.DeveloperName</field>
             <operation>equals</operation>
-            <value>Outlet</value>
+            <value>Customer</value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
