@@ -59,7 +59,7 @@ jobs:
                 run: |
                     permissions="<userPermissions>\n<enabled>true</enabled>\n<name>ManageCssUsers</name>\n</userPermissions>"
                     fileWc=$(wc -l "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml")
-                    lines=$(echo $fileWc|cut -d' ' -f0)
+                    lines=$(echo $fileWc|cut -d' ' -f1)
                     sed -i ${lines%% *}"i\ ${permissions}" "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml"
                     less -FX src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml
 
