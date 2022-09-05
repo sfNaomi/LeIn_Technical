@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Product Layout</layout>
+        <sections>
+            <label></label>
+            <section>Additional Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>DRS Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Endorsement Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Unit Information</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Allow_Parent_Product_Value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Allow_Pricing_Conversion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Allow_Singles_Quantity</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Allow_UOM_Field</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Allow_UOM_Parent_Product</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Require_Singles_Quantity</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Require_UOM_Field</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>aforza__Conditionally_Require_UOM_Parent_Product</name>
+    </validationRules>
+</CustomObjectTranslation>
