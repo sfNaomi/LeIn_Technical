@@ -5,6 +5,5 @@
     <fields>AccountId</fields>
     <fields>Phone</fields>
     <fields>Email</fields>
-    <fields>PrimaryContact__c</fields>
     <label>Contact Compact Layout</label>
 </CompactLayout>
