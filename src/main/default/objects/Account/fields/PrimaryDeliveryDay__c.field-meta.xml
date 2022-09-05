@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PrimaryDeliveryDay__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE( LEFT( PrimaryGridNumber__c ,1), 
+    &quot;1&quot;, &quot;Monday&quot;, 
+    &quot;2&quot;, &quot;Tuesday&quot;, 
+    &quot;3&quot;, &quot;Wednesday&quot;, 
+    &quot;4&quot;, &quot;Thursday&quot;, 
+    &quot;5&quot;, &quot;Friday&quot;, 
+    &quot;Error&quot;)</formula>
+    <label>Primary Delivery Day</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

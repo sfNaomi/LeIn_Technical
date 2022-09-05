@@ -232,7 +232,11 @@
     <picklistValues>
         <picklist>Depot__c</picklist>
         <values>
-            <fullName>Cumbernauld</fullName>
+            <fullName>Bentleys</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cranks</fullName>
             <default>false</default>
         </values>
         <values>
@@ -240,7 +244,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Menzies</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Moston</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Murdens</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scotland</fullName>
             <default>false</default>
         </values>
         <values>
