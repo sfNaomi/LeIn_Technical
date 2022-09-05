@@ -5,7 +5,7 @@ name: Scratch Org Validation
 on:
     workflow_dispatch:
     pull_request:
-        types: [opened, edited, synchronize]
+        types: [ opened, edited, synchronize ]
         branches:
             - 'develop'
             - 'staging'
@@ -14,32 +14,32 @@ on:
 # Jobs to be executed .
 jobs:
     scratch-org-validation:
+        name: Scratch Org Validation
         runs-on: ubuntu-latest
         env:
             SCRATCH_NAME: ${{ github.event.repository.name }}
         steps:
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
+
             # Install Salesforce CLI.
-            - name: 'Install Salesforce CLI'
-              run: |
-                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-                  mkdir ~/sfdx
-                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-                  ~/sfdx/bin/sfdx version
+            -   name: 'Install Salesforce CLI'
+                run: npm install sfdx-cli --global
 
             # Install sfdx plugin
-            - name: 'Install plugin'
-              shell: bash
-              run: |
-                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
-                  printf 'y\n' | sfdx plugins:install sfdmu@latest
+            -   name: 'Install plugin'
+                shell: bash
+                run: |
+                    printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
+                    printf 'y\n' | sfdx plugins:install sfdmu@latest
 
             # Obtain JWT certificate for DEVHUB
-            - name: 'Obtain JWT certificate from secrets'
-              env:
-                  JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
-              shell: bash
-              run: echo "$JWT" | base64 --decode > ${HOME}/server.key
+            -   name: 'Obtain JWT certificate from secrets'
+                env:
+                    JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
+                shell: bash
+                run: echo "$JWT" | base64 --decode > ${HOME}/server.key
 
             # Authenticate dev hub
             -   name: 'Authenticate Dev Hub'
@@ -50,8 +50,18 @@ jobs:
                 run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile ${HOME}/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 
             # Checkout the source code
-            - name: Checkout source code
-              uses: actions/checkout@v3
+            -   name: Checkout source code
+                uses: actions/checkout@v3
+
+            # add needed permissions to Administrator PSG for scratch
+            -   name: 'Add Permissions for Scratch'
+                shell: bash
+                run: |
+                    permissions="</userPermissions><userPermissions>\n<enabled>true</enabled>\n<name>ManageCssUsers</name>"
+                    fileWc=$(wc -l "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml")
+                    lines=$(echo $fileWc|cut -d' ' -f1)
+                    sed -i ${lines%% *}"i\ ${permissions}" "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml"
+                    less -FX src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml
 
             # Create scratch org and push
             -   name: 'Create scratch org and push'

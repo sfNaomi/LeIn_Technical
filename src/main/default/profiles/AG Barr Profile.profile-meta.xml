@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
+    <layoutAssignments>
+        <layout>Product2-aforza__Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Customer Account Page</layout>
+        <recordType>Account.Customer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Business</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Buying_Group</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Distributor</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Logistics_Provider</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Outlet</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Producer</recordType>
+    </layoutAssignments>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Account.Customer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Business</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Buying_Group</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Distributor</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Logistics_Provider</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Outlet</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.aforza__Producer</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>
@@ -9,14 +78,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AddDirectMessageMembers</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>AllowUniversalSearch</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>AllowViewKnowledge</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

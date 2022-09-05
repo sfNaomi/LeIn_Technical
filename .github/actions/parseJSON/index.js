@@ -19,6 +19,9 @@ try {
         case 'main':
             certificatePath = '${HOME}/prod.key';
             break;
+        case 'interfaces':
+            certificatePath = '${HOME}/interfaces.key';
+            break;
         default:
             certificatePath = '${HOME}/qa.key';
     }
@@ -28,6 +31,7 @@ try {
     core.setOutput('clientId', branchData.clientId);
     core.setOutput('instanceUrl', branchData.instanceUrl);
     core.setOutput('certificatePath', certificatePath);
+    core.setOutput('runDestructive', branchData.runDestructive);
 
 } catch (e) {
     core.setFailed(e.message);
