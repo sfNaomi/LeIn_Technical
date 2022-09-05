@@ -4,10 +4,6 @@
     <layoutAssignments>
         <layout>Product2-aforza__Product Layout</layout>
     </layoutAssignments>
-    <tabVisibilities>
-        <tab>standard-Product2</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
     <layoutAssignments>
         <layout>Account-Customer Account Page</layout>
         <recordType>Account.Customer</recordType>
