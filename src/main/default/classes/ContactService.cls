@@ -3,26 +3,22 @@
  **/
 
 public with sharing class ContactService {
-    public static void updatePrimaryContactOnParentAccount(List<Contact> newContacts) {
-        List<Account> parentAccountsToUpdate = new List<Account>();
-        for (Contact newContact : newContacts) {
-            if (newContact.AccountId == null) {
-                continue;
+    public static void copyContactDetailsToRelatedAccounts(List<Contact> newContacts) {
+        List<Contact> contactsWithRelatedAccounts = [
+                SELECT Id, Phone, Email, (SELECT Id FROM aforza__Accounts__r)
+                FROM Contact
+                WHERE Id IN :newContacts
+        ];
+
+        List<Account> accountsToUpdate = new List<Account>();
+        for (Contact newContact : contactsWithRelatedAccounts) {
+            for (Account relatedAccount : newContact.aforza__Accounts__r) {
+                relatedAccount.Phone = newContact.Phone;
+                relatedAccount.Email__c = newContact.Email;
+                accountsToUpdate.add(relatedAccount);
             }
-
-            Id primaryContactId = newContact.PrimaryContact__c ? newContact.Id : null;
-
-            Account newAccountToUpdate = new Account (
-                    Id = newContact.AccountId,
-                    aforza__Primary_Contact__c = primaryContactId
-            );
-            parentAccountsToUpdate.add(newAccountToUpdate);
         }
 
-        try {
-            update parentAccountsToUpdate;
-        } catch (Exception ex) {
-            // to do: introduce logging
-        }
+        update accountsToUpdate;
     }
 }
