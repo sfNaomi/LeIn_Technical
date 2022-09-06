@@ -11,7 +11,7 @@ TODAY()+ VALUE(LEFT( PrimaryGridNumber__c ,1)),
 IF(WEEKDAY(TODAY()) &lt; (VALUE(LEFT( PrimaryGridNumber__c ,1))+ 1),
 TODAY()+ (VALUE(LEFT( PrimaryGridNumber__c ,1))+1 - WEEKDAY(TODAY())),
 IF(WEEKDAY(TODAY()) &gt; (VALUE(LEFT( PrimaryGridNumber__c ,1))+ 1),
-TODAY()+ (VALUE(LEFT( PrimaryGridNumber__c ,1))+1 - WEEKDAY(TODAY())),
+TODAY()+ (VALUE(LEFT( SecondaryGridNumber__c ,1))+1 - WEEKDAY(TODAY())),
 TODAY()))))
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
