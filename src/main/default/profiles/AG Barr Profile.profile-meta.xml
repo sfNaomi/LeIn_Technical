@@ -2,6 +2,9 @@
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
     <layoutAssignments>
+        <layout>Product2-aforza__Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Customer Account Page</layout>
         <recordType>Account.Customer</recordType>
     </layoutAssignments>
