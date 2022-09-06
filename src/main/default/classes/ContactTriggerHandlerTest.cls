@@ -12,15 +12,16 @@ public with sharing class ContactTriggerHandlerTest {
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = outletRTId));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
 
-        // create new DP account and set primary contact
+        // create new DP account and set primary contact; update contact details
+        Test.startTest();
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = outletRTId, aforza__Primary_Contact__c = primaryContact.Id)
         );
 
-        // update contact details
         primaryContact.Email = 'newemail@test.com';
         primaryContact.Phone = '+4043423423423424';
         update primaryContact;
+        Test.stopTest();
 
         // retrieve updated account
         Account updatedDPAccount = [

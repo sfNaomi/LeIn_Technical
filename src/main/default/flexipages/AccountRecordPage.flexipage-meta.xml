@@ -326,9 +326,15 @@
                 <componentName>recordPageWarningMessage</componentName>
                 <identifier>c_recordPageWarningMessage</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.aforza__Primary_Contact__r.LastName}</leftValue>
                         <operator>EQUAL</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Outlet</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -346,7 +352,7 @@
                 <componentName>recordPageWarningMessage</componentName>
                 <identifier>c_recordPageWarningMessage2</identifier>
                 <visibilityRule>
-                    <booleanFilter>3 AND (1 OR 2)</booleanFilter>
+                    <booleanFilter>3 AND 4 AND (1 OR 2)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.aforza__Primary_Contact__r.Email}</leftValue>
                         <operator>EQUAL</operator>
@@ -358,6 +364,11 @@
                     <criteria>
                         <leftValue>{!Record.aforza__Primary_Contact__r.LastName}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Outlet</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -382,6 +393,13 @@
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
                 <identifier>console_relatedRecord2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Outlet</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

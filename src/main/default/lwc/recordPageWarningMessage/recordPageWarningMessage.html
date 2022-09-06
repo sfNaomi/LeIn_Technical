@@ -2,18 +2,13 @@
  - Created by magdalena.stanciu on 05.09.2022.
  -->
 
-<!-- Record Page Warning Message -->
 <template>
-    <lightning-card>
-        <lightning-layout vertical-align="center">
-            <lightning-layout-item padding="around-small">
-                <lightning-icon icon-name={iconName} alternative-text={variant} title={variant} size="medium" variant={variant}></lightning-icon>
-            </lightning-layout-item>
-            <lightning-layout-item>
-                <div class="slds-text-heading_small">
-                    {message}
-                </div>
-            </lightning-layout-item>
-        </lightning-layout>
-    </lightning-card>
+    <lightning-layout class={theme} vertical-align="center">
+        <lightning-layout-item padding="around-small">
+            <lightning-icon icon-name={iconName} alternative-text={variant} title={variant} size="small" variant={variant}></lightning-icon>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+            <lightning-formatted-text value={message}></lightning-formatted-text>
+        </lightning-layout-item>
+    </lightning-layout>
 </template>

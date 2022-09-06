@@ -11,4 +11,8 @@ export default class RecordPageWarningMessage extends LightningElement {
     get iconName() {
         return 'utility:' + this.variant.toLowerCase();
     }
+
+    get theme() {
+        return 'slds-theme_' + this.variant.toLowerCase();
+    }
 }
