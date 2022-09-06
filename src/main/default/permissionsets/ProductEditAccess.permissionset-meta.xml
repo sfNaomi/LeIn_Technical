@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Includes View to all fields plus Read access to Product object.</description>
+    <description>Edit access for Product object - Edit on object and Edit on relevant fields</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>PricebookEntry.aforza__Cost__c</field>
@@ -147,7 +147,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>ProductEditAccess</label>
+    <label>Product Edit Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
