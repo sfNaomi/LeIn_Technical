@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permission set which grants an extended level of access to account - Edit on Account object</description>
+    <description>Edit access for Account object - Edit on object and Edit on relevant fields</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account Edit Access</label>
     <objectPermissions>
@@ -12,8 +12,4 @@
         <object>Account</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>standard-Account</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

@@ -3,7 +3,7 @@
     <fullName>AccountCompactLayout</fullName>
     <fields>Name</fields>
     <fields>DeliveryPointReference__c</fields>
-    <fields>aforza__Primary_Contact__c</fields>
+    <fields>Phone</fields>
     <fields>ShippingAddress</fields>
     <fields>Depot__c</fields>
     <fields>AccountStatus__c</fields>
