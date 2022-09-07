@@ -8,7 +8,9 @@
     private static void notNull(Object it) {
         System.assertNotEquals(null, it);
     }
-
+    
     @IsTest private static void test() {
+        notNull(RecordTypes.ACCOUNT_CUSTOMER_ID);
+        notNull(RecordTypes.ACCOUNT_OUTLET_ID);
     }
 }

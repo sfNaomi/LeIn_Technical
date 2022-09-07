@@ -7,13 +7,13 @@ public with sharing class ContactTriggerHandlerTest {
     @IsTest
     public static void testPrimaryContactAutomation_UpdateContactDetailsForPrimaryContact() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
 
         // create new DP account and set primary contact; update contact details
         Test.startTest();
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET, aforza__Primary_Contact__c = primaryContact.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
         );
 
         primaryContact.Email = 'newemail@test.com';
@@ -36,13 +36,13 @@ public with sharing class ContactTriggerHandlerTest {
     @IsTest
     public static void testPrimaryContactAutomation_RemoveContactDetailsForPrimaryContact() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
 
         // create new DP account and set primary contact; update contact details
         Test.startTest();
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET, aforza__Primary_Contact__c = primaryContact.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
         );
 
         primaryContact.Email = null;
