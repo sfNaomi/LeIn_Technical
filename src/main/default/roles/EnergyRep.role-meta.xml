@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Energy Rep</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>BusinessDevelopmentRep</parentRole>
+    <parentRole>FieldSalesManager</parentRole>
 </Role>

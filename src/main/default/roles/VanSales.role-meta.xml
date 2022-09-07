@@ -5,5 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Van Sales</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
-    <parentRole>BusinessDevelopmentRep</parentRole>
+    <parentRole>FieldSalesManager</parentRole>
 </Role>
