@@ -307,12 +307,4 @@
         <object>Account</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-<<<<<<< HEAD
-    <tabSettings>
-        <tab>standard-Account</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
-=======
-</PermissionSet>
->>>>>>> develop
