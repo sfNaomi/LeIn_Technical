@@ -23,11 +23,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Contact.CanAllowPortalSelfReg</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Contact.DecisionMakerAuthorised__c</field>
         <readable>true</readable>
     </fieldPermissions>
