@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Support Manager</label>
+    <permissionSets>AccountSupportAccess</permissionSets>
+    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>ContactConsentFieldsAccess</permissionSets>
+    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>PricebookEditAccess</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
