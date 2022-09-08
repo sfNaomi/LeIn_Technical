@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Frequency__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The frequency at which this recurring record should happen.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The frequency at which this recurring record should happen.</inlineHelpText>
+    <label>Frequency</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+                <label>Weekly</label>
+            </value>
+            <value>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+                <label>Fortnightly</label>
+            </value>
+            <value>
+                <fullName>4 weekly</fullName>
+                <default>false</default>
+                <label>4 weekly</label>
+            </value>
+            <value>
+                <fullName>Annually</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Annually</label>
+            </value>
+            <value>
+                <fullName>Bi-Monthly</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bi-Monthly</label>
+            </value>
+            <value>
+                <fullName>Bi-Weekly</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bi-Weekly</label>
+            </value>
+            <value>
+                <fullName>Daily</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Daily</label>
+            </value>
+            <value>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Quarterly</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
