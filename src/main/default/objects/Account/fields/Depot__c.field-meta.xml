@@ -12,24 +12,50 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Cumbernauld</fullName>
-                <default>false</default>
-                <label>Cumbernauld</label>
-            </value>
-            <value>
-                <fullName>Dagenham</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
                 <label>Dagenham</label>
             </value>
             <value>
-                <fullName>Wednesbury</fullName>
+                <fullName>W</fullName>
                 <default>false</default>
                 <label>Wednesbury</label>
             </value>
             <value>
-                <fullName>Moston</fullName>
+                <fullName>M</fullName>
                 <default>false</default>
                 <label>Moston</label>
+            </value>
+            <value>
+                <fullName>S</fullName>
+                <default>false</default>
+                <label>Scotland</label>
+            </value>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Cranks</label>
+            </value>
+            <value>
+                <fullName>B</fullName>
+                <default>false</default>
+                <label>Bentleys</label>
+            </value>
+            <value>
+                <fullName>U</fullName>
+                <default>false</default>
+                <label>Murdens</label>
+            </value>
+            <value>
+                <fullName>Z</fullName>
+                <default>false</default>
+                <label>Menzies</label>
+            </value>
+            <value>
+                <fullName>Cumbernauld</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cumbernauld</label>
             </value>
         </valueSetDefinition>
     </valueSet>
