@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Full Access to Product fields for Admins</description>
+    <description>Admin access for Product object - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.DRSGrossPack__c</field>
@@ -108,6 +108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.ProductStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Product2.QuantityUnitOfMeasure</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,11 +124,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ScoreWeightage__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.ProductStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -302,7 +302,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>ProductAdminAccess</label>
+    <label>Product Admin Access</label>
     <license>Salesforce</license>
     <objectPermissions>
         <allowCreate>true</allowCreate>
