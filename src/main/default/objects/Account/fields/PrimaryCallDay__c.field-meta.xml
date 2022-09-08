@@ -2,15 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PrimaryCallDay__c</fullName>
     <externalId>false</externalId>
-    <formula>CASE( LEFT(RIGHT( PrimaryGridNumber__c ,3),2), 
-    &quot;MO&quot;, &quot;Monday&quot;, 
-    &quot;TU&quot;, &quot;Tuesday&quot;, 
-    &quot;WE&quot;, &quot;Wednesday&quot;, 
-    &quot;TH&quot;, &quot;Thursday&quot;, 
-    &quot;FR&quot;, &quot;Friday&quot;, 
-    &quot;Error&quot;)</formula>
     <label>Primary Call Day</label>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>WeekDays</valueSetName>
+    </valueSet>
 </CustomField>
