@@ -13,4 +13,8 @@ public with sharing class AccountTriggerHandler {
         }
         AccountService.copyContactDetailsFromPrimaryContact(accountsToUpdateContactDetails);
     }
+
+    public static void manageReoccurrence(List<Account> newAccounts, Map<Id, Account> oldMap) {
+
+    }
 }
