@@ -31,10 +31,6 @@
                 <behavior>Edit</behavior>
                 <field>CustomerTier__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TAMOwner__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
