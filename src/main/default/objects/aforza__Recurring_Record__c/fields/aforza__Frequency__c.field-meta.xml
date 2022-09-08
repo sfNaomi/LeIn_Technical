@@ -7,6 +7,7 @@
     <inlineHelpText>The frequency at which this recurring record should happen.</inlineHelpText>
     <label>Frequency</label>
     <required>true</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

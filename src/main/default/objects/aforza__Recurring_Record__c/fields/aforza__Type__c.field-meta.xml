@@ -7,6 +7,7 @@
     <inlineHelpText>The type of recurring record.</inlineHelpText>
     <label>Type</label>
     <required>true</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
