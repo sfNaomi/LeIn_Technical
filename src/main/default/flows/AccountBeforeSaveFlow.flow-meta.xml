@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
-    <decisions>
-        <name>IsDepotCharacterAvailable</name>
-        <label>Depot Character Available</label>
-        <locationX>182</locationX>
-        <locationY>311</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Available</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>DepotCharacter</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue/>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>UpdateDepot</targetReference>
-            </connector>
-            <label>Available</label>
-        </rules>
-    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>DepotCharacter</name>
@@ -32,7 +10,11 @@
     <formulas>
         <name>Frequency</name>
         <dataType>String</dataType>
-        <expression>RIGHT({!$Record.PrimaryGridNumber__c},1)</expression>
+        <expression>CASE( RIGHT({!$Record.PrimaryGridNumber__c},1),
+&quot;W&quot;, &quot;W&quot;,
+&quot;1&quot;, &quot;F&quot;,
+&quot;2&quot;, &quot;F&quot;,
+&quot;M&quot;)</expression>
     </formulas>
     <formulas>
         <name>PrimaryCallDay</name>
@@ -88,10 +70,111 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>UpdateDepot</name>
-        <label>Update Depot</label>
-        <locationX>50</locationX>
+        <name>UpdateBillingAddress</name>
+        <label>UpdateBillingAddress</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <connector>
+            <targetReference>UpdatePrimaryGridFields</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6)</filterLogic>
+        <filters>
+            <field>BillingSameAsShipping__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingCity</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ShippingCity</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingCountry</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ShippingCountry</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingPostalCode</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ShippingPostalCode</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingState</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ShippingState</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ShippingStreet</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.ShippingStreet</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BillingCity</field>
+            <value>
+                <elementReference>$Record.ShippingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCountry</field>
+            <value>
+                <elementReference>$Record.ShippingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingPostalCode</field>
+            <value>
+                <elementReference>$Record.ShippingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingState</field>
+            <value>
+                <elementReference>$Record.ShippingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreet</field>
+            <value>
+                <elementReference>$Record.ShippingStreet</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdatePrimaryGridFields</name>
+        <label>Update Primary Grid Fields</label>
+        <locationX>176</locationX>
         <locationY>431</locationY>
+        <connector>
+            <targetReference>UpdateSecondaryGridFields</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PrimaryGridNumber__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>PrimaryGridNumber__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.PrimaryGridNumber__c</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
             <field>Depot__c</field>
             <value>
@@ -116,6 +199,28 @@
                 <elementReference>PrimaryDeliveryDay</elementReference>
             </value>
         </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateSecondaryGridFields</name>
+        <label>Update Secondary Grid Fields</label>
+        <locationX>176</locationX>
+        <locationY>551</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SecondaryGridNumber__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SecondaryGridNumber__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record__Prior.SecondaryGridNumber__c</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
             <field>SecondaryCallDay__c</field>
             <value>
@@ -131,19 +236,11 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>IsDepotCharacterAvailable</targetReference>
+            <targetReference>UpdateBillingAddress</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>PrimaryGridNumber__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue/>
-            </value>
-        </filters>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
