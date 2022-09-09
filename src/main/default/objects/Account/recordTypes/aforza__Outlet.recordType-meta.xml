@@ -388,11 +388,7 @@
     <picklistValues>
         <picklist>Frequency__c</picklist>
         <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
+            <fullName>F</fullName>
             <default>false</default>
         </values>
         <values>
