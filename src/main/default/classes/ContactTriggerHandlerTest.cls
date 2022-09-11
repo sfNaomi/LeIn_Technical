@@ -4,6 +4,12 @@
 
 @IsTest
 public with sharing class ContactTriggerHandlerTest {
+
+    @TestSetup
+    private static void setData() {
+        TdfSObjectFactory.insertSObject(new CallCreationSettings__c());
+    }
+
     @IsTest
     public static void testPrimaryContactAutomation_UpdateContactDetailsForPrimaryContact() {
         // create new contact to be set as primary
