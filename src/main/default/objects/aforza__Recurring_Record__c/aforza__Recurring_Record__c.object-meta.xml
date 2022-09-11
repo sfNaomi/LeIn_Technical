@@ -158,7 +158,7 @@
     <label>Recurring Record</label>
     <nameField>
         <label>Recurring Record Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Recurring Records</pluralLabel>
