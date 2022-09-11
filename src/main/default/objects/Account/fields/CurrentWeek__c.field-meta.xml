@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CurrentWeek__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(MOD( FLOOR( ( TODAY() - $CustomMetadata.SystemSetting__mdt.StartDate.DateOffset__c) /7 ), 2) + 1)</formula>
+    <formula>TEXT(MOD( FLOOR( ( Today__c - PrimaryStartDate__c ) /7 ), 4)+1 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Current Week</label>
     <required>false</required>

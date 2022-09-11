@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NextCallDateRollUp__c</fullName>
+    <externalId>false</externalId>
+    <label>Next Call Date</label>
+    <summarizedField>aforza__Visit__c.aforza__Planned_Time__c</summarizedField>
+    <summaryFilterItems>
+        <field>aforza__Visit__c.aforza__Status__c</field>
+        <operation>equals</operation>
+        <value>Not Started</value>
+    </summaryFilterItems>
+    <summaryForeignKey>aforza__Visit__c.aforza__Account__c</summaryForeignKey>
+    <summaryOperation>min</summaryOperation>
+    <type>Summary</type>
+</CustomField>
