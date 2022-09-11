@@ -4,12 +4,12 @@
 
 public with sharing class RecurringRecordService {
 
-    private static final CallCreationSettings__c CALL_SETTING {
+    private static final CallCreationSettings__c CALL_SETTINGS {
         get {
-            if (CALL_SETTING == null) {
-                CALL_SETTING = CallCreationSettings__c.getOrgDefaults();
+            if (CALL_SETTINGS == null) {
+                CALL_SETTINGS = CallCreationSettings__c.getOrgDefaults();
             }
-            return CALL_SETTING;
+            return CALL_SETTINGS;
         }
         set;
     }
@@ -24,10 +24,10 @@ public with sharing class RecurringRecordService {
 
     private static aforza__Recurring_Record__c createRecurringRecord(Account acc) {
         aforza__Recurring_Record__c recurring = new aforza__Recurring_Record__c();
-        recurring.aforza__Type__c = CALL_SETTING.CallType__c;
+        recurring.aforza__Type__c = CALL_SETTINGS.CallType__c;
         recurring.Account__c = acc.Id;
         recurring.OwnerId = acc.OwnerId;
-        recurring.Status__c = CALL_SETTING.CallStatus__c;
+        recurring.Status__c = CALL_SETTINGS.CallStatus__c;
         recurring.aforza__Frequency__c = acc.Frequency__c;
         recurring.Name = acc.DeliveryPointReference__c + '_' + acc.Id;
 
