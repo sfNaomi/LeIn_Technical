@@ -20,8 +20,6 @@ IlluminatedCloud/
 # SFDX-Data-Move-Utility
 data/binary_cache/
 data/logs/
-data/source/
-data/target/
 
 # SFDX-Git-Delta
 package/

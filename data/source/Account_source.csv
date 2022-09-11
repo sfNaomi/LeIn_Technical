@@ -1,0 +1,3 @@
+Id,Name,Description,ParentId,Phone,Website,Parent.Name
+0015E00001pCqRdQAK,Salesforce.com,Testing parent account.,,+1776667767,www.salesforce.com,
+0015E00001pIBo2QAG,"Salesforce CZ, a.s.",Test account record.,0015E00001pCqRdQAK,+420776667767,www.salesforce.cz,Salesforce.com
