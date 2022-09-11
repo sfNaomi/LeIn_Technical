@@ -11,7 +11,7 @@
         <value xsi:type="xsd:string">Call</value>
     </values>
     <values>
-        <field>Call_Status__c</field>
+        <field>CallStatus__c</field>
         <value xsi:type="xsd:string">Not Started</value>
     </values>
 </CustomMetadata>
