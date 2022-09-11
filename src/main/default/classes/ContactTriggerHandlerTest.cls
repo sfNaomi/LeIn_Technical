@@ -3,15 +3,9 @@
  */
 
 @IsTest
-public with sharing class ContactTriggerHandlerTest {
-
-    @TestSetup
-    private static void setData() {
-        TdfSObjectFactory.insertSObject(new CallCreationSettings__c());
-    }
-
+private with sharing class ContactTriggerHandlerTest {
     @IsTest
-    public static void testPrimaryContactAutomation_UpdateContactDetailsForPrimaryContact() {
+    private static void testPrimaryContactAutomation_UpdateContactDetailsForPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -40,7 +34,7 @@ public with sharing class ContactTriggerHandlerTest {
     }
 
     @IsTest
-    public static void testPrimaryContactAutomation_RemoveContactDetailsForPrimaryContact() {
+    private static void testPrimaryContactAutomation_RemoveContactDetailsForPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));

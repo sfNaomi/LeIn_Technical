@@ -6,7 +6,7 @@ public with sharing class AccountTriggerHandler {
     private static final Set<String> VISIT_STATUSES {
         get {
             if (VISIT_STATUSES == null) {
-                VISIT_STATUSES = new Set<String>(CallCreationSettings__c.getOrgDefaults().AllowedStatuses__c.split(','));
+                VISIT_STATUSES = new Set<String>(CallRecurrenceSetting__mdt.getInstance('OrgDefaultCallSettings').AllowedStatuses__c.split(','));
             }
             return VISIT_STATUSES;
         }

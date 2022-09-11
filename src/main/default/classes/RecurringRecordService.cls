@@ -4,10 +4,10 @@
 
 public with sharing class RecurringRecordService {
 
-    private static final CallCreationSettings__c CALL_SETTINGS {
+    private static final CallRecurrenceSetting__mdt CALL_SETTINGS {
         get {
             if (CALL_SETTINGS == null) {
-                CALL_SETTINGS = CallCreationSettings__c.getOrgDefaults();
+                CALL_SETTINGS = CallRecurrenceSetting__mdt.getInstance('OrgDefaultCallSettings');
             }
             return CALL_SETTINGS;
         }

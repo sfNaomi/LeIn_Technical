@@ -4,12 +4,6 @@
 
 @IsTest
 private with sharing class AccountTriggerHandlerTest {
-
-    @TestSetup
-    private static void setData() {
-        TdfSObjectFactory.insertSObject(new CallCreationSettings__c());
-    }
-
     @IsTest
     private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
