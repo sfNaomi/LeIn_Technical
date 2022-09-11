@@ -10,6 +10,11 @@
       "query": "SELECT Name, AccountId, Email, FirstName, LastName, MobilePhone, Phone FROM Contact",
       "operation": "Upsert",
       "externalId": "Name"
+    },
+    {
+      "query": "SELECT AllowedStatuses__c, CallStatus__c, CallType__c FROM CallCreationSettings__c",
+      "operation": "Upsert",
+      "externalId": "Name"
     }
   ]
 }
