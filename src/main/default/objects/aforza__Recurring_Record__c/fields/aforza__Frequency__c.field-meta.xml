@@ -32,7 +32,7 @@
             <value>
                 <fullName>M</fullName>
                 <default>false</default>
-                <label>Monthly</label>
+                <label>Month-ly</label>
             </value>
             <value>
                 <fullName>Annually</fullName>
