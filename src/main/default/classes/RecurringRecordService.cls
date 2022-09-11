@@ -15,7 +15,11 @@ public with sharing class RecurringRecordService {
     }
 
     public static void manageRecurringRecords(List<Account> accounts) {
-
+        List<aforza__Recurring_Record__c> recurringToUpsert = new List<aforza__Recurring_Record__c>();
+        for (Account acc : accounts) {
+            recurringToUpsert.add(createRecurringRecord((acc)));
+        }
+        upsert recurringToUpsert Name;
     }
 
     private static aforza__Recurring_Record__c createRecurringRecord(Account acc) {
@@ -25,6 +29,7 @@ public with sharing class RecurringRecordService {
         recurring.OwnerId = acc.OwnerId;
         recurring.Status__c = CALL_SETTING.CallStatus__c;
         recurring.aforza__Frequency__c = acc.Frequency__c;
+        recurring.Name = acc.DeliveryPointReference__c + '_' + acc.Id;
 
         return recurring;
     }
