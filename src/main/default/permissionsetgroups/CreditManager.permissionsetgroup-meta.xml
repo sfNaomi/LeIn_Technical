@@ -5,6 +5,7 @@
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
