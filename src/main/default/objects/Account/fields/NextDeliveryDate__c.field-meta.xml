@@ -2,7 +2,35 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NextDeliveryDate__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(Frequency__c,&quot;W&quot;),IF(AND(VALUE(LEFT(SecondaryGridNumber__c,1))!=0,TODAY()&gt;SecondaryStartDate__c),IF(WEEKDAY(Today__c)=(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c,IF(WEEKDAY(Today__c)=7,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1))+1,IF(WEEKDAY(Today__c)=1,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1)),IF(WEEKDAY(Today__c)&lt;(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+(VALUE(LEFT(PrimaryGridNumber__c,1))+1-WEEKDAY(Today__c)),IF(AND(WEEKDAY(Today__c)&gt;(VALUE(LEFT(PrimaryGridNumber__c,1))+1),WEEKDAY(Today__c)&lt;=(VALUE(LEFT(SecondaryGridNumber__c,1))+1)),Today__c+(VALUE(LEFT(SecondaryGridNumber__c,1))+1-WEEKDAY(Today__c)),Today__c+(7-(WEEKDAY(Today__c)-VALUE(LEFT(PrimaryGridNumber__c,1))-1))))))),IF(WEEKDAY(Today__c)=(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c,IF(WEEKDAY(Today__c)=7,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1))+1,IF(WEEKDAY(Today__c)=1,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1)),IF(WEEKDAY(Today__c)&lt;(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+(VALUE(LEFT(PrimaryGridNumber__c,1))+1-WEEKDAY(Today__c)),Today__c+(7-(WEEKDAY(Today__c)-VALUE(LEFT(PrimaryGridNumber__c,1))-1))))))),IF(ISPICKVAL(Frequency__c,&quot;F&quot;),IF(OR(CurrentWeek__c=&quot;1&quot;,CurrentWeek__c=&quot;3&quot;),IF(WEEKDAY(Today__c)=(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+14,IF(WEEKDAY(Today__c)=7,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1))+1+7,IF(WEEKDAY(Today__c)=1,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1))+7,IF(WEEKDAY(Today__c)&lt;(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+7+(VALUE(LEFT(PrimaryGridNumber__c,1))+1-WEEKDAY(Today__c)),Today__c+14-(WEEKDAY(Today__c)-VALUE(LEFT(PrimaryGridNumber__c,1))-1))))),IF(WEEKDAY(Today__c)=(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+7,IF(WEEKDAY(Today__c)=7,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1))+1,IF(WEEKDAY(Today__c)=1,Today__c+VALUE(LEFT(PrimaryGridNumber__c,1)),IF(WEEKDAY(Today__c)&lt;(VALUE(LEFT(PrimaryGridNumber__c,1))+1),Today__c+(VALUE(LEFT(PrimaryGridNumber__c,1))+1-WEEKDAY(Today__c)),Today__c+7-(WEEKDAY(Today__c)-VALUE(LEFT(PrimaryGridNumber__c,1))-1)))))),MonthlyNextDeliveryDate__c))</formula>
+    <formula>IF(
+    NextDeliveryDateHidden__c &gt; TODAY(),
+    NextDeliveryDateHidden__c,
+    IF(
+        OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;)),
+        DATEVALUE(  NextCallDate__c ) +
+            CASE(
+              WEEKDAY(DATEVALUE( NextCallDate__c )),
+               1, 1,
+               2, 1,
+               3, 1,
+               4, 1,
+               5, 1,
+               6, 3,
+               7, 2,
+             0),
+        DATEVALUE( NextCallDate__c ) +
+            CASE(
+              WEEKDAY(DATEVALUE( NextCallDate__c )),
+               1, 2,
+               2, 2,
+               3, 2,
+               4, 2,
+               5, 4,
+               6, 4,
+               7, 3,
+             0)
+    )
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Next Delivery Date</label>
     <required>false</required>

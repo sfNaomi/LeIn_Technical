@@ -3,22 +3,12 @@
     <description>Edit access for Account object - Edit on object and Edit on relevant fields</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.MonthlyNextDeliveryDate__c</field>
+        <field>Account.NextDeliveryDateHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.NextCallDateRollUp__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.CurrentWeek__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.PrimaryCallDayHidden__c</field>
+        <field>Account.LastSuccessfulCallDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29,11 +19,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.PrimaryDeliveryDay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.SecondaryCallDayHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
