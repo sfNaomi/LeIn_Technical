@@ -3,6 +3,11 @@
     <description>Finance access for Account object and fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.AccountStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.CurrentWeek__c</field>
         <readable>true</readable>
     </fieldPermissions>

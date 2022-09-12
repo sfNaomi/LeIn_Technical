@@ -13,7 +13,7 @@
             <value>Outlet</value>
         </filterItems>
         <filterItems>
-            <field>Account.DPStatus__c</field>
+            <field>Account.AccountStatus__c</field>
             <operation>equals</operation>
             <value>Closed</value>
         </filterItems>

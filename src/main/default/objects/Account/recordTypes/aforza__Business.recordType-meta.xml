@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>aforza__Outlet</fullName>
+    <fullName>aforza__Business</fullName>
     <active>true</active>
-    <compactLayoutAssignment>AccountCompactLayout</compactLayoutAssignment>
-    <label>Outlet</label>
+    <label>Business</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
@@ -18,36 +17,12 @@
     <picklistValues>
         <picklist>AccountStatus__c</picklist>
         <values>
-            <fullName>Active Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>At Risk</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Closed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Lapsed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Legal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prospect</fullName>
+            <fullName>Open</fullName>
             <default>true</default>
-        </values>
-        <values>
-            <fullName>Traders</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Win Back</fullName>
-            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -747,21 +722,6 @@
         </values>
         <values>
             <fullName>Spar</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Type</picklist>
-        <values>
-            <fullName>Large</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Medium</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Small</fullName>
             <default>false</default>
         </values>
     </picklistValues>
