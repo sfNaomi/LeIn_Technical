@@ -4,5 +4,5 @@
     <entityName>Account</entityName>
     <fieldName>AccountStatus__c</fieldName>
     <masterLabel>Customer Account Status</masterLabel>
-    <recordTypeName>Business</recordTypeName>
+    <recordTypeName>Customer</recordTypeName>
 </PathAssistant>
