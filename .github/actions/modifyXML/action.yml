@@ -1,0 +1,9 @@
+name: 'Modify XML'
+description: 'Gets input attributes and remove them from xml file'
+inputs:
+    nodeToDelete:  # id of input
+        description: 'name of the node to delete (will take parent of this node)'
+        required: true
+runs:
+    using: 'node16'
+    main: 'index.js'

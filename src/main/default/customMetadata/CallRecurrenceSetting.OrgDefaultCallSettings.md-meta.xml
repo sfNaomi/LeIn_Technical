@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Org Default Call Settings</label>
+    <protected>false</protected>
+    <values>
+        <field>AllowedStatuses__c</field>
+        <value xsi:type="xsd:string">Traders, At Risk, Win Back, Lapsed</value>
+    </values>
+    <values>
+        <field>CallType__c</field>
+        <value xsi:type="xsd:string">Call</value>
+    </values>
+    <values>
+        <field>CallStatus__c</field>
+        <value xsi:type="xsd:string">Not Started</value>
+    </values>
+</CustomMetadata>

@@ -3,9 +3,9 @@
  */
 
 @IsTest
-public with sharing class AccountTriggerHandlerTest {
+private with sharing class AccountTriggerHandlerTest {
     @IsTest
-    public static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
+    private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -30,7 +30,7 @@ public with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    public static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
+    private static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -59,7 +59,7 @@ public with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    public static void testPrimaryContactAutomation_RemovePrimaryContact() {
+    private static void testPrimaryContactAutomation_RemovePrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -88,7 +88,7 @@ public with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    public static void testPrimaryContactAutomation_PrimaryContactMisingContactDetails() {
+    private static void testPrimaryContactAutomation_PrimaryContactMisingContactDetails() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null));

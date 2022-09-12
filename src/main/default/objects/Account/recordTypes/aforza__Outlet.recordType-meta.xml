@@ -39,11 +39,7 @@
         </values>
         <values>
             <fullName>Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Request to close</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Traders</fullName>
@@ -135,17 +131,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CustomerStatus__c</picklist>
-        <values>
-            <fullName>Closed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CustomerTier__c</picklist>
         <values>
             <fullName>Bronze</fullName>
@@ -161,25 +146,6 @@
         </values>
         <values>
             <fullName>Silver</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DPStatus__c</picklist>
-        <values>
-            <fullName>Closed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Limit Exceeded</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Suspended</fullName>
             <default>false</default>
         </values>
     </picklistValues>

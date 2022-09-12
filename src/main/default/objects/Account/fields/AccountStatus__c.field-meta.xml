@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Open</fullName>
+                <default>false</default>
+                <label>Open</label>
+            </value>
+            <value>
                 <fullName>Prospect</fullName>
                 <default>false</default>
                 <label>Prospect</label>
@@ -44,11 +49,6 @@
                 <fullName>Legal</fullName>
                 <default>false</default>
                 <label>Legal</label>
-            </value>
-            <value>
-                <fullName>Request to close</fullName>
-                <default>false</default>
-                <label>Request to close</label>
             </value>
             <value>
                 <fullName>Closed</fullName>
