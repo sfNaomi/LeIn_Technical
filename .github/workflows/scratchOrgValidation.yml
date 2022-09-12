@@ -53,16 +53,6 @@ jobs:
             -   name: Checkout source code
                 uses: actions/checkout@v3
 
-            # add needed permissions to Administrator PSG for scratch
-            -   name: 'Add Permissions for Scratch'
-                shell: bash
-                run: |
-                    permissions="</userPermissions>\n<userPermissions>\n<enabled>true</enabled>\n<name>ManageCssUsers</name>"
-                    fileWc=$(wc -l "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml")
-                    lines=$(echo $fileWc|cut -d' ' -f1)
-                    sed -i ${lines%% *}"i\ ${permissions}" "src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml"
-                    less -FX src/main/default/permissionsets/SystemAdminFeatures.permissionset-meta.xml
-
             # Create scratch org and push
             -   name: 'Create scratch org and push'
                 run: npm run sfci:init --alias=$SCRATCH_NAME

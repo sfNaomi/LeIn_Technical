@@ -69,6 +69,13 @@ jobs:
                         echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
                     fi
 
+            # remove unneeded items from PS
+            -   name: remove unneeded items from PS
+                id: modify-xml
+                uses: ./.github/actions/modifyXML
+                with:
+                    nodeToDelete: '["ManageCssUsers"]'
+
             # prepare delta
             -   name: Prepare Delta
                 run: |
