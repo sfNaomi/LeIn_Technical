@@ -8,5 +8,12 @@
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
+    <permissionSets>PricebookEntryBaseAccess</permissionSets>
+    <permissionSets>PricebookEntryEditAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Admin</permissionSets>
+    <permissionSets>aforza__Aforza_Deliver</permissionSets>
+    <permissionSets>aforza__Aforza_Plan</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>aforza__Aforza_Visit</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
