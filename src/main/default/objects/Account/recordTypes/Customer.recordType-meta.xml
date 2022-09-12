@@ -58,7 +58,7 @@
         </values>
         <values>
             <fullName>Open</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
