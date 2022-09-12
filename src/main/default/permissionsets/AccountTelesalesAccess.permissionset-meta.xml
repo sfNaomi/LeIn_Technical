@@ -3,6 +3,11 @@
     <description>Telesales access for Account object and fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.AccountStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.CurrentWeek__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -123,17 +128,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CustomerStatus__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.CustomerTier__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.DPStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
