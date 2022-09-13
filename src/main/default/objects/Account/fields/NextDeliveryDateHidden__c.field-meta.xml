@@ -3,7 +3,7 @@
     <fullName>NextDeliveryDateHidden__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;)),
+    OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;), ISPICKVAL(Depot__c, &quot;B&quot;)),
     DATEVALUE( LastSuccessfulCallDate__c ) +
         CASE(
           WEEKDAY(DATEVALUE( LastSuccessfulCallDate__c )),
