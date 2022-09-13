@@ -4,6 +4,7 @@
     <label>Distribution Admin</label>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>

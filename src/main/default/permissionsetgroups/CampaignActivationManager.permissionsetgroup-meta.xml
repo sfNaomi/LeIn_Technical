@@ -6,6 +6,9 @@
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <status>Updated</status>

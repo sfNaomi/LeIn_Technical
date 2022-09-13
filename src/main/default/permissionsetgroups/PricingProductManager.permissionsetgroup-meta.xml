@@ -8,6 +8,7 @@
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <status>Updated</status>
