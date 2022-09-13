@@ -2,6 +2,16 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Admin access for Account object - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NextDeliveryDateHidden__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.LastSuccessfulCallDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountNumber</field>
         <readable>true</readable>
@@ -74,11 +84,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.CreditStatus__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.CurrentWeek__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -263,11 +268,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.PrimaryCallDayHidden__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.PrimaryCallDay__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -309,11 +309,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.SeasonalStartDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.SecondaryCallDayHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NextDeliveryDateHidden__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;)),
+    DATEVALUE( LastSuccessfulCallDate__c ) +
+        CASE(
+          WEEKDAY(DATEVALUE( LastSuccessfulCallDate__c )),
+           1, 1,
+           2, 1,
+           3, 1,
+           4, 1,
+           5, 1,
+           6, 3,
+           7, 2,
+         0),
+    DATEVALUE( LastSuccessfulCallDate__c ) +
+        CASE(
+          WEEKDAY(DATEVALUE( LastSuccessfulCallDate__c )),
+           1, 2,
+           2, 2,
+           3, 2,
+           4, 2,
+           5, 4,
+           6, 4,
+           7, 3,
+         0)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Next Delivery Date Hidden</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>
