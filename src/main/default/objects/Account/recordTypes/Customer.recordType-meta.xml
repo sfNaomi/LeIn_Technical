@@ -53,40 +53,12 @@
     <picklistValues>
         <picklist>AccountStatus__c</picklist>
         <values>
-            <fullName>Active Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>At Risk</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Closed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Lapsed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Legal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prospect</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Request to close</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Traders</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Win Back</fullName>
-            <default>false</default>
+            <fullName>Open</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -170,17 +142,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CustomerStatus__c</picklist>
-        <values>
-            <fullName>Closed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CustomerTier__c</picklist>
         <values>
             <fullName>Bronze</fullName>
@@ -196,25 +157,6 @@
         </values>
         <values>
             <fullName>Silver</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DPStatus__c</picklist>
-        <values>
-            <fullName>Closed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Limit Exceeded</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Suspended</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -423,11 +365,7 @@
     <picklistValues>
         <picklist>Frequency__c</picklist>
         <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
+            <fullName>F</fullName>
             <default>false</default>
         </values>
         <values>

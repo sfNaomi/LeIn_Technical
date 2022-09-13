@@ -11,16 +11,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
-                <default>false</default>
-                <label>1 fortnightly cycle</label>
-            </value>
-            <value>
-                <fullName>2</fullName>
-                <default>false</default>
-                <label>2 fortnightly cycle</label>
-            </value>
-            <value>
                 <fullName>W</fullName>
                 <default>false</default>
                 <label>Weekly</label>
@@ -29,6 +19,17 @@
                 <fullName>M</fullName>
                 <default>false</default>
                 <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>F</fullName>
+                <default>false</default>
+                <label>Fortnightly</label>
+            </value>
+            <value>
+                <fullName>1</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>1 fortnightly cycle</label>
             </value>
         </valueSetDefinition>
     </valueSet>
