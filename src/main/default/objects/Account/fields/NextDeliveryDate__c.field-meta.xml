@@ -3,10 +3,10 @@
     <fullName>NextDeliveryDate__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-    NextDeliveryDateHidden__c &gt; TODAY(),
+    NextDeliveryDateHidden__c &gt;= TODAY(),
     NextDeliveryDateHidden__c,
     IF(
-        OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;)),
+        OR(ISPICKVAL(Depot__c, &quot;C&quot;), ISPICKVAL(Depot__c,&quot;Z&quot;), ISPICKVAL(Depot__c, &quot;B&quot;)),
         DATEVALUE(  NextCallDate__c ) +
             CASE(
               WEEKDAY(DATEVALUE( NextCallDate__c )),
