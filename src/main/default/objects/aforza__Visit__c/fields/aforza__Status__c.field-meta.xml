@@ -38,6 +38,11 @@
                 <default>false</default>
                 <label>Successful</label>
             </value>
+            <value>
+                <fullName>Ring Back</fullName>
+                <default>false</default>
+                <label>Ring Back</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
