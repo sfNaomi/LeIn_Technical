@@ -4,8 +4,10 @@
     <label>Administrator</label>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
-    <permissionSets>CreateAndEditReports</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>

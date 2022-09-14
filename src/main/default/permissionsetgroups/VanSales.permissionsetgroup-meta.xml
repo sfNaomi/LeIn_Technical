@@ -5,6 +5,7 @@
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>

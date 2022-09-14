@@ -89,35 +89,35 @@
             <field>ShippingCity</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.ShippingCity</elementReference>
+                <elementReference>$Record.BillingCity</elementReference>
             </value>
         </filters>
         <filters>
-            <field>ShippingCountry</field>
+            <field>ShippingCountryCode</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.ShippingCountry</elementReference>
+                <elementReference>$Record.BillingCountryCode</elementReference>
             </value>
         </filters>
         <filters>
             <field>ShippingPostalCode</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.ShippingPostalCode</elementReference>
+                <elementReference>$Record.BillingPostalCode</elementReference>
             </value>
         </filters>
         <filters>
-            <field>ShippingState</field>
+            <field>ShippingStateCode</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.ShippingState</elementReference>
+                <elementReference>$Record.BillingStateCode</elementReference>
             </value>
         </filters>
         <filters>
             <field>ShippingStreet</field>
             <operator>NotEqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.ShippingStreet</elementReference>
+                <elementReference>$Record.BillingStreet</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -127,9 +127,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>BillingCountry</field>
+            <field>BillingCountryCode</field>
             <value>
-                <elementReference>$Record.ShippingCountry</elementReference>
+                <elementReference>$Record.ShippingCountryCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -139,9 +139,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>BillingState</field>
+            <field>BillingStateCode</field>
             <value>
-                <elementReference>$Record.ShippingState</elementReference>
+                <elementReference>$Record.ShippingStateCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
