@@ -96,16 +96,16 @@ public without sharing class VisitCallService {
         Map<Id, Datetime> recurringRecordToLastScheduledDateMap = new Map<Id, Datetime>();
         for (aforza__Visit__c visit : visits) {
             if (recurringRecordToLastScheduledDateMap.get(visit.aforza__Recurring_Record__c) == null) {
-                recurringRecordToLastScheduledDateMap.put(visit.aforza__Recurring_Record__c, visit.aforza__Start_Time__c);
-            } else if (recurringRecordToLastScheduledDateMap.get(visit.aforza__Recurring_Record__c) < visit.aforza__Start_Time__c) {
-                recurringRecordToLastScheduledDateMap.put(visit.aforza__Recurring_Record__c, visit.aforza__Start_Time__c);
+                recurringRecordToLastScheduledDateMap.put(visit.aforza__Recurring_Record__c, visit.aforza__Planned_Time__c);
+            } else if (recurringRecordToLastScheduledDateMap.get(visit.aforza__Recurring_Record__c) < visit.aforza__Planned_Time__c) {
+                recurringRecordToLastScheduledDateMap.put(visit.aforza__Recurring_Record__c, visit.aforza__Planned_Time__c);
             }
         }
         RecurringRecordService.updateRecurringRecordsLastScheduledDate(recurringRecordToLastScheduledDateMap);
     }
 
     public static void deleteFutureCalls(List<aforza__Recurring_Record__c> recurringRecords, Date actualDate) {
-        List<aforza__Visit__c> visitsToDelete = [SELECT Id FROM aforza__Visit__c WHERE aforza__Recurring_Record__c IN :recurringRecords AND aforza__Start_Time__c > :actualDate];
+        List<aforza__Visit__c> visitsToDelete = [SELECT Id FROM aforza__Visit__c WHERE aforza__Recurring_Record__c IN :recurringRecords AND aforza__Planned_Time__c > :actualDate];
 
         delete visitsToDelete;
     }
@@ -129,20 +129,20 @@ public without sharing class VisitCallService {
     private static void addStartEndTime(aforza__Visit__c visit, aforza__Recurring_Record__c recurringRecord, Date scheduledDate) {
         switch on recurringRecord.Priority__c {
             when 'P1' {
-                visit.aforza__Start_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(09, 00));
-                visit.aforza__End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(09, 06));
+                visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(09, 00));
+                visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(09, 06));
             }
             when 'P2' {
-                visit.aforza__Start_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(10, 00));
-                visit.aforza__End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(10, 06));
+                visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(10, 00));
+                visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(10, 06));
             }
             when 'P3' {
-                visit.aforza__Start_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 00));
-                visit.aforza__End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 06));
+                visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 00));
+                visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 06));
             }
             when else {
-                visit.aforza__Start_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 00));
-                visit.aforza__End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 06));
+                visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 00));
+                visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 06));
             }
         }
     }

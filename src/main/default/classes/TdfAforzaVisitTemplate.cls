@@ -57,8 +57,8 @@ public with sharing class TdfAforzaVisitTemplate extends TdfSObjectTemplate {
                 aforza__Type__c = 'Phone Call',
                 aforza__Status__c = 'Not Started',
                 aforza__Recurring_Record__c = recurringRecordId,
-                aforza__Start_Time__c = System.now().addDays(1),
-                aforza__End_Time__c = System.now().addDays(1).addMinutes(6)
+                aforza__Planned_Time__c = System.now().addDays(1),
+                aforza__Planned_End_Time__c = System.now().addDays(1).addMinutes(6)
         );
 
         return template;

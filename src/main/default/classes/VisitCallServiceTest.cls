@@ -22,7 +22,7 @@ private class VisitCallServiceTest {
         VisitCallService.manageVisitCalls(recurringRecords);
         Test.stopTest();
 
-        List<aforza__Visit__c> visits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c DESC];
+        List<aforza__Visit__c> visits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC];
         System.assertEquals(13, visits.size(), 'We expect 13 visits for weekly recurrence');
     }
 
@@ -43,7 +43,7 @@ private class VisitCallServiceTest {
         VisitCallService.manageVisitCalls(recurringRecords);
         Test.stopTest();
 
-        List<aforza__Visit__c> visits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c DESC];
+        List<aforza__Visit__c> visits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC];
         System.assertEquals(3, visits.size(), 'We expect 3 visits for weekly recurrence');
     }
 
@@ -64,7 +64,7 @@ private class VisitCallServiceTest {
         VisitCallService.manageVisitCalls(recurringRecords);
         Test.stopTest();
 
-        List<aforza__Visit__c> visits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c DESC];
+        List<aforza__Visit__c> visits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC];
         System.assertEquals(6, visits.size(), 'We expect 6 visits for weekly recurrence');
     }
 
@@ -144,8 +144,8 @@ private class VisitCallServiceTest {
         VisitCallService.addStartEndTime(visit, recurringRecord, scheduledDate);
         Test.stopTest();
 
-        System.assertEquals('14/09/2022, 09:00', visit.aforza__Start_Time__c.format());
-        System.assertEquals('14/09/2022, 09:06', visit.aforza__End_Time__c.format());
+        System.assertEquals('14/09/2022, 09:00', visit.aforza__Planned_Time__c.format());
+        System.assertEquals('14/09/2022, 09:06', visit.aforza__Planned_End_Time__c.format());
     }
 
     @IsTest
@@ -158,8 +158,8 @@ private class VisitCallServiceTest {
         VisitCallService.addStartEndTime(visit, recurringRecord, scheduledDate);
         Test.stopTest();
 
-        System.assertEquals('14/09/2022, 10:00', visit.aforza__Start_Time__c.format());
-        System.assertEquals('14/09/2022, 10:06', visit.aforza__End_Time__c.format());
+        System.assertEquals('14/09/2022, 10:00', visit.aforza__Planned_Time__c.format());
+        System.assertEquals('14/09/2022, 10:06', visit.aforza__Planned_End_Time__c.format());
     }
 
     @IsTest
@@ -172,8 +172,8 @@ private class VisitCallServiceTest {
         VisitCallService.addStartEndTime(visit, recurringRecord, scheduledDate);
         Test.stopTest();
 
-        System.assertEquals('14/09/2022, 11:00', visit.aforza__Start_Time__c.format());
-        System.assertEquals('14/09/2022, 11:06', visit.aforza__End_Time__c.format());
+        System.assertEquals('14/09/2022, 11:00', visit.aforza__Planned_Time__c.format());
+        System.assertEquals('14/09/2022, 11:06', visit.aforza__Planned_End_Time__c.format());
     }
 
     @IsTest
@@ -186,8 +186,8 @@ private class VisitCallServiceTest {
         VisitCallService.addStartEndTime(visit, recurringRecord, scheduledDate);
         Test.stopTest();
 
-        System.assertEquals('14/09/2022, 12:00', visit.aforza__Start_Time__c.format());
-        System.assertEquals('14/09/2022, 12:06', visit.aforza__End_Time__c.format());
+        System.assertEquals('14/09/2022, 12:00', visit.aforza__Planned_Time__c.format());
+        System.assertEquals('14/09/2022, 12:06', visit.aforza__Planned_End_Time__c.format());
     }
 
     @IsTest
@@ -374,22 +374,22 @@ private class VisitCallServiceTest {
         // create first set of visits
         VisitCallService.manageVisitCalls(recurringRecords);
         // delete the last one and modify Last Recurrence date
-        List<aforza__Visit__c> visits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c DESC LIMIT 1];
-        System.debug(visits[0].aforza__Start_Time__c);
+        List<aforza__Visit__c> visits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC LIMIT 1];
+        System.debug(visits[0].aforza__Planned_Time__c);
         delete visits;
         // get second latest
-        List<aforza__Visit__c> secondLatest = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c DESC LIMIT 1];
-        recurringRecords[0].aforza__Last_Recurrence_Date__c = secondLatest[0].aforza__Start_Time__c;
+        List<aforza__Visit__c> secondLatest = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC LIMIT 1];
+        recurringRecords[0].aforza__Last_Recurrence_Date__c = secondLatest[0].aforza__Planned_Time__c;
         update recurringRecords;
 
         // getting this to check if expected visits would stay
-        List<aforza__Visit__c> visitsBeforeUpdate = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c ASC];
+        List<aforza__Visit__c> visitsBeforeUpdate = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c ASC];
 
         Test.startTest();
         VisitCallService.manageVisitCalls(recurringRecords);
         Test.stopTest();
 
-        List<aforza__Visit__c> finalVisits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c ASC];
+        List<aforza__Visit__c> finalVisits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c ASC];
         for (Integer i = 0; i < visitsBeforeUpdate.size(); i++) {
             System.assertEquals(visitsBeforeUpdate[0].Id, finalVisits[0].Id);
         }
@@ -413,13 +413,13 @@ private class VisitCallServiceTest {
         update recurringRecords;
 
         // getting this to check if expected visits would stay
-        List<aforza__Visit__c> visitsBeforeUpdate = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c ASC];
+        List<aforza__Visit__c> visitsBeforeUpdate = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c ASC];
 
         Test.startTest();
         VisitCallService.manageVisitCalls(recurringRecords);
         Test.stopTest();
 
-        List<aforza__Visit__c> finalVisits = [SELECT Id, aforza__Start_Time__c FROM aforza__Visit__c ORDER BY aforza__Start_Time__c ASC];
+        List<aforza__Visit__c> finalVisits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c ASC];
         for (Integer i = 0; i < visitsBeforeUpdate.size(); i++) {
             System.assertNotEquals(visitsBeforeUpdate[0].Id, finalVisits[0].Id);
         }
