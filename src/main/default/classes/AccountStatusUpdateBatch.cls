@@ -37,13 +37,13 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
 
     public void execute(Database.BatchableContext context, List<Account> accountsToProcess) {
         List<Account> accountsToUpdate = new List<Account>();
-        for (Account newAccount : accountsToProcess) {
+        for (Account newAccount : accountsToProcess) {            
             if (newAccount.Orders.isEmpty()) {
                 continue;
             }
 
             Date lastOrderDate = Date.valueOf(newAccount.Orders[0].CreatedDate);
-
+            
             if (CommonUtility.isMoreThanXWeeksAgo(lastOrderDate, Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c))) {
                 newAccount.AccountStatus__c = setting.UpdatedAccountStatusUpperLimit__c;
                 accountsToUpdate.add(newAccount);

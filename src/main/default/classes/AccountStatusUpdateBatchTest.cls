@@ -9,7 +9,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create new dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'W',
+                PrimaryGridNumber__c = '3C7201WEW',
                 AccountStatus__c = 'Traders'
         ));
 
@@ -34,7 +34,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'W',
+                PrimaryGridNumber__c = '3C7201WEW',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -63,7 +63,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'W',
+                PrimaryGridNumber__c = '3C7201WEW',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -93,7 +93,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'W',
+                PrimaryGridNumber__c = '3C7201WEW',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -123,7 +123,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'W',
+                PrimaryGridNumber__c = '3C7201WEW',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -153,7 +153,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create new dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'F',
+                PrimaryGridNumber__c = '3C7201WE1',
                 AccountStatus__c = 'Traders'
         ));
 
@@ -178,7 +178,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'F',
+                PrimaryGridNumber__c = '3C7201WE1',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -207,7 +207,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'F',
+                PrimaryGridNumber__c = '3C7201WE1',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -237,7 +237,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'F',
+                PrimaryGridNumber__c = '3C7201WE1',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -267,7 +267,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'F',
+                PrimaryGridNumber__c = '3C7201WE1',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -297,7 +297,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'M',
+                PrimaryGridNumber__c = '3C7201WEM',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -326,7 +326,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'M',
+                PrimaryGridNumber__c = '3C7201WEM',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -356,7 +356,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'M',
+                PrimaryGridNumber__c = '3C7201WEM',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
@@ -386,7 +386,7 @@ private with sharing class AccountStatusUpdateBatchTest {
         // create dp account and related order
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Frequency__c = 'M',
+                PrimaryGridNumber__c = '3C7201WEM',
                 AccountStatus__c = 'Traders'
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
