@@ -6,6 +6,7 @@
     "private": true,
     "description": "AG Barr project",
     "scripts": {
+        "sfci:init:ci": "sfdx ci:org:create -a ${npm_config_alias} && sfdx ci:org:printurl && sfdx ci:package:install && sfdx ci:source:push --ci && sfdx ci:user:assign:permsetgroup && sfdx ci:user:assign:profile",
         "sfci:init": "sfdx ci:org:create -a ${npm_config_alias} && sfdx ci:org:printurl && sfdx ci:package:install && npm run sfci:init:postcreate && npm run data:import --target=${npm_config_alias}",
         "sfci:init:win": "sfdx ci:org:create -a %npm_config_alias% && sfdx ci:package:install && npm run sfci:init:postcreate && npm run data:import --target=%npm_config_alias%",
         "sfci:init:postcreate": "sfdx ci:source:push && sfdx ci:user:assign:permsetgroup && sfdx ci:user:assign:profile",

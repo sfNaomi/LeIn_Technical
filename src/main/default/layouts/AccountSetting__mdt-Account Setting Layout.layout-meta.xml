@@ -15,8 +15,8 @@
                 <field>DeveloperName</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DateOffset__c</field>
+                <behavior>Required</behavior>
+                <field>DefaultPriceBookNames__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

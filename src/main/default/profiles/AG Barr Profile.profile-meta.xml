@@ -33,17 +33,32 @@
         <recordType>Account.aforza__Producer</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>AccountSetting__mdt-Account Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountStatusUpdateBatchSetting__mdt-Account Status Update Batch Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Product2-aforza__Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SystemSetting__mdt-System Setting Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>aforza__Recurring_Record__c-aforza__Recurring Record Layout</layout>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Account.Customer</recordType>
@@ -81,12 +96,47 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>aforza__Visit__c.aforza__Remote_Visit</recordType>
-        <visible>true</visible>
+        <recordType>Order.ECommerceOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.EDIOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.FieldDirectOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.ReturnOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.StraightToJDEOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.TelesalesOrder</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Order.VanSalesOrder</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>aforza__Visit__c.aforza__Direct_Visit</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>aforza__Visit__c.aforza__Remote_Visit</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -106,6 +156,14 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AddDirectMessageMembers</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>AllowUniversalSearch</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>AllowViewKnowledge</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

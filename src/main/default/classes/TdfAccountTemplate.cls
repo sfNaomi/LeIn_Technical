@@ -53,6 +53,7 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.CallPriority__c = 'P2';
         template.PrimaryCallDay__c = '3';
         template.OwnerId = UserInfo.getUserId();
+        template.FieldSalesRegion__c = 'England North';
 
         if (accountRecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
             template.AccountStatus__c = 'Traders';

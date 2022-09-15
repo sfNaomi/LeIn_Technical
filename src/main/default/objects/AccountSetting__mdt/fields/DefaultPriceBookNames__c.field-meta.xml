@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DefaultPriceBookNames__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Please insert part of the names we should look for when assigning default price books to accounts. We expect a list delimited with comas. The name has to be in format of &quot;Default England&quot;. The mapping then is linked to first word from Field Sales Region.</inlineHelpText>
+    <label>Default Price Book Names</label>
+    <length>200</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

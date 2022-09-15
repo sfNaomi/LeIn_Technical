@@ -7,6 +7,7 @@ trigger AccountTrigger on Account (before insert, before update, after update, a
         when BEFORE_INSERT {
             // copy contact details (phone & email) from primary contacts to accounts
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, null);
+            AccountTriggerHandler.assignDefaultPriceBook(Trigger.new);
         }
         when BEFORE_UPDATE {
             // copy contact details (phone & email) from primary contacts to accounts

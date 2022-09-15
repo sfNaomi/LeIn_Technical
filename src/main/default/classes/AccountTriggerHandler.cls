@@ -12,7 +12,19 @@ public with sharing class AccountTriggerHandler {
         }
         set;
     }
-    private enum Operation { UPSERTION, DELETION }
+    private enum Operation {
+        UPSERTION, DELETION
+    }
+
+    private static final Set<String> DEFAULT_PRICE_BOOKS {
+        get {
+            if (DEFAULT_PRICE_BOOKS == null) {
+                DEFAULT_PRICE_BOOKS = new Set<String>(AccountSetting__mdt.getInstance('OrgDefaultAccountSettings').DefaultPriceBookNames__c.split(','));
+            }
+            return DEFAULT_PRICE_BOOKS;
+        }
+        set;
+    }
 
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts, List<Account> oldAccounts) {
         List<Account> accountsToUpdateContactDetails = new List<Account>();
@@ -81,11 +93,35 @@ public with sharing class AccountTriggerHandler {
         for (Account newAccount : newAccounts) {
             // Non-coverage accounts moved to "Traders" -> should not be visible for Field Sales users
             if (!newAccount.IsCoverage__c &&
-                newAccount.AccountStatus__c != oldAccounts.get(newAccount.Id).AccountStatus__c &&
-                AccountService.ACC_STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(newAccount.AccountStatus__c)) {
+                    newAccount.AccountStatus__c != oldAccounts.get(newAccount.Id).AccountStatus__c &&
+                    AccountService.ACC_STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(newAccount.AccountStatus__c)) {
                 nonCoverageAccountIdsMovedToTraders.add(newAccount.Id);
             }
         }
         AccountService.removeRolesFromAccountTeam(nonCoverageAccountIdsMovedToTraders, AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM);
+    }
+
+    public static void assignDefaultPriceBook(List<Account> accounts) {
+        Map<String, Id> defaultPriceBooks = getDefaultPriceBooks();
+        for (Account acc : accounts) {
+            if (acc.FieldSalesRegion__c != null) {
+                acc.aforza__Default_Price_Book__c = defaultPriceBooks.get(acc.FieldSalesRegion__c.substringBefore(' '));
+            }
+        }
+    }
+
+    @TestVisible
+    private static Map<String, Id> getDefaultPriceBooks() {
+        Map<String, Id> priceBookNameToId = new Map<String, Id>();
+        for (Pricebook2 priceBook : [SELECT Id, Name FROM Pricebook2 WHERE IsActive = TRUE AND Name LIKE '%Default%']) {
+            System.debug(priceBook);
+            for (String defaultName : DEFAULT_PRICE_BOOKS) {
+                System.debug(defaultName);
+                if (priceBook.Name.contains(defaultName)) {
+                    priceBookNameToId.put(defaultName.substring(defaultName.lastIndexOf(' ') + 1), priceBook.Id);
+                }
+            }
+        }
+        return priceBookNameToId;
     }
 }

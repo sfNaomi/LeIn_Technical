@@ -117,10 +117,10 @@ private with sharing class AccountTriggerHandlerTest {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = FALSE,
+                IsCoverage__c = false,
                 AccountStatus__c = 'Prospect'
         ));
-        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
         ));
 
@@ -146,10 +146,10 @@ private with sharing class AccountTriggerHandlerTest {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = FALSE,
+                IsCoverage__c = false,
                 AccountStatus__c = 'Active Prospect'
         ));
-        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
         ));
 
@@ -175,10 +175,10 @@ private with sharing class AccountTriggerHandlerTest {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = TRUE,
+                IsCoverage__c = true,
                 AccountStatus__c = 'Prospect'
         ));
-        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
         ));
 
@@ -204,10 +204,10 @@ private with sharing class AccountTriggerHandlerTest {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = TRUE,
+                IsCoverage__c = true,
                 AccountStatus__c = 'Active Prospect'
         ));
-        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
         ));
 
@@ -490,4 +490,84 @@ private with sharing class AccountTriggerHandlerTest {
 
         System.assertEquals(0, record.size());
     }
+
+    @IsTest
+    private static void testGetDefaultPriceBooks() {
+        // create price books
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default England'));
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default Scotland'));
+
+        Test.startTest();
+        Map<String, Id> priceBooks = AccountTriggerHandler.getDefaultPriceBooks();
+        Test.stopTest();
+
+        System.debug(priceBooks);
+
+        System.assertEquals(2, priceBooks.size());
+        System.assert(priceBooks.containsKey('England'));
+        System.assert(priceBooks.containsKey('Scotland'));
+    }
+
+    @IsTest
+    private static void testGetDefaultPriceBooks_funkyNames() {
+        // create price books
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = ' asd Default England asd'));
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'lklk Default Scotlandlklk'));
+
+        Test.startTest();
+        Map<String, Id> priceBooks = AccountTriggerHandler.getDefaultPriceBooks();
+        Test.stopTest();
+
+        System.debug(priceBooks);
+
+        System.assertEquals(2, priceBooks.size());
+        System.assert(priceBooks.containsKey('England'));
+        System.assert(priceBooks.containsKey('Scotland'));
+    }
+    @IsTest
+    private static void testGetDefaultPriceBooks_NotReturning() {
+        // create price books
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default asd England'));
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'efault Scotland'));
+
+        Test.startTest();
+        Map<String, Id> priceBooks = AccountTriggerHandler.getDefaultPriceBooks();
+        Test.stopTest();
+
+        System.debug(priceBooks);
+
+        System.assertEquals(0, priceBooks.size());
+    }
+
+    @IsTest
+    private static void testAssignDefaultPriceBook() {
+        // create price books
+        Pricebook2 priceBook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default England'));
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default Scotland'));
+
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID));
+        Test.stopTest();
+
+        Account acc = [SELECT Id, aforza__Default_Price_Book__c FROM Account LIMIT 1][0];
+
+        System.assertEquals(priceBook.Id, acc.aforza__Default_Price_Book__c);
+    }
+
+    @IsTest
+    private static void testAssignDefault_Scotland() {
+        // create price books
+        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default England'));
+        Pricebook2 priceBook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default Scotland'));
+
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East'));
+        Test.stopTest();
+
+        Account acc = [SELECT Id, aforza__Default_Price_Book__c FROM Account LIMIT 1][0];
+
+        System.assertEquals(priceBook.Id, acc.aforza__Default_Price_Book__c);
+    }
+
+
 }
