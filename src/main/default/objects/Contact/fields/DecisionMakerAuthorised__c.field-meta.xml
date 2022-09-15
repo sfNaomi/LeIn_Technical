@@ -7,7 +7,17 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>DecisionMaker__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>YesNo</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Yes</controllingFieldValue>
+            <valueName>Yes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Yes</controllingFieldValue>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>No</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

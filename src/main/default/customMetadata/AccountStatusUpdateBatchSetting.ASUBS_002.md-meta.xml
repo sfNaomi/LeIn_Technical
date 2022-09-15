@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ASUBS-002</label>
+    <protected>false</protected>
+    <values>
+        <field>AccountFrequency__c</field>
+        <value xsi:type="xsd:string">F</value>
+    </values>
+    <values>
+        <field>InitialAccountStatuses__c</field>
+        <value xsi:type="xsd:string">Traders,At Risk,Win Back,Lapsed</value>
+    </values>
+    <values>
+        <field>NoOfWeeksNoOrdersLowerLimit__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>NoOfWeeksNoOrdersMidLimit__c</field>
+        <value xsi:type="xsd:double">18.0</value>
+    </values>
+    <values>
+        <field>NoOfWeeksNoOrdersUpperLimit__c</field>
+        <value xsi:type="xsd:double">26.0</value>
+    </values>
+    <values>
+        <field>OrderTypes__c</field>
+        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder</value>
+    </values>
+    <values>
+        <field>UpdatedAccountStatusLowerLimit__c</field>
+        <value xsi:type="xsd:string">At Risk</value>
+    </values>
+    <values>
+        <field>UpdatedAccountStatusMidLimit__c</field>
+        <value xsi:type="xsd:string">Win Back</value>
+    </values>
+    <values>
+        <field>UpdatedAccountStatusRecentOrders__c</field>
+        <value xsi:type="xsd:string">Traders</value>
+    </values>
+    <values>
+        <field>UpdatedAccountStatusUpperLimit__c</field>
+        <value xsi:type="xsd:string">Lapsed</value>
+    </values>
+</CustomMetadata>

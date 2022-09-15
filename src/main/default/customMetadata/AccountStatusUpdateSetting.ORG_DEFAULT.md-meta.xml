@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ORG_DEFAULT</label>
+    <protected>false</protected>
+    <values>
+        <field>AccStatusesToRemRolesFromAcctTeam__c</field>
+        <value xsi:type="xsd:string">Traders</value>
+    </values>
+    <values>
+        <field>AccStatusesToUpdateOnNewOrder__c</field>
+        <value xsi:type="xsd:string">Active Prospect</value>
+    </values>
+    <values>
+        <field>NewAccStatusOnNewOrder__c</field>
+        <value xsi:type="xsd:string">Traders</value>
+    </values>
+    <values>
+        <field>RolesToBeRemovedFromAccountTeam__c</field>
+        <value xsi:type="xsd:string">Field Sales Rep,Field Sales Manager</value>
+    </values>
+</CustomMetadata>

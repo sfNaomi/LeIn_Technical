@@ -5,7 +5,7 @@
 @IsTest
 private with sharing class AccountTriggerHandlerTest {
     @IsTest
-    private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
+    private static void testPrimaryContactAutomationInsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -30,7 +30,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
+    private static void testPrimaryContactAutomationUpdateAccountPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -59,7 +59,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomation_RemovePrimaryContact() {
+    private static void testPrimaryContactAutomationRemovePrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -88,7 +88,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomation_PrimaryContactMisingContactDetails() {
+    private static void testPrimaryContactAutomationPrimaryContactMisingContactDetails() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null));
@@ -110,5 +110,121 @@ private with sharing class AccountTriggerHandlerTest {
         // check results
         System.assertEquals(null, updatedDPAccount.Phone, 'Expecting a different phone number.');
         System.assertEquals(null, updatedDPAccount.Email__c, 'Expecting a different email.');
+    }
+
+    @IsTest
+    private static void testNonCoverageAccountMovedToActiveProspect() {
+        // create dp account and add team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = FALSE,
+                AccountStatus__c = 'Prospect'
+        ));
+        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
+        ));
+
+        // update status
+        Test.startTest();
+        dpAccount.AccountStatus__c = 'Active Prospect';
+        update dpAccount;
+        Test.stopTest();
+
+        // query team members
+        List<AccountTeamMember> teamMembers = [
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+        ];
+
+        // check results
+        System.assertEquals(1, teamMembers.size(), 'Expecting to have team members');
+    }
+
+    @IsTest
+    private static void testNonCoverageAccountMovedToTraders() {
+        // create dp account and add team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = FALSE,
+                AccountStatus__c = 'Active Prospect'
+        ));
+        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
+        ));
+
+        // update status
+        Test.startTest();
+        dpAccount.AccountStatus__c = 'Traders';
+        update dpAccount;
+        Test.stopTest();
+
+        // query team members
+        List<AccountTeamMember> teamMembers = [
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+        ];
+
+        // check results
+        System.assertEquals(0, teamMembers.size(), 'Expecting to don\'t have team members');
+    }
+
+    @IsTest
+    private static void testCoverageAccountMovedToActiveProspect() {
+        // create dp account and add team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = TRUE,
+                AccountStatus__c = 'Prospect'
+        ));
+        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
+        ));
+
+        // update status
+        Test.startTest();
+        dpAccount.AccountStatus__c = 'Active Prospect';
+        update dpAccount;
+        Test.stopTest();
+
+        // query team members
+        List<AccountTeamMember> teamMembers = [
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+        ];
+
+        // check results
+        System.assertEquals(1, teamMembers.size(), 'Expecting to have team members');
+    }
+
+    @IsTest
+    private static void testCoverageAccountMovedToTraders() {
+        // create dp account and add team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = TRUE,
+                AccountStatus__c = 'Active Prospect'
+        ));
+        AccountTeamMember newTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'
+        ));
+
+        // update status
+        Test.startTest();
+        dpAccount.AccountStatus__c = 'Traders';
+        update dpAccount;
+        Test.stopTest();
+
+        // query team members
+        List<AccountTeamMember> teamMembers = [
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+        ];
+
+        // check results
+        System.assertEquals(1, teamMembers.size(), 'Expecting to have team members');
     }
 }

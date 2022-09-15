@@ -13,10 +13,11 @@ trigger AccountTrigger on Account (before insert, before update, after update, a
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, Trigger.old);
         }
         when AFTER_INSERT {
-            AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+            //AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
         }
         when AFTER_UPDATE {
-            AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+            //AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.determineIfAccountTeamMembersMustBeRemoved(Trigger.new, Trigger.oldMap);
         }
     }
 }

@@ -12,6 +12,7 @@ public with sharing class AccountTriggerHandler {
         }
         set;
     }
+
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts, List<Account> oldAccounts) {
         List<Account> accountsToUpdateContactDetails = new List<Account>();
         for (Integer index = 0; index < newAccounts.size(); index++) {
@@ -34,5 +35,18 @@ public with sharing class AccountTriggerHandler {
         if (accountsToUpsertRecurringRecord.size() > 0) {
             RecurringRecordService.manageRecurringRecords(accountsToUpsertRecurringRecord);
         }
+    }
+
+    public static void determineIfAccountTeamMembersMustBeRemoved(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
+        Set<Id> nonCoverageAccountIdsMovedToTraders = new Set<Id>();
+        for (Account newAccount : newAccounts) {
+            // Non-coverage accounts moved to "Traders" -> should not be visible for Field Sales users
+            if (!newAccount.IsCoverage__c &&
+                newAccount.AccountStatus__c != oldAccounts.get(newAccount.Id).AccountStatus__c &&
+                AccountService.ACC_STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(newAccount.AccountStatus__c)) {
+                nonCoverageAccountIdsMovedToTraders.add(newAccount.Id);
+            }
+        }
+        AccountService.removeRolesFromAccountTeam(nonCoverageAccountIdsMovedToTraders, AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM);
     }
 }
