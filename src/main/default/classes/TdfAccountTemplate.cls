@@ -48,6 +48,18 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.ShippingPostalCode = '56789';
         template.ShippingStreet = 'Awesome Street 234';
         template.RecordTypeId = accountRecordTypeId;
+        template.PrimaryGridNumber__c = '3C7201MOW';
+        template.PrimaryStartDate__c = Date.parse('05/09/2022');
+        template.CallPriority__c = 'P2';
+        template.PrimaryCallDay__c = '3';
+        template.OwnerId = UserInfo.getUserId();
+
+        if (accountRecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
+            template.AccountStatus__c = 'Traders';
+        } else {
+            template.AccountStatus__c = 'Open';
+        }
+
         return template;
     }
 }

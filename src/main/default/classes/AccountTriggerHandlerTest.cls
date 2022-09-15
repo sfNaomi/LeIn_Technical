@@ -88,7 +88,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationPrimaryContactMisingContactDetails() {
+    private static void testPrimaryContactAutomationPrimaryContactMissingContactDetails() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact  = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null));
@@ -226,5 +226,268 @@ private with sharing class AccountTriggerHandlerTest {
 
         // check results
         System.assertEquals(1, teamMembers.size(), 'Expecting to have team members');
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Test.stopTest();
+
+        aforza__Recurring_Record__c record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ][0];
+
+        System.assertNotEquals(null, record);
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_InsertNoCreateCallChecked() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, CreateCalls__c = false));
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_InsertWrongStatus() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Legal'));
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_InsertWrongRecordType() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID));
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_InsertNoPrimaryGrid() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = null));
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_InsertNoStartDate() {
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryStartDate__c = null));
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_UpdateNewPrimaryStartDate() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Date newDate = Date.parse('21/09/2022');
+
+        Test.startTest();
+        acc.PrimaryStartDate__c = newDate;
+        update acc;
+        Test.stopTest();
+
+        aforza__Recurring_Record__c record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ][0];
+
+        System.assertEquals(newDate, record.StartDate__c);
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_UpdateNewPrimaryGrid() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        Test.startTest();
+        acc.PrimaryGridNumber__c = '3C7201WEW'; //changing Call Day of Week (3)
+        update acc;
+        Test.stopTest();
+
+        aforza__Recurring_Record__c record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ][0];
+
+        System.assertEquals('3', record.CallDayOfWeek__c);
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_UpdateNoCreateCalls() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        List<aforza__Recurring_Record__c> checkItExists = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+        System.assertEquals(1, checkItExists.size());
+
+
+        Test.startTest();
+        acc.CreateCalls__c = false;
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_OutStatus() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        List<aforza__Recurring_Record__c> checkItExists = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+        System.assertEquals(1, checkItExists.size());
+
+
+        Test.startTest();
+        acc.AccountStatus__c = 'Legal';
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_UpdateNoGrid() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        List<aforza__Recurring_Record__c> checkItExists = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+        System.assertEquals(1, checkItExists.size());
+
+
+        Test.startTest();
+        acc.PrimaryGridNumber__c = '';
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_UpdateNoPrimaryStartDate() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        List<aforza__Recurring_Record__c> checkItExists = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+        System.assertEquals(1, checkItExists.size());
+
+
+        Test.startTest();
+        acc.PrimaryStartDate__c = null;
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
     }
 }

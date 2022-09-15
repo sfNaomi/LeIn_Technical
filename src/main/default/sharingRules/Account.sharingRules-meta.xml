@@ -31,7 +31,7 @@
         <description>PF-29: Sharing all DP accounts with all Telesales users, so that orders can be placed for any account, independent of account team membership.</description>
         <label>Share DP Accounts with Telesales Users</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>SalesController</roleAndSubordinatesInternal>
+            <roleAndSubordinates>SalesController</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>

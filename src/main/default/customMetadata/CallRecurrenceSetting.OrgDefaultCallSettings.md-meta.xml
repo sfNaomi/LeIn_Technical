@@ -7,11 +7,15 @@
         <value xsi:type="xsd:string">Traders, At Risk, Win Back, Lapsed</value>
     </values>
     <values>
-        <field>CallType__c</field>
-        <value xsi:type="xsd:string">Call</value>
-    </values>
-    <values>
         <field>CallStatus__c</field>
         <value xsi:type="xsd:string">Not Started</value>
+    </values>
+    <values>
+        <field>CallType__c</field>
+        <value xsi:type="xsd:string">Phone Call</value>
+    </values>
+    <values>
+        <field>GenerateVisitsForNextAmountOfDays__c</field>
+        <value xsi:type="xsd:double">90.0</value>
     </values>
 </CustomMetadata>

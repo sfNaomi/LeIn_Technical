@@ -6,21 +6,70 @@
 public inherited sharing class RecordTypes {
 
     public static RecordTypeInfo ACCOUNT_CUSTOMER {
-        get { return ACCOUNT_CUSTOMER = ACCOUNT_CUSTOMER != null
-                ? ACCOUNT_CUSTOMER : Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer'); }
+        get {
+            return ACCOUNT_CUSTOMER = ACCOUNT_CUSTOMER != null
+                    ? ACCOUNT_CUSTOMER : Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer');
+        }
         private set;
     }
     public static Id ACCOUNT_CUSTOMER_ID {
-        get { return ACCOUNT_CUSTOMER.getRecordTypeId(); }
+        get {
+            return ACCOUNT_CUSTOMER.getRecordTypeId();
+        }
         private set;
     }
     public static RecordTypeInfo ACCOUNT_OUTLET {
-        get { return ACCOUNT_OUTLET = ACCOUNT_OUTLET != null
-                ? ACCOUNT_OUTLET : Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Outlet'); }
+        get {
+            return ACCOUNT_OUTLET = ACCOUNT_OUTLET != null
+                    ? ACCOUNT_OUTLET : Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Outlet');
+        }
         private set;
     }
     public static Id ACCOUNT_OUTLET_ID {
-        get { return ACCOUNT_OUTLET.getRecordTypeId(); }
+        get {
+            return ACCOUNT_OUTLET.getRecordTypeId();
+        }
+        private set;
+    }
+    public static RecordTypeInfo VISIT_DIRECT_VISIT {
+        get {
+            return VISIT_DIRECT_VISIT = VISIT_DIRECT_VISIT != null
+                    ? VISIT_DIRECT_VISIT : Schema.SObjectType.aforza__Visit__c.getRecordTypeInfosByDeveloperName().get('Direct_Visit');
+        }
+        private set;
+    }
+    public static Id VISIT_DIRECT_VISIT_ID {
+        get {
+            return VISIT_DIRECT_VISIT.getRecordTypeId();
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo VISIT_REMOTE_VISIT {
+        get {
+            return VISIT_REMOTE_VISIT = VISIT_REMOTE_VISIT != null
+                    ? VISIT_REMOTE_VISIT : Schema.SObjectType.aforza__Visit__c.getRecordTypeInfosByDeveloperName().get('Remote_Visit');
+        }
+        private set;
+    }
+    public static Id VISIT_REMOTE_VISIT_ID {
+        get {
+            return VISIT_REMOTE_VISIT.getRecordTypeId();
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo VISIT_TEMPLATE_VISIT {
+        get {
+            return VISIT_TEMPLATE_VISIT = VISIT_TEMPLATE_VISIT != null
+                    ? VISIT_TEMPLATE_VISIT : Schema.SObjectType.aforza__Visit__c.getRecordTypeInfosByDeveloperName().get('Template_Visit');
+        }
+        private set;
+    }
+    public static Id VISIT_TEMPLATE_VISIT_ID {
+        get {
+            return VISIT_TEMPLATE_VISIT.getRecordTypeId();
+        }
         private set;
     }
     public static Map<Id, Schema.RecordTypeInfo> ORDER_RT_INFO_BY_ID {
