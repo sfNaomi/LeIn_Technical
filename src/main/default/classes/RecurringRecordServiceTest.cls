@@ -153,7 +153,7 @@ private class RecurringRecordServiceTest {
         System.assertEquals(newDate, record.aforza__Last_Recurrence_Date__c);
     }
 
-    @IsTest
+    /*@IsTest
     private static void testDeleteRecurringAndVisitRecords() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
 
@@ -175,5 +175,5 @@ private class RecurringRecordServiceTest {
 
         List<aforza__Visit__c> deletedVisits = [SELECT Id FROM aforza__Visit__c];
         System.assertEquals(0, deletedVisits.size());
-    }
+    }*/
 }
