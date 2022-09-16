@@ -346,6 +346,11 @@
         <field>Account.aforza__Invoice_Email_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.aforza__Primary_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account Telesales Access</label>
     <objectPermissions>

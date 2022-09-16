@@ -45,6 +45,9 @@
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Contact-aforza__Contact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Product2-aforza__Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

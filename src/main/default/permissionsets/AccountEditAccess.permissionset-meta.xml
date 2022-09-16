@@ -567,4 +567,12 @@
         <object>Account</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Account.Customer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Account.aforza__Outlet</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
