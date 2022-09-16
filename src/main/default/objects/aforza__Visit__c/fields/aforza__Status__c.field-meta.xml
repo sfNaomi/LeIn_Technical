@@ -43,6 +43,11 @@
                 <default>false</default>
                 <label>Ring Back</label>
             </value>
+            <value>
+                <fullName>No Order</fullName>
+                <default>false</default>
+                <label>No Order</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
