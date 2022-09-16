@@ -54,6 +54,7 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.PrimaryCallDay__c = '3';
         template.OwnerId = UserInfo.getUserId();
         template.FieldSalesRegion__c = 'England North';
+        template.aforza__Last_Visit__c = System.now();
 
         if (accountRecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
             template.AccountStatus__c = 'Traders';

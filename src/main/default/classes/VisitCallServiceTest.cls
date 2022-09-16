@@ -5,7 +5,7 @@
 @IsTest
 private class VisitCallServiceTest {
 
-    /*@IsTest
+    @IsTest
     private static void testManageVisitCalls_Weekly() {
         // create accounts, we are expecting that trigger will create needed recurring records
         TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
@@ -66,7 +66,7 @@ private class VisitCallServiceTest {
 
         List<aforza__Visit__c> visits = [SELECT Id, aforza__Planned_Time__c FROM aforza__Visit__c ORDER BY aforza__Planned_Time__c DESC];
         System.assertEquals(6, visits.size(), 'We expect 6 visits for weekly recurrence');
-    }*/
+    }
 
     @IsTest
     private static void testDayOfWeek() {
@@ -206,7 +206,7 @@ private class VisitCallServiceTest {
         System.assertEquals(visit.aforza__Recurring_Record__c, recurringRecord.Id);
     }
 
-   /* @IsTest
+   @IsTest
     private static void testDeleteFutureCalls() {
         // get all the visits
         aforza__Recurring_Record__c recurringRecord = (aforza__Recurring_Record__c) TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c());
@@ -276,7 +276,7 @@ private class VisitCallServiceTest {
 
         List<aforza__Visit__c> leftVisits = [SELECT Id FROM aforza__Visit__c];
         System.assert(leftVisits.size() == 2);
-    }*/
+    }
 
     @IsTest
     private static void testDetermineLastVisitForEachAccount() {
@@ -359,7 +359,7 @@ private class VisitCallServiceTest {
         System.assertEquals(Date.parse('26/09/2022'), dateList[0]);
     }
 
-    /*@IsTest
+    @IsTest
     private static void testManageVisitCalls_AddVisits() {
         // create accounts, we are expecting that trigger will create needed recurring records
         TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
@@ -423,5 +423,5 @@ private class VisitCallServiceTest {
         for (Integer i = 0; i < visitsBeforeUpdate.size(); i++) {
             System.assertNotEquals(visitsBeforeUpdate[0].Id, finalVisits[0].Id);
         }
-    }*/
+    }
 }
