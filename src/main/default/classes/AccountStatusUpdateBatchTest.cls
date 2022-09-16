@@ -68,9 +68,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(5*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(5*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -98,9 +98,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(9*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(9*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -128,9 +128,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(13*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(13*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -212,9 +212,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(10*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(10*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -242,9 +242,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(18*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(18*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -272,9 +272,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(26*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(26*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -331,9 +331,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(20*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(20*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -361,9 +361,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(36*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(36*7+1)));
 
         // run batch to update account status
         Test.startTest();
@@ -391,9 +391,9 @@ private with sharing class AccountStatusUpdateBatchTest {
         ));
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id
+                AccountId = dpAccount.Id,
+                EffectiveDate = System.today().addDays(-(52*7+1))
         ));
-        Test.setCreatedDate(newOrder.Id, System.Now().addDays(-(52*7+1)));
 
         // run batch to update account status
         Test.startTest();

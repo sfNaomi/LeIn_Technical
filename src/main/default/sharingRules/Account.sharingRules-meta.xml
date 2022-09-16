@@ -11,7 +11,7 @@
         <description>PF-29: Sharing all Customer accounts with all internal users.</description>
         <label>Share Customer Accounts with All Internal Users</label>
         <sharedTo>
-            <allInternalUsers/>
+            <allInternalUsers></allInternalUsers>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
@@ -37,6 +37,11 @@
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>Delivery Point</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>AccountStatus__c</field>
+            <operation>equals</operation>
+            <value>Traders,At Risk,Win Back,Lapsed</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>

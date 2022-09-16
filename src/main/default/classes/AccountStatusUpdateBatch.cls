@@ -42,7 +42,7 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
                 continue;
             }
 
-            Date lastOrderDate = Date.valueOf(newAccount.Orders[0].CreatedDate);
+            Date lastOrderDate = Date.valueOf(newAccount.Orders[0].EffectiveDate);
             
             if (CommonUtility.isMoreThanXWeeksAgo(lastOrderDate, Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c))) {
                 newAccount.AccountStatus__c = setting.UpdatedAccountStatusUpperLimit__c;
@@ -90,9 +90,9 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
         String orderTypes = '(\'' + setting.OrderTypes__c.replaceAll(',', '\',\'') + '\')';
         String accountStatuses = '(\'' + setting.InitialAccountStatuses__c.replaceAll(',', '\',\'') + '\')';
         String query =
-                'SELECT Id, (SELECT Id, CreatedDate FROM Orders WHERE RecordType.DeveloperName ' +
+                'SELECT Id, (SELECT Id, EffectiveDate FROM Orders WHERE RecordType.DeveloperName ' +
                 'IN ' + orderTypes + ' ' +
-                'ORDER BY CreatedDate DESC LIMIT 1) ' +
+                'ORDER BY EffectiveDate DESC LIMIT 1) ' +
                 'FROM Account ' +
                 'WHERE AccountStatus__c IN ' + accountStatuses + ' ' +
                 'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' ';
