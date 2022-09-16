@@ -7,9 +7,9 @@
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>PricebookEntryBaseAccess</permissionSets>

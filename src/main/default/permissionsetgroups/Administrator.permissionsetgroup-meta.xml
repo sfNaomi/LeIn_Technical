@@ -13,6 +13,7 @@
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>PricebookEntryAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>
