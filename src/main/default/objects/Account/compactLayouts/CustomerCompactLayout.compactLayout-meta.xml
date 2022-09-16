@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CustomerCompactLayout</fullName>
+    <fields>Name</fields>
+    <fields>CustomerReference__c</fields>
+    <fields>Phone</fields>
+    <fields>AccountStatus__c</fields>
+    <fields>aforza__Invoice_Email_Address__c</fields>
+    <label>Customer Compact Layout</label>
+</CompactLayout>
