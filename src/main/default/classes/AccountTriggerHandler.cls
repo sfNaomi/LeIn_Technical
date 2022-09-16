@@ -86,7 +86,8 @@ public with sharing class AccountTriggerHandler {
                     String.isNotEmpty(account.PrimaryGridNumber__c) &&
                     account.PrimaryStartDate__c != null &&
                     (account.PrimaryStartDate__c <> oldAccount.PrimaryStartDate__c ||
-                    account.PrimaryGridNumber__c <> oldAccount.PrimaryGridNumber__c)
+                    account.PrimaryGridNumber__c <> oldAccount.PrimaryGridNumber__c ||
+                            account.AccountStatus__c <> oldAccount.AccountStatus__c)
                 ) {
                     operationToAccountListMap.get(Operation.UPSERTION).add(account);
                     continue;
