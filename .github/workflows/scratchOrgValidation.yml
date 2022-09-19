@@ -55,7 +55,7 @@ jobs:
 
             # Create scratch org and push
             -   name: 'Create scratch org and push'
-                run: npm run sfci:init --alias=$SCRATCH_NAME
+                run: npm run sfci:init:ci --alias=$SCRATCH_NAME
 
             # Run Tests in scratch org
             -   name: 'Run Tests in scratch org'

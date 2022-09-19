@@ -3,12 +3,32 @@
     <description>Base access for Account object - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CurrentWeek__c</field>
+        <field>Account.NextDeliveryDateHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.PrimaryCallDayHidden__c</field>
+        <field>Account.LastSuccessfulCallDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.LastOrderDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.TradingFrequency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.JDENumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RTM__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19,11 +39,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.PrimaryDeliveryDay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.SecondaryCallDayHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -214,6 +229,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.InvoiceType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.IsCoverage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

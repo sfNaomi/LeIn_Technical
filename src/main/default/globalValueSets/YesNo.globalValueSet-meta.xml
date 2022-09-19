@@ -7,7 +7,7 @@
     </customValue>
     <customValue>
         <fullName>No</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>No</label>
     </customValue>
     <masterLabel>Yes No</masterLabel>

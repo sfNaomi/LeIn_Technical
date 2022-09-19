@@ -4,9 +4,13 @@
     <label>Integration</label>
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>AccountEditAccess</permissionSets>
+    <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>PricebookEntryBaseAccess</permissionSets>

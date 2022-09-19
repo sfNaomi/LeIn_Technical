@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Remote_Visit</fullName>
+    <active>true</active>
+    <description>A visit to be executed remotely.</description>
+    <label>Remote Visit</label>
+    <picklistValues>
+        <picklist>aforza__Status__c</picklist>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ring Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Successful</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>aforza__Type__c</picklist>
+        <values>
+            <fullName>Phone Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Video Call</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -23,6 +23,14 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Phone</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Email__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>aforza__Default_Price_Book__c</field>
             </layoutItems>
@@ -37,16 +45,20 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Depot__c</field>
+                <behavior>Edit</behavior>
+                <field>IsCoverage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PreferredCallTimeTelesales__c</field>
+                <field>Depot__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NextDeliveryDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PreferredCallTimeTelesales__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -92,10 +104,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Frequency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CurrentWeek__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -153,6 +161,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PORequired__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>TradingFrequency__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -243,11 +255,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>aforza__Last_Visit__c</field>
+                <field>ExternalDBID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ExternalDBID__c</field>
+                <field>aforza__Last_Visit__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -318,11 +330,6 @@
     </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
@@ -429,6 +436,11 @@
             <sortOrder>21</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>EmailHighlightAction</actionName>
             <actionType>ProductivityAction</actionType>
             <sortOrder>22</sortOrder>
@@ -437,6 +449,11 @@
             <actionName>WebsiteHighlightAction</actionName>
             <actionType>ProductivityAction</actionType>
             <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>24</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>
@@ -447,6 +464,9 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>aforza__Name__c</fields>
         <fields>aforza__Type__c</fields>
@@ -455,11 +475,12 @@
         <relatedList>aforza__Outlet_Asset__c.aforza__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>FULL_NAME</fields>
-        <fields>CONTACT.TITLE</fields>
+        <fields>CONTACT.FULL_NAME</fields>
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
-        <relatedList>RelatedContactList</relatedList>
+        <fields>CONTACT.ACCOUNT_NAME</fields>
+        <fields>ACCCONRELATION.ROLES</fields>
+        <relatedList>RelatedAccountContactRelationList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -656,7 +677,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000005382b</masterLabel>
+        <masterLabel>00h1j000005JEAB</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

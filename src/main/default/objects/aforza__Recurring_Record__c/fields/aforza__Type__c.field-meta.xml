@@ -14,11 +14,6 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
-                <fullName>Call</fullName>
-                <default>false</default>
-                <label>Call</label>
-            </value>
-            <value>
                 <fullName>Promotion</fullName>
                 <default>false</default>
                 <label>Promotion</label>
@@ -27,6 +22,11 @@
                 <fullName>Visit</fullName>
                 <default>false</default>
                 <label>Visit</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
             </value>
         </valueSetDefinition>
     </valueSet>

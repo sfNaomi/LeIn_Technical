@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>aforza__Outlet</fullName>
     <active>true</active>
-    <compactLayoutAssignment>AccountCompactLayout</compactLayoutAssignment>
+    <compactLayoutAssignment>DPAccountCompactLayout</compactLayoutAssignment>
     <label>Outlet</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
