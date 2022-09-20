@@ -4,6 +4,6 @@
     <externalId>false</externalId>
     <label>Secondary Start Date</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackFeedHistory>true</trackFeedHistory>
     <type>Date</type>
 </CustomField>

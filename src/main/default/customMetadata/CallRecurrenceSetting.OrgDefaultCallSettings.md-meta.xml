@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>AllowedStatuses__c</field>
-        <value xsi:type="xsd:string">Traders, At Risk, Win Back, Lapsed</value>
+        <value xsi:type="xsd:string">Traders,At Risk,Win Back,Lapsed</value>
     </values>
     <values>
         <field>CallStatus__c</field>
