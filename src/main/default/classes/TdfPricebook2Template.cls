@@ -14,6 +14,22 @@
  */
 @IsTest
 public with sharing class TdfPricebook2Template extends TdfSObjectTemplate {
+    public static final Id standardPricebookId {
+        get {
+            if (standardPricebookId == null) {
+                // activate standard pricebook when used first time
+                Pricebook2 standardPricebook = new Pricebook2(
+                    Id = Test.getStandardPricebookId(),
+                    IsActive = true
+                );
+                update standardPricebook;
+
+                standardPricebookId = standardPricebook.Id;
+            }
+            return standardPricebookId;
+        }
+        set;
+    }
 
     /**
      * Instance is created dynamically. This method compensates a constructor.
@@ -24,7 +40,6 @@ public with sharing class TdfPricebook2Template extends TdfSObjectTemplate {
      */
     public override void init() {
         Pricebook2 userDefinedPricebook = (Pricebook2) userDefinedSObject;
-
     }
 
     /**

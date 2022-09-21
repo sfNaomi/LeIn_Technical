@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NewAccStatusOnNewOrder__c</fullName>
+    <fullName>RTsToUpdateAccOnOrderCompletion__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>New Acc Status on New Order</label>
+    <label>RTs to Update Acc on Order Completion</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

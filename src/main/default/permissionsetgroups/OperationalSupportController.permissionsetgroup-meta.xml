@@ -9,10 +9,11 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
-    <permissionSets>PricebookEntryBaseAccess</permissionSets>
-    <permissionSets>PricebookEntryEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

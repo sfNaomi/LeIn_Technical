@@ -14,4 +14,11 @@
         <shortDescription>NoPrimaryContactOnAccountErrorMessage</shortDescription>
         <value>No Primary Contact exists on this account.</value>
     </labels>
+    <labels>
+        <fullName>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</shortDescription>
+        <value>Order creation/completion is not allowed in the current status of the related account.</value>
+    </labels>
 </CustomLabels>

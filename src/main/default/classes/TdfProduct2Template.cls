@@ -1,5 +1,5 @@
 /**
- * Class provides functionality for creating default Order in test methods.
+ * Class provides functionality for creating default product in test methods.
  *
  * Do not use this class directly.
  * Class is initialized in TDF_SObjectTemplateFactory and all its functionality is used through TDF_SObjectFactory.
@@ -7,27 +7,23 @@
  * @see TdfSObjectFactory
  * @see TdfSObjectTemplate
  * @see TdfSObjectTemplateFactory
+ *
  * @author  Magdalena Stanciu
- * @date    2022-09-14
+ * @date    2022-09-20
  *
  */
 @IsTest
-public class TdfOrderTemplate extends TdfSObjectTemplate {
-    private Id orderRecordTypeId;
-    private Id accountId;
+public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
 
     /**
      * Instance is created dynamically. This method compensates a constructor.
      *
      * @author  Magdalena Stanciu
-     * @date    2022-09-14
+     * @date    2022-09-20
      *
      */
     public override void init() {
-        Order userDefinedOrder = (Order) userDefinedSObject;
-        if (userDefinedOrder.AccountId == null) {
-            accountId = TdfSObjectFactory.insertSObject(new Account()).Id;
-        }
+        Product2 userDefinedPricebook = (Product2) userDefinedSObject;
     }
 
     /**
@@ -35,19 +31,18 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
      *
      * Because this method can be called multiple times, all operations as DML or SOQL has to be done in init().
      *
-     * @return order template with default values
+     * @return template with product record
      *
      * @author  Magdalena Stanciu
-     * @date    2022-09-14
+     * @date    2022-09-20
      *
      */
     protected override SObject createTemplateSObject() {
-        Order template = new Order();
-        template.Name = 'Order Name';
-        template.RecordTypeId = orderRecordTypeId;
-        template.Status = 'Draft';
-        template.EffectiveDate = System.today();
-        template.Pricebook2Id = TdfPricebook2Template.standardPricebookId;
+        Product2 template = new Product2(
+                Name = 'Test Product',
+                IsActive = true
+        );
+
         return template;
     }
 }

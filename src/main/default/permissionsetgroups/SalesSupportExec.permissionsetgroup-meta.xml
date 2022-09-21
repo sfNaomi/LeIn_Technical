@@ -7,8 +7,10 @@
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
-    <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>

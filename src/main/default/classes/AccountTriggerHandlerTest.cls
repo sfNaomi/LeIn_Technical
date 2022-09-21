@@ -5,7 +5,7 @@
 @IsTest
 private with sharing class AccountTriggerHandlerTest {
     @IsTest
-    private static void testPrimaryContactAutomationInsertAccountWithPrimaryContact() {
+    private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -26,7 +26,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationUpdateAccountPrimaryContact() {
+    private static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -51,7 +51,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationRemovePrimaryContact() {
+    private static void testPrimaryContactAutomation_RemovePrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
@@ -76,7 +76,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationPrimaryContactMissingContactDetails() {
+    private static void testPrimaryContactAutomation_PrimaryContactMissingContactDetails() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
@@ -99,7 +99,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testNonCoverageAccountMovedToActiveProspect() {
+    private static void testManageAccountTeamMembership_NonCoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = false, AccountStatus__c = 'Prospect')
@@ -124,7 +124,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testNonCoverageAccountMovedToTraders() {
+    private static void testManageAccountTeamMembership_NonCoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = false, AccountStatus__c = 'Active Prospect')
@@ -149,7 +149,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCoverageAccountMovedToActiveProspect() {
+    private static void testManageAccountTeamMembership_CoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = true, AccountStatus__c = 'Prospect')
@@ -174,7 +174,7 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCoverageAccountMovedToTraders() {
+    private static void testManageAccountTeamMembership_CoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = true, AccountStatus__c = 'Active Prospect')
@@ -741,6 +741,7 @@ private with sharing class AccountTriggerHandlerTest {
         Account updatedDpAccount = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccount.Id];
         System.assertEquals(true, updatedDpAccount.PORequired__c);
     }
+
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_InsertMultiples() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -760,6 +761,7 @@ private with sharing class AccountTriggerHandlerTest {
         ];
         System.assertEquals(10, updatedDpAccounts.size());
     }
+
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_Update() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AccStatusesToRemRolesFromAcctTeam__c</fullName>
+    <fullName>StatusesWhereOrderCreationAllowed__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Acc Statuses to Rem Roles from Acc Team</label>
+    <label>Statuses where Order Creation Allowed</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

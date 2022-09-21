@@ -3,20 +3,26 @@
  */
 
 public with sharing class AccountStatusUpdateBatch implements Database.Batchable<sObject>, Schedulable {
-    private Integer batchOrder {
+    private Map<Integer, String> orderFrequencyToBeProcessed = new Map<Integer, String>{
+            1 => 'W',
+            2 => 'F',
+            3 => 'M'
+    };
+
+    private Integer order {
         get {
-            if (batchOrder == null) {
-                batchOrder = 1;
+            if (order == null) {
+                order = 1;
             }
-            return batchOrder;
+            return order;
         }
         set;
     }
 
-    private AccountStatusUpdateBatchSetting__mdt setting {
+    private AccountStatusUpdateSetting__mdt setting {
         get {
             if (setting == null) {
-                setting = getSetting(batchOrder);
+                setting = AccountService.ACC_STATUS_UPDATE_SETTINGS.get(orderFrequencyToBeProcessed.get(order));
             }
             return setting;
         }
@@ -26,8 +32,8 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
     public AccountStatusUpdateBatch() {
     }
 
-    public AccountStatusUpdateBatch(Integer batchOrder) {
-        this.batchOrder = batchOrder;
+    private AccountStatusUpdateBatch(Integer order) {
+        this.order = order;
     }
 
     public Database.QueryLocator start(Database.BatchableContext context) {
@@ -36,41 +42,13 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
     }
 
     public void execute(Database.BatchableContext context, List<Account> accountsToProcess) {
-        List<Account> accountsToUpdate = new List<Account>();
-        for (Account newAccount : accountsToProcess) {            
-            if (newAccount.Orders.isEmpty()) {
-                continue;
-            }
-
-            Date lastOrderDate = Date.valueOf(newAccount.Orders[0].EffectiveDate);
-            
-            if (CommonUtility.isMoreThanXWeeksAgo(lastOrderDate, Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c))) {
-                newAccount.AccountStatus__c = setting.UpdatedAccountStatusUpperLimit__c;
-                accountsToUpdate.add(newAccount);
-                continue;
-            }
-
-            if (CommonUtility.isMoreThanXWeeksAgo(lastOrderDate, Integer.valueOf(setting.NoOfWeeksNoOrdersMidLimit__c))) {
-                newAccount.AccountStatus__c = setting.UpdatedAccountStatusMidLimit__c;
-                accountsToUpdate.add(newAccount);
-                continue;
-            }
-
-            if (CommonUtility.isMoreThanXWeeksAgo(lastOrderDate, Integer.valueOf(setting.NoOfWeeksNoOrdersLowerLimit__c))) {
-                newAccount.AccountStatus__c = setting.UpdatedAccountStatusLowerLimit__c;
-                accountsToUpdate.add(newAccount);
-                continue;
-            }
-
-            newAccount.AccountStatus__c = setting.UpdatedAccountStatusRecentOrders__c;
-            accountsToUpdate.add(newAccount);
-        }
-        update accountsToProcess;
+        List<Account> accountsToUpdate = AccountService.updateAccountStatusBasedOnLastOrderDate(accountsToProcess);
+        update accountsToUpdate;
     }
 
     public void finish(Database.BatchableContext context) {
-        Integer nextBatchOrder = batchOrder + 1;
-        if (getSetting(nextBatchOrder) != null) {
+        Integer nextBatchOrder = order + 1;
+        if (nextBatchOrder <= 3) {
             AccountStatusUpdateBatch nextChainedBatch = new AccountStatusUpdateBatch(nextBatchOrder);
             Database.executeBatch(nextChainedBatch);
         }
@@ -80,22 +58,17 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
         Database.executeBatch(new AccountStatusUpdateBatch());
     }
 
-    private AccountStatusUpdateBatchSetting__mdt getSetting(Integer batchOrder) {
-        return AccountStatusUpdateBatchSetting__mdt.getInstance(
-                'ASUBS_' + String.valueOf(batchOrder)?.leftPad(3, '0')
-        );
-    }
-
     private String getQuery() {
-        String orderTypes = '(\'' + setting.OrderTypes__c.replaceAll(',', '\',\'') + '\')';
-        String accountStatuses = '(\'' + setting.InitialAccountStatuses__c.replaceAll(',', '\',\'') + '\')';
+        String accountStatuses = '(\'' + String.join(AccountService.STATUSES_TO_UPDATE_WHEN_NO_RECENT_ORDERS, '\',\'') + '\')';
         String query =
-                'SELECT Id, (SELECT Id, EffectiveDate FROM Orders WHERE RecordType.DeveloperName ' +
-                'IN ' + orderTypes + ' ' +
-                'ORDER BY EffectiveDate DESC LIMIT 1) ' +
+                'SELECT Id, LastOrderDate__c, Frequency__c, AccountStatus__c ' +
                 'FROM Account ' +
                 'WHERE AccountStatus__c IN ' + accountStatuses + ' ' +
-                'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' ';
+                'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' AND (' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersUpperLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusUpperLimit__c + '\') OR ' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersMidLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusMidLimit__c + '\') OR ' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusLowerLimit__c + '\') ' +
+                ')';
         return query;
     }
 }

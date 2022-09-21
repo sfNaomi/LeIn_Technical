@@ -38,13 +38,13 @@
         <recordType>Account.aforza__Producer</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountSetting__mdt-Account Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountStatusUpdateBatchSetting__mdt-Account Status Update Batch Setting Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+        <layout>OrderSetting__mdt-Order Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>

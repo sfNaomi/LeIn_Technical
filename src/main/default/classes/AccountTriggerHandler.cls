@@ -17,18 +17,6 @@ public with sharing class AccountTriggerHandler {
         DELETION
     }
 
-    private static final Set<String> DEFAULT_PRICE_BOOKS {
-        get {
-            if (DEFAULT_PRICE_BOOKS == null) {
-                DEFAULT_PRICE_BOOKS = new Set<String>(
-                        AccountSetting__mdt.getInstance('OrgDefaultAccountSettings').DefaultPriceBookNames__c.split(',')
-                );
-            }
-            return DEFAULT_PRICE_BOOKS;
-        }
-        set;
-    }
-
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts, List<Account> oldAccounts) {
         List<Account> accountsToUpdateContactDetails = new List<Account>();
         for (Integer index = 0; index < newAccounts.size(); index++) {
@@ -104,18 +92,22 @@ public with sharing class AccountTriggerHandler {
         return operationToAccountListMap;
     }
 
-    public static void determineIfAccountTeamMembersMustBeRemoved(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
-        Set<Id> nonCoverageAccountIdsMovedToTraders = new Set<Id>();
+    public static void manageAccountTeamMembership(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
+        Set<Id> accountIdsWhichRequireAccountMembershipUpdate = new Set<Id>();
         for (Account newAccount : newAccounts) {
-            // Non-coverage accounts moved to "Traders" -> should not be visible for Field Sales users
-            if (!newAccount.IsCoverage__c &&
-                            newAccount.AccountStatus__c != oldAccounts.get(newAccount.Id).AccountStatus__c &&
-                            AccountService.ACC_STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(newAccount.AccountStatus__c)
+            Account oldAccount = oldAccounts.get(newAccount.Id);
+            if (!newAccount.IsCoverage__c && AccountService.accountStatusRequiresAccountTeamMembershipUpdate(newAccount.AccountStatus__c) &&
+                    (newAccount.IsCoverage__c != oldAccount.IsCoverage__c ||
+                        (
+                            newAccount.AccountStatus__c != oldAccount.AccountStatus__c &&
+                            !AccountService.accountStatusRequiresAccountTeamMembershipUpdate(oldAccount.AccountStatus__c)
+                        )
+                    )
             ) {
-                nonCoverageAccountIdsMovedToTraders.add(newAccount.Id);
+                accountIdsWhichRequireAccountMembershipUpdate.add(newAccount.Id);
             }
         }
-        AccountService.removeRolesFromAccountTeam(nonCoverageAccountIdsMovedToTraders, AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM);
+        AccountService.removeRolesFromAccountTeam(accountIdsWhichRequireAccountMembershipUpdate, AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM);
     }
 
     public static void updatePORequiredStartingWithCustomerAccs(List<Account> newAccounts, Map<Id, Account> oldMap) {
@@ -190,9 +182,7 @@ public with sharing class AccountTriggerHandler {
     private static Map<String, Id> getDefaultPriceBooks() {
         Map<String, Id> priceBookNameToId = new Map<String, Id>();
         for (Pricebook2 priceBook : [SELECT Id, Name FROM Pricebook2 WHERE IsActive = TRUE AND Name LIKE '%Default%']) {
-            System.debug(priceBook);
-            for (String defaultName : DEFAULT_PRICE_BOOKS) {
-                System.debug(defaultName);
+            for (String defaultName : Accountservice.DEFAULT_PRICE_BOOKS) {
                 if (priceBook.Name.contains(defaultName)) {
                     priceBookNameToId.put(defaultName.substring(defaultName.lastIndexOf(' ') + 1), priceBook.Id);
                 }

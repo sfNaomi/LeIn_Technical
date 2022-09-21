@@ -9,7 +9,9 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
-    <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

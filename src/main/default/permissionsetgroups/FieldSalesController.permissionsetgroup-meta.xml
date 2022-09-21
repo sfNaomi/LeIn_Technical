@@ -8,8 +8,10 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderFieldSalesAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
-    <permissionSets>PricebookEntryBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductFieldSalesAccess</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
