@@ -25,4 +25,11 @@
         notNull(RecordTypes.ORDER_STRAIGHT_TO_JDE_ID);
         notNull(RecordTypes.ORDER_VAN_SALES_ID);
     }
+
+    @IsTest private static void testAssortmentRecordTypes() {
+        notNull(RecordTypes.ASSORTMENT_ACCOUNT_ASSORTMENT);
+        notNull(RecordTypes.ASSORTMENT_ACCOUNT_ASSORTMENT_ID);
+        notNull(RecordTypes.ASSORTMENT_SEGMENT_ASSORTMENT);
+        notNull(RecordTypes.ASSORTMENT_SEGMENT_ASSORTMENT_ID);
+    }
 }

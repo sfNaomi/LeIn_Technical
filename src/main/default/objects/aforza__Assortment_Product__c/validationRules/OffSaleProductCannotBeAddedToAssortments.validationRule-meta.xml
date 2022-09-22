@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OffSaleProductCannotBeAddedToAssortments</fullName>
+    <active>true</active>
+    <description>Validation rule preventing off-sale products from being added to assortments.</description>
+    <errorConditionFormula>AND(ISNEW(), ISPICKVAL(aforza__Product__r.OffSale__c, &apos;Yes&apos;))</errorConditionFormula>
+    <errorDisplayField>aforza__Product__c</errorDisplayField>
+    <errorMessage>This product is off-sale and cannot be added to assortments.</errorMessage>
+</ValidationRule>

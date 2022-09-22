@@ -11,5 +11,6 @@
     <permissionSets>OrderEditAccess</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
