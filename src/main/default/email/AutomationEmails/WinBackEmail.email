@@ -1,0 +1,11 @@
+Hello, 
+
+there is a Win Back Order on customer 
+
+DP Account Name: {!Order.AccountName__c}
+Order Number: {!Order.OrderNumber}
+Total Order Amount: {!Order.TotalAmount}
+Order Link: {!Order.Link}
+Order Owner: {!Order.OwnerName__c}
+
+Your SF Team
