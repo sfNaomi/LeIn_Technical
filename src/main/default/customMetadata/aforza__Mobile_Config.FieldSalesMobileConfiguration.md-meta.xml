@@ -64,6 +64,6 @@
     </values>
     <values>
         <field>aforza__Profiles_JSON__c</field>
-        <value xsi:type="xsd:string">[&quot;00e1j000001APaBAAW&quot;,&quot;00e1j000001APaCAAW&quot;]</value>
+        <value xsi:type="xsd:string">[&quot;00e1j000001APaBAAW&quot;]</value>
     </values>
 </CustomMetadata>
