@@ -3,14 +3,20 @@
     <fullName>ParentId</fullName>
     <lookupFilter>
         <active>true</active>
-        <errorMessage>Only Account of type Customer can be selected.</errorMessage>
+        <errorMessage>Only Account of type Customer can be selected. Only from Delivery Point Record.</errorMessage>
         <filterItems>
             <field>Account.RecordType.DeveloperName</field>
             <operation>equals</operation>
             <value>Customer</value>
         </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeName__c</field>
+            <operation>equals</operation>
+            <value>Outlet</value>
+        </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Hierarchy</type>
 </CustomField>

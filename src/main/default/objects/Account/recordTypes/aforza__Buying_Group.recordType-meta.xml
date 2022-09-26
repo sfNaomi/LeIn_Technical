@@ -626,6 +626,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RTM__c</picklist>
+        <values>
+            <fullName>Barr Direct</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cash%26Carry</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Rating</picklist>
         <values>
             <fullName>Cold</fullName>
@@ -637,6 +648,17 @@
         </values>
         <values>
             <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RecordTypeName__c</picklist>
+        <values>
+            <fullName>Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outlet</fullName>
             <default>false</default>
         </values>
     </picklistValues>
