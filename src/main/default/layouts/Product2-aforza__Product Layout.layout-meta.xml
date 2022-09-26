@@ -31,7 +31,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OffSale__c</field>
+                <field>ProductStatus__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -44,7 +44,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>UnitsPerPack__c</field>
+                <field>aforza__Typical_Quantity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -74,7 +74,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>aforza__Typical_Quantity__c</field>
+                <field>aforza__Height__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -83,10 +83,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>HeightDimension__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>aforza__Height__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
