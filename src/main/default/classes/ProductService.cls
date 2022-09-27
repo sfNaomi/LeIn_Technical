@@ -61,7 +61,7 @@ public with sharing class ProductService {
 
     public static aforza__Relationship_Rule__c createNewDRSRelationshipRule(Product2 baseProduct, Product2 drsProduct) {
         aforza__Relationship_Rule__c relationship = new aforza__Relationship_Rule__c();
-        relationship.aforza__Local_Id__c = createLocalIdForRelationshipRule(
+        relationship.ExternalId__c = createExternalIdForRelationshipRule(
                 SETTINGS.DRSProductRelationshipRulePrefix__c,
                 baseProduct.StockKeepingUnit,
                 drsProduct.StockKeepingUnit
@@ -80,7 +80,7 @@ public with sharing class ProductService {
         List<String> idsOfRelationshipsToBeDeleted = new List<String>();
         for (Product2 oldProduct : oldProducts) {
             idsOfRelationshipsToBeDeleted.add(
-                    createLocalIdForRelationshipRule(
+                    createExternalIdForRelationshipRule(
                             SETTINGS.DRSProductRelationshipRulePrefix__c,
                             oldProduct.StockKeepingUnit,
                             oldProduct.DRSSKUCode__c
@@ -91,7 +91,7 @@ public with sharing class ProductService {
         List<aforza__Relationship_Rule__c> relationshipsToBeDeleted = [
                 SELECT Id
                 FROM aforza__Relationship_Rule__c
-                WHERE aforza__Local_Id__c IN :idsOfRelationshipsToBeDeleted
+                WHERE ExternalId__c IN :idsOfRelationshipsToBeDeleted
         ];
 
         delete relationshipsToBeDeleted;
@@ -101,7 +101,7 @@ public with sharing class ProductService {
         List<aforza__Relationship_Rule__c> relationshipsToBeUpdated = new List<aforza__Relationship_Rule__c>();
         for (Product2 newProduct : newProducts) {
             aforza__Relationship_Rule__c newRelationship = new aforza__Relationship_Rule__c();
-            newRelationship.aforza__LocaL_Id__c = createLocalIdForRelationshipRule (
+            newRelationship.ExternalId__c = createExternalIdForRelationshipRule (
                     SETTINGS.DRSProductRelationshipRulePrefix__c,
                     newProduct.StockKeepingUnit,
                     newProduct.DRSSKUCode__c
@@ -109,10 +109,10 @@ public with sharing class ProductService {
             newRelationship.aforza__Quantity__c = newProduct.DRSGrossUnits__c;
             relationshipsToBeUpdated.add(newRelationship);
         }
-        upsert relationshipsToBeUpdated aforza__LocaL_Id__c;
+        upsert relationshipsToBeUpdated ExternalId__c;
     }
 
-    public static String createLocalIdForRelationshipRule(String prefix, String baseProductSKU, String drsProductSku) {
+    public static String createExternalIdForRelationshipRule(String prefix, String baseProductSKU, String drsProductSku) {
         return prefix + baseProductSKU + drsProductSku;
     }
 }
