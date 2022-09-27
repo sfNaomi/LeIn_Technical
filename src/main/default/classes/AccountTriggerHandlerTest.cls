@@ -5,10 +5,14 @@
 @IsTest
 private with sharing class AccountTriggerHandlerTest {
     @IsTest
-    private static void testPrimaryContactAutomationInsertAccountWithPrimaryContact() {
+    private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = primaryContactParentAccount.Id)
+        );
 
         // create new DP account and set primary contact
         Test.startTest();
@@ -26,14 +30,22 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationUpdateAccountPrimaryContact() {
+    private static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = primaryContactParentAccount.Id)
+        );
 
         // create new DP account
         Account testDPAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, Phone = '+404234234234', Email__c = 'test@test.com')
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                Phone = '+404234234234',
+                Email__c = 'test@test.com'
+            )
         );
 
         // update the primary contact of the DP account
@@ -51,10 +63,14 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationRemovePrimaryContact() {
+    private static void testPrimaryContactAutomation_RemovePrimaryContact() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = primaryContactParentAccount.Id));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = primaryContactParentAccount.Id)
+        );
 
         // create new DP account and set primary contact; update account by removing primary contact
         Test.startTest();
@@ -76,9 +92,11 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testPrimaryContactAutomationPrimaryContactMissingContactDetails() {
+    private static void testPrimaryContactAutomation_PrimaryContactMissingContactDetails() {
         // create new contact to be set as primary
-        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
             new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null)
         );
@@ -99,12 +117,18 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testNonCoverageAccountMovedToActiveProspect() {
+    private static void testManageAccountTeamMembership_NonCoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = false, AccountStatus__c = 'Prospect')
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = false,
+                AccountStatus__c = 'Prospect'
+            )
         );
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'));
+        TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+        );
 
         // update status
         Test.startTest();
@@ -124,12 +148,18 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testNonCoverageAccountMovedToTraders() {
+    private static void testManageAccountTeamMembership_NonCoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = false, AccountStatus__c = 'Active Prospect')
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = false,
+                AccountStatus__c = 'Active Prospect'
+            )
         );
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'));
+        TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+        );
 
         // update status
         Test.startTest();
@@ -149,12 +179,18 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCoverageAccountMovedToActiveProspect() {
+    private static void testManageAccountTeamMembership_CoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = true, AccountStatus__c = 'Prospect')
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = true,
+                AccountStatus__c = 'Prospect'
+            )
         );
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'));
+        TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+        );
 
         // update status
         Test.startTest();
@@ -174,12 +210,18 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCoverageAccountMovedToTraders() {
+    private static void testManageAccountTeamMembership_CoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, IsCoverage__c = true, AccountStatus__c = 'Active Prospect')
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                IsCoverage__c = true,
+                AccountStatus__c = 'Active Prospect'
+            )
         );
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep'));
+        TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+        );
 
         // update status
         Test.startTest();
@@ -230,7 +272,9 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_InsertNoCreateCallChecked() {
         Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, CreateCalls__c = false));
+        TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, CreateCalls__c = false)
+        );
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
@@ -259,7 +303,9 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_InsertWrongStatus() {
         Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Legal'));
+        TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Legal')
+        );
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
@@ -317,7 +363,9 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_InsertNoPrimaryGrid() {
         Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = null));
+        TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = null)
+        );
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
@@ -346,7 +394,9 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_InsertNoStartDate() {
         Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryStartDate__c = null));
+        TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryStartDate__c = null)
+        );
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
@@ -374,7 +424,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryStartDate() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
         Date newDate = Date.parse('21/09/2022');
 
         Test.startTest();
@@ -407,7 +459,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryGrid() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '3C7201WEW'; //changing Call Day of Week (3)
@@ -439,7 +493,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoCreateCalls() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
 
         List<aforza__Recurring_Record__c> checkItExists = [
             SELECT
@@ -492,7 +548,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_OutStatus() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
 
         List<aforza__Recurring_Record__c> checkItExists = [
             SELECT
@@ -545,7 +603,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoGrid() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
 
         List<aforza__Recurring_Record__c> checkItExists = [
             SELECT
@@ -598,7 +658,9 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoPrimaryStartDate() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
 
         List<aforza__Recurring_Record__c> checkItExists = [
             SELECT
@@ -719,7 +781,9 @@ private with sharing class AccountTriggerHandlerTest {
         Pricebook2 priceBook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default Scotland'));
 
         Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East'));
+        TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East')
+        );
         Test.stopTest();
 
         Account acc = [SELECT Id, aforza__Default_Price_Book__c FROM Account LIMIT 1][0];
@@ -728,8 +792,10 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testUpdatePORequiredStartingWithCustomerAccs_Update() {
-        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID));
+    private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateTrue() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID)
+        );
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
         );
@@ -741,6 +807,23 @@ private with sharing class AccountTriggerHandlerTest {
         Account updatedDpAccount = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccount.Id];
         System.assertEquals(true, updatedDpAccount.PORequired__c);
     }
+    @IsTest
+    private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateFalse() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+        );
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
+        );
+        Test.startTest();
+        customerAccount.PORequired__c = false;
+        update customerAccount;
+        Test.stopTest();
+
+        Account updatedDpAccount = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccount.Id];
+        System.assertEquals(false, updatedDpAccount.PORequired__c);
+    }
+
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_InsertMultiples() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -760,12 +843,16 @@ private with sharing class AccountTriggerHandlerTest {
         ];
         System.assertEquals(10, updatedDpAccounts.size());
     }
+
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_Update() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
-        List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID), 10);
+        List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID),
+            10
+        );
         Test.startTest();
         for (Account acc : dpAccounts) {
             acc.ParentId = customerAccount.Id;

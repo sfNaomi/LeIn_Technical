@@ -5,13 +5,11 @@
 trigger AccountTrigger on Account(before insert, before update, after update, after insert) {
     switch on Trigger.operationType {
         when BEFORE_INSERT {
-            // copy contact details (phone & email) from primary contacts to accounts
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, null);
             AccountTriggerHandler.assignDefaultPriceBook(Trigger.new);
             AccountTriggerHandler.updatePORequiredStartingWithDPs(Trigger.new, Trigger.oldMap);
         }
         when BEFORE_UPDATE {
-            // copy contact details (phone & email) from primary contacts to accounts
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, Trigger.old);
             AccountTriggerHandler.updatePORequiredStartingWithDPs(Trigger.new, Trigger.oldMap);
         }
@@ -20,7 +18,7 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
-            AccountTriggerHandler.determineIfAccountTeamMembersMustBeRemoved(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.manageAccountTeamMembership(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.updatePORequiredStartingWithCustomerAccs(Trigger.new, Trigger.oldMap);
         }
     }

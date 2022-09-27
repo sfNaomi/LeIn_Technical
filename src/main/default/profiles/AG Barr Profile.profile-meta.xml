@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>TAMDesktopApp</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
     <custom>true</custom>
     <layoutAssignments>
         <layout>Account-Customer Account Page</layout>
@@ -33,13 +38,13 @@
         <recordType>Account.aforza__Producer</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountSetting__mdt-Account Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AccountStatusUpdateBatchSetting__mdt-Account Status Update Batch Setting Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+        <layout>OrderSetting__mdt-Order Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>

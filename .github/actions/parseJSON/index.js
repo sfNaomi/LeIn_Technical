@@ -22,6 +22,9 @@ try {
         case 'interfaces':
             certificatePath = '${HOME}/interfaces.key';
             break;
+        case 'sit':
+            certificatePath = '${HOME}/sit.key';
+            break;
         default:
             certificatePath = '${HOME}/qa.key';
     }

@@ -3,11 +3,6 @@
     <description>Base access for Product object - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.DRSGrossPack__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Product2.DRSGrossUnits__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -83,11 +78,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.ProductStatus__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Product2.Rating__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,6 +109,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.aforza__Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.UnitsPerPack__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -6,7 +6,9 @@ public with sharing class AccountTriggerHandler {
     private static final Set<String> VISIT_STATUSES {
         get {
             if (VISIT_STATUSES == null) {
-                VISIT_STATUSES = new Set<String>(CallRecurrenceSetting__mdt.getInstance('OrgDefaultCallSettings').AllowedStatuses__c.split(','));
+                VISIT_STATUSES = new Set<String>(
+                    CallRecurrenceSetting__mdt.getInstance('OrgDefaultCallSettings').AllowedStatuses__c.split(',')
+                );
             }
             return VISIT_STATUSES;
         }
@@ -15,18 +17,6 @@ public with sharing class AccountTriggerHandler {
     private enum Operation {
         UPSERTION,
         DELETION
-    }
-
-    private static final Set<String> DEFAULT_PRICE_BOOKS {
-        get {
-            if (DEFAULT_PRICE_BOOKS == null) {
-                DEFAULT_PRICE_BOOKS = new Set<String>(
-                    AccountSetting__mdt.getInstance('OrgDefaultAccountSettings').DefaultPriceBookNames__c.split(',')
-                );
-            }
-            return DEFAULT_PRICE_BOOKS;
-        }
-        set;
     }
 
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts, List<Account> oldAccounts) {
@@ -43,7 +33,10 @@ public with sharing class AccountTriggerHandler {
     }
 
     public static void manageReoccurrenceRecord(List<Account> newAccounts, Map<Id, Account> oldMap) {
-        Map<Operation, List<Account>> operationToAccountListMap = determineAccountsToManageRecurrenceFor(newAccounts, oldMap);
+        Map<Operation, List<Account>> operationToAccountListMap = determineAccountsToManageRecurrenceFor(
+            newAccounts,
+            oldMap
+        );
 
         if (operationToAccountListMap.get(Operation.UPSERTION).size() > 0) {
             RecurringRecordService.upsertRecurringRecords(operationToAccountListMap.get(Operation.UPSERTION));
@@ -58,7 +51,10 @@ public with sharing class AccountTriggerHandler {
         }
     }
 
-    private static Map<Operation, List<Account>> determineAccountsToManageRecurrenceFor(List<Account> newAccounts, Map<Id, Account> oldMap) {
+    private static Map<Operation, List<Account>> determineAccountsToManageRecurrenceFor(
+        List<Account> newAccounts,
+        Map<Id, Account> oldMap
+    ) {
         Map<Operation, List<Account>> operationToAccountListMap = new Map<Operation, List<Account>>();
         operationToAccountListMap.put(Operation.UPSERTION, new List<Account>());
         operationToAccountListMap.put(Operation.DELETION, new List<Account>());
@@ -87,7 +83,8 @@ public with sharing class AccountTriggerHandler {
                     account.PrimaryStartDate__c != null &&
                     (account.PrimaryStartDate__c <> oldAccount.PrimaryStartDate__c ||
                     account.PrimaryGridNumber__c <> oldAccount.PrimaryGridNumber__c ||
-                            account.AccountStatus__c <> oldAccount.AccountStatus__c)
+                    account.AccountStatus__c <> oldAccount.AccountStatus__c ||
+                    account.CallPriority__c <> oldAccount.CallPriority__c)
                 ) {
                     operationToAccountListMap.get(Operation.UPSERTION).add(account);
                     continue;
@@ -95,8 +92,10 @@ public with sharing class AccountTriggerHandler {
                 // check for delete after update context
                 if (
                     (oldAccount.CreateCalls__c && account.CreateCalls__c == false) ||
-                    (VISIT_STATUSES.contains(oldAccount.AccountStatus__c) && !VISIT_STATUSES.contains(account.AccountStatus__c)) ||
-                    (String.isNotEmpty(oldAccount.PrimaryGridNumber__c) && String.isEmpty(account.PrimaryGridNumber__c)) ||
+                    (VISIT_STATUSES.contains(oldAccount.AccountStatus__c) &&
+                    !VISIT_STATUSES.contains(account.AccountStatus__c)) ||
+                    (String.isNotEmpty(oldAccount.PrimaryGridNumber__c) &&
+                    String.isEmpty(account.PrimaryGridNumber__c)) ||
                     (oldAccount.PrimaryStartDate__c != null &&
                     account.PrimaryStartDate__c == null)
                 ) {
@@ -107,23 +106,29 @@ public with sharing class AccountTriggerHandler {
         return operationToAccountListMap;
     }
 
-    public static void determineIfAccountTeamMembersMustBeRemoved(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
-        Set<Id> nonCoverageAccountIdsMovedToTraders = new Set<Id>();
+    public static void manageAccountTeamMembership(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
+        Set<Id> accountIdsWhichRequireAccountMembershipUpdate = new Set<Id>();
         for (Account newAccount : newAccounts) {
-            // Non-coverage accounts moved to "Traders" -> should not be visible for Field Sales users
+            Account oldAccount = oldAccounts.get(newAccount.Id);
             if (
                 !newAccount.IsCoverage__c &&
-                newAccount.AccountStatus__c != oldAccounts.get(newAccount.Id).AccountStatus__c &&
-                AccountService.ACC_STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(newAccount.AccountStatus__c)
+                AccountService.accountStatusRequiresAccountTeamMembershipUpdate(newAccount.AccountStatus__c) &&
+                (newAccount.IsCoverage__c != oldAccount.IsCoverage__c ||
+                (newAccount.AccountStatus__c != oldAccount.AccountStatus__c &&
+                !AccountService.accountStatusRequiresAccountTeamMembershipUpdate(oldAccount.AccountStatus__c)))
             ) {
-                nonCoverageAccountIdsMovedToTraders.add(newAccount.Id);
+                accountIdsWhichRequireAccountMembershipUpdate.add(newAccount.Id);
             }
         }
-        AccountService.removeRolesFromAccountTeam(nonCoverageAccountIdsMovedToTraders, AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM);
+        AccountService.removeRolesFromAccountTeam(
+            accountIdsWhichRequireAccountMembershipUpdate,
+            AccountService.ROLES_TO_BE_REMOVED_FROM_ACCOUNT_TEAM
+        );
     }
 
     public static void updatePORequiredStartingWithCustomerAccs(List<Account> newAccounts, Map<Id, Account> oldMap) {
         List<Id> customerAccountsWithPOReq = new List<Id>();
+        List<Id> customerAccountsWithoutPOReq = new List<Id>();
         for (Account account : newAccounts) {
             if (
                 oldMap != null &&
@@ -133,10 +138,31 @@ public with sharing class AccountTriggerHandler {
             ) {
                 customerAccountsWithPOReq.add(account.Id);
             }
+            if (
+                oldMap != null &&
+                account.RecordTypeId == RecordTypes.ACCOUNT_CUSTOMER_ID &&
+                account.PORequired__c == false &&
+                oldMap.get(account.Id).PORequired__c != false
+            ) {
+                customerAccountsWithoutPOReq.add(account.Id);
+            }
         }
-        List<Account> dpAccountsToUpdate = [SELECT PORequired__c, ParentId FROM Account WHERE ParentId IN :customerAccountsWithPOReq];
+        if (!customerAccountsWithPOReq.isEmpty()) {
+            updateDPsWithNewPORequiredValue(customerAccountsWithPOReq, true);
+        }
+        if (!customerAccountsWithoutPOReq.isEmpty()) {
+            updateDPsWithNewPORequiredValue(customerAccountsWithoutPOReq, false);
+        }
+    }
+
+    public static void updateDPsWithNewPORequiredValue(List<Id> customerAccounts, Boolean newValue) {
+        List<Account> dpAccountsToUpdate = [
+            SELECT PORequired__c, ParentId
+            FROM Account
+            WHERE ParentId IN :customerAccounts
+        ];
         for (Account account : dpAccountsToUpdate) {
-            account.PORequired__c = true;
+            account.PORequired__c = newValue;
         }
         update dpAccountsToUpdate;
     }
@@ -172,7 +198,10 @@ public with sharing class AccountTriggerHandler {
         }
     }
 
-    public static void addChildrenDPsToParentCustomerAcc(Account newAccount, Map<Id, List<Account>> customerAccountIdsToDPAccounts) {
+    public static void addChildrenDPsToParentCustomerAcc(
+        Account newAccount,
+        Map<Id, List<Account>> customerAccountIdsToDPAccounts
+    ) {
         if (customerAccountIdsToDPAccounts.containsKey(newAccount.ParentId)) {
             customerAccountIdsToDPAccounts.get(newAccount.ParentId).add(newAccount);
         } else {
@@ -193,9 +222,7 @@ public with sharing class AccountTriggerHandler {
     private static Map<String, Id> getDefaultPriceBooks() {
         Map<String, Id> priceBookNameToId = new Map<String, Id>();
         for (Pricebook2 priceBook : [SELECT Id, Name FROM Pricebook2 WHERE IsActive = TRUE AND Name LIKE '%Default%']) {
-            System.debug(priceBook);
-            for (String defaultName : DEFAULT_PRICE_BOOKS) {
-                System.debug(defaultName);
+            for (String defaultName : Accountservice.DEFAULT_PRICE_BOOKS) {
                 if (priceBook.Name.contains(defaultName)) {
                     priceBookNameToId.put(defaultName.substring(defaultName.lastIndexOf(' ') + 1), priceBook.Id);
                 }

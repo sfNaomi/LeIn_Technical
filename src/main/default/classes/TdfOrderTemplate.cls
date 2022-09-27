@@ -25,7 +25,6 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
      */
     public override void init() {
         Order userDefinedOrder = (Order) userDefinedSObject;
-        orderRecordTypeId = userDefinedOrder.RecordTypeId;
         if (userDefinedOrder.AccountId == null) {
             accountId = TdfSObjectFactory.insertSObject(new Account()).Id;
         }
@@ -47,7 +46,8 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
         template.Name = 'Order Name';
         template.RecordTypeId = orderRecordTypeId;
         template.Status = 'Draft';
-        template.EffectiveDate = system.today();
+        template.EffectiveDate = System.today();
+        template.Pricebook2Id = TdfPricebook2Template.standardPricebookId;
         return template;
     }
 }

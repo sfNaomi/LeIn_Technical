@@ -33,11 +33,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DRSGrossPack__c</field>
-            <table>Product2</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>DRSSKUCode__c</field>
             <table>Product2</table>
         </columns>
@@ -334,6 +329,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>aforza__Width__c</field>
+            <table>Product2</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>UnitsPerPack__c</field>
             <table>Product2</table>
         </columns>
         <masterLabel>Products</masterLabel>

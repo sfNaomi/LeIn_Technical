@@ -3,6 +3,11 @@
     <description>Admin access for Order and Order Product objects - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.AccountName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.ActivatedById</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -69,6 +74,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.OrderReferenceNumber</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.OwnerName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -383,6 +393,7 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Order Admin Access</label>
+    <license>Salesforce</license>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -420,5 +431,8 @@
         <recordType>Order.VanSalesOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <license>Salesforce</license>
+    <tabSettings>
+        <tab>standard-Order</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

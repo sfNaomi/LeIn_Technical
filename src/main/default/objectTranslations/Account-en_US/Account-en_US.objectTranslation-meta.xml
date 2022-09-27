@@ -6,18 +6,6 @@
             <label><!-- Additional Store Information --></label>
             <section>Additional Store Information</section>
         </sections>
-        <sections>
-            <label><!-- Delivery Information --></label>
-            <section>Delivery Information</section>
-        </sections>
-        <sections>
-            <label><!-- Field Sales Information --></label>
-            <section>Field Sales Information</section>
-        </sections>
-        <sections>
-            <label><!-- Grid Details --></label>
-            <section>Grid Details</section>
-        </sections>
     </layouts>
     <layouts>
         <layout>Delivery Point Page</layout>

@@ -3,11 +3,6 @@
     <description>Admin access for Product object - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.DRSGrossPack__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Product2.DRSGrossUnits__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -109,11 +104,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ProductCode</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.ProductStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -289,6 +279,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.aforza__Unique_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.UnitsPerPack__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
