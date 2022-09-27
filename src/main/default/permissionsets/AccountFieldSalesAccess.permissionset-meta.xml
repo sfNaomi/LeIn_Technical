@@ -2,6 +2,11 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Field Sales access for Account object and fields</description>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ProofOfDeliveryRequired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.NextDeliveryDateHidden__c</field>
         <readable>true</readable>

@@ -307,6 +307,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+            <editable>true</editable>
+            <field>Account.ProofOfDeliveryRequired__c</field>
+            <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.RTM__c</field>
         <readable>true</readable>
