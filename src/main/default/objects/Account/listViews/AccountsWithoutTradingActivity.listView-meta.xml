@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountsWithoutTradingActivity</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>DeliveryPointReference__c</columns>
+    <columns>PARENT_NAME</columns>
+    <columns>AccountStatus__c</columns>
+    <columns>WeeksSinceLastOrder__c</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <columns>Email__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>AccountStatus__c</field>
+        <operation>equals</operation>
+        <value>At Risk,Win Back,Lapsed</value>
+    </filters>
+    <label>Accounts Without Trading Activity</label>
+</ListView>

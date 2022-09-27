@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>MissingContactDetailsOnPrimaryContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MissingContactDetailsOnPrimaryContact</shortDescription>
+        <value>Primary Contact is missing contact details (Email and/or Phone).</value>
+    </labels>
+    <labels>
+        <fullName>NoPrimaryContactOnAccountErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoPrimaryContactOnAccountErrorMessage</shortDescription>
+        <value>No Primary Contact exists on this account.</value>
+    </labels>
+    <labels>
+        <fullName>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</shortDescription>
+        <value>Order creation/completion is not allowed in the current status of the related account.</value>
+    </labels>
+</CustomLabels>

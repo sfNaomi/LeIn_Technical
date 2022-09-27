@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Energy Rep</label>
+    <permissionSets>AccountFieldSalesAccess</permissionSets>
+    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderFieldSalesAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>ProductFieldSalesAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Plan</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

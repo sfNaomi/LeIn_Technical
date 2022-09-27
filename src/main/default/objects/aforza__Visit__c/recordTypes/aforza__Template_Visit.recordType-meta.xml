@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Template_Visit</fullName>
+    <active>true</active>
+    <description>A visit template for quickly creating new visits.</description>
+    <label>Template Visit</label>
+    <picklistValues>
+        <picklist>aforza__Status__c</picklist>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Started</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ring Back</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>aforza__Type__c</picklist>
+        <values>
+            <fullName>Conference</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outlet Visit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

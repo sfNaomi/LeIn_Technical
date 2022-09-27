@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoOrderCalls</fullName>
+    <columns>NAME</columns>
+    <columns>aforza__Account__c</columns>
+    <columns>aforza__Priority__c</columns>
+    <columns>aforza__Status__c</columns>
+    <columns>AccountPrimaryGridNumber__c</columns>
+    <columns>AccountSecondaryGridNumber__c</columns>
+    <columns>aforza__Planned_Time__c</columns>
+    <columns>CallNote__c</columns>
+    <columns>AccountDepot__c</columns>
+    <columns>OnHoldIndicator__c</columns>
+    <columns>AccountLastOrderDate__c</columns>
+    <columns>AccountNextDeliveryDate__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>aforza__Planned_Time__c</field>
+        <operation>equals</operation>
+        <value>LAST_WEEK</value>
+    </filters>
+    <filters>
+        <field>AccountSecondaryGridNumber__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>aforza__Status__c</field>
+        <operation>equals</operation>
+        <value>No Order</value>
+    </filters>
+    <label>No Order Calls</label>
+</ListView>

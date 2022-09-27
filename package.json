@@ -1,13 +1,16 @@
 {
     "name": "ag-barr",
+    "main": ".github/actions/parseJSON/index.js",
     "version": "0.1.0",
     "license": "MIT",
     "private": true,
     "description": "AG Barr project",
     "scripts": {
-        "sfci:init": "sfdx ci:org:create -a ${npm_config_alias} && sfdx ci:package:install && npm run sfci:init:postcreate && npm run data:import --target=${npm_config_alias}",
+        "sfci:init:ci": "sfdx ci:org:create -a ${npm_config_alias} && sfdx ci:org:printurl && sfdx ci:package:install && sfdx ci:source:push --ci && sfdx ci:user:assign:permsetgroup && sfdx ci:user:assign:profile",
+        "sfci:init": "sfdx ci:org:create -a ${npm_config_alias} && sfdx ci:org:printurl && sfdx ci:package:install && npm run sfci:init:postcreate && npm run data:import --target=${npm_config_alias}",
         "sfci:init:win": "sfdx ci:org:create -a %npm_config_alias% && sfdx ci:package:install && npm run sfci:init:postcreate && npm run data:import --target=%npm_config_alias%",
-        "sfci:init:postcreate": "sfdx ci:org:printurl && sfdx ci:source:push && sfdx ci:user:assign:permsetgroup",
+        "sfci:init:postcreate": "sfdx ci:source:push && sfdx ci:user:assign:permsetgroup && sfdx ci:user:assign:profile",
+        "sfci:init:assignPsg": "sfdx ci:user:assign:permsetgroup && sfdx ci:user:assign:profile && npm run data:import --target=${npm_config_alias}",
         "data:import": "sfdx sfdmu:run --path data --sourceusername csvfile --targetusername ${npm_config_target}",
         "data:import:win": "sfdx sfdmu:run --path data --sourceusername csvfile --targetusername %npm_config_target%",
         "data:export": "sfdx sfdmu:run --path data --sourceusername ${npm_config_source} --targetusername csvfile",
@@ -23,5 +26,9 @@
     "devDependencies": {
         "eslint-config-sf-common": "latest",
         "salesforce-source-gen": "latest"
+    },
+    "dependencies": {
+        "@actions/core": "^1.9.1",
+        "xml2js": "^0.4.23"
     }
 }

@@ -4,11 +4,19 @@
     <label>Administrator</label>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
-    <permissionSets>CreateAndEditReports</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
+    <permissionSets>OrderAdminAccess</permissionSets>
+    <permissionSets>PricebookAdminAccess</permissionSets>
+    <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>
+    <permissionSets>VisitAdminAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Admin</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

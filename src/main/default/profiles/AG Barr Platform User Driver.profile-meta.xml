@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>TAMDesktopApp</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <custom>true</custom>
+    <layoutAssignments>
+        <layout>Account-Customer Account Page</layout>
+        <recordType>Account.Customer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Business</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Buying_Group</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Distributor</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Logistics_Provider</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Outlet</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-Delivery Point Page</layout>
+        <recordType>Account.aforza__Producer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountStatusUpdateSetting__mdt-Account Status Update Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountSetting__mdt-Account Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OrderSetting__mdt-Order Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-aforza__Contact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ECommerceOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.EDIOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.FieldDirectOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ReturnOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.StraightToJDEOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.TelesalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.VanSalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OrderItem-aforza__Order Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Pricebook2-aforza__Price Book Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Product2-aforza__Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>aforza__Recurring_Record__c-aforza__Recurring Record Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>aforza__Visit__c-aforza__Visit Direct Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>aforza__Visit__c-aforza__Visit Direct Layout</layout>
+        <recordType>aforza__Visit__c.aforza__Direct_Visit</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>aforza__Visit__c-aforza__Visit Remote Layout</layout>
+        <recordType>aforza__Visit__c.aforza__Remote_Visit</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>aforza__Visit__c-aforza__Visit Template Layout</layout>
+        <recordType>aforza__Visit__c.aforza__Template_Visit</recordType>
+    </layoutAssignments>
+    <loginIpRanges>
+        <endAddress>255.255.255.255</endAddress>
+        <startAddress>0.0.0.0</startAddress>
+    </loginIpRanges>
+    <tabVisibilities>
+        <tab>standard-Account</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-Contact</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <userLicense>Salesforce Platform</userLicense>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ActivitiesAccess</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterEditOwnPost</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterInternalUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditEvent</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditTask</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EmailSingle</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>LightningExperienceUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>TransactionalEmailSend</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>UseWebLink</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewHelpLink</name>
+    </userPermissions>
+</Profile>

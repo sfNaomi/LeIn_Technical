@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales Controller</label>
+    <permissionSets>AccountTelesalesAccess</permissionSets>
+    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderTelesalesAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Deliver</permissionSets>
+    <permissionSets>aforza__Aforza_Plan</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>
