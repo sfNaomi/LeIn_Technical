@@ -22,5 +22,11 @@
         "clientId": "3MVG9DREgiBqN9WnX6bDiTmd6M0BZk90lb6KO2QmndzM5IjqTsvJmg48XrbEDGpFHvb9ypvsURqXMfg76u1yu",
         "instanceUrl": "https://login.salesforce.com",
         "runDestructive": false
+    },
+    "sit": {
+        "userName": "admin@agbarr.aforza.org.sit",
+        "clientId": "3MVG9xqN3LZmHU7nIjL98FJA6HOIrBzlQfcA4SLD0hPwPoWJnxR229j16J5vDmQVt4YhJbCh5ePmS6qwV6ULH",
+        "instanceUrl": "https://test.salesforce.com",
+        "runDestructive": true
     }
 }
