@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PORequiredValidation</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+  ISPICKVAL( Status , &quot;Activated&quot;),  
+  ISBLANK( PoNumber ),  
+  Account.PORequired__c, 
+  OR( RecordType.DeveloperName = &quot;TelesalesOrder&quot;, 
+      RecordType.DeveloperName = &quot;FieldDirectOrder&quot;
+   ) 
+)</errorConditionFormula>
+    <errorMessage>Please fill out the Purchase Order Number on this order.</errorMessage>
+</ValidationRule>

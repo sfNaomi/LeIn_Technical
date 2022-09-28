@@ -163,6 +163,10 @@
                 <behavior>Readonly</behavior>
                 <field>TradingFrequency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ProofOfDeliveryRequired__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

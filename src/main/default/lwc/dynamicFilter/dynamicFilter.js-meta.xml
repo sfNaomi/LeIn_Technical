@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <description>Accepts object and set of fields for filtering and to obtain and returns a filtered list of data.
+    </description>
+    <isExposed>false</isExposed>
+    <masterLabel>Dynamic Filter</masterLabel>
+</LightningComponentBundle>

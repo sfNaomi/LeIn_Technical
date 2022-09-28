@@ -127,7 +127,7 @@ public with sharing class AccountService {
 
         for (Account newAccount : newAccounts) {
             AccountStatusUpdateSetting__mdt setting = ACC_STATUS_UPDATE_SETTINGS.get(newAccount.Frequency__c);
-
+            
             if (setting == null) {
                 continue;
             }
@@ -136,25 +136,28 @@ public with sharing class AccountService {
                 continue;
             }
 
-            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c)) &&
-                newAccount.AccountStatus__c != setting.UpdatedAccountStatusUpperLimit__c) {
+            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c))) {
+                if (newAccount.AccountStatus__c != setting.UpdatedAccountStatusUpperLimit__c) {
                     newAccount.AccountStatus__c = setting.UpdatedAccountStatusUpperLimit__c;
                     accountsWithUpdatedStatus.add(newAccount);
-                    continue;
+                }
+                continue;              
             }
 
-            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersMidLimit__c)) &&
-                newAccount.AccountStatus__c != setting.UpdatedAccountStatusMidLimit__c) {
+            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersMidLimit__c))) {
+                if (newAccount.AccountStatus__c != setting.UpdatedAccountStatusMidLimit__c) {
                     newAccount.AccountStatus__c = setting.UpdatedAccountStatusMidLimit__c;
                     accountsWithUpdatedStatus.add(newAccount);
-                    continue;
+                }
+                continue;
             }
 
-            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersLowerLimit__c)) &&
-                newAccount.AccountStatus__c != setting.UpdatedAccountStatusLowerLimit__c) {
+            if (CommonUtility.isMoreThanXWeeksAgo(newAccount.LastOrderDate__c, Integer.valueOf(setting.NoOfWeeksNoOrdersLowerLimit__c))) {
+                if (newAccount.AccountStatus__c != setting.UpdatedAccountStatusLowerLimit__c) {
                     newAccount.AccountStatus__c = setting.UpdatedAccountStatusLowerLimit__c;
                     accountsWithUpdatedStatus.add(newAccount);
-                    continue;
+                }
+                continue;
             }
 
             newAccount.AccountStatus__c = setting.UpdatedAccountStatusRecentOrders__c;
