@@ -21,4 +21,196 @@
         <shortDescription>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</shortDescription>
         <value>Order creation/completion is not allowed in the current status of the related account.</value>
     </labels>
+    <labels>
+        <fullName>Filter</fullName>
+        <categories>DynamicFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Filter</shortDescription>
+        <value>Filter</value>
+    </labels>
+    <labels>
+        <fullName>NoRecordsShown</fullName>
+        <categories>DynamicFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Records Shown</shortDescription>
+        <value>Please populate the relevant filters.</value>
+    </labels>
+    <labels>
+        <fullName>SelectedNumberOfRows</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectedNumberOfRows</shortDescription>
+        <value>You have selected #0# visits.</value>
+    </labels>
+    <labels>
+        <fullName>SuccessMoveMessage</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SuccessMoveMessage</shortDescription>
+        <value>Selected Visits have been moved to new owner.</value>
+    </labels>
+    <labels>
+        <fullName>TotalNumberOfRecords</fullName>
+        <categories>DynamicFilter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Number Of Records</shortDescription>
+        <value>There are #0# records that are valid for your criteria.</value>
+    </labels>
+    <labels>
+        <fullName>Move</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Move</shortDescription>
+        <value>Move</value>
+    </labels>
+    <labels>
+        <fullName>CallDate</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Call Date</shortDescription>
+        <value>Call Date</value>
+    </labels>
+    <labels>
+        <fullName>CallOwner</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Call Owner</shortDescription>
+        <value>Call Owner</value>
+    </labels>
+    <labels>
+        <fullName>CallStatus</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Call Status</shortDescription>
+        <value>Call Status</value>
+    </labels>
+    <labels>
+        <fullName>CreditStatus</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Status</shortDescription>
+        <value>Credit Status</value>
+    </labels>
+    <labels>
+        <fullName>CurrentTam</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Current Tam</shortDescription>
+        <value>Current TAM</value>
+    </labels>
+    <labels>
+        <fullName>DateFrom</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Date From</shortDescription>
+        <value>Date From</value>
+    </labels>
+    <labels>
+        <fullName>DateTo</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Date To</shortDescription>
+        <value>Date To</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryPointName</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Point Name</shortDescription>
+        <value>Delivery Point Name</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryPointPostCode</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Point Post Code</shortDescription>
+        <value>Delivery Point Post Code</value>
+    </labels>
+    <labels>
+        <fullName>Depot</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Depot</shortDescription>
+        <value>Depot</value>
+    </labels>
+    <labels>
+        <fullName>DpReference</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DP Reference</shortDescription>
+        <value>DP Reference</value>
+    </labels>
+    <labels>
+        <fullName>NewTam</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Tam</shortDescription>
+        <value>New TAM</value>
+    </labels>
+    <labels>
+        <fullName>OriginalOwner</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Original Owner</shortDescription>
+        <value>Original Owner</value>
+    </labels>
+    <labels>
+        <fullName>PrimaryGrid</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Primary Grid</shortDescription>
+        <value>Primary Grid</value>
+    </labels>
+    <labels>
+        <fullName>Priority</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Priority</shortDescription>
+        <value>Priority</value>
+    </labels>
+    <labels>
+        <fullName>SecondaryGrid</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Secondary Grid</shortDescription>
+        <value>Secondary Grid</value>
+    </labels>
+    <labels>
+        <fullName>TradingFrequency</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Trading Frequency</shortDescription>
+        <value>Trading Frequency</value>
+    </labels>
+    <labels>
+        <fullName>VisitTransferTabName</fullName>
+        <categories>CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Visit Transfer Tab Name</shortDescription>
+        <value>Call Base Management</value>
+    </labels>
 </CustomLabels>

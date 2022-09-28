@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>List of features for Sales and Marketing Users. No object access should be here, only standard features. Custom features should be handled via separate PS. </description>
+    <description>List of features for Sales and Marketing Users. No object access should be here, only standard features. Custom features should be handled via separate PS.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>System Basic Features</label>
     <license>Salesforce</license>
@@ -70,10 +70,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>EditOppLineItemUnitPrice</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>EditTask</name>
     </userPermissions>
     <userPermissions>
@@ -130,15 +126,7 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>SendSitRequests</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ShowCompanyNameAsUserBadge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>SubmitMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -167,9 +155,5 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewSetup</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ViewTrustMeasures</name>
     </userPermissions>
 </PermissionSet>

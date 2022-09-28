@@ -9,5 +9,7 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

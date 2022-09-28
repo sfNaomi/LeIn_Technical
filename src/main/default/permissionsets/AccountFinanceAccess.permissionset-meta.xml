@@ -3,6 +3,11 @@
     <description>Finance access for Account object and fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.ProofOfDeliveryRequired__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NextDeliveryDateHidden__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19,6 +24,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.TradingFrequency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.TradingFrequencyBucketed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
