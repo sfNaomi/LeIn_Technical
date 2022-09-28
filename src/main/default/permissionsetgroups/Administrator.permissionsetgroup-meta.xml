@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Administrator</label>
+    <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -13,11 +14,10 @@
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>RecurringRecordAdminAccess</permissionSets>
-    <permissionSets>RelationshipRuleAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>
     <permissionSets>VisitAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
-    <status>Updated</status>
+    <status>Updating</status>
 </PermissionSetGroup>
