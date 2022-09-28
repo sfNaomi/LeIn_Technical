@@ -1,0 +1,36 @@
+<!--
+ - Created by svatopluk.sejkora on 20.09.2022.
+ -->
+
+<!-- Dynamic Input -->
+<template>
+    <lightning-input
+            if:true={isDate}
+            type="date"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            value={fieldDefinition.value}
+            onchange={handleSelection}
+    ></lightning-input>
+
+    <lightning-input
+            if:true={isWholeNumber}
+            type="number"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            value={fieldDefinition.value}
+            onchange={handleSelection}
+    ></lightning-input>
+
+    <lightning-combobox
+            if:true={isCombobox}
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            options={fieldDefinition.options}
+            value={fieldDefinition.value}
+            onchange={handleSelection}
+    ></lightning-combobox>
+</template>
+
+
+
