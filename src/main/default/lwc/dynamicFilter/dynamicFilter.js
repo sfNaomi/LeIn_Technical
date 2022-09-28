@@ -56,7 +56,7 @@ export default class DynamicFilter extends LightningElement {
         const filterValuePopulatedIndex = this.filterFieldsWithPopulatedFilters.findIndex(obj => {
             return obj.index === filterValueObject.index;
         })
-        if (filterValueObject.value === '' && filterValuePopulatedIndex !== -1) {
+        if ((filterValueObject.value === '' || filterValueObject.value === null) && filterValuePopulatedIndex !== -1) {
             this.filterFieldsWithPopulatedFilters.splice(filterValuePopulatedIndex, 1);
         }
         else if (filterValuePopulatedIndex !== -1) {
