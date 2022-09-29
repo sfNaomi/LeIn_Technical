@@ -108,6 +108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.TotalNumberOfCasesOnOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.TotalOrderWeight__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -194,6 +199,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ProductCode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>OrderItem.ProductFamily__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

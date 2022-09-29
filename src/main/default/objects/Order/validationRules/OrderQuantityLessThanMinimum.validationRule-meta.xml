@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OrderQuantityLessThanMinimum</fullName>
+    <active>true</active>
+    <description>Can&apos;t push order to &quot;completed&quot; when quantity of order is less then the minimum quantity set on the account.</description>
+    <errorConditionFormula>IF(   ISCHANGED(Status) &amp;&amp;  CONTAINS($CustomMetadata.OrderSetting__mdt.OrgDefaultOrderSettings.CompletedOrderStatuses__c , TEXT(Status)) &amp;&amp; RecordType.DeveloperName = &apos;TelesalesOrder&apos; &amp;&amp; (TotalNumberOfCasesOnOrder__c &lt;  Account.MinOrderQuantity__c), true, false)</errorConditionFormula>
+    <errorMessage>Can&apos;t push this order to &quot;Completed&quot;. Quantity in order is less than minimum quantity stipulated.</errorMessage>
+</ValidationRule>
