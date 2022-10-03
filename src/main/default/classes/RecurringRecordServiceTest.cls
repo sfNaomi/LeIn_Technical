@@ -106,7 +106,9 @@ private class RecurringRecordServiceTest {
                 FROM Account
         ];
 
-        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
+        Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
+
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = createdAcc.DeliveryPointReference__c + createdAcc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '3C7201WEM';

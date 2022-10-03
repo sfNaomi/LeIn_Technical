@@ -243,7 +243,8 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryStartDate() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
+        Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = createdAcc.DeliveryPointReference__c + createdAcc.Id + '_Primary'));
 
         Date newDate = Date.parse('21/09/2022');
 
@@ -278,7 +279,8 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryGrid() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
+        Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = createdAcc.DeliveryPointReference__c + createdAcc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '3C7201WEW'; //changing Call Day of Week (3)
