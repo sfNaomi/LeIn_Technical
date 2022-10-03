@@ -9,6 +9,8 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
+    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>

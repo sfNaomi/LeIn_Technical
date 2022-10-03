@@ -8,6 +8,8 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
+    <permissionSets>InvoiceAdminAccess</permissionSets>
+    <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
     <permissionSets>OrderAdminAccess</permissionSets>
