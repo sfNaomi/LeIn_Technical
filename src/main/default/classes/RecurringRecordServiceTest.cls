@@ -106,16 +106,7 @@ private class RecurringRecordServiceTest {
                 FROM Account
         ];
 
-        aforza__Recurring_Record__c recordBeforeUpdate = [
-                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
-                        aforza__Frequency__c, Name, StartDate__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
-                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c
-                FROM aforza__Recurring_Record__c
-                LIMIT 1
-        ][0];
-
-        recordBeforeUpdate.aforza__Last_Recurrence_Date__c = System.today();
-        update recordBeforeUpdate;
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '3C7201WEM';
@@ -156,15 +147,10 @@ private class RecurringRecordServiceTest {
     @IsTest
     private static void testDeleteRecurringAndVisitRecords() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-
-        aforza__Recurring_Record__c record = [
-                SELECT Id, aforza__Last_Recurrence_Date__c
-                FROM aforza__Recurring_Record__c
-                LIMIT 1
-        ][0];
+        aforza__Recurring_Record__c recurringRecord = (aforza__Recurring_Record__c) TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id));
 
         TdfSObjectFactory.insertSObjects(
-                new aforza__Visit__c(aforza__Account__c = acc.Id, aforza__Recurring_Record__c = record.Id,
+                new aforza__Visit__c(aforza__Account__c = acc.Id, aforza__Recurring_Record__c = recurringRecord.Id,
                         RecordTypeId = RecordTypes.VISIT_REMOTE_VISIT_ID), 10);
 
         Test.startTest();

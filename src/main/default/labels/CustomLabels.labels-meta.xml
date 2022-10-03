@@ -213,4 +213,12 @@
         <shortDescription>Visit Transfer Tab Name</shortDescription>
         <value>Call Base Management</value>
     </labels>
+    <labels>
+        <fullName>DuplicateTamRoleError</fullName>
+        <categories>AccountTeamMemberTrigger</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate TAM Role Error</shortDescription>
+        <value>There can be only one TAM user assigned to each Account. Please change your data</value>
+    </labels>
 </CustomLabels>

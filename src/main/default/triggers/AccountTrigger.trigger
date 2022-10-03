@@ -14,7 +14,7 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
             AccountTriggerHandler.updatePORequiredStartingWithDPs(Trigger.new, Trigger.oldMap);
         }
         when AFTER_INSERT {
-            AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);

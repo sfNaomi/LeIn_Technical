@@ -186,6 +186,7 @@ private class DynamicFilterControllerTest {
     private static void testGetResult() {
         // get some visits
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [SELECT Id FROM aforza__Recurring_Record__c WHERE Account__c = :acc.Id LIMIT 1];
         System.assert(recurringRecords.size() == 1);
@@ -228,6 +229,7 @@ private class DynamicFilterControllerTest {
     private static void testGetResult_NoData() {
         // get some visits
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [SELECT Id FROM aforza__Recurring_Record__c WHERE Account__c = :acc.Id LIMIT 1];
         System.assert(recurringRecords.size() == 1);

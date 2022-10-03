@@ -8,16 +8,16 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
-            new Contact(AccountId = primaryContactParentAccount.Id)
+                new Contact(AccountId = primaryContactParentAccount.Id)
         );
 
         // create new DP account and set primary contact
         Test.startTest();
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
         );
         Test.stopTest();
 
@@ -33,19 +33,19 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testPrimaryContactAutomation_UpdateAccountPrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
-            new Contact(AccountId = primaryContactParentAccount.Id)
+                new Contact(AccountId = primaryContactParentAccount.Id)
         );
 
         // create new DP account
         Account testDPAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                Phone = '+404234234234',
-                Email__c = 'test@test.com'
-            )
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        Phone = '+404234234234',
+                        Email__c = 'test@test.com'
+                )
         );
 
         // update the primary contact of the DP account
@@ -66,17 +66,17 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testPrimaryContactAutomation_RemovePrimaryContact() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
-            new Contact(AccountId = primaryContactParentAccount.Id)
+                new Contact(AccountId = primaryContactParentAccount.Id)
         );
 
         // create new DP account and set primary contact; update account by removing primary contact
         Test.startTest();
         // create new DP account and set primary contact
         Account testDPAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
         );
 
         testDPAccount.aforza__Primary_Contact__c = null;
@@ -95,16 +95,16 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testPrimaryContactAutomation_PrimaryContactMissingContactDetails() {
         // create new contact to be set as primary
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         Contact primaryContact = (Contact) TdfSObjectFactory.insertSObject(
-            new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null)
+                new Contact(AccountId = primaryContactParentAccount.Id, Phone = null, Email = null)
         );
 
         // create new DP account and set primary contact
         Test.startTest();
         Account testDPAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Primary_Contact__c = primaryContact.Id)
         );
         Test.stopTest();
 
@@ -120,14 +120,14 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = false,
-                AccountStatus__c = 'Prospect'
-            )
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        IsCoverage__c = false,
+                        AccountStatus__c = 'Prospect'
+                )
         );
         TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+                new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
         );
 
         // update status
@@ -138,9 +138,9 @@ private with sharing class AccountTriggerHandlerTest {
 
         // query team members
         List<AccountTeamMember> teamMembers = [
-            SELECT Id
-            FROM AccountTeamMember
-            WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
         ];
 
         // check results
@@ -151,14 +151,14 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = false,
-                AccountStatus__c = 'Active Prospect'
-            )
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        IsCoverage__c = false,
+                        AccountStatus__c = 'Active Prospect'
+                )
         );
         TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+                new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
         );
 
         // update status
@@ -169,9 +169,9 @@ private with sharing class AccountTriggerHandlerTest {
 
         // query team members
         List<AccountTeamMember> teamMembers = [
-            SELECT Id
-            FROM AccountTeamMember
-            WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
         ];
 
         // check results
@@ -182,14 +182,14 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testManageAccountTeamMembership_CoverageAccountMovedToActiveProspect() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = true,
-                AccountStatus__c = 'Prospect'
-            )
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        IsCoverage__c = true,
+                        AccountStatus__c = 'Prospect'
+                )
         );
         TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+                new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
         );
 
         // update status
@@ -200,9 +200,9 @@ private with sharing class AccountTriggerHandlerTest {
 
         // query team members
         List<AccountTeamMember> teamMembers = [
-            SELECT Id
-            FROM AccountTeamMember
-            WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
         ];
 
         // check results
@@ -213,14 +213,14 @@ private with sharing class AccountTriggerHandlerTest {
     private static void testManageAccountTeamMembership_CoverageAccountMovedToTraders() {
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                IsCoverage__c = true,
-                AccountStatus__c = 'Active Prospect'
-            )
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        IsCoverage__c = true,
+                        AccountStatus__c = 'Active Prospect'
+                )
         );
         TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
+                new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'Field Sales Rep')
         );
 
         // update status
@@ -231,9 +231,9 @@ private with sharing class AccountTriggerHandlerTest {
 
         // query team members
         List<AccountTeamMember> teamMembers = [
-            SELECT Id
-            FROM AccountTeamMember
-            WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
+                SELECT Id
+                FROM AccountTeamMember
+                WHERE AccountId = :dpAccount.Id AND TeamMemberRole IN ('Field Sales Rep', 'Field Sales Managers')
         ];
 
         // check results
@@ -241,192 +241,10 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testManageReoccurrenceRecord() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        Test.stopTest();
-
-        aforza__Recurring_Record__c record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ][0];
-
-        System.assertNotEquals(null, record);
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_InsertNoCreateCallChecked() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, CreateCalls__c = false)
-        );
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_InsertWrongStatus() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Legal')
-        );
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_InsertWrongRecordType() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID));
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_InsertNoPrimaryGrid() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = null)
-        );
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_InsertNoStartDate() {
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryStartDate__c = null)
-        );
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryStartDate() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
+
         Date newDate = Date.parse('21/09/2022');
 
         Test.startTest();
@@ -435,23 +253,23 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Recurring_Record__c record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
         ][0];
 
         System.assertEquals(newDate, record.StartDate__c);
@@ -459,9 +277,8 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryGrid() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '3C7201WEW'; //changing Call Day of Week (3)
@@ -469,23 +286,23 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Recurring_Record__c record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
         ][0];
 
         System.assertEquals('3', record.CallDayOfWeek__c);
@@ -493,30 +310,8 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoCreateCalls() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
-
-        List<aforza__Recurring_Record__c> checkItExists = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-        System.assertEquals(1, checkItExists.size());
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
 
         Test.startTest();
         acc.CreateCalls__c = false;
@@ -524,78 +319,23 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-
-        System.assertEquals(0, record.size());
-    }
-
-    @IsTest
-    private static void testManageReoccurrenceRecord_OutStatus() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
-
-        List<aforza__Recurring_Record__c> checkItExists = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-        System.assertEquals(1, checkItExists.size());
-
-        Test.startTest();
-        acc.AccountStatus__c = 'Legal';
-        update acc;
-        Test.stopTest();
-
-        List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
         ];
 
         System.assertEquals(0, record.size());
@@ -603,30 +343,8 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoGrid() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
-
-        List<aforza__Recurring_Record__c> checkItExists = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-        System.assertEquals(1, checkItExists.size());
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryGridNumber__c = '';
@@ -634,23 +352,23 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
         ];
 
         System.assertEquals(0, record.size());
@@ -658,30 +376,8 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoPrimaryStartDate() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
-
-        List<aforza__Recurring_Record__c> checkItExists = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
-        ];
-        System.assertEquals(1, checkItExists.size());
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(), Name = '100001_' + acc.Id + '_Primary'));
 
         Test.startTest();
         acc.PrimaryStartDate__c = null;
@@ -689,23 +385,23 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Recurring_Record__c> record = [
-            SELECT
-                Id,
-                aforza__Type__c,
-                Account__c,
-                OwnerId,
-                Status__c,
-                aforza__Frequency__c,
-                Name,
-                StartDate__c,
-                PlanAnotherVisit__c,
-                DaysBetweenRecurrence__c,
-                aforza__Last_Recurrence_Date__c,
-                CallDayOfWeek__c,
-                Priority__c,
-                aforza__Number_Of_Recurrences__c
-            FROM aforza__Recurring_Record__c
-            LIMIT 1
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
         ];
 
         System.assertEquals(0, record.size());
@@ -782,7 +478,7 @@ private with sharing class AccountTriggerHandlerTest {
 
         Test.startTest();
         TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East')
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East')
         );
         Test.stopTest();
 
@@ -794,10 +490,10 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateTrue() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID)
         );
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
         );
         Test.startTest();
         customerAccount.PORequired__c = true;
@@ -810,10 +506,10 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateFalse() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
         );
         Test.startTest();
         customerAccount.PORequired__c = false;
@@ -827,19 +523,19 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_InsertMultiples() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
 
         Test.startTest();
-        List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id),
-            10
+        TdfSObjectFactory.insertSObjects(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id),
+                10
         );
         Test.stopTest();
         List<Account> updatedDpAccounts = [
-            SELECT Id, PORequired__c
-            FROM Account
-            WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
+                SELECT Id, PORequired__c
+                FROM Account
+                WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
         ];
         System.assertEquals(10, updatedDpAccounts.size());
     }
@@ -847,11 +543,11 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testUpdatePORequiredStartingWithDPs_Update() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
         List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID),
-            10
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID),
+                10
         );
         Test.startTest();
         for (Account acc : dpAccounts) {
@@ -860,10 +556,43 @@ private with sharing class AccountTriggerHandlerTest {
         update dpAccounts;
         Test.stopTest();
         List<Account> updatedDpAccounts = [
-            SELECT Id, PORequired__c
-            FROM Account
-            WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
+                SELECT Id, PORequired__c
+                FROM Account
+                WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
         ];
         System.assertEquals(10, updatedDpAccounts.size());
     }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_NoRecurrenceRecord() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        Test.startTest();
+        acc.PrimaryGridNumber__c = '3C7201WEW';
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Recurring_Record__c> record = [
+                SELECT
+                        Id,
+                        aforza__Type__c,
+                        Account__c,
+                        OwnerId,
+                        Status__c,
+                        aforza__Frequency__c,
+                        Name,
+                        StartDate__c,
+                        PlanAnotherVisit__c,
+                        DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c,
+                        CallDayOfWeek__c,
+                        Priority__c,
+                        aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ];
+
+        System.assertEquals(0, record.size());
+    }
+
 }
