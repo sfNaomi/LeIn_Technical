@@ -105,6 +105,7 @@ private class RecurringRecordServiceTest {
                         SecondaryCallDay__c
                 FROM Account
         ];
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
 
