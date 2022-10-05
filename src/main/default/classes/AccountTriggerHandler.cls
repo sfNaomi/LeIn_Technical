@@ -107,91 +107,6 @@ public with sharing class AccountTriggerHandler {
         );
     }
 
-    public static void updatePORequiredStartingWithCustomerAccs(List<Account> newAccounts, Map<Id, Account> oldMap) {
-        List<Id> customerAccountsWithPOReq = new List<Id>();
-        List<Id> customerAccountsWithoutPOReq = new List<Id>();
-        for (Account account : newAccounts) {
-            if (
-                    oldMap != null &&
-                            account.RecordTypeId == RecordTypes.ACCOUNT_CUSTOMER_ID &&
-                            account.PORequired__c == true &&
-                            oldMap.get(account.Id).PORequired__c != true
-            ) {
-                customerAccountsWithPOReq.add(account.Id);
-            }
-            if (
-                    oldMap != null &&
-                            account.RecordTypeId == RecordTypes.ACCOUNT_CUSTOMER_ID &&
-                            account.PORequired__c == false &&
-                            oldMap.get(account.Id).PORequired__c != false
-            ) {
-                customerAccountsWithoutPOReq.add(account.Id);
-            }
-        }
-        if (!customerAccountsWithPOReq.isEmpty()) {
-            updateDPsWithNewPORequiredValue(customerAccountsWithPOReq, true);
-        }
-        if (!customerAccountsWithoutPOReq.isEmpty()) {
-            updateDPsWithNewPORequiredValue(customerAccountsWithoutPOReq, false);
-        }
-    }
-
-    public static void updateDPsWithNewPORequiredValue(List<Id> customerAccounts, Boolean newValue) {
-        List<Account> dpAccountsToUpdate = [
-                SELECT PORequired__c, ParentId
-                FROM Account
-                WHERE ParentId IN :customerAccounts
-        ];
-        for (Account account : dpAccountsToUpdate) {
-            account.PORequired__c = newValue;
-        }
-        update dpAccountsToUpdate;
-    }
-
-    public static void updatePORequiredStartingWithDPs(List<Account> newAccounts, Map<Id, Account> oldMap) {
-        Map<Id, List<Account>> customerAccountIdsToDPAccounts = new Map<Id, List<Account>>();
-        for (Account account : newAccounts) {
-            if (oldMap == null && account.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && account.ParentId != null) {
-                addChildrenDPsToParentCustomerAcc(account, customerAccountIdsToDPAccounts);
-            }
-            if (
-                    oldMap != null &&
-                            account.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID &&
-                            account.ParentId != oldMap.get(account.Id).ParentId &&
-                            account.ParentId != null
-            ) {
-                addChildrenDPsToParentCustomerAcc(account, customerAccountIdsToDPAccounts);
-            }
-        }
-        List<Account> verifiedAccountsWithPORequired = [
-                SELECT Id, PORequired__c
-                FROM Account
-                WHERE Id IN :customerAccountIdsToDPAccounts.keySet() AND PORequired__c = TRUE
-        ];
-        Set<Id> customerAccountIdsWithPORequired = (new Map<Id, Account>(verifiedAccountsWithPORequired)).keySet();
-
-        for (Id customerAccountId : customerAccountIdsWithPORequired) {
-            if (customerAccountIdsToDPAccounts.containsKey(customerAccountId)) {
-                for (Account dpAccount : customerAccountIdsToDPAccounts.get(customerAccountId)) {
-                    dpAccount.PORequired__c = true;
-                }
-            }
-        }
-    }
-
-    public static void addChildrenDPsToParentCustomerAcc(
-            Account newAccount,
-            Map<Id, List<Account>> customerAccountIdsToDPAccounts
-    ) {
-        if (customerAccountIdsToDPAccounts.containsKey(newAccount.ParentId)) {
-            customerAccountIdsToDPAccounts.get(newAccount.ParentId).add(newAccount);
-        } else {
-            customerAccountIdsToDPAccounts.put(newAccount.ParentId, new List<Account>{
-                    newAccount
-            });
-        }
-    }
-
     public static void assignDefaultPriceBook(List<Account> accounts) {
         Map<String, Id> defaultPriceBooks = getDefaultPriceBooks();
         for (Account acc : accounts) {
@@ -240,5 +155,27 @@ public with sharing class AccountTriggerHandler {
             }
         }
         Database.executeBatch(new CreateOutletAssetsAccountBatch(dpAccounts));
+    }
+
+    public static void pullInfoOnDPFromRelatedCustomer(List<Account> newAccounts, Map<Id, Account> oldMap) {
+        syncRelatedAccounts(newAccounts, oldMap, AccountSyncService.SyncOperation.PULL);
+    }
+
+    public static void pushInfoFromCustomerToRelatedDPs(List<Account> newAccounts, Map<Id, Account> oldMap) {
+        syncRelatedAccounts(newAccounts, oldMap, AccountSyncService.SyncOperation.PUSH);
+    }
+
+    private static void syncRelatedAccounts(List<Account> newAccounts, Map<Id, Account> oldMap, AccountSyncService.SyncOperation operation) {
+        List<Account> accountsRequireSync = new List<Account>();
+
+        for (Account newAccount : newAccounts) {
+            Account oldAccount = oldMap?.get(newAccount.Id);
+
+            if (AccountSyncService.accountRequiresSync(newAccount, oldAccount, operation)) {
+                accountsRequireSync.add(newAccount);
+            }
+        }
+
+        AccountSyncService.syncAccounts(accountsRequireSync, operation);
     }
 }

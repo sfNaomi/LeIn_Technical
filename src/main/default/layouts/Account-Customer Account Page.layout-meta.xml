@@ -47,6 +47,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>DefaultInvoiceBillingAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>BillingAddress</field>
             </layoutItems>
         </layoutColumns>
@@ -70,6 +74,20 @@
                 <field>ClosedDate__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Additional Billing Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>aforza__Invoice_Email_Address__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -336,8 +354,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>aforza__Due_Date__c</fields>
-        <fields>aforza__Amount_Due__c</fields>
+        <fields>Gross__c</fields>
         <fields>aforza__Status__c</fields>
+        <fields>aforza__Reference__c</fields>
         <relatedList>aforza__Invoice__c.aforza__Account__c</relatedList>
         <sortField>aforza__Due_Date__c</sortField>
         <sortOrder>Asc</sortOrder>

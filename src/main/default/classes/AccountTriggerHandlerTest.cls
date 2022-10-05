@@ -492,79 +492,185 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateTrue() {
+    private static void testPullInfoOnDPFromRelatedCustomer_InsertDPRelatedToCustomer() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PoRequired__c = true)
         );
-        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
-        );
+
         Test.startTest();
-        customerAccount.PORequired__c = true;
-        update customerAccount;
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id, PoRequired__c = false)
+        );
         Test.stopTest();
 
         Account updatedDpAccount = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccount.Id];
         System.assertEquals(true, updatedDpAccount.PORequired__c);
     }
+
     @IsTest
-    private static void testUpdatePORequiredStartingWithCustomerAccs_UpdateFalse() {
+    private static void testPullInfoOnDPFromRelatedCustomer_UpdateRelatedCustomerOnDP() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PoRequired__c = true)
         );
+
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PoRequired__c = false)
         );
+
         Test.startTest();
-        customerAccount.PORequired__c = false;
-        update customerAccount;
+        dpAccount.ParentId = customerAccount.Id;
+        update dpAccount;
         Test.stopTest();
 
         Account updatedDpAccount = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccount.Id];
-        System.assertEquals(false, updatedDpAccount.PORequired__c);
+        System.assertEquals(true, updatedDpAccount.PORequired__c);
     }
 
-    @IsTest
-    private static void testUpdatePORequiredStartingWithDPs_InsertMultiples() {
+    private static void testPushInfoFromCustomerToRelatedDPs_UpdatePoRequired() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
-        );
-
-        Test.startTest();
-        TdfSObjectFactory.insertSObjects(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id),
-                10
-        );
-        Test.stopTest();
-        List<Account> updatedDpAccounts = [
-                SELECT Id, PORequired__c
-                FROM Account
-                WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
-        ];
-        System.assertEquals(10, updatedDpAccounts.size());
-    }
-
-    @IsTest
-    private static void testUpdatePORequiredStartingWithDPs_Update() {
-        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = false)
         );
         List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID),
-                10
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id, PORequired__c = false), 2
         );
+
         Test.startTest();
-        for (Account acc : dpAccounts) {
-            acc.ParentId = customerAccount.Id;
-        }
-        update dpAccounts;
+        customerAccount.PORequired__c = true;
+        update customerAccount;
         Test.stopTest();
-        List<Account> updatedDpAccounts = [
-                SELECT Id, PORequired__c
+
+        List<Account> updatedDpAccounts = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccounts];
+        for (Account newAccount : updatedDpAccounts) {
+            System.assertEquals(true, newAccount.PORequired__c);
+        }
+    }
+
+    private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressTrue() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                        BillingStreet = 'Test 1',
+                        BillingCity = 'Test 2',
+                        BillingCountry = 'Test 3',
+                        BillingPostalCode = 'Test 4',
+                        aforza__Invoice_Email_Address__c = 'test@test.com'
+                )
+        );
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        BillingStreet = null,
+                        BillingCity =  null,
+                        BillingCountry = null,
+                        BillingPostalCode = null,
+                        aforza__Invoice_Email_Address__c = null,
+                        DefaultInvoiceBillingAddress__c = false
+                )
+        );
+
+        Test.startTest();
+        customerAccount.ParentId = customerAccount.Id;
+        customerAccount.DefaultInvoiceBillingAddress__c = true;
+        update customerAccount;
+        Test.stopTest();
+
+        Account updatedDpAccount = [
+                SELECT Id, BillingStreet, BillingCity, BillingCountry, BillingPostalCode, aforza__Invoice_Email_Address__c
                 FROM Account
-                WHERE PORequired__c = TRUE AND RecordTypeId = :RecordTypes.ACCOUNT_OUTLET_ID
+                WHERE Id = :dpAccount.Id
         ];
-        System.assertEquals(10, updatedDpAccounts.size());
+
+        System.assertEquals(customerAccount.BillingStreet, updatedDpAccount.BillingStreet);
+        System.assertEquals(customerAccount.BillingCity, updatedDpAccount.BillingCity);
+        System.assertEquals(customerAccount.BillingCountry, updatedDpAccount.BillingCountry);
+        System.assertEquals(customerAccount.BillingPostalCode, updatedDpAccount.BillingPostalCode);
+        System.assertEquals(customerAccount.aforza__Invoice_Email_Address__c, updatedDpAccount.aforza__Invoice_Email_Address__c);
+    }
+
+    private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressFalse() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                        BillingStreet = 'Test 1',
+                        BillingCity = 'Test 2',
+                        BillingCountry = 'Test 3',
+                        BillingPostalCode = 'Test 4',
+                        aforza__Invoice_Email_Address__c = 'test@test.com'
+                )
+        );
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        BillingStreet = null,
+                        BillingCity =  null,
+                        BillingCountry = null,
+                        BillingPostalCode = null,
+                        aforza__Invoice_Email_Address__c = null,
+                        DefaultInvoiceBillingAddress__c = false
+                )
+        );
+
+        Test.startTest();
+        customerAccount.ParentId = customerAccount.Id;
+        customerAccount.DefaultInvoiceBillingAddress__c = false;
+        update customerAccount;
+        Test.stopTest();
+
+        Account updatedDpAccount = [
+                SELECT Id, BillingStreet, BillingCity, BillingCountry, BillingPostalCode, aforza__Invoice_Email_Address__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+
+        System.assertEquals(null, updatedDpAccount.BillingStreet);
+        System.assertEquals(null, updatedDpAccount.BillingCity);
+        System.assertEquals(null, updatedDpAccount.BillingCountry);
+        System.assertEquals(null, updatedDpAccount.BillingPostalCode);
+        System.assertEquals(null, updatedDpAccount.aforza__Invoice_Email_Address__c);
+    }
+
+    private static void testPushInfoFromCustomerToRelatedDPs_CreditStatus() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = false)
+        );
+        List<Account> dpAccounts = (List<Account>) TdfSObjectFactory.insertSObjects(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id, PORequired__c = false), 2
+        );
+
+        Test.startTest();
+        customerAccount.PORequired__c = true;
+        update customerAccount;
+        Test.stopTest();
+
+        List<Account> updatedDpAccounts = [SELECT Id, PORequired__c FROM Account WHERE Id = :dpAccounts];
+        for (Account newAccount : updatedDpAccounts) {
+            System.assertEquals(true, newAccount.PORequired__c);
+        }
+    }
+
+    private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressOnDPs() {
+        Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                        CreditStatus__c = null
+                )
+        );
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(
+                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                        ParentId = customerAccount.Id,
+                        CreditStatus__c = null
+                )
+        );
+
+        Test.startTest();
+        customerAccount.CreditStatus__c = 'Good';
+        update customerAccount;
+        Test.stopTest();
+
+        Account updatedDpAccount = [SELECT Id, CreditStatus__c FROM Account WHERE Id = :dpAccount.Id];
+
+        System.assertEquals('Good', updatedDpAccount.CreditStatus__c);
     }
 
     @IsTest
