@@ -23,12 +23,12 @@ public with sharing class ProductService {
     }
 
     public static void createDRSRelationshipRules(List<Product2> newProducts) {
-        List<String> skuCodesOfRelatedDRSProducts = new List<String>();
+        List<String> productCodesCodesOfRelatedDRSProducts = new List<String>();
         for (Product2 newProduct : newProducts) {
-            skuCodesOfRelatedDRSProducts.add(newProduct.DRSSKUCode__c);
+            productCodesCodesOfRelatedDRSProducts.add(newProduct.DRSSKUCode__c);
         }
 
-        Map<String, Product2> drsProducts = getProductsBasedOnSKUCodes(skuCodesOfRelatedDRSProducts);
+        Map<String, Product2> drsProducts = getProductsBasedOnProductCodes(productCodesCodesOfRelatedDRSProducts);
 
         List<aforza__Relationship_Rule__c> relationshipRulesToBeCreated = new List<aforza__Relationship_Rule__c>();
         for (Product2 newProduct : newProducts) {
@@ -44,16 +44,16 @@ public with sharing class ProductService {
         insert relationshipRulesToBeCreated;
     }
 
-    public static Map<String, Product2> getProductsBasedOnSKUCodes(List<String> skuCodes) {
+    public static Map<String, Product2> getProductsBasedOnProductCodes(List<String> productCodes) {
         List<Product2> drsProducts = [
-                SELECT Id, Name, StockKeepingUnit
+                SELECT Id, Name, ProductCode
                 FROM Product2
-                WHERE StockKeepingUnit IN :skuCodes
+                WHERE ProductCode IN :productCodes
         ];
 
         Map<String, Product2> productsBySKU = new Map<String, Product2>();
         for (Product2 newProduct : drsProducts) {
-            productsBySKU.put(newProduct.StockKeepingUnit, newProduct);
+            productsBySKU.put(newProduct.ProductCode, newProduct);
         }
 
         return productsBySKU;
@@ -63,8 +63,8 @@ public with sharing class ProductService {
         aforza__Relationship_Rule__c relationship = new aforza__Relationship_Rule__c();
         relationship.ExternalId__c = createExternalIdForRelationshipRule(
                 SETTINGS.DRSProductRelationshipRulePrefix__c,
-                baseProduct.StockKeepingUnit,
-                drsProduct.StockKeepingUnit
+                baseProduct.ProductCode,
+                drsProduct.ProductCode
         );
         relationship.Name = baseProduct.Name + ' - ' + drsProduct.Name;
         relationship.aforza__Source_Product__c = baseProduct.Id;
@@ -82,7 +82,7 @@ public with sharing class ProductService {
             idsOfRelationshipsToBeDeleted.add(
                     createExternalIdForRelationshipRule(
                             SETTINGS.DRSProductRelationshipRulePrefix__c,
-                            oldProduct.StockKeepingUnit,
+                            oldProduct.ProductCode,
                             oldProduct.DRSSKUCode__c
                     )
             );
@@ -103,7 +103,7 @@ public with sharing class ProductService {
             aforza__Relationship_Rule__c newRelationship = new aforza__Relationship_Rule__c();
             newRelationship.ExternalId__c = createExternalIdForRelationshipRule (
                     SETTINGS.DRSProductRelationshipRulePrefix__c,
-                    newProduct.StockKeepingUnit,
+                    newProduct.ProductCode,
                     newProduct.DRSSKUCode__c
             );
             newRelationship.aforza__Quantity__c = newProduct.DRSGrossUnits__c;

@@ -40,7 +40,7 @@ private with sharing class ProductTriggerHandlerTest {
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductNoDRSCode() {
         Test.startTest();
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TBP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
@@ -53,12 +53,12 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductWithDRSCode() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
 
         Test.startTest();
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-                StockKeepingUnit = 'TBP',
-                DRSSKUCode__c = drsProduct.StockKeepingUnit,
+                ProductCode = 'TBP',
+                DRSSKUCode__c = drsProduct.ProductCode,
                 DRSGrossUnits__c = 12
         ));
         Test.stopTest();
@@ -77,14 +77,14 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCode() {
-        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP1'));
-        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP2'));
+        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP1'));
+        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP2'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct1.StockKeepingUnit, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct1.ProductCode, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
-        baseProduct.DRSSKUCode__c = drsProduct2.StockKeepingUnit;
+        baseProduct.DRSSKUCode__c = drsProduct2.ProductCode;
         update baseProduct;
         Test.stopTest();
 
@@ -102,11 +102,11 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNullToNotNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TBP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
 
         Test.startTest();
-        baseProduct.DRSSKUCode__c = drsProduct.StockKeepingUnit;
+        baseProduct.DRSSKUCode__c = drsProduct.ProductCode;
         update baseProduct;
         Test.stopTest();
 
@@ -124,9 +124,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNotNullToNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
@@ -145,9 +145,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSUnits() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct.StockKeepingUnit, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.ProductCode, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
