@@ -208,6 +208,7 @@ private with sharing class OrderTriggerHandlerTest {
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
         );
+
         Test.startTest();
         newOrder.Status = new List<String>(OrderService.COMPLETED_ORDER_STATUSES).get(0);
         update newOrder;
@@ -228,6 +229,7 @@ private with sharing class OrderTriggerHandlerTest {
         ];
         System.assertEquals(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
     }
+
     @IsTest
     private static void testCloneCompletedOrder_NoCloneCreated() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -240,6 +242,7 @@ private with sharing class OrderTriggerHandlerTest {
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
         );
+
         Test.startTest();
         newOrder.Status = 'Awaiting Approval';
         update newOrder;
@@ -247,5 +250,143 @@ private with sharing class OrderTriggerHandlerTest {
 
         List<Order> clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
         System.assertEquals(0, clonedOrder.size(), 'Expected no clone orders to be created');
+    }
+
+    @IsTest
+    private static void testCreateInvoice_ValidOrderRecordType() {
+        // create dp acccount
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        // create related order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        // create product and order product
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        // mark order as receipted
+        Test.startTest();
+        newOrder.Status = 'Receipted';
+        update newOrder;
+        Test.stopTest();
+
+        // retrieve invoice and invoice line items, validate results
+        List<aforza__Invoice__c> invoices = [SELECT Id FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+        List<aforza__Invoice_Line_Item__c> invoiceLineItems = [SELECT Id FROM aforza__Invoice_Line_Item__c WHERE aforza__Invoice__c IN :invoices];
+        System.assertEquals(1, invoices.size(), 'Expected invoice to be created');
+        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
+    }
+
+    @IsTest
+    private static void testCreateInvoice_InvalidOrderRecordType() {
+        // create dp account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        // create related order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_VAN_SALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        // create product and order product
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+                new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        // mark order as receipted
+        Test.startTest();
+        newOrder.Status = 'Receipted';
+        update newOrder;
+        Test.stopTest();
+
+        // retrieve invoice and invoice line items, validate results
+        List<aforza__Invoice__c> invoices = [SELECT Id FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+        List<aforza__Invoice_Line_Item__c> invoiceLineItems = [SELECT Id FROM aforza__Invoice_Line_Item__c WHERE aforza__Invoice__c IN :invoices];
+        System.assertEquals(0, invoices.size(), 'Expected no invoice to be created');
+        System.assertEquals(0, invoiceLineItems.size(), 'Expected no invoice line items to be created');
+    }
+
+    @IsTest
+    private static void testCreateInvoice_OrderWithPayment() {
+        // create dp account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        // create related order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        // create product and order product
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+                new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        // create Payment
+        aforza__Payment_Transaction__c newPayment = (aforza__Payment_Transaction__c) TdfSObjectFactory.insertSObject(
+                new aforza__Payment_Transaction__c(aforza__Account__c = dpAccount.Id, OrderNumber__c = newOrder.Id)
+        );
+
+        // mark order as receipted
+        Test.startTest();
+        newOrder.Status = 'Receipted';
+        update newOrder;
+        Test.stopTest();
+
+        // retrieve invoice and invoice line items, validate results
+        List<aforza__Invoice__c> invoices = [SELECT Id FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+        List<aforza__Invoice_Line_Item__c> invoiceLineItems = [SELECT Id FROM aforza__Invoice_Line_Item__c WHERE aforza__Invoice__c IN :invoices];
+        System.assertEquals(1, invoices.size(), 'Expected invoice to be created');
+        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
+
+        // retrive payment and validate result
+        List<aforza__Payment_Transaction__c> transactions = [SELECT Id, aforza__Invoice__c FROM aforza__Payment_Transaction__c WHERE Id = :newPayment.Id];
+        System.assertEquals(invoices[0].Id, transactions[0].aforza__Invoice__c, 'Expecting transaction to be linked to the created invoice');
+    }
+
+    @IsTest
+    private static void testCreateInvoice_ExistingInvoice() {
+        // create dp account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        // create related order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        // create product and order product
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+                new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        // create Invoice
+        aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
+                new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id)
+        );
+
+        // mark order as receipted
+        Test.startTest();
+        newOrder.Status = 'Receipted';
+        update newOrder;
+        Test.stopTest();
+
+        // retrieve invoice and invoice line items, validate results
+        List<aforza__Invoice__c> invoices = [SELECT Id FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+        List<aforza__Invoice_Line_Item__c> invoiceLineItems = [SELECT Id FROM aforza__Invoice_Line_Item__c WHERE aforza__Invoice__c IN :invoices];
+        System.assertEquals(1, invoices.size(), 'Expected existing invoice to be updated');
+        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
     }
 }
