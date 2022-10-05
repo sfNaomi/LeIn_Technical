@@ -48,4 +48,35 @@ public with sharing class ProductTriggerHandler {
         ProductService.createDRSRelationshipRules(productsToCreateDRSRelationshipRule);
         ProductService.updateDRSRelationshipRules(productsToUpdateDRSRelationshipRuleQuantity);
     }
+
+    public static void manageFocusProducts(List<Product2> products, Map<Id, Product2> oldMap) {
+        List<Product2> focusedProducts = new List<Product2>();
+        Set<String> notFocusedProductsSkus = new Set<String>();
+        Set<Id> notFocusedProductsIds = new Set<Id>();
+        for (Product2 product : products) {
+            Product2 oldProduct = oldMap?.get(product.Id);
+            if (oldProduct == null && product.FocusFiveProduct__c == true) {
+                focusedProducts.add(product);
+                continue;
+            }
+            if (product.FocusFiveProduct__c == true && oldProduct != null && oldProduct.FocusFiveProduct__c <> product.FocusFiveProduct__c) {
+                focusedProducts.add(product);
+                continue;
+            }
+            if (product.FocusFiveProduct__c == false && oldProduct != null && oldProduct.FocusFiveProduct__c <> product.FocusFiveProduct__c) {
+                notFocusedProductsSkus.add(product.StockKeepingUnit);
+                notFocusedProductsIds.add(product.Id);
+            }
+        }
+
+        if (focusedProducts.size() > 0) {
+            AttributesService.createAttributes(focusedProducts);
+            Database.executeBatch(new CreateOutletAssetsProductsBatch(focusedProducts), 150);
+        }
+
+        if (notFocusedProductsSkus.size() > 0) {
+            AttributesService.deactivateAttributes(notFocusedProductsSkus);
+            Database.executeBatch(new RemoveOutletAssetsProductBatch(notFocusedProductsIds));
+        }
+    }
 }

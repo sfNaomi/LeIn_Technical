@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Energy Rep</label>
     <permissionSets>AccountFieldSalesAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -14,10 +15,9 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductFieldSalesAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

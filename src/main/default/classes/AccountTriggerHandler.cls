@@ -231,4 +231,14 @@ public with sharing class AccountTriggerHandler {
             accountsMap.remove(accountId);
         }
     }
+
+    public static void manageFocusProducts(Map<Id, Account> accountsMap) {
+        Set<Id> dpAccounts = new Set<Id>();
+        for (Account acc : accountsMap.values()) {
+            if (acc.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
+                dpAccounts.add(acc.Id);
+            }
+        }
+        Database.executeBatch(new CreateOutletAssetsAccountBatch(dpAccounts));
+    }
 }

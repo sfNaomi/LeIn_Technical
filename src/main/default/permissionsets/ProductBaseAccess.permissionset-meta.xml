@@ -18,6 +18,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.FocusFiveGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.FocusFiveProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.HeightDimension__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -98,6 +108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.UnitsPerPack__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.WeightUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -114,11 +129,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.aforza__Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Product2.UnitsPerPack__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

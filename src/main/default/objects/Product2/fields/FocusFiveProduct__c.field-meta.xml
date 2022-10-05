@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FocusFiveProduct__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>Pease check this field when the Product should be considered as Focus 5 Product. It will add this product to All DPs Outlet Assets. When the product is unchecked as Focus 5 Product it will be unchecked as Focus 5 Product or deleted if no orders from Outlet Assets.</inlineHelpText>
+    <label>Focus 5 Product</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

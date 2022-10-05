@@ -14,6 +14,7 @@
  */
 @IsTest
 public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
+    private static Integer counter = 0;
 
     /**
      * Instance is created dynamically. This method compensates a constructor.
@@ -40,7 +41,8 @@ public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
     protected override SObject createTemplateSObject() {
         Product2 template = new Product2(
                 Name = 'Test Product',
-                IsActive = true
+                IsActive = true,
+                StockKeepingUnit = 'uniqueSKU' + ++counter
         );
 
         return template;

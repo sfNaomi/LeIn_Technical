@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Leader</label>
     <permissionSets>AccountTelesalesAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -15,12 +16,11 @@
     <permissionSets>OrderTelesalesAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

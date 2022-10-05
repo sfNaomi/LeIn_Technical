@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Transport Manager</label>
     <permissionSets>AccountLogisticsAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
@@ -11,9 +12,8 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

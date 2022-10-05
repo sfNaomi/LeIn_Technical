@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Pricing &amp; Product Manager</label>
     <permissionSets>AccountSupportAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
@@ -17,12 +18,11 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SystemBasicFeatures</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

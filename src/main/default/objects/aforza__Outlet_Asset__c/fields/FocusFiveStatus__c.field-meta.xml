@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FocusFiveStatus__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF (FocusFiveProduct__c,
+CASE (
+    aforza__Account__r.FieldSalesRegion__c,
+				&quot;England North&quot;, IF($CustomMetadata.ProductSetting__mdt.OrgDefaultProductSettings.FocusFiveEngland__c + aforza__Purchase_Date__c &lt;= TODAY(), &quot;Not Lapsed&quot;, &quot;Lapsed&quot;),
+				&quot;England South&quot;, IF($CustomMetadata.ProductSetting__mdt.OrgDefaultProductSettings.FocusFiveEngland__c + aforza__Purchase_Date__c &lt;= TODAY(), &quot;Not Lapsed&quot;, &quot;Lapsed&quot;),
+				&quot;Scotland East&quot;, IF($CustomMetadata.ProductSetting__mdt.OrgDefaultProductSettings.FocusFiveScotland__c + aforza__Purchase_Date__c &lt;= TODAY(), &quot;Not Lapsed&quot;, &quot;Lapsed&quot;),
+				&quot;Scotland West&quot;, IF($CustomMetadata.ProductSetting__mdt.OrgDefaultProductSettings.FocusFiveScotland__c + aforza__Purchase_Date__c &lt;= TODAY(), &quot;Not Lapsed&quot;, &quot;Lapsed&quot;),
+				&quot;Unknown Sales Region&quot;
+), &quot;Not Focus 5 Product&quot;)</formula>
+    <label>Focus 5 Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

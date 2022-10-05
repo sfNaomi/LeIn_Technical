@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FocusProductRequiredFields</fullName>
+    <active>true</active>
+    <description>When a Focus product is checked, make sure Other needed fields are also populated.</description>
+    <errorConditionFormula>AND(
+    FocusFiveProduct__c,
+				OR (
+				    ISBLANK(FocusFiveGroup__c),
+				    ISBLANK(StockKeepingUnit)
+				)
+)</errorConditionFormula>
+    <errorMessage>When selecting Focus 5 product you also have to populate SKU code and Focus 5 Group.</errorMessage>
+</ValidationRule>

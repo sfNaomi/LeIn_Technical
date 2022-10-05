@@ -599,4 +599,22 @@ private with sharing class AccountTriggerHandlerTest {
         System.assertEquals(0, record.size());
     }
 
+    @IsTest
+    private static void testManageFocusProducts() {
+        // create NonStockis attribute category
+        TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
+
+        // create product with focus five
+        TdfSObjectFactory.insertSObject(new Product2(FocusFiveProduct__c = true, FocusFiveGroup__c = 'GROUP'));
+
+        Test.startTest();
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        System.debug(assets);
+        // given the fact that batches will be only run after stop test, and there is also batch to add new nonstocking product to accounts. At the time
+        // batches run the account is here and thus the Asset is created twice
+        System.assertEquals(2, assets.size());
+    }
 }
