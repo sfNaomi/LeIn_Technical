@@ -104,6 +104,6 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>OrderProductCompactLayout</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
 </CustomObject>

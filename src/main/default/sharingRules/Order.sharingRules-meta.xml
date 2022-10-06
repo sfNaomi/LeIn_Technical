@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>ReadOrderAccessForFieldSales</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Read Order Access for Field Sales</label>
+        <sharedTo>
+            <roleAndSubordinates>FieldSalesController</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Telesales Order,E-Commerce Order,EDI Order,Return Order,Van Sales Order,Field Direct Order</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ReadOrderAccessForTelesales</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Read Order Access for Telesales</label>
+        <sharedTo>
+            <roleAndSubordinates>SalesController</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Telesales Order,E-Commerce Order,EDI Order,Return Order,Field Direct Order</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ReadWriteOrderAccessForFieldSales</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Write Order Access for Field Sales</label>
+        <sharedTo>
+            <roleAndSubordinates>FieldSalesController</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Field Direct Order,Van Sales Order</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Status</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ReadWriteOrderAccessForLogistics</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Write Order Access for Logistics</label>
+        <sharedTo>
+            <roleAndSubordinates>TransportManager</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>Status</field>
+            <operation>equals</operation>
+            <value>Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ReadWriteOrderAccessForTelesales</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Write Order Access for Telesales</label>
+        <sharedTo>
+            <roleAndSubordinates>SalesController</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Telesales Order,E-Commerce Order,EDI Order,Return Order,Field Direct Order</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Status</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

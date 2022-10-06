@@ -37,11 +37,10 @@ public with sharing class OrderTriggerHandler {
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Account relatedAccount = relatedAccounts.get(newOrder.AccountId);
-            if (
-                !AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
+            if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 (
                     (oldOrder == null) ||
-                    (oldOrder != null && newOrder.Status != oldOrder.Status && OrderService.COMPLETED_ORDER_STATUSES.contains(newOrder.Status))
+                    (oldOrder != null && newOrder.Status != oldOrder.Status && !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))
                 )
             ) {
                 newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
@@ -61,12 +60,11 @@ public with sharing class OrderTriggerHandler {
                 orderIdsToCreateInvoiceFor.add(newOrder.Id);
             }
         }
-        OrderService.createInvoicesForOrders(orderIdsToCreateInvoiceFor);
+        InvoiceService.createInvoicesForOrders(orderIdsToCreateInvoiceFor);
     }
 
     public static void cloneCompletedOrder(List<Order> newOrders, Map<Id, Order> oldOrders) {
         List<Order> toBeClonedOrders = new List<Order>();
-        List<Id> succesfullyClonedOrdersIds = new List<Id>();
         for (Order order : newOrders) {
             if (
                 order.Status == 'Activated' &&
