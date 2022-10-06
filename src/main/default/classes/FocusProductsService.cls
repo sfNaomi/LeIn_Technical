@@ -32,12 +32,12 @@ public with sharing class FocusProductsService {
 
         for (Id accountId : accounts) {
             Set<Id> outletAssetProductIds = new Set<Id>();
-            if (accountsOutletAssetsByProductId.size() > 0) {
-                outletAssetProductIds = accountsOutletAssetsByProductId.get(accountId).keySet();
+            if (accountsOutletAssetsByProductId.size() > 0 && accountsOutletAssetsByProductId.containsKey(accountId)) {
+                outletAssetProductIds = accountsOutletAssetsByProductId?.get(accountId).keySet();
             }
             for (Product2 focusedProduct : products) {
                 // if the id is not present in current list we add new Asset Outlet
-                if (!outletAssetProductIds.contains(focusedProduct.Id)) {
+                if (outletAssetProductIds.isEmpty() || !outletAssetProductIds.contains(focusedProduct.Id)) {
                     outletAssetsToImport.add(createOutletAsset(accountId, focusedProduct));
                 }
             }

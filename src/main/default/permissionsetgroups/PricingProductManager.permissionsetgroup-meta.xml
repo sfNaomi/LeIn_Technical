@@ -10,6 +10,7 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
+    <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
