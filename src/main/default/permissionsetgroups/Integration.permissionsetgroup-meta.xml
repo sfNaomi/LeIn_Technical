@@ -16,7 +16,6 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>
-    <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>

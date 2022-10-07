@@ -48,6 +48,20 @@
         <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>ReadWriteOrderAccessForIT</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Write Order Access for IT</label>
+        <sharedTo>
+            <group>IT</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Return Order,Straight to JDE Order,Telesales Order,E-Commerce Order,EDI Order,Van Sales Order,Field Direct Order</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>ReadWriteOrderAccessForLogistics</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Read Write Order Access for Logistics</label>
@@ -58,6 +72,20 @@
             <field>Status</field>
             <operation>equals</operation>
             <value>Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ReadWriteOrderAccessForSupport</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Read Write Order Access for Support</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>OperationalSupportController</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Return Order,Straight to JDE Order,Telesales Order,E-Commerce Order,EDI Order,Van Sales Order,Field Direct Order</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>

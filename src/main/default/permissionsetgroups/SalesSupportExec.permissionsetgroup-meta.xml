@@ -12,7 +12,6 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>
-    <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
