@@ -30,6 +30,14 @@
             value={fieldDefinition.value}
             onchange={handleSelection}
     ></lightning-combobox>
+
+    <lightning-input
+            if:true={isText}
+            type="text"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            onchange={handleSelection}
+    ></lightning-input>
 </template>
 
 

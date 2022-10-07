@@ -1,8 +1,6 @@
 <!--
- - Created by svatopluk.sejkora on 20.09.2022.
+ - Created by svatopluk.sejkora on 05.10.2022.
  -->
-
-<!-- Test Page -->
 <template>
     <div class="slds-is-relative">
         <div if:true={filterFields}>
@@ -24,10 +22,11 @@
                 </lightning-layout-item>
                 <lightning-layout-item size="2" class="slds-m-left_medium slds-m-right_medium">
                     <lightning-combobox
-                            label={label.newTam}
-                            options={tamUsers}
-                            value={tamToMove}
-                            onchange={handleNewTamSelection}
+                            label={label.action}
+                            options={actions}
+                            value={selectedAction}
+                            disabled={disableActionSelection}
+                            onchange={handleActionSelection}
                     ></lightning-combobox>
                 </lightning-layout-item>
                 <lightning-layout-item
@@ -35,9 +34,10 @@
                         class="slds-m-left_medium slds-m-right_medium slds-align_absolute-center slds-m-top_large">
                     <lightning-button
                             variant="brand"
-                            disabled={showMove}
-                            label={label.move}
-                            onclick={handleMoveClick}></lightning-button>
+                            disabled={actionButtonDisabled}
+                            label={label.printUpdate}
+                            onclick={handleActionButton}
+                    ></lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
             <div style="height: 50em">

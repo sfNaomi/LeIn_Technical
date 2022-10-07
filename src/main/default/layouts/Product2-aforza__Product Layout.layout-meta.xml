@@ -132,6 +132,10 @@
                 <behavior>Edit</behavior>
                 <field>FocusFiveProduct__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>StockKeepingUnit</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

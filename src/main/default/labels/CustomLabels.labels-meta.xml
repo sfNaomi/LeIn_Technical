@@ -229,6 +229,134 @@
         <value>This account doesn&apos;t have a parent Customer account. Please select a parent account in the Parent Account field before moving the account to Traders status.</value>
     </labels>
     <labels>
+        <fullName>SelectedNumberOfOrderRows</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectedNumberOfOrderRows</shortDescription>
+        <value>You have selected #0# orders.</value>
+    </labels>
+    <labels>
+        <fullName>Action</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>PrintUpdate</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrintUpdate</shortDescription>
+        <value>Print / Update</value>
+    </labels>
+    <labels>
+        <fullName>LoadId</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LoadId</shortDescription>
+        <value>Load ID</value>
+    </labels>
+    <labels>
+        <fullName>Depot</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Depot</shortDescription>
+        <value>Depot</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryDate</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryDate</shortDescription>
+        <value>Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>OrderId</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderId</shortDescription>
+        <value>Order ID</value>
+    </labels>
+    <labels>
+        <fullName>AccountName</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountName</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>PickingSheetPrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PickingSheetPrinted</shortDescription>
+        <value>Picking Sheet Printed?</value>
+    </labels>
+    <labels>
+        <fullName>PickingCompleted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PickingCompleted</shortDescription>
+        <value>Picking Completed?</value>
+    </labels>
+    <labels>
+        <fullName>IsLoaded</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IsLoaded</shortDescription>
+        <value>Is Loaded?</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryManifestPrinted</shortDescription>
+        <value>Delivery Manifest Printed?</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryNotePrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryNotePrinted</shortDescription>
+        <value>Delivery Note Printed?</value>
+    </labels>
+    <labels>
+        <fullName>Receipt</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Receipt</shortDescription>
+        <value>Receipt?</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InvoicePrinted</shortDescription>
+        <value>Invoice Printed?</value>
+    </labels>
+    <labels>
         <fullName>AWRS</fullName>
         <categories>Invoice</categories>
         <language>en_US</language>

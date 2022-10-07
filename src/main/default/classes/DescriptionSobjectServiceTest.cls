@@ -27,4 +27,16 @@ private class DescriptionSobjectServiceTest {
 
         System.assertEquals('DATE', result);
     }
+
+    @IsTest
+    static void testGetPicklistEntries() {
+        String fieldName = 'Rating';
+        String sObjectName = 'Account';
+
+        Test.startTest();
+        List<PicklistEntry> result = DescriptionSobjectService.getPicklistEntries(fieldName, sObjectName);
+        Test.stopTest();
+
+        System.assertEquals(false, result.isEmpty());
+    }
 }

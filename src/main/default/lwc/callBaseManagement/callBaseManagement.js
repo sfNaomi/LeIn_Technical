@@ -7,6 +7,7 @@ import changeOwnerOfVisits from "@salesforce/apex/CallBaseManagementController.c
 import fetchTamUsers from "@salesforce/apex/CallBaseManagementController.fetchTamUsers";
 import {replaceStringValues} from 'c/stringOperationsService';
 import {processError} from 'c/errorHandlingService';
+import {setTabNameAndIcon} from 'c/workspaceApiService';
 import selectedNumberOfRowsLabel from '@salesforce/label/c.SelectedNumberOfRows';
 import successMoveMessage from '@salesforce/label/c.SuccessMoveMessage'
 import move from '@salesforce/label/c.Move'
@@ -28,8 +29,6 @@ import secondaryGridLabel from '@salesforce/label/c.SecondaryGrid';
 import depotLabel from '@salesforce/label/c.Depot';
 import creditStatusLabel from '@salesforce/label/c.CreditStatus';
 import visitTransferTabNameLabel from '@salesforce/label/c.VisitTransferTabName'
-
-
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const columns = [
@@ -67,6 +66,7 @@ export default class CallBaseManagement extends LightningElement {
     tamUsers = [];
     limitOfRowsReturned = 900;
     sObjectApiName = 'aforza__Visit__c';
+    filterSize = 2;
     @track selectedIds = [];
     @track filterFields = [];
     @track tamToMove;
@@ -91,7 +91,7 @@ export default class CallBaseManagement extends LightningElement {
         Promise.all([this.fetchTamUsers()]).then(() => {
             this.prepareFieldDefinitionVisit();
         });
-        this.setTabNameAndIcon();
+        setTabNameAndIcon(visitTransferTabNameLabel, 'action:change_owner', visitTransferTabNameLabel, this);
     }
 
     /** Method to prepare filter fields definition for filter component
@@ -274,54 +274,5 @@ export default class CallBaseManagement extends LightningElement {
         } finally {
             this.isLoading = false;
         }
-    }
-
-    invokeWorkspaceAPI(methodName, methodArgs) {
-        return new Promise((resolve, reject) => {
-            const apiEvent = new CustomEvent("internalapievent", {
-                bubbles: true,
-                composed: true,
-                cancelable: false,
-                detail: {
-                    category: "workspaceAPI",
-                    methodName: methodName,
-                    methodArgs: methodArgs,
-                    callback: (err, response) => {
-                        if (err) {
-                            return reject(err);
-                        } else {
-                            return resolve(response);
-                        }
-                    }
-                }
-            });
-
-            this.dispatchEvent(apiEvent);
-        });
-    }
-
-    setTabNameAndIcon() {
-        this.invokeWorkspaceAPI('isConsoleNavigation').then(isConsole => {
-            if (isConsole) {
-                this.invokeWorkspaceAPI('getFocusedTabInfo').then(focusedTab => {
-                    this.invokeWorkspaceAPI('setTabLabel', {
-                        tabId: focusedTab.tabId,
-                        label: visitTransferTabNameLabel
-                    })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    this.invokeWorkspaceAPI('setTabIcon', {
-                        tabId: focusedTab.tabId,
-                        icon: "action:change_owner",
-                        iconAlt: visitTransferTabNameLabel
-                    })
-                        .catch(function (error) {
-                            console.log(error);
-                        })
-
-                });
-            }
-        });
     }
 }

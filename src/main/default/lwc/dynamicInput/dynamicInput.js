@@ -46,6 +46,18 @@ export default class DynamicInput extends LightningElement {
     }
 
     /**
+     * Check for Text DisplayType.
+     *
+     * @returns {boolean} - true fortext
+     *
+     * @author Svata Sejkora
+     * @date 2022-10-05
+     */
+    get isText() {
+        return this.fieldDefinition.type === 'Text';
+    }
+
+    /**
      * @description methods to fire an event to parent with changed data. Includes name of the Application object API name
      * and its value.
      *

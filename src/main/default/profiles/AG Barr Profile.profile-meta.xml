@@ -47,6 +47,40 @@
         <layout>OrderSetting__mdt-Order Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Load__c-Load Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ECommerceOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.EDIOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.FieldDirectOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ReturnOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.StraightToJDEOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.TelesalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.VanSalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>

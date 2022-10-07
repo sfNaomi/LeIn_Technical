@@ -6,13 +6,13 @@
 <template>
     <div class="slds-is-relative">
         <lightning-card>
-            <lightning-layout class="slds-m-around_medium">
+            <lightning-layout class="slds-m-around_medium" multiple-rows="true">
                 <lightning-layout-item
                         for:each={filterFields}
                         for:item="field"
                         key={field.index}
                         class="slds-m-around_medium"
-                        size="2">
+                        size={filterSize}>
                     <c-dynamic-input field-definition={field} onchangeddata={handleChangedData}></c-dynamic-input>
                 </lightning-layout-item>
             </lightning-layout>

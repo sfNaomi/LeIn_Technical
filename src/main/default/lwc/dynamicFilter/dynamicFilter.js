@@ -17,6 +17,7 @@ export default class DynamicFilter extends LightningElement {
     @api sobjectApiName;
     @api toFlatten;
     @api limitOfRowsReturned;
+    @api filterSize;
     @track filterFieldsWithPopulatedFilters = [];
     @track isLoading = false;
     flattenedRecords = [];

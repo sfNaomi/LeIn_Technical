@@ -37,6 +37,8 @@ public with sharing class OrderTriggerHandler {
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Account relatedAccount = relatedAccounts.get(newOrder.AccountId);
+            System.debug(relatedAccount.AccountStatus__c);
+            System.debug(AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED);
             if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 (
                     (oldOrder == null) ||

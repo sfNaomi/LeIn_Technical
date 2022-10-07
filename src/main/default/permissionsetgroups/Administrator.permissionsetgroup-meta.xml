@@ -3,9 +3,11 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Administrator</label>
     <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
@@ -14,6 +16,7 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
     <permissionSets>OrderAdminAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
     <permissionSets>OutletAssetAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
