@@ -15,6 +15,20 @@
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>ReadOrderAccessForFinance</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Read Order Access for Finance</label>
+        <sharedTo>
+            <roleAndSubordinates>CreditManager</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Return Order,Straight to JDE Order,Telesales Order,E-Commerce Order,EDI Order,Van Sales Order,Field Direct Order</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>ReadOrderAccessForTelesales</fullName>
         <accessLevel>Read</accessLevel>
         <label>Read Order Access for Telesales</label>
@@ -80,7 +94,7 @@
         <accessLevel>Edit</accessLevel>
         <label>Read Write Order Access for Support</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>OperationalSupportController</roleAndSubordinatesInternal>
+            <roleAndSubordinates>OperationalSupportController</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
