@@ -228,4 +228,60 @@
         <shortDescription>NoParentCustomAccountErrorMessage</shortDescription>
         <value>This account doesn&apos;t have a parent Customer account. Please select a parent account in the Parent Account field before moving the account to Traders status.</value>
     </labels>
+    <labels>
+        <fullName>AWRS</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AWRS</shortDescription>
+        <value>AWRS #</value>
+    </labels>
+    <labels>
+        <fullName>Reg</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reg</shortDescription>
+        <value>Reg #</value>
+    </labels>
+    <labels>
+        <fullName>VAT</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT</shortDescription>
+        <value>VAT #</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine1</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 1</shortDescription>
+        <value>Invoice Address Line 1</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine2</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 2</shortDescription>
+        <value>Invoice Address Line 2</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine3</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 3</shortDescription>
+        <value>Invoice Address Line 3</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePhoneNumber</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Phone Number</shortDescription>
+        <value>Tel. 0345 345 3566</value>
+    </labels>
 </CustomLabels>
