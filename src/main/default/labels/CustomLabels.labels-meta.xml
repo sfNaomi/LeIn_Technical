@@ -15,6 +15,13 @@
         <value>No Primary Contact exists on this account.</value>
     </labels>
     <labels>
+        <fullName>MinOrderOnAccountNotMetErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MinOrderOnAccountNotMetErrorMessage</shortDescription>
+        <value>This order´s quantity is less than the minimum order quantity set on the account.</value>
+    </labels>
+    <labels>
         <fullName>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</fullName>
         <language>en_US</language>
         <protected>false</protected>

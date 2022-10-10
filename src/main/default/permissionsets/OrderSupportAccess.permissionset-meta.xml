@@ -72,6 +72,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.MinOrderQuantityCalculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.Name</field>
         <readable>true</readable>
@@ -79,6 +84,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.NetTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.OrderWasActivated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

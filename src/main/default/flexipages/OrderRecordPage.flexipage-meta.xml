@@ -178,6 +178,38 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>message</name>
+                    <value>{!$Label.MinOrderOnAccountNotMetErrorMessage}</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>Warning</value>
+                </componentInstanceProperties>
+                <componentName>recordPageWarningMessage</componentName>
+                <identifier>c_recordPageWarningMessage</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.MinOrderQuantityCalculation__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>TelesalesOrder</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OrderWasActivated__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
                 </componentInstanceProperties>
