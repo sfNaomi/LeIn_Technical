@@ -81,7 +81,7 @@ public with sharing class DynamicFilterController {
             return addTimeValueToDateIfComparedToDatetimeField(filterValue, sObjectName);
         } else if (filterValue.type == 'Integer') {
             return filterValue.value;
-        } else if (filterValue.type == 'Picklist') {
+        } else if (filterValue.type == 'Picklist' || filterValue.type == 'Lookup') {
             return '\'' + filterValue.value + '\'';
         } else {
             throw  new IllegalArgumentException('An unknown data type submitted: ' + filterValue.type);

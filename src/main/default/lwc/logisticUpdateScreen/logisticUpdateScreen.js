@@ -79,9 +79,12 @@ const depotUserActions = [
     {"label": "Replan", "value": "Replan"}
 ];
 
+const RESET_FILTER = 'Reset Filter';
+
 export default class LogisticUpdateScreen extends LightningElement {
 
     @track filterFields = [];
+    originalTableData = [];
     @track tableData = [];
     @track selectedRows = [];
     columns = columns;
@@ -90,23 +93,25 @@ export default class LogisticUpdateScreen extends LightningElement {
     isLoading = false;
     filterSize = 2;
     sObjectApiName = 'Order';
-    depotPicklist = [];
-    statusPicklist = [];
+    @track depotPicklist = [];
+    @track statusPicklist = [];
+    @track loadIdsFromFilteredOrders = [];
     actions = [];
     @track selectedAction = '';
     @track actionConfirmDisabled = true;
+    @track selectedLoadId;
     label = {
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,Depot__c,DeliveryDate__c,OrderNumber,AccountName__c,Status,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,OrderNumber,AccountName__c,Status,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
-        setTabNameAndIcon('Logistic Update Screen', 'standard:planogram', 'Logistic Update Screen', this);
         Promise.all([this.fetchPicklistValues()]).then(() => {
             this.prepareFilterDefinition();
             this.prepareActionValues();
+            setTabNameAndIcon('Logistic Update Screen', 'standard:planogram', 'Logistic Update Screen', this);
         });
     }
 
@@ -116,8 +121,8 @@ export default class LogisticUpdateScreen extends LightningElement {
      * @date 2022-09-20
      */
     prepareFilterDefinition() {
-        this.filterFields.push(this.createInputFieldDefinitionJson('Text', 'Load__c',
-            'Load ID', null, [{"label": "", "value": ""}], 'Load__r.Name', 'equals'));
+        this.filterFields.push(this.createInputFieldDefinitionJson('Lookup', 'Load__c',
+            'Load ID', null, null, null, 'equals', 'Load__c', 'standard:webcart'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Depot__c',
             'Depot', null, this.depotPicklist, null, 'equals'));
@@ -140,13 +145,15 @@ export default class LogisticUpdateScreen extends LightningElement {
      * @param soqlName - name to be used within SOQL for filtering (needed for fields to be accessed via dot notation
      * (if same as apiName should be empty)
      * @param operand - operand to be used for this specific field (equals, equalSmaller, equalGreater)
+     * @param lookupObject - if the field is of type Lookup this is api name of the object Lookup is pointing to
+     * @param iconName - name of the icon to show in lookup component, valid only for lookup type
      *
      * @returns {Object} - object with filter field definition
      *
      * @author Svata Sejkora
      * @date 2022-09-20
      */
-    createInputFieldDefinitionJson(dataType, apiName, label, value, options, soqlName, operand) {
+    createInputFieldDefinitionJson(dataType, apiName, label, value, options, soqlName, operand, lookupObject, iconName) {
         let inputFieldDefinition = {};
         inputFieldDefinition.type = dataType;
         inputFieldDefinition.name = apiName;
@@ -155,6 +162,8 @@ export default class LogisticUpdateScreen extends LightningElement {
         inputFieldDefinition.options = [] = options;
         inputFieldDefinition.soqlName = soqlName === null ? apiName : soqlName;
         inputFieldDefinition.operand = operand;
+        inputFieldDefinition.lookupObject = lookupObject;
+        inputFieldDefinition.lookupIcon = iconName;
         inputFieldDefinition.index = this.filterFields.length
         return inputFieldDefinition;
     }
@@ -168,12 +177,32 @@ export default class LogisticUpdateScreen extends LightningElement {
      */
     processReturnedData(event) {
         this.tableData = [];
+        this.originalTableData = [];
         // add clickable URL to the Order Number
         let orderUrl;
-        this.tableData = event.detail.returnedData.map(row => {
+        this.originalTableData = event.detail.returnedData.map(row => {
             orderUrl = `/${row.Id}`;
             return {...row, orderUrl}
         });
+        this.tableData = this.originalTableData;
+        this.prepareLoadIdsForOrderFiltering();
+    }
+
+    /** Method to iterate over filtered orders and to prepare load is to filter further
+     *
+     * @author Svata Sejkora
+     * @date 2022-10-09
+     */
+    prepareLoadIdsForOrderFiltering() {
+        let loadIds = new Set();
+        this.loadIdsFromFilteredOrders = [];
+        this.loadIdsFromFilteredOrders.push({"label": RESET_FILTER, "value": RESET_FILTER});
+        this.tableData.forEach((order) => {
+            if (!loadIds.has(order.Load__rName)) {
+                loadIds.add(order.Load__rName);
+                this.loadIdsFromFilteredOrders.push({"label": order.Load__rName, "value": order.Load__rName});
+            }
+        })
     }
 
     /** Method to call apex to get picklist values
@@ -277,6 +306,23 @@ export default class LogisticUpdateScreen extends LightningElement {
         }
     }
 
+    handleLoadIdSelection(event) {
+        // when the empty value is selected transform it to actual value in order list
+        const selectedLoadName = event.target.value === null ? undefined : event.target.value;
+        this.selectedLoadId = selectedLoadName;
+        this.tableData = [];
+        if (selectedLoadName === RESET_FILTER) {
+            // load all returned data
+            this.tableData = this.originalTableData;
+        } else {
+            this.originalTableData.forEach(order => {
+                if (order.Load__rName === selectedLoadName) {
+                    this.tableData.push(order);
+                }
+            })
+        }
+    }
+
     /** temporary method to show toast with info
      *
      * @author Svata Sejkora
@@ -376,7 +422,7 @@ export default class LogisticUpdateScreen extends LightningElement {
             this.actionConfirmDisabled = true;
             const toastSuccess = new ShowToastEvent({
                 title: 'Selected Orders do not have correct Status',
-                message: `For Action "${selectedAction}" all selected orders have to have status(es): ${JSON.stringify(allowedStatuses)}`,
+                message: `For Action "${selectedAction}" all selected orders have to be in status(es): ${JSON.stringify(allowedStatuses)}`,
                 variant: 'warning',
                 mode: 'sticky'
             });
@@ -443,5 +489,27 @@ export default class LogisticUpdateScreen extends LightningElement {
      */
     get actionButtonDisabled() {
         return Boolean(this.actionConfirmDisabled || this.selectedAction.length === 0);
+    }
+
+    /** Method to return true when the filter values are laoded, as we are loading some of the data from apex we need to show only when filters are loaded
+     *
+     * @returns {boolean} - true when there is at least 1 filtered value definition
+     *
+     * @author Svata Sejkora
+     * @date 2022-09-20
+     */
+    get filterDataReady() {
+        return Boolean(this.filterFields.length > 0);
+    }
+
+    /** Method to return true when there is only one option (empty) no need to filter
+     *
+     * @returns {boolean} - true when there is exactly 1 options = empty one, no need to filter
+     *
+     * @author Svata Sejkora
+     * @date 2022-09-20
+     */
+    get disableLoadIdFilter() {
+        return Boolean(this.loadIdsFromFilteredOrders.length === 1);
     }
 }

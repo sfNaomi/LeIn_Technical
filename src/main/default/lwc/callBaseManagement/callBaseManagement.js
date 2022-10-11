@@ -75,9 +75,9 @@ export default class CallBaseManagement extends LightningElement {
         newTam
     }
 
-    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Owner__r.LastName,' +
-        'aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,aforza__Account__r.DeliveryPointReference__c,' +
-        'aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
+    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Account__r.Owner.FirstName,' +
+        'aforza__Owner__r.LastName,aforza__Owner__r.FirstName,aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,' +
+        'aforza__Account__r.DeliveryPointReference__c,aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
         'toLabel(aforza__Account__r.Depot__c),aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c';
 
     /**
@@ -164,7 +164,10 @@ export default class CallBaseManagement extends LightningElement {
      */
     processReturnedData(event) {
         this.tableData = [];
+        console.log('processing data');
         this.tableData = event.detail.returnedData;
+        console.log('copy data?');
+        this.mergeNamesToSingleColumn();
     }
 
     /** Method to return true when there are data to show
@@ -212,9 +215,11 @@ export default class CallBaseManagement extends LightningElement {
             this.isLoading = true;
             const users = await fetchTamUsers();
             this.tamUsers.push({label: "", value: ""});
-            users.forEach((user) => {
-                this.tamUsers.push({label: user.FirstName + ' ' + user.LastName, value: user.Id});
-            });
+            if (users) {
+                users.forEach((user) => {
+                    this.tamUsers.push({label: user.FirstName + ' ' + user.LastName, value: user.Id});
+                });
+            }
         } catch (error) {
             processError(this, error);
         } finally {
@@ -235,6 +240,15 @@ export default class CallBaseManagement extends LightningElement {
         for (let i = 0; i < selectedRows.length; i++) {
             this.selectedIds.push(selectedRows[i].Id);
         }
+    }
+
+    mergeNamesToSingleColumn() {
+        this.tableData.forEach((visit) => {
+            const visitOwner = `${visit.aforza__Owner__rLastName} ${visit.aforza__Owner__rFirstName}`;
+            const accountOwner = `${visit.aforza__Account__rOwnerLastName} ${visit.aforza__Account__rOwnerFirstName}`;
+            visit.aforza__Owner__rLastName = visitOwner;
+            visit.aforza__Account__rOwnerLastName = accountOwner;
+        });
     }
 
     /** Method to assign new TAM owner to attribute

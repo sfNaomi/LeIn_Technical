@@ -38,6 +38,15 @@
             label={fieldDefinition.label}
             onchange={handleSelection}
     ></lightning-input>
+
+    <c-custom-lookup-input
+            if:true={isLookup}
+            object-name={fieldDefinition.lookupObject}
+            icon-name={fieldDefinition.lookupIcon}
+            label={fieldDefinition.label}
+            placeholder="Select"
+            onselected={handleLookupSelection}
+    ></c-custom-lookup-input>
 </template>
 
 

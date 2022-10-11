@@ -13,7 +13,10 @@
                         key={field.index}
                         class="slds-m-around_medium"
                         size={filterSize}>
-                    <c-dynamic-input field-definition={field} onchangeddata={handleChangedData}></c-dynamic-input>
+                    <c-dynamic-input
+                            field-definition={field}
+                            onchangeddata={handleChangedData}
+                    ></c-dynamic-input>
                 </lightning-layout-item>
             </lightning-layout>
             <div class="slds-align_absolute-center">
