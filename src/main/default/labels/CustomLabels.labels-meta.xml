@@ -149,14 +149,6 @@
         <value>Delivery Point Post Code</value>
     </labels>
     <labels>
-        <fullName>Depot</fullName>
-        <categories>CallBaseManagement</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Depot</shortDescription>
-        <value>Depot</value>
-    </labels>
-    <labels>
         <fullName>DpReference</fullName>
         <categories>CallBaseManagement</categories>
         <language>en_US</language>
@@ -271,7 +263,7 @@
     </labels>
     <labels>
         <fullName>Depot</fullName>
-        <categories>LogisticUpdateScreen</categories>
+        <categories>LogisticUpdateScreen, CallBaseManagement</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Depot</shortDescription>
