@@ -93,6 +93,9 @@
         <layout>Product2-aforza__Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Vehicle__c-Vehicle Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>aforza__Recurring_Record__c-aforza__Recurring Record Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
