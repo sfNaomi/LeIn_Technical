@@ -4,6 +4,7 @@
     <label>Application Support</label>
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>AccountEditAccess</permissionSets>
+    <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
