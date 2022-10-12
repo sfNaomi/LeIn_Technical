@@ -12,6 +12,8 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
