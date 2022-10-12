@@ -243,59 +243,64 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.LinkPost</actionName>
+            <actionName>Order.CancelOrder</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.PollPost</actionName>
+            <actionName>FeedItem.LinkPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.QuestionPost</actionName>
+            <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>FeedItem.QuestionPost</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeOwnerOne</actionName>
+            <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
+            <actionName>ChangeOwnerOne</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Clone</actionName>
+            <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>PrintableView</actionName>
+            <actionName>Clone</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Share</actionName>
+            <actionName>PrintableView</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Deactivate</actionName>
+            <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
+            <actionName>Deactivate</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>16</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>

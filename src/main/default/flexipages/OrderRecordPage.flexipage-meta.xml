@@ -53,17 +53,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>force:detailPanel</componentName>
-                <identifier>force_detailPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
-        <name>detailTabContent</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>NONE</value>
@@ -87,27 +76,20 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>detailTabContent</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.detail</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>detailTab</identifier>
+                <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
+        <mode>Replace</mode>
+        <name>detailTabContent</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>body</name>
@@ -119,6 +101,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>relatedListsTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>detailTabContent</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -203,6 +199,70 @@
                         <leftValue>{!Record.OrderWasActivated__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>message</name>
+                    <value>Credit Exceeded</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>Warning</value>
+                </componentInstanceProperties>
+                <componentName>recordPageWarningMessage</componentName>
+                <identifier>c_recordPageWarningMessage2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.AvailableCredit__c}</leftValue>
+                        <operator>LT</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Awaiting Approval</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>message</name>
+                    <value>DP is on Hold</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>Warning</value>
+                </componentInstanceProperties>
+                <componentName>recordPageWarningMessage</componentName>
+                <identifier>c_recordPageWarningMessage3</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.CreditStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>On Hold</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Awaiting Approval</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

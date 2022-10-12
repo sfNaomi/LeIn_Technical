@@ -9,12 +9,18 @@ public with sharing class OrderTriggerHandler {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             if (
                 OrderService.orderTypeCountsTowardsAccountLastOrderDate(newOrder.RecordTypeId) &&
-                    (
-                        (oldOrder == null && OrderService.isOrderCompleted(newOrder.Status)) ||
-                        (oldOrder != null && newOrder.Status != oldOrder.Status && !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status)) ||
-                        (oldOrder != null && newOrder.Status != oldOrder.Status && OrderService.isOrderCompleted(oldOrder.Status) && !OrderService.isOrderCompleted(newOrder.Status)) ||
-                        (oldOrder != null && newOrder.EffectiveDate != oldOrder.EffectiveDate && OrderService.isOrderCompleted(newOrder.Status))
-                    )
+                ((oldOrder == null && OrderService.isOrderCompleted(newOrder.Status)) ||
+                (oldOrder != null &&
+                newOrder.Status != oldOrder.Status &&
+                !OrderService.isOrderCompleted(oldOrder.Status) &&
+                OrderService.isOrderCompleted(newOrder.Status)) ||
+                (oldOrder != null &&
+                newOrder.Status != oldOrder.Status &&
+                OrderService.isOrderCompleted(oldOrder.Status) &&
+                !OrderService.isOrderCompleted(newOrder.Status)) ||
+                (oldOrder != null &&
+                newOrder.EffectiveDate != oldOrder.EffectiveDate &&
+                OrderService.isOrderCompleted(newOrder.Status)))
             ) {
                 ordersToUpdateAccountLastOrder.add(newOrder);
             }
@@ -22,23 +28,21 @@ public with sharing class OrderTriggerHandler {
         OrderService.updateLastOrderDateAndStatusOnParentAccount(ordersToUpdateAccountLastOrder);
     }
 
-    public static void validateOrderCreation(List<Order> newOrders, Map<Id, Order> oldOrders) {
+    public static void validateOrderCreationOrCompletion(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> relatedAccountIds = new Set<Id>();
         for (Order newOrder : newOrders) {
             relatedAccountIds.add(newOrder.AccountId);
         }
 
-        Map<Id, Account> relatedAccounts = new Map<Id, Account>([
-                SELECT Id, AccountStatus__c
-                FROM Account
-                WHERE Id IN :relatedAccountIds
-        ]);
+        Map<Id, Account> relatedAccounts = new Map<Id, Account>(
+            [SELECT Id, AccountStatus__c, CreditStatus__c, AvailableCredit__c,
+                (SELECT Id, AccountId, TeamMemberRole, UserId FROM AccountTeamMembers WHERE TeamMemberRole = 'TAM') 
+                    FROM Account WHERE Id IN :relatedAccountIds]
+        );
 
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Account relatedAccount = relatedAccounts.get(newOrder.AccountId);
-            System.debug(relatedAccount.AccountStatus__c);
-            System.debug(AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED);
             if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 (
                     (oldOrder == null) ||
@@ -47,7 +51,52 @@ public with sharing class OrderTriggerHandler {
             ) {
                 newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
             }
-        }
+            if (
+                oldOrder != null &&
+                newOrder.Status != oldOrder.Status && 
+                !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && 
+                (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED ||
+                 relatedAccount.AvailableCredit__c < 0) &&
+                (newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID || newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
+                newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID || newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)
+                ){ 
+                    if(relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED 
+                         && newOrder.RecordTypeId != RecordTypes.ORDER_FIELD_DIRECT_ID){
+                            newOrder.addError(Label.OrderActivationPreventedDueToDPOnHold);
+                    }
+                    if (relatedAccount.AvailableCredit__c < 0) {
+                        newOrder.addError(Label.OrderActivationPreventedDueToDPNegativeCredit);
+                    }
+                    OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
+                }   
+        }        
+    }    
+
+    private static void sendNotificationToTAM (String orderNumber, String orderAccountName, String orderId, List<AccountTeamMember> tamUsersIds){
+        String notificationName = 'NotificationToTAM';
+        String notificationTitle = 'Order in need of Approval';
+        Set<String> usersToBeNotified = new Set<String>();
+        
+        for(AccountTeamMember atm : tamUsersIds){
+            usersToBeNotified.add(atm.UserId);
+        } 
+        
+        CustomNotificationType notificationType = 
+            [SELECT Id, DeveloperName 
+             FROM CustomNotificationType 
+             WHERE DeveloperName = :notificationName]; 
+        
+        Messaging.CustomNotification notification = new Messaging.CustomNotification();
+        notification.setTitle(notificationTitle);
+        notification.setBody('Order number: ' + orderNumber +  ' from account ' + orderAccountName + ' needs to be submitted for approval.');
+        notification.setNotificationTypeId(notificationType.Id);
+        notification.setTargetId(orderId);
+        
+        try {    
+            notification.send(usersToBeNotified);
+        }catch (Exception e) {
+             System.debug('Problem sending notification: ' + e.getMessage());
+             }
     }
 
     public static void createInvoice(List<Order> newOrders, Map<Id, Order> oldOrders) {
@@ -152,3 +201,4 @@ public with sharing class OrderTriggerHandler {
         insert clonedOrderItems;
     }
 }
+

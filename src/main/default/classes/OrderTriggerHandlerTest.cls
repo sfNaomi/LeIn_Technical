@@ -389,4 +389,68 @@ private with sharing class OrderTriggerHandlerTest {
         System.assertEquals(1, invoices.size(), 'Expected existing invoice to be updated');
         System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
     }
+    
+    @IsTest
+    private static void testPreventOrderActivation_DPOnHoldAndRTTelesales() {
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, CreditStatus__c = 'On Hold')
+        );
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+                new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        Test.startTest();
+        try{
+            newOrder.Status = 'Activated';
+            update newOrder;
+            System.assert(false);
+        }catch (Exception e){
+            String expectedErrorMessage = Label.OrderActivationPreventedDueToDPOnHold;
+            System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+        }    
+        Test.stopTest();
+
+    }
+    
+    @IsTest
+    private static void testPreventOrderActivation_DPNegativeCreditAndRTEDI() {
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100)
+        );
+
+        AccountTeamMember atm = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'TAM')
+        );
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id, Status = 'Draft')
+        );
+
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
+        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+                new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id)
+        );
+
+        aforza__Invoice__c newInvoice = new aforza__Invoice__c(aforza__Reference__c= '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id, aforza__Status__c ='Outstanding', aforza__Amount_Due__c = 300);
+        insert newInvoice;
+        dpAccount = [SELECT Id, aforza__Credit_Amount__c, aforza__Outstanding_Invoice_Amount__c, AvailableCredit__c FROM Account WHERE Id = :dpAccount.Id];
+        
+        Test.startTest();
+        try{
+            newOrder.Status = 'Activated';
+            update newOrder;
+            System.assert(false);
+        }catch (Exception e){
+            String expectedErrorMessage = Label.OrderActivationPreventedDueToDPNegativeCredit;
+            System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+        }    
+        Test.stopTest();       
+    }   
 }
+

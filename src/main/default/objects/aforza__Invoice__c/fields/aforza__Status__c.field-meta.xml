@@ -29,16 +29,15 @@
                 <label>Paid in Full</label>
             </value>
             <value>
+                <fullName>Outstanding</fullName>
+                <default>false</default>
+                <label>Outstanding</label>
+            </value>
+            <value>
                 <fullName>Approved</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Approved</label>
-            </value>
-            <value>
-                <fullName>Outstanding</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Outstanding</label>
             </value>
             <value>
                 <fullName>Paid</fullName>

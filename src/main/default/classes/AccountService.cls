@@ -46,9 +46,19 @@ public with sharing class AccountService {
     public static final List<String> STATUSES_WHERE_ORDER_CREATION_ALLOWED {
         get {
             if (STATUSES_WHERE_ORDER_CREATION_ALLOWED == null) {
-                STATUSES_WHERE_ORDER_CREATION_ALLOWED = ACCOUNT_SETTING.StatusesWhereOrderCreationAllowed__c .split(',');
+                STATUSES_WHERE_ORDER_CREATION_ALLOWED = ACCOUNT_SETTING.StatusesWhereOrderCreationAllowed__c.split(',');
             }
             return STATUSES_WHERE_ORDER_CREATION_ALLOWED;
+        }
+        set;
+    }
+
+    public static final String STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED {
+        get {
+            if (STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED == null) {
+                STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED = ACCOUNT_SETTING.CreditStatusesOrderActiveNotAllowed__c;
+            }
+            return STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED;
         }
         set;
     }
