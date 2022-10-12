@@ -3,6 +3,6 @@
     <fullName>PreventEditOfLockedOrder</fullName>
     <active>true</active>
     <description>Prevents users from editing locked orders with a special custom permission - &quot;Edit Locked Orders&quot;</description>
-    <errorConditionFormula>NOT($Permission.EditLockedOrders) &amp;&amp; OR(ISPICKVAL( Status, &apos;Delivered&apos;), ISPICKVAL(Status, &apos;Receipted&apos;))</errorConditionFormula>
+    <errorConditionFormula>NOT($Permission.EditLockedOrders) &amp;&amp; ISPICKVAL(Status, &apos;Receipted&apos;)</errorConditionFormula>
     <errorMessage>This order is locked and no further changes are allowed.</errorMessage>
 </ValidationRule>

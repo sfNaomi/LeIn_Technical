@@ -86,6 +86,16 @@ public with sharing class AccountService {
         set;
     }
 
+    /**
+	 * @description copies information on account from primary contact (email, phone)
+	 *
+	 * @param newAccounts list with new versions of the account records
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts) {
         Set<Id> primaryContactIds = new Set<Id>();
         for (Account newAccount : newAccounts) {
@@ -106,6 +116,17 @@ public with sharing class AccountService {
         }
     }
 
+    /**
+	 * @description removes users with specified roles from the account team of the specified accounts
+	 *
+	 * @param accountsIds ids of accounts to remove users from
+	 * @param rolesToRemove roles of users to be removed from the account teams
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
     public static void removeRolesFromAccountTeam(Set<Id> accountsIds, List<String> rolesToRemove) {
         List<AccountTeamMember> teamMembersToDelete = [
                 SELECT Id
@@ -115,6 +136,16 @@ public with sharing class AccountService {
         delete teamMembersToDelete;
     }
 
+    /**
+	 * @description updates last order date and status on account
+	 *
+	 * @param accountsIds ids of accounts to be updated
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
     public static void updateLastOrderDateAndAccountStatus(Set<Id> accountIds) {
         List<Account> accToUpdateLastOrderDate = getAccountsWithLastCompletedOrder(accountIds);
 
@@ -132,6 +163,16 @@ public with sharing class AccountService {
         update accountsWithUpdatedLastOrderDate;
     }
 
+    /**
+	 * @description updates status on account based on last order date
+	 *
+	 * @param newAccounts accounts to be updated
+	 *
+	 * @return List<Account> updated accounts
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
     public static List<Account> updateAccountStatusBasedOnLastOrderDate(List<Account> newAccounts) {
         List<Account> accountsWithUpdatedStatus = new List<Account>();
 
@@ -177,6 +218,16 @@ public with sharing class AccountService {
         return accountsWithUpdatedStatus;
     }
 
+    /**
+     * @description retrieve accounts with their last completed order
+     *
+     * @param accountIds account ids to be retrieved
+     *
+     * @return List<Account> retrieved accounts
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-10
+     */
     private static List<Account> getAccountsWithLastCompletedOrder(Set<Id> accountIds) {
         List<Account> accountsWithLastOrder = [
                 SELECT Id, LastOrderDate__c, Frequency__c, AccountStatus__c,
@@ -194,6 +245,17 @@ public with sharing class AccountService {
         return accountsWithLastOrder;
     }
 
+    /**
+    * @description checks whether a specific account status should be taken into account for account
+    *             team membership automatic updated
+    *
+    * @param status account status
+    *
+    * @return Boolean requires the account status automatic update of the account team membership
+    *
+    * @author Magdalena Stanciu
+    * @date 2022-10-10
+    */
     public static Boolean accountStatusRequiresAccountTeamMembershipUpdate(String status) {
         return STATUSES_TO_REM_ROLES_FROM_ACCOUNT_TEAM.contains(status);
     }

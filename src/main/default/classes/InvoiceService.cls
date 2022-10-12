@@ -1,14 +1,27 @@
 /**
- * @description       :
- * @author            : Ciuca Bianca BearingPoint GmbH
- * @group             :
- * @last modified on  : 10-07-2022
- * @last modified by  : Ciuca Bianca, BearingPoint GmbH
+ * @description       : Service class for invoice generation
  **/
-public with sharing class InvoiceService {
-	private static final String INVOICE_OBJECT_NAME = 'aforza__Invoice__c';
 
-	public static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
+public with sharing class InvoiceService {
+	private static final String INVOICE_EMAIL_TEMPLATE_NAME = 'AGBarrInvoiceEmailTemplate';
+
+	private static final Id INVOICE_EMAIL_TEMPLATE_ID {
+		get {
+			if (INVOICE_EMAIL_TEMPLATE_ID == null) {
+				List<EmailTemplate> templates = new List<EmailTemplate>([
+						SELECT Id
+						FROM EmailTemplate
+						WHERE DeveloperName = :INVOICE_EMAIL_TEMPLATE_NAME
+						LIMIT 1
+				]);
+				INVOICE_EMAIL_TEMPLATE_ID = templates.isEmpty() ? null : templates[0].Id;
+			}
+			return INVOICE_EMAIL_TEMPLATE_ID;
+		}
+		set;
+	}
+
+	private static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
 		get {
 			if (ORDER_TO_INVOICE_MAPPING == null) {
 				ORDER_TO_INVOICE_MAPPING = CommonUtility.getFieldMapping('ORDER_TO_INVOICE');
@@ -18,7 +31,7 @@ public with sharing class InvoiceService {
 		set;
 	}
 
-	public static final FieldMapping__mdt ORDER_ITEM_TO_INVOICE_ITEM_MAPPING {
+	private static final FieldMapping__mdt ORDER_ITEM_TO_INVOICE_ITEM_MAPPING {
 		get {
 			if (ORDER_ITEM_TO_INVOICE_ITEM_MAPPING == null) {
 				ORDER_ITEM_TO_INVOICE_ITEM_MAPPING = CommonUtility.getFieldMapping('ORDER_ITEM_TO_INVOICE_ITEM');
@@ -27,150 +40,21 @@ public with sharing class InvoiceService {
 		}
 		set;
 	}
-	public static String getSObjectType(Id recordId) {
-		return recordId.getSObjectType().getDescribe().getName();
-	}
 
-	public static Blob getPdfContentBlob(Id recordId, PageReference pdfDocumentPageRef) {
-		pdfDocumentPageRef.getParameters().put('id', recordId);
-		Blob pdfBlob = Test.isRunningTest() ? Blob.valueOf('Test Page') : pdfDocumentPageRef.getContent();
-		return pdfBlob;
-	}
-
-	public static void generatePdfDocument(List<Id> recordIds, PageReference pdfDocumentPageRef) {
-		String sObjectType = getSObjectType(recordIds[0]);
-		sendEmailWithInvoiceAttachment(recordIds);
-		if (sObjectType == 'aforza__Invoice__c') {
-			List<aforza__Invoice__c> invoicePdfsToGenerate = [SELECT Name FROM aforza__Invoice__c WHERE Id IN :recordIds];
-			insertPdfAsFileForSObject(invoicePdfsToGenerate, pdfDocumentPageRef, sObjectType);
-		} else {
-			//List<Order> orderPdfsToGenerate = [SELECT Name FROM Order WHERE Id IN :recordIds];
-			//insertPdfAsFileForSObject(orderPdfsToGenerate, pdfDocumentPageRef, sObjectType);
-		}
-	}
-
-	public static void insertPdfAsFileForSObject(
-		List<SObject> sObjectPdfsToGenerate,
-		PageReference pdfDocumentPageRef,
-		String sObjectType
-	) {
-		List<ContentVersion> newContentVersionsToInsert = new List<ContentVersion>();
-		for (SObject sObjectRecord : sObjectPdfsToGenerate) {
-			Blob pdfContentBlob = getPdfContentBlob(sObjectRecord.Id, pdfDocumentPageRef);
-			ContentVersion newContentVersion = new ContentVersion();
-			newContentVersion.ContentLocation = 'S';
-			newContentVersion.Origin = 'C';
-			newContentVersion.OwnerId = UserInfo.getUserId();
-			newContentVersion.VersionData = pdfContentBlob;
-			if (sObjectType == INVOICE_OBJECT_NAME) {
-				addDetailsToContentVersionSpecificToInvoice(newContentVersion, (aforza__Invoice__c) sObjectRecord);
-			}
-
-			newContentVersionsToInsert.add(newContentVersion);
-		}
-
-		insert newContentVersionsToInsert;
-
-		List<ContentDocumentLink> contentDocumentsLinksToInsert = new List<ContentDocumentLink>();
-		Set<Id> insertedContentVersionsIds = (new Map<Id, ContentVersion>(newContentVersionsToInsert)).keySet();
-		for (ContentVersion insertedContentVersion : [
-			SELECT InvoiceId__c, ContentDocumentId
-			FROM ContentVersion
-			WHERE Id IN :insertedContentVersionsIds
-		]) {
-			ContentDocumentLink newContentDocumentLink = new ContentDocumentLink();
-			newContentDocumentLink.ContentDocumentId = insertedContentVersion.ContentDocumentId;
-			newContentDocumentLink.ShareType = 'V';
-			if (sObjectType == INVOICE_OBJECT_NAME) {
-				newContentDocumentLink.LinkedEntityId = insertedContentVersion.InvoiceId__c;
-			}
-			contentDocumentsLinksToInsert.add(newContentDocumentLink);
-		}
-		insert contentDocumentsLinksToInsert;
-	}
-
-	public static void addDetailsToContentVersionSpecificToInvoice(ContentVersion newContentVersion, aforza__Invoice__c invoice) {
-		newContentVersion.PathOnClient = 'Invoice ' + invoice.Name + ' ' + system.today().format() + '.pdf';
-		newContentVersion.Title = 'Invoice ' + invoice.Name + ' ' + system.today().format() + '.pdf';
-		newContentVersion.InvoiceId__c = invoice.Id;
-	}
-
-	@future(callout=true)
-	public static void sendEmailWithInvoiceAttachment(List<Id> recordIds) {
-		List<aforza__Invoice__c> invoicesToEmail = [
-			SELECT
-				id,
-				aforza__Account__r.aforza__Invoice_Email_Address__c,
-				aforza__Account__r.InvoiceType__c,
-				aforza__Account__r.aforza__Primary_Contact__c
-			FROM aforza__Invoice__c
-			WHERE
-				Id IN :recordIds
-				AND aforza__Account__r.InvoiceType__c = 'Email'
-				AND aforza__Account__r.aforza__Invoice_Email_Address__c != NULL
-		];
-
-		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
-		EmailTemplate emailTemplate = [
-			SELECT Id, Subject, Description, HtmlValue, DeveloperName, Body
-			FROM EmailTemplate
-			WHERE DeveloperName = 'AGBarrInvoiceEmailTemplate'
-		];
-
-		for (aforza__Invoice__c invoice : invoicesToEmail) {
-			Messaging.EmailFileAttachment emailAttachment = buildEmailAttachment(invoice.Id, Page.AGBarrInvoice);
-			Messaging.SingleEmailMessage message = buildEmailMessage(
-				invoice.aforza__Account__r.aforza__Invoice_Email_Address__c,
-				emailAttachment
-			);
-			message.setTemplateID(emailTemplate.Id);
-			message.setWhatId(invoice.Id);
-			message.setTargetObjectId(invoice.aforza__Account__r.aforza__Primary_Contact__c);
-			message.setTreatTargetObjectAsRecipient(false);
-			emailsToBeSent.add(message);
-		}
-		try {
-			if (!emailsToBeSent.isEmpty()) {
-				Messaging.SendEmailResult[] results = Messaging.sendEmail(emailsToBeSent);
-			}
-		} catch (Exception e) {
-			System.debug(LoggingLevel.Error, e.getMessage());
-			System.debug(LoggingLevel.Error, e.getStackTraceString());
-		}
-	}
-
-	public static Messaging.SingleEmailMessage buildEmailMessage(String emailAddress, Messaging.EmailFileAttachment emailAttachment) {
-		Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-		message.setToAddresses(new List<String>{ emailAddress });
-		message.setSenderDisplayName('AgBarr');
-		message.setReplyTo('fusion-no-reply@agbarr.co.uk');
-		message.setUseSignature(false);
-		message.setBccSender(false);
-		message.setSaveAsActivity(true);
-		message.setFileAttachments(new List<Messaging.EmailFileAttachment>{ emailAttachment });
-		return message;
-	}
-
-	public static Messaging.EmailFileAttachment buildEmailAttachment(Id recordId, PageReference pdfDocumentPageRef) {
-		String sObjectType = getSObjectType(recordId);
-		Blob pdfContentBlob = getPdfContentBlob(recordId, pdfDocumentPageRef);
-		Messaging.EmailFileAttachment emailAttachment = new Messaging.EmailFileAttachment();
-		emailAttachment.setContentType('application/pdf');
-		emailAttachment.setInline(false);
-		emailAttachment.setBody(pdfContentBlob);
-		if (sObjectType == 'aforza__Invoice__c') {
-			emailAttachment.setFileName('Invoice' + system.today().format() + '.pdf');
-		} else {
-			//emailAttachment.setFileName('Delivery Note' + system.today().format() + '.pdf');
-		}
-		return emailAttachment;
-	}
-	/* Created by magdalena.stanciu on 06.10.2022.
+	/**
+	 * @description creates invoice for orders (invoice with related invoice line items, relates existing payments to the
+	 * 				invoice and generated the invoice documents and sends it via email)
+	 *
+	 * @param orderIdsToCreateInvoices ids of orders for which invoices must be created
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
 	 */
-
-	public static void createInvoicesForOrders(Set<Id> orderIdsToCreateInvoiceFor) {
-		List<Order> ordersToBeProcessed = getOrders(orderIdsToCreateInvoiceFor);
-		List<aforza__Invoice__c> existingInvoices = getInvoices(orderIdsToCreateInvoiceFor);
+	public static void createInvoicesFromOrders(Set<Id> orderIdsToCreateInvoices) {
+		List<Order> ordersToBeProcessed = getOrders(orderIdsToCreateInvoices);
+		List<aforza__Invoice__c> existingInvoices = getInvoices(orderIdsToCreateInvoices);
 
 		Map<Id, aforza__Invoice__c> orderIdExistingInvoice = new Map<Id, aforza__Invoice__c>();
 		for (aforza__Invoice__c existingInvoice : existingInvoices) {
@@ -186,7 +70,7 @@ public with sharing class InvoiceService {
 				newInvoice = new aforza__Invoice__c();
 			}
 
-			populateInvoiceFromOrder(newInvoice, existingOrder);
+			generateInvoiceFromOrder(newInvoice, existingOrder);
 			invoicesByOriginalOrderId.put(existingOrder.Id, newInvoice);
 		}
 		upsert invoicesByOriginalOrderId.values();
@@ -204,36 +88,81 @@ public with sharing class InvoiceService {
 		insert invoiceLineItems;
 
 		// link payments
-		List<aforza__Payment_Transaction__c> transactions = getPaymentTransactions(orderIdsToCreateInvoiceFor);
+		List<aforza__Payment_Transaction__c> transactions = getPaymentTransactions(orderIdsToCreateInvoices);
 		for (aforza__Payment_Transaction__c newTransaction : transactions) {
 			Id invoiceId = invoicesByOriginalOrderId?.get(newTransaction.OrderNumber__c)?.Id;
 			newTransaction.aforza__Invoice__c = invoiceId;
 		}
 		update transactions;
+
+		// update invoice lookup on orders
+		Set<Id> invoiceIdsToGenerateFilesAndSendThemViaEmail = new Set<Id>();
+		List<Order> ordersToUpdate = new List<Order>();
+		for (Id orderId : invoicesByOriginalOrderId.keyset()) {
+			Id invoiceId = invoicesByOriginalOrderId.get(orderId)?.Id;
+			if (invoiceId != null) {
+				invoiceIdsToGenerateFilesAndSendThemViaEmail.add(invoiceId);
+				ordersToUpdate.add(new Order(Id = orderId, Invoice__c = invoiceId));
+			}
+		}
+		update ordersToUpdate;
+
+		// generate invoice documents and send them via email
+		generateInvoiceDocumentsAndSendFilesViaEmail(invoiceIdsToGenerateFilesAndSendThemViaEmail);
 	}
 
+	/**
+	 * @description get existing payment transactions related to orders
+	 *
+	 * @param orderIds ids of orders for which transactions will be retrieved
+	 *
+	 * @return list of transactions
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
 	@TestVisible
 	private static List<aforza__Payment_Transaction__c> getPaymentTransactions(Set<Id> orderIds) {
 		List<aforza__Payment_Transaction__c> transactions = [
-			SELECT Id, OrderNumber__c, aforza__Invoice__c
-			FROM aforza__Payment_Transaction__c
-			WHERE OrderNumber__c IN :orderIds
+				SELECT Id, OrderNumber__c, aforza__Invoice__c
+				FROM aforza__Payment_Transaction__c
+				WHERE OrderNumber__c IN :orderIds
 		];
 		return transactions;
 	}
 
+	/**
+	 * @description enriches the inbound invoice record with data from the inbound order (based on mapping stored in CMD)
+	 *
+	 * @param newInvoice invoice record to be enriched with order information
+	 * @param existingOrder order record based on which the invoice is enriched
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
 	@TestVisible
-	private static aforza__Invoice__c populateInvoiceFromOrder(aforza__Invoice__c newInvoice, Order existingOrder) {
+	private static void generateInvoiceFromOrder(aforza__Invoice__c newInvoice, Order existingOrder) {
 		// set fixed fields
 		newInvoice.aforza__Issued_Date__c = newInvoice.aforza__Issued_Date__c != null ? newInvoice.aforza__Issued_Date__c : System.today();
 		newInvoice.aforza__Due_Date__c = newInvoice.aforza__Issued_Date__c + 28;
 
 		// populate fields on the new invoice based on mapping
 		CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
-
-		return newInvoice;
 	}
 
+	/**
+	 * @description creates invoice lines items based on order line items and related the invoice line item to the invoice
+	 *
+	 * @param existingOrderItem order item record to generate an invoice line item from it
+	 * @param existingInvoice invoice to relate the generate invoice line item to it
+	 *
+	 * @return aforza__Invoice_Line_Item__c new invoice line item record
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
 	@TestVisible
 	private static aforza__Invoice_Line_Item__c generateInvoiceLineItem(OrderItem existingOrderItem, aforza__Invoice__c existingInvoice) {
 		// create invoice line item
@@ -244,45 +173,68 @@ public with sharing class InvoiceService {
 
 		// populate fields on the new invoice based on mapping
 		CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(
-			newInvoiceLineItem,
-			existingOrderItem,
-			ORDER_ITEM_TO_INVOICE_ITEM_MAPPING
+				newInvoiceLineItem,
+				existingOrderItem,
+				ORDER_ITEM_TO_INVOICE_ITEM_MAPPING
 		);
 
 		return newInvoiceLineItem;
 	}
 
+	/**
+	 * @description retrieves orders with all the fields needed for invoice generation
+	 * 				(taken dynamically based on mapping stored in CMD)
+	 *
+	 * @param orderIds ids of orders to be retrieved
+	 *
+	 * @return List<Order> retrieved orders
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
 	@TestVisible
 	private static List<Order> getOrders(Set<Id> orderIds) {
 		List<String> orderFields = new List<String>(
-			CommonUtility.getFieldsToQueryFromMapping(ORDER_TO_INVOICE_MAPPING, CommonUtility.QueryFieldType.SOURCE)
+				CommonUtility.getFieldsToQueryFromMapping(ORDER_TO_INVOICE_MAPPING, CommonUtility.QueryFieldType.SOURCE)
 		);
 		List<String> orderItemFields = new List<String>(
-			CommonUtility.getFieldsToQueryFromMapping(ORDER_ITEM_TO_INVOICE_ITEM_MAPPING, CommonUtility.QueryFieldType.SOURCE)
+				CommonUtility.getFieldsToQueryFromMapping(ORDER_ITEM_TO_INVOICE_ITEM_MAPPING, CommonUtility.QueryFieldType.SOURCE)
 		);
 
 		String queryString =
-			'SELECT ' +
-			String.join(orderFields, ',') +
-			', ' +
-			'(SELECT ' +
-			String.join(orderItemFields, ',') +
-			' FROM OrderItems) ' +
-			'FROM Order WHERE Id IN :orderIds';
+				'SELECT ' +
+						String.join(orderFields, ',') +
+						', ' +
+						'(SELECT ' +
+						String.join(orderItemFields, ',') +
+						' FROM OrderItems) ' +
+						'FROM Order WHERE Id IN :orderIds';
 		List<Order> orders = Database.query(queryString);
 
 		return orders;
 	}
 
+	/**
+	 * @description retrieves existing invoices for orders
+	 *
+	 * @param orderIds ids of orders to retrieve the invoice for them
+	 *
+	 * @return List<aforza__Invoice__c> retrieved invoices
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
 	@TestVisible
 	private static List<aforza__Invoice__c> getInvoices(Set<Id> orderIds) {
 		Set<String> invoiceFields = CommonUtility.getFieldsToQueryFromMapping(
-			ORDER_TO_INVOICE_MAPPING,
-			CommonUtility.QueryFieldType.TARGET
+				ORDER_TO_INVOICE_MAPPING,
+				CommonUtility.QueryFieldType.TARGET
 		);
 
 		// fields set to fixed values in code - not based on mapping
-		Set<String> FIXED_INVOICE_FIELDS = new Set<String>{ 'aforza__Issued_Date__c', 'aforza__Due_Date__c' };
+		Set<String> FIXED_INVOICE_FIELDS = new Set<String>{
+				'aforza__Issued_Date__c', 'aforza__Due_Date__c'
+		};
 		invoiceFields.addAll(FIXED_INVOICE_FIELDS);
 
 		List<String> allQueryFields = new List<String>(invoiceFields);
@@ -291,5 +243,105 @@ public with sharing class InvoiceService {
 		List<aforza__Invoice__c> invoices = Database.query(queryString);
 
 		return invoices;
+	}
+
+	/**
+	 * @description generates invoice documents, saves them as files related to invoices and sends them via email
+	 *
+	 * @param invoiceIds ids of invoices to generate files for and send them via email
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
+	@Future(callout = true)
+	public static void generateInvoiceDocumentsAndSendFilesViaEmail(Set<Id> invoiceIds) {
+		if (invoiceIds.isEmpty() || INVOICE_EMAIL_TEMPLATE_ID == null) {
+			return;
+		}
+
+		// get invoices with completed details
+		Map<Id, aforza__Invoice__c> invoicesToGenerateDocuments = getInvoicesWhichRequireInvoiceSendingViaEmail(invoiceIds);
+
+		// generate files and send them via email
+		Map<Id, ContentVersion> contentVersionsByInvoiceId = generateInvoiceDocuments(invoicesToGenerateDocuments.keySet());
+		sendInvoiceDocumentsViaEmail(invoicesToGenerateDocuments, contentVersionsByInvoiceId);
+	}
+
+	/**
+	 * @description retrieves invoices with complete details
+	 *
+	 * @param invoiceIds ids of invoices
+	 *
+	 * @return Map<Id, aforza__Invoice__c> invoices with additional details
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
+	public static Map<Id, aforza__Invoice__c> getInvoicesWhichRequireInvoiceSendingViaEmail(Set<Id> invoiceIds) {
+		Map<Id, aforza__Invoice__c> invoices = new Map<Id, aforza__Invoice__c>([
+				SELECT
+						Id,
+						aforza__Account__r.aforza__Invoice_Email_Address__c,
+						aforza__Account__r.aforza__Primary_Contact__c
+				FROM aforza__Invoice__c
+				WHERE
+						Id IN :invoiceIds
+						AND aforza__Account__r.InvoiceType__c = 'Email'
+						AND aforza__Account__r.aforza__Invoice_Email_Address__c != NULL
+						AND aforza__Account__r.aforza__Primary_Contact__c != NULL
+		]);
+		return invoices;
+	}
+
+	/**
+	 * @description generates invoice documents and saves them as files related to invoices
+	 *
+	 * @param invoiceIds ids of invoices to generate files for
+	 *
+	 * @return Map<Id, ContentVersion> map with invoice id as key, generated content version as value
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
+	public static Map<Id, ContentVersion> generateInvoiceDocuments(Set<Id> invoiceIds) {
+		Map<Id, ContentVersion> contentVersionsByInvoiceId = FileGenerationService.generateDocuments(
+				FileGenerationService.DocumentType.INVOICE, invoiceIds
+		);
+		return contentVersionsByInvoiceId;
+	}
+
+	/**
+	 * @description send invoice documents via email
+	 *
+	 * @param invoices map of invoices to send documents for via email
+	 * @param contentVersionsByInvoiceId map with invoice ids as keys and generated invoice documents as values
+	 *
+	 * @return N/A
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-10-10
+	 */
+	public static void sendInvoiceDocumentsViaEmail(
+			Map<Id, aforza__Invoice__c> invoices,
+			Map<Id, ContentVersion> contentVersionsByInvoiceId
+	) {
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+		for (Id invoiceId : invoices.keySet()) {
+			aforza__Invoice__c invoice = invoices.get(invoiceId);
+			ContentVersion invoiceDocument = contentVersionsByInvoiceId.get(invoice.Id);
+			Messaging.SingleEmailMessage message = EmailService.buildEmailMessage(
+					INVOICE_EMAIL_TEMPLATE_ID,
+					false,
+					true,
+					invoice.Id,
+					invoice?.aforza__Account__r?.aforza__Primary_Contact__c,
+					new List<String>{invoice?.aforza__Account__r?.aforza__Invoice_Email_Address__c},
+					new List<String>{invoiceDocument?.Id}
+			);
+			emails.add(message);
+		}
+		Messaging.sendEmail(emails);
 	}
 }

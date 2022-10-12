@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>FieldAPIName__c</field>
-        <value xsi:type="xsd:string">BillingState</value>
+        <value xsi:type="xsd:string">BillingStateCode</value>
     </values>
     <values>
         <field>FieldDefaultValue__c</field>

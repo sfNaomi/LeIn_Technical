@@ -59,18 +59,20 @@ public with sharing class InvoicePDFController {
 			FROM Account
 			WHERE Id = :this.associatedOrder.AccountId
 		];
-		this.signature = [
-			SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.Title
-			FROM ContentDocumentLink
-			WHERE LinkedEntityId = :associatedOrder.Id AND ContentDocument.Title LIKE 'Signature%'
-		];
+
+		// get signature
+		List<ContentDocumentLink> signatureDocuments = new List<ContentDocumentLink>([
+				SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.Title
+				FROM ContentDocumentLink
+				WHERE LinkedEntityId = :associatedOrder.Id AND ContentDocument.Title LIKE 'Signature%'
+		]);
+		this.signature = signatureDocuments.isEmpty() ? null : signatureDocuments[0];
 	}
+
 	@AuraEnabled
 	public static void attachPDF(Id invoiceId) {
 		try {
-			List<Id> invoicesList = new List<Id>();
-			invoicesList.add(invoiceId);
-			InvoiceService.generatePdfDocument(invoicesList, Page.AGBarrInvoice);
+			InvoiceService.generateInvoiceDocuments(new Set<Id>{invoiceId});
 		} catch (Exception e) {
 			System.debug(LoggingLevel.Error, e.getStackTraceString());
 			throw new AuraHandledException(e.getMessage());

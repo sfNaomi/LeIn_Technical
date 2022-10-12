@@ -526,6 +526,7 @@ private with sharing class AccountTriggerHandlerTest {
         System.assertEquals(true, updatedDpAccount.PORequired__c);
     }
 
+    @IsTest
     private static void testPushInfoFromCustomerToRelatedDPs_UpdatePoRequired() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = false)
@@ -545,15 +546,18 @@ private with sharing class AccountTriggerHandlerTest {
         }
     }
 
+    @IsTest
     private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressTrue() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
                         RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
-                        BillingStreet = 'Test 1',
-                        BillingCity = 'Test 2',
-                        BillingCountry = 'Test 3',
-                        BillingPostalCode = 'Test 4',
-                        aforza__Invoice_Email_Address__c = 'test@test.com'
+                        BillingStateCode = 'AK',
+                        BillingStreet = 'Test Street',
+                        BillingCity = 'Test City',
+                        BillingCountryCode = 'US',
+                        BillingPostalCode = 'ABC DEF',
+                        aforza__Invoice_Email_Address__c = 'test@test.com',
+                        DefaultInvoiceBillingAddress__c = true
                 )
         );
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -561,41 +565,44 @@ private with sharing class AccountTriggerHandlerTest {
                         RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
                         BillingStreet = null,
                         BillingCity =  null,
-                        BillingCountry = null,
+                        BillingStateCode = null,
+                        BillingCountryCode = null,
                         BillingPostalCode = null,
-                        aforza__Invoice_Email_Address__c = null,
-                        DefaultInvoiceBillingAddress__c = false
+                        aforza__Invoice_Email_Address__c = null
                 )
         );
 
         Test.startTest();
-        customerAccount.ParentId = customerAccount.Id;
-        customerAccount.DefaultInvoiceBillingAddress__c = true;
-        update customerAccount;
+        dpAccount.ParentId = customerAccount.Id;
+        update dpAccount;
         Test.stopTest();
 
         Account updatedDpAccount = [
-                SELECT Id, BillingStreet, BillingCity, BillingCountry, BillingPostalCode, aforza__Invoice_Email_Address__c
+                SELECT Id, BillingStreet, BillingCity, BillingCountryCode, BillingStateCode, BillingPostalCode, aforza__Invoice_Email_Address__c
                 FROM Account
                 WHERE Id = :dpAccount.Id
         ];
 
         System.assertEquals(customerAccount.BillingStreet, updatedDpAccount.BillingStreet);
         System.assertEquals(customerAccount.BillingCity, updatedDpAccount.BillingCity);
-        System.assertEquals(customerAccount.BillingCountry, updatedDpAccount.BillingCountry);
+        System.assertEquals(customerAccount.BillingCountryCode, updatedDpAccount.BillingCountryCode);
+        System.assertEquals(customerAccount.BillingStateCode, updatedDpAccount.BillingStateCode);
         System.assertEquals(customerAccount.BillingPostalCode, updatedDpAccount.BillingPostalCode);
         System.assertEquals(customerAccount.aforza__Invoice_Email_Address__c, updatedDpAccount.aforza__Invoice_Email_Address__c);
     }
 
+    @IsTest
     private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressFalse() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
                         RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
-                        BillingStreet = 'Test 1',
-                        BillingCity = 'Test 2',
-                        BillingCountry = 'Test 3',
-                        BillingPostalCode = 'Test 4',
-                        aforza__Invoice_Email_Address__c = 'test@test.com'
+                        BillingStateCode = 'AK',
+                        BillingStreet = 'Test Street',
+                        BillingCity = 'Test City',
+                        BillingCountryCode = 'US',
+                        BillingPostalCode = 'ABC DEF',
+                        aforza__Invoice_Email_Address__c = 'test@test.com',
+                        DefaultInvoiceBillingAddress__c = false
                 )
         );
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -603,32 +610,33 @@ private with sharing class AccountTriggerHandlerTest {
                         RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
                         BillingStreet = null,
                         BillingCity =  null,
-                        BillingCountry = null,
+                        BillingStateCode = null,
+                        BillingCountryCode = null,
                         BillingPostalCode = null,
-                        aforza__Invoice_Email_Address__c = null,
-                        DefaultInvoiceBillingAddress__c = false
+                        aforza__Invoice_Email_Address__c = null
                 )
         );
 
         Test.startTest();
-        customerAccount.ParentId = customerAccount.Id;
-        customerAccount.DefaultInvoiceBillingAddress__c = false;
-        update customerAccount;
+        dpAccount.ParentId = customerAccount.Id;
+        update dpAccount;
         Test.stopTest();
 
         Account updatedDpAccount = [
-                SELECT Id, BillingStreet, BillingCity, BillingCountry, BillingPostalCode, aforza__Invoice_Email_Address__c
+                SELECT Id, BillingStreet, BillingCity, BillingCountryCode, BillingStateCode, BillingPostalCode, aforza__Invoice_Email_Address__c
                 FROM Account
                 WHERE Id = :dpAccount.Id
         ];
 
         System.assertEquals(null, updatedDpAccount.BillingStreet);
         System.assertEquals(null, updatedDpAccount.BillingCity);
-        System.assertEquals(null, updatedDpAccount.BillingCountry);
+        System.assertEquals(null, updatedDpAccount.BillingCountryCode);
+        System.assertEquals(null, updatedDpAccount.BillingStateCode);
         System.assertEquals(null, updatedDpAccount.BillingPostalCode);
         System.assertEquals(null, updatedDpAccount.aforza__Invoice_Email_Address__c);
     }
 
+    @IsTest
     private static void testPushInfoFromCustomerToRelatedDPs_CreditStatus() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = false)
@@ -648,6 +656,7 @@ private with sharing class AccountTriggerHandlerTest {
         }
     }
 
+    @IsTest
     private static void testPushInfoFromCustomerToRelatedDPs_DefaultBillingAddressOnDPs() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(

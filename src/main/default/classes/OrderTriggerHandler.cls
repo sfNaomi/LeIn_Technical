@@ -100,7 +100,7 @@ public with sharing class OrderTriggerHandler {
     }
 
     public static void createInvoice(List<Order> newOrders, Map<Id, Order> oldOrders) {
-        Set<Id> orderIdsToCreateInvoiceFor = new Set<Id>();
+        Set<Id> orderIdsToCreateInvoiceFrom = new Set<Id>();
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             if (
@@ -108,10 +108,12 @@ public with sharing class OrderTriggerHandler {
                     oldOrder != null && newOrder.Status != oldOrder.Status &&
                     newOrder.Status == OrderService.SETTINGS.StatusToCreateInvoice__c
             ) {
-                orderIdsToCreateInvoiceFor.add(newOrder.Id);
+                orderIdsToCreateInvoiceFrom.add(newOrder.Id);
             }
         }
-        InvoiceService.createInvoicesForOrders(orderIdsToCreateInvoiceFor);
+        if (!orderIdsToCreateInvoiceFrom.isEmpty()) {
+            InvoiceService.createInvoicesFromOrders(orderIdsToCreateInvoiceFrom);
+        }
     }
 
     public static void cloneCompletedOrder(List<Order> newOrders, Map<Id, Order> oldOrders) {
