@@ -12,6 +12,6 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleReadAccess</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

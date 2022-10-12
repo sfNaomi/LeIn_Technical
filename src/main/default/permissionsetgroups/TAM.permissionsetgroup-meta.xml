@@ -15,7 +15,7 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleReadAccess</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

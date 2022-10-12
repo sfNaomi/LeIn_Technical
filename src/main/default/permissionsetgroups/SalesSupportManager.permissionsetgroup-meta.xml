@@ -21,6 +21,7 @@
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>

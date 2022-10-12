@@ -21,7 +21,7 @@
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SystemBasicFeatures</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleReadAccess</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
