@@ -10,6 +10,7 @@
     <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderLogisticsAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>

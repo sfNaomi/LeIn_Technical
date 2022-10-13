@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Base access for Load object - Read on object and Read on relevant fields</description>
+    <description>Edit access for Load object - Edit on object and Edit on relevant fields</description>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Load__c.DeliveryDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12,21 +12,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Load__c.Driver__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Load__c.Vehicle__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Load Base Access</label>
+    <label>Load Edit Access</label>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Load__c</object>
