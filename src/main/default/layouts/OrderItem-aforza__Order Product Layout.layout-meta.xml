@@ -30,6 +30,10 @@
                 <behavior>Readonly</behavior>
                 <field>TotalProductWeight__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsDRSProduct__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

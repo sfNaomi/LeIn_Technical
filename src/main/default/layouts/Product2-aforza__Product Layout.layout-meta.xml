@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Family</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsDRSProduct__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
