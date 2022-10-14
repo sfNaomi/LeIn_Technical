@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>56.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <description>Update OrderItem fields product weight and is drs product based on Product (Before Insert)</description>
     <environments>Default</environments>
     <interviewLabel>UpdateOrderItemBasedOnProductBeforeInsert {!$Flow.CurrentDateTime}</interviewLabel>
