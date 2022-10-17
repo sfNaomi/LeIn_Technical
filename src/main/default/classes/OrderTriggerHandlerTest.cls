@@ -6,6 +6,9 @@
 private with sharing class OrderTriggerHandlerTest {
     @IsTest
     private static void testValidateOrderCreation_ProspectAccountNewOrder() {
+         // create attribute for New DP attribute flow automation
+         aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -31,6 +34,9 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testValidateOrderCreation_ActiveProspectAccountNewTelesalesOrder() {
+        // create attribute for New DP attribute flow automation
+        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -56,6 +62,9 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testValidateOrderCreation_ActiveProspectAccountNewDraftFieldDirectOrder() {
+        // create attribute for New DP attribute flow automation
+        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -80,6 +89,9 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testUpdateLastOrderDateAndStatusOnParentAccount_TradersAccountNewDraftFDOrderIsCreated() {
+        // create attribute for New DP attribute flow automation
+        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -110,6 +122,9 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testUpdateLastOrderDateAndStatusOnParentAccount_TradersAccountNewDraftFDOrderIsCompleted() {
+        // create attribute for New DP attribute flow automation
+        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -285,6 +300,9 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testCreateInvoice_InvalidOrderRecordType() {
+        // create attribute for New DP attribute flow automation
+        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         // create dp account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
@@ -389,7 +407,7 @@ private with sharing class OrderTriggerHandlerTest {
         System.assertEquals(1, invoices.size(), 'Expected existing invoice to be updated');
         System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
     }
-    
+
     @IsTest
     private static void testPreventOrderActivation_DPOnHoldAndRTTelesales() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -413,11 +431,11 @@ private with sharing class OrderTriggerHandlerTest {
         }catch (Exception e){
             String expectedErrorMessage = Label.OrderActivationPreventedDueToDPOnHold;
             System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
-        }    
+        }
         Test.stopTest();
 
     }
-    
+
     @IsTest
     private static void testPreventOrderActivation_DPNegativeCreditAndRTEDI() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -440,7 +458,7 @@ private with sharing class OrderTriggerHandlerTest {
         aforza__Invoice__c newInvoice = new aforza__Invoice__c(aforza__Reference__c= '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id, aforza__Status__c ='Outstanding', aforza__Amount_Due__c = 300);
         insert newInvoice;
         dpAccount = [SELECT Id, aforza__Credit_Amount__c, aforza__Outstanding_Invoice_Amount__c, AvailableCredit__c FROM Account WHERE Id = :dpAccount.Id];
-        
+
         Test.startTest();
         try{
             newOrder.Status = 'Activated';
@@ -449,8 +467,7 @@ private with sharing class OrderTriggerHandlerTest {
         }catch (Exception e){
             String expectedErrorMessage = Label.OrderActivationPreventedDueToDPNegativeCredit;
             System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
-        }    
-        Test.stopTest();       
-    }   
+        }
+        Test.stopTest();
+    }
 }
-
