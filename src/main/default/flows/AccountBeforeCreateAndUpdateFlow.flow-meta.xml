@@ -2,8 +2,9 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
     <decisions>
-        <name>Account_Record_Type</name>
-        <label>Account Record Type</label>
+        <description>If DP account, assign &apos;Credit Status&apos; to on hold and assign attribute &apos;New DP&apos; to account</description>
+        <name>Copy_1_of_If_DP_Account</name>
+        <label>Copy 1 of If DP Account</label>
         <locationX>182</locationX>
         <locationY>431</locationY>
         <defaultConnector>
@@ -11,24 +12,38 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>DP_Account</name>
-            <conditionLogic>and</conditionLogic>
+            <name>isADPAccount</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.RecordTypeName__c</leftValueReference>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Outlet</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active Prospect</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Credit_Status_on_hold</targetReference>
+                <targetReference>Put_Credit_status_on_Hold</targetReference>
             </connector>
-            <label>DP Account</label>
+            <label>isADPAccount</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Created_or_Updated_Decision</name>
-        <label>Created or Updated Decision</label>
+        <name>Create_or_Updated</name>
+        <label>Create or Updated</label>
         <locationX>336</locationX>
         <locationY>311</locationY>
         <defaultConnector>
@@ -36,7 +51,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>On_Created_Account</name>
+            <name>OnCreated</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record__Prior.Id</leftValueReference>
@@ -46,9 +61,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Account_Record_Type</targetReference>
+                <targetReference>Copy_1_of_If_DP_Account</targetReference>
             </connector>
-            <label>On Created Account</label>
+            <label>On Created</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -125,9 +140,9 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <description>New DP Account, Credit Status on hold</description>
-        <name>Credit_Status_on_hold</name>
-        <label>Credit Status on hold</label>
+        <description>If new DP account update Credit Status to on hold</description>
+        <name>Put_Credit_status_on_Hold</name>
+        <label>Put Credit status on Hold</label>
         <locationX>50</locationX>
         <locationY>551</locationY>
         <connector>
@@ -327,7 +342,7 @@
         <locationX>210</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Created_or_Updated_Decision</targetReference>
+            <targetReference>Create_or_Updated</targetReference>
         </connector>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
