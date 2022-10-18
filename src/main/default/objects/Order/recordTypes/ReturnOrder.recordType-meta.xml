@@ -69,15 +69,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Picking in Progress</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ready to Load</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ready to Pick</fullName>
             <default>false</default>
         </values>
         <values>
