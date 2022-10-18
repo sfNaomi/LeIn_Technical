@@ -187,4 +187,19 @@ public inherited sharing class RecordTypes {
         get { return ASSORTMENT_SEGMENT_ASSORTMENT.getRecordTypeId(); }
         private set;
     }
+
+    public static RecordTypeInfo INVENTORY_BUILDING {
+        get {
+            return INVENTORY_BUILDING = INVENTORY_BUILDING != null
+                    ? INVENTORY_BUILDING : Schema.SObjectType.aforza__Inventory__c.getRecordTypeInfosByDeveloperName().get('Building');
+        }
+        private set;
+    }
+
+    public static Id INVENTORY_BUILDING_ID {
+        get {
+            return INVENTORY_BUILDING.getRecordTypeId();
+        }
+        private set;
+    }
 }

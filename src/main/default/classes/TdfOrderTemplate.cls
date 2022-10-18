@@ -25,7 +25,9 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
     public override void init() {
         Order userDefinedOrder = (Order) userDefinedSObject;
         if (userDefinedOrder.AccountId == null) {
-            accountId = TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')).Id;
+            accountId = TdfSObjectFactory.insertSObject(
+                    new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+            ).Id;
         }
     }
 

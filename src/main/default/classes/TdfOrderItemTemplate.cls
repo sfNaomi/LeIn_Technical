@@ -1,5 +1,8 @@
 /**
  * Class provides functionality for creating default order items in test methods.
+ * Template will ensure that if no order, a product with standard pricebook is created.
+ * If no product is passed in, a new product will be created and added to standard pricebook, and the resulting
+ * pricebook entry is used in the creation of the order item.
  *
  * Do not use this class directly.
  * Class is initialized in TDF_SObjectTemplateFactory and all its functionality is used through TDF_SObjectFactory.
@@ -29,14 +32,16 @@ public with sharing class TdfOrderItemTemplate extends TdfSObjectTemplate {
         OrderItem userDefinedOrderItem = (OrderItem) userDefinedSObject;
 
         if (userDefinedOrderItem.OrderId == null) {
-            orderId = TdfSObjectFactory.insertSObject(new Order()).Id;
+            orderId = TdfSObjectFactory.insertSObject(
+                    new Order(Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            ).Id;
         }
+
         if (userDefinedOrderItem.Product2Id == null) {
             product2Id = TdfSObjectFactory.insertSObject(new Product2()).Id;
-        }
-        if (userDefinedOrderItem.PricebookEntryId == null) {
-            Id newProductId = product2Id == null ? userDefinedOrderItem.Product2Id : product2Id;
-            pricebookEntryId = TdfSObjectFactory.insertSObject(new PricebookEntry(Product2Id = newProductId)).Id;
+            pricebookEntryId = TdfSObjectFactory.insertSObject(
+                    new PricebookEntry(Product2Id = product2Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            ).Id;
         }
     }
 
@@ -53,11 +58,11 @@ public with sharing class TdfOrderItemTemplate extends TdfSObjectTemplate {
      */
     protected override SObject createTemplateSObject() {
         OrderItem template = new OrderItem(
-                OrderId = orderId,
-                Product2Id = product2Id,
-                PricebookEntryId = pricebookEntryId,
-                Quantity = 1,
-                UnitPrice = 10
+            OrderId = orderId,
+            Product2Id = product2Id,
+            PricebookEntryId = pricebookEntryId,
+            Quantity = 1,
+            UnitPrice = 10
         );
 
         return template;

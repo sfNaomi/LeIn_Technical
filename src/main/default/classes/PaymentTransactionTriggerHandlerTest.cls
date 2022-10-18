@@ -5,65 +5,106 @@
 private with sharing class PaymentTransactionTriggerHandlerTest {
     @isTest
     private static void testUpdateParentOrderAndAccountCreditStatuses_onCreation(){
-        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
+        );
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                CreditStatus__c = 'On Hold'
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                aforza__Default_Price_Book__c = newPricebook.Id, CreditStatus__c = 'On Hold'
             )
         );
-        Order parentOrder = (Order) TdfSObjectFactory.insertSObject(
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
-                AccountId = parentAccount.Id,
-                RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
-                Status = 'Draft'
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-                new OrderItem(OrderId = parentOrder.Id, Product2Id = newProduct.Id)
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
         Test.startTest();
-			aforza__Payment_Transaction__c newPaymentTransaction = new aforza__Payment_Transaction__c(aforza__account__c = parentAccount.Id, aforza__amount__c = 100, aforza__Status__c = 'Pre-Authorization', OrderNumber__c=parentOrder.Id);
-       		insert newPaymentTransaction;
+        TdfSObjectFactory.insertSObject(
+            new aforza__Payment_Transaction__c(
+                aforza__Account__c = dpAccount.Id, aforza__amount__c = 100,
+                aforza__Status__c = 'Pre-Authorization', OrderNumber__c = newOrder.Id
+            )
+        );
         Test.stopTest();
-        Order updatedParentOrder = [
+
+        Order updatedOrder = [
             SELECT Id, Status
             FROM Order
-            WHERE Id = :parentOrder.Id
+            WHERE Id = :newOrder.Id
         ];
         
-        Account updatedParentAccount = [
+        Account updatedDpAccount = [
             SELECT Id, CreditStatus__c
             FROM Account
-            WHERE Id = :parentAccount.Id
+            WHERE Id = :dpAccount.Id
         ];
    
-        System.assertEquals('Activated', updatedParentOrder.Status, 'Expecting a different order status.');
-        System.assertEquals('Good', updatedParentAccount.CreditStatus__c, 'Expecting a different account credit status.');
+        System.assertEquals('Activated', updatedOrder.Status, 'Expecting a different order status.');
+        System.assertEquals('Good', updatedDpAccount.CreditStatus__c, 'Expecting a different account credit status.');
     }
+
 	@isTest
     private static void testUpdateParentOrderAndAccountCreditStatuses_onUpdate(){
-        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                CreditStatus__c = 'On Hold'
-            )
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
         );
-        Order parentOrder = (Order) TdfSObjectFactory.insertSObject(
-            new Order(
-                AccountId = parentAccount.Id,
-                RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
-                Status = 'Draft'
-            )
-        );
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product'));
-        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-                new OrderItem(OrderId = parentOrder.Id, Product2Id = newProduct.Id)
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
 
-        aforza__Payment_Transaction__c newPaymentTransaction = new aforza__Payment_Transaction__c(aforza__account__c = parentAccount.Id, aforza__amount__c = 100, aforza__Status__c = 'Applied', OrderNumber__c=parentOrder.Id);
-        insert newPaymentTransaction;
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                aforza__Default_Price_Book__c = newPricebook.Id, CreditStatus__c = 'On Hold'
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        // create payment transaction
+        aforza__Payment_Transaction__c newPaymentTransaction = (aforza__Payment_Transaction__c) TdfSObjectFactory.insertSObject(
+            new aforza__Payment_Transaction__c(
+                aforza__Account__c = dpAccount.Id, aforza__amount__c = 100,
+                aforza__Status__c = 'Applied', OrderNumber__c = newOrder.Id
+            )
+        );
         
         Test.startTest();
         newPaymentTransaction.aforza__Status__c = 'Pre-Authorization';
@@ -73,13 +114,13 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
         Order updatedParentOrder = [
             SELECT Id, Status
             FROM Order
-            WHERE Id = :parentOrder.Id
+            WHERE Id = :newOrder.Id
         ];
         
         Account updatedParentAccount = [
             SELECT Id, CreditStatus__c
             FROM Account
-            WHERE Id = :parentAccount.Id
+            WHERE Id = :dpAccount.Id
         ];
 
         System.assertEquals('Activated', updatedParentOrder.Status, 'Expecting a different order status.');

@@ -5,16 +5,8 @@
   @last modified on  : 10-06-2022
   @last modified by  : Ciuca Bianca, BearingPoint GmbH
 -->
-<apex:page
-	showHeader="false"
-	sidebar="false"
-	renderAs="pdf"
-	standardStylesheets="false"
-	applyBodyTag="False"
-	applyHtmlTag="false"
-	controller="InvoicePDFController"
->
-	<apex:stylesheet value="{!$Resource.invoiceCustomCss}" />
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="InvoicePDFController">
+	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}"/>
 
 	<div class="invoice-header-container">
 		<div class="logo-container">

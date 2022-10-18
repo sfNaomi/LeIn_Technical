@@ -1,5 +1,5 @@
 /**
- * Class provides functionality for creating default product in test methods.
+ * Class provides functionality for creating default load in test methods.
  *
  * Do not use this class directly.
  * Class is initialized in TDF_SObjectTemplateFactory and all its functionality is used through TDF_SObjectFactory.
@@ -9,22 +9,25 @@
  * @see TdfSObjectTemplateFactory
  *
  * @author  Magdalena Stanciu
- * @date    2022-09-20
+ * @date    2022-10-15
  *
  */
 @IsTest
-public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
-    private static Integer counter = 0;
+public with sharing class TdfLoadTemplate extends TdfSObjectTemplate {
+    private Id vehicleId;
 
     /**
      * Instance is created dynamically. This method compensates a constructor.
      *
      * @author  Magdalena Stanciu
-     * @date    2022-09-20
+     * @date    2022-10-15
      *
      */
     public override void init() {
-        Product2 userDefinedPricebook = (Product2) userDefinedSObject;
+        Load__c userDefinedLoad = (Load__c) userDefinedSObject;
+        if (userDefinedLoad.Vehicle__c == null) {
+            vehicleId = ((Vehicle__c) TdfSObjectFactory.insertSObject(new Vehicle__c())).Id;
+        }
     }
 
     /**
@@ -32,18 +35,16 @@ public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
      *
      * Because this method can be called multiple times, all operations as DML or SOQL has to be done in init().
      *
-     * @return template with product record
+     * @return template with load record
      *
      * @author  Magdalena Stanciu
-     * @date    2022-09-20
-     *
+     * @date    2022-10-15
      */
     protected override SObject createTemplateSObject() {
-        Product2 template = new Product2(
-                Name = 'Test Product',
-                IsActive = true,
-                StockKeepingUnit = 'uniqueSKU' + ++counter,
-                ProductCode = 'uniqueCode' + ++counter
+        Load__c template = new Load__c(
+                DeliveryDate__c = System.today(),
+                Driver__c = UserInfo.getUserId(),
+                Vehicle__c = vehicleId
         );
 
         return template;

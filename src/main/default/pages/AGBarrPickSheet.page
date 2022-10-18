@@ -1,0 +1,119 @@
+<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="PickSheetPDFController">
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'picksheet.css')}"/>
+
+    <apex:repeat value="{!loadPlans}" var="loadPlan">
+        <apex:repeat value="{!loadPlan.palletSequences}" var="palletSequence">
+            <div class="page-break"/>
+            <table class="document-table">
+                <tr>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetLoadId}
+                    </td>
+                    <td>
+                        {!loadPlan.load}
+                    </td>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetDriver}
+                    </td>
+                    <td>
+                        {!loadPlan.driver}
+                    </td>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetNoDPs}
+                    </td>
+                    <td>
+                        {!palletSequence.numberOfDps}
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table class="document-table">
+                <tr>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetGrid}
+                    </td>
+                    <td>
+                        {!palletSequence.grid}
+                    </td>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetVehicle}
+                    </td>
+                    <td>
+                        {!loadPlan.vehicle}
+                    </td>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetDeliveryDate}
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!loadPlan.deliveryDate}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table class="document-table">
+                <tr>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetPalletSequence}
+                    </td>
+                    <td>
+                        {!palletSequence.sequenceNumber}
+                    </td>
+                    <td class="document-table-header">
+                        {!$Label.PickSheetDescription}
+                    </td>
+                    <td>
+                        {!palletSequence.palletDescription}
+                    </td>
+                    <td class="no-border"></td>
+                    <td class="no-border"></td>
+                </tr>
+            </table>
+            <br/>
+            <table class="document-table">
+                <tr>
+                    <th>
+                        {!$Label.PickSheetPickLocation}
+                    </th>
+                    <th>
+                        {!$Label.PickSheetSkuId}
+                    </th>
+                    <th colspan="3">
+                        {!$Label.PickSheetSKUDescription}
+                    </th>
+                    <th>
+                        {!$Label.PickSheetQuantity}
+                    </th>
+                </tr>
+                <apex:variable value="{!1}" var="itemIndex"/>
+                <apex:repeat value="{!palletSequence.palletSequenceItems}" var="palletSequenceItem">
+                    <tr class="{!IF(mod(itemIndex,2)==0, 'gray-bkg', '')}">
+                        <td>
+                            {!palletSequenceItem.pickLocation}
+                        </td>
+                        <td>
+                            {!palletSequenceItem.productCode}
+                        </td>
+                        <td colspan="3">
+                            {!palletSequenceItem.productDescription}
+                        </td>
+                        <td>
+                            {!palletSequenceItem.quantity}
+                        </td>
+                    </tr>
+                    <apex:variable value="{!itemIndex+1}" var="itemIndex"/>
+                </apex:repeat>
+                <tr>
+                    <td colspan="4" class="no-border"></td>
+                    <td class="double-border-bottom">
+                        {!$Label.PickSheetTotalCases}
+                    </td>
+                    <td class="double-border-bottom">
+                        {!palletSequence.totalCases}
+                    </td>
+                </tr>
+            </table>
+        </apex:repeat>
+    </apex:repeat>
+</apex:page>

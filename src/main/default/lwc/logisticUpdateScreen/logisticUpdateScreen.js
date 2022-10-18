@@ -9,7 +9,7 @@ import updateOrderStatus from '@salesforce/apex/LogisticUpdateScreenController.u
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
-
+import {NavigationMixin} from 'lightning/navigation';
 
 import isDepotUser from '@salesforce/customPermission/DepotUser';
 import isPickingUser from '@salesforce/customPermission/PickingUser';
@@ -81,7 +81,7 @@ const depotUserActions = [
 
 const RESET_FILTER = 'Reset Filter';
 
-export default class LogisticUpdateScreen extends LightningElement {
+export default class LogisticUpdateScreen extends NavigationMixin(LightningElement) {
 
     @track filterFields = [];
     originalTableData = [];
@@ -267,8 +267,7 @@ export default class LogisticUpdateScreen extends LightningElement {
             this.isLoading = true;
             switch (this.selectedAction) {
                 case 'Print Pick Sheets':
-                    //TODO add proper action once this is finished
-                    this.showActionNotYetImplemented(this.selectedAction);
+                    this.navigateToPage('AGBarrPickSheet', {'ids' : this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Picked':
                     this.changeOrderStatus(this.getSelectedOrdersIds(), 'Ready to Load');
@@ -368,6 +367,48 @@ export default class LogisticUpdateScreen extends LightningElement {
             variant: 'success'
         });
         this.dispatchEvent(toastSuccess);
+    }
+
+    /** Method to navigate to a web page with query params and refresh selection on logistics screen
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-07
+     */
+    async navigateToPage(page, params) {
+        this.navigateToWebPage(page, params);
+        this.template.querySelector('.table').selectedRows = [];
+        const dynamicFilter = this.template.querySelector('c-dynamic-filter');
+        await dynamicFilter.handleFilterClick();
+        this.selectedRows = [];
+        this.selectedAction = '';
+    }
+
+    /** Method to navigate to a web page with query params
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-07
+     */
+     navigateToPage(page, params) {
+        let queryString = this.generateUrlQueryString(params);
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/apex/' + page + queryString
+            }
+        });
+    }
+
+    /** Method to to generate url query string from params received as object
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-07
+     */
+    generateUrlQueryString(params) {
+        let queryString = '?';
+        Object.keys(params).forEach(key => {
+            queryString += key + '=' + params[key];
+        });
+        return queryString;
     }
 
     /** Method containing definition of allowed statuses for each action. It also triggers necessary check to be sure selected data are valid
