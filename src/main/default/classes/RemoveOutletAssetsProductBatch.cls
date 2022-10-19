@@ -13,7 +13,7 @@ public with sharing class RemoveOutletAssetsProductBatch implements Database.Bat
     public Iterable<SObject> start(Database.BatchableContext batchableContext) {
         String query = 'SELECT Id ' +
                 'FROM aforza__Outlet_Asset__c ' +
-                'WHERE aforza__Purchase_Date__c = null AND aforza__Product__c IN :unFocusedProductIds';
+                'WHERE aforza__Purchase_Date__c = NULL AND aforza__Product__c IN :unFocusedProductIds';
         return Database.getQueryLocator(query);
     }
 

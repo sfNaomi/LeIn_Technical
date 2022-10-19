@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Administrator</label>
     <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>

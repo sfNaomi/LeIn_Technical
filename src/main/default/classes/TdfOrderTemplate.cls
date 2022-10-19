@@ -45,11 +45,11 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
     protected override SObject createTemplateSObject() {
         Order template = new Order();
         template.Name = 'Order Name';
-        template.RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID;
         template.Status = 'Draft';
         template.EffectiveDate = System.today();
         template.Pricebook2Id = TdfPricebook2Template.standardPricebookId;
         template.AccountId = accountId;
+        template.DeliveryDate__c = System.today().addDays(2);
         return template;
     }
 }

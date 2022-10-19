@@ -89,6 +89,7 @@ export default class DynamicInput extends LightningElement {
         try {
             let updatedFieldDefinition = JSON.parse(JSON.stringify(this.fieldDefinition));
             updatedFieldDefinition.value = event.detail.id;
+
             this.sendChangeEvent(updatedFieldDefinition);
         } catch (error) {
             processError(this, error);

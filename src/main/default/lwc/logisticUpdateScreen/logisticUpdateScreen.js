@@ -111,7 +111,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         Promise.all([this.fetchPicklistValues()]).then(() => {
             this.prepareFilterDefinition();
             this.prepareActionValues();
-            setTabNameAndIcon('Logistic Update Screen', 'standard:planogram', 'Logistic Update Screen', this);
+            setTabNameAndIcon('Logistic Update', 'standard:planogram', 'Logistic Update Screen', this);
         });
     }
 
@@ -122,7 +122,8 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      */
     prepareFilterDefinition() {
         this.filterFields.push(this.createInputFieldDefinitionJson('Lookup', 'Load__c',
-            'Load ID', null, null, null, 'equals', 'Load__c', 'standard:webcart'));
+            'Load ID', null, null, null, 'equals', 'Load__c',
+            'standard:webcart', ['Name'], ['Name'], 'Name'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Depot__c',
             'Depot', null, this.depotPicklist, null, 'equals'));
@@ -147,13 +148,16 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @param operand - operand to be used for this specific field (equals, equalSmaller, equalGreater)
      * @param lookupObject - if the field is of type Lookup this is api name of the object Lookup is pointing to
      * @param iconName - name of the icon to show in lookup component, valid only for lookup type
+     * @param returnFields - list of fields to be returned from query, valid only for lookup type
+     * @param queryFields - filtering fields needs to be delimited with OR, valid only for lookup type
+     * @param mainField - main field - visible within the Lookup itself, valid only for lookup type
      *
      * @returns {Object} - object with filter field definition
      *
      * @author Svata Sejkora
      * @date 2022-09-20
      */
-    createInputFieldDefinitionJson(dataType, apiName, label, value, options, soqlName, operand, lookupObject, iconName) {
+    createInputFieldDefinitionJson(dataType, apiName, label, value, options, soqlName, operand, lookupObject, iconName, returnFields, queryFields, mainField) {
         let inputFieldDefinition = {};
         inputFieldDefinition.type = dataType;
         inputFieldDefinition.name = apiName;
@@ -165,6 +169,9 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         inputFieldDefinition.lookupObject = lookupObject;
         inputFieldDefinition.lookupIcon = iconName;
         inputFieldDefinition.index = this.filterFields.length
+        inputFieldDefinition.returnFields = returnFields;
+        inputFieldDefinition.queryFields = queryFields;
+        inputFieldDefinition.mainField = mainField;
         return inputFieldDefinition;
     }
 

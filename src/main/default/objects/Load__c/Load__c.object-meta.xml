@@ -148,8 +148,8 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
@@ -160,7 +160,16 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Loads</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>DeliveryDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Depot__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DriverFullName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>NumberOfDeliveryPoints__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Route__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TotalQuantity__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TotalWeight__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Vehicle__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

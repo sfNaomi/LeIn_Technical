@@ -17,7 +17,7 @@ public with sharing class OutletAssetTriggerHandler {
         List<aforza__Attribute_Assignment__c> assignmentsToDelete = new List<aforza__Attribute_Assignment__c>();
         for (aforza__Outlet_Asset__c asset : outletAssetsByIds.values()) {
             Map<String, Id> accountAssignments = accountIdToAssignmentsByIds.get(asset.aforza__Account__c);
-            if (accountAssignments.containsKey(asset.aforza__Product_SKU__c)) {
+            if (accountAssignments <> null && accountAssignments.containsKey(asset.aforza__Product_SKU__c)) {
                 assignmentsToDelete.add(new aforza__Attribute_Assignment__c(Id = accountAssignments.get(asset.aforza__Product_SKU__c)));
             }
         }

@@ -11,7 +11,7 @@
  *      variant - label-hidden or standard - default standard
  *      disabled - true/false - disables input
  *      selectRecordId - default input value
- *      dropdownLength - maximum number of records to show in the dropdown before scrolling asdsa
+ *      dropdownLength - maximum number of records to show in the dropdown before scrolling
  *
  * @author  Svatopluk Sejkora, BearingPoint
  * @date    2020-04-03
@@ -40,6 +40,7 @@ export default class CustomLookupInput extends LightningElement {
     @api returnFields = ['Name'];
     @api queryFields = ['Name'];
     @api mainField = 'Name';
+    @api returnDifferentObjectId;
     @api fieldName;
     @api label;
     @api required;
@@ -142,9 +143,6 @@ export default class CustomLookupInput extends LightningElement {
         try {
             if (!this._hasRendered) {
                 this._hasRendered = true;
-
-                console.log('lwcStyles', lwcStyles);
-
                 await loadStyle(this, lwcStyles + '/customLookupInput.css');
 
                 if (!this._selectRecordId) {
@@ -164,7 +162,7 @@ export default class CustomLookupInput extends LightningElement {
                     sObjectName: this.objectName,
                     mainField: this.mainField
                 });
-                if (this.selectRecordId) {
+                if (this.selectRecordId && initRecord) {
                     this.selectRecordName = initRecord[this.mainField];
                     this.fireSelectedEvent();
                     this.iconFlag = false;
@@ -346,7 +344,13 @@ export default class CustomLookupInput extends LightningElement {
         }
         const returnFields = this.returnFields;
         this.searchRecords.forEach(searchRecord => {
-            const dto = {Id: searchRecord.Id, Name: searchRecord[this.mainField], detailFields: []};
+            let returnId;
+            if (this.returnDifferentObjectId === undefined) {
+                returnId = searchRecord.Id;
+            } else {
+                returnId = searchRecord[this.returnDifferentObjectId];
+            }
+            const dto = {Id: returnId, Name: searchRecord[this.mainField], detailFields: []};
             returnFields.forEach(field => {
                 if (returnFields.indexOf(field) !== 0) {
                     let fieldValue = this.getFieldFromRelationObject(searchRecord, field);

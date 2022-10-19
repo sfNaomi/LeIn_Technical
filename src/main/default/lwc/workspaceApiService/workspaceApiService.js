@@ -11,7 +11,7 @@ export function setTabNameAndIcon(labelName, icon, iconAlt, thisArg) {
                     label: labelName
                 })
                     .catch(function (error) {
-                        console.log(error);
+                        console.error(error);
                     });
                 invokeWorkspaceAPI(thisArg, 'setTabIcon', {
                     tabId: focusedTab.tabId,
@@ -19,7 +19,7 @@ export function setTabNameAndIcon(labelName, icon, iconAlt, thisArg) {
                     iconAlt: iconAlt
                 })
                     .catch(function (error) {
-                        console.log(error);
+                        console.error(error);
                     })
 
             });

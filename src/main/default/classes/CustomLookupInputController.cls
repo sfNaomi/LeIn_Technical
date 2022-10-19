@@ -159,7 +159,11 @@ public with sharing class CustomLookupInputController {
         } else {
             sQuery += mainField;
         }
-        sQuery += ' FROM ' + sObjectName + ' WHERE LastViewedDate != NULL';
+
+        sQuery += ' FROM ' + sObjectName;
+        if (String.isNotBlank(filter)) {
+            sQuery += ' WHERE ' + filter;
+        }
 
         sQuery += ' ORDER BY LastViewedDate DESC LIMIT ' + maxResults;
 

@@ -9,6 +9,10 @@
         <apexClass>DynamicFilterController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>CustomLookupInputController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Access Logistic Update Screen</label>
     <tabSettings>
