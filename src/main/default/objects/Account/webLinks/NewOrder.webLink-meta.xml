@@ -10,5 +10,5 @@
     <masterLabel>New Order</masterLabel>
     <openType>sidebar</openType>
     <protected>false</protected>
-    <url>/lightning/o/Order/new?useRecordTypeCheck=1&amp;defaultFieldValues=AccountId={!Account.Id},Depot__c={!Account.Depot__c},Status=Draft,EffectiveDate={!TEXT(TODAY())},DeliveryDate__c={!TEXT(Account.NextDeliveryDate__c)},aforza__Inventory__c={!Account.DefaultInventoryId__c},Grid__c={!Account.CurrentGridNumber__c},BillToContactId={!Account.aforza__Primary_ContactId__c}</url>
+    <url>/lightning/o/Order/new?useRecordTypeCheck=1&amp;defaultFieldValues=AccountId={!Account.Id},Depot__c={!Account.Depot__c},Status=Draft,EffectiveDate={!TEXT(TODAY())},DeliveryDate__c={!TEXT(Account.NextDeliveryDate__c)},Grid__c={!Account.CurrentGridNumber__c}{!IF(Account.DefaultInventoryId__c==null,&apos;&apos;,&apos;,aforza__Inventory__c=&apos;&amp;Account.DefaultInventoryId__c)}{!IF(Account.aforza__Primary_ContactId__c ==null,&apos;&apos;,&apos;,BillToContactId=&apos;&amp;Account.aforza__Primary_ContactId__c)}{!IF(Account.aforza__Primary_ContactId__c ==null,&apos;&apos;,&apos;,ShipToContactId=&apos;&amp;Account.aforza__Primary_ContactId__c)}</url>
 </WebLink>
