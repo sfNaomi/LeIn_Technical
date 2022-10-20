@@ -649,6 +649,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>message</name>
+                    <value>{!$Label.NoDriverOnDPAccount}</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>Warning</value>
+                </componentInstanceProperties>
+                <componentName>recordPageWarningMessage</componentName>
+                <identifier>c_recordPageWarningMessage4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.PrimaryGridNumber__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DriverName__c}</leftValue>
+                        <operator>EQUAL</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>createQuickActionName</name>
                     <value>aforza__NewContact</value>
                 </componentInstanceProperties>

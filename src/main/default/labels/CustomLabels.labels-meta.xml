@@ -442,6 +442,13 @@
         <value>No Record Found</value>
     </labels>
     <labels>
+        <fullName>NoDriverOnDPAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoDriverOnDPAccount</shortDescription>
+        <value>No driver has been associated to the DP. Please contact Sales Support team for assistance.</value>
+    </labels>    
+    <labels>
         <fullName>PickSheetDeliveryDate</fullName>
         <language>en_US</language>
         <protected>false</protected>

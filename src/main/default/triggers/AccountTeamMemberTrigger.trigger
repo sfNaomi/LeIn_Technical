@@ -13,12 +13,15 @@ trigger AccountTeamMemberTrigger on AccountTeamMember (before insert, before upd
             }
             when AFTER_INSERT {
                 AccountTeamMemberTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.updateDriverNameOnAccountFromDriverAccountTeamMember(Trigger.new, Trigger.oldMap);
             }
             when AFTER_UPDATE {
                 AccountTeamMemberTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.updateDriverNameOnAccountFromDriverAccountTeamMember(Trigger.new, Trigger.oldMap);
             }
             when AFTER_DELETE {
                 AccountTeamMemberTriggerHandler.deleteReoccurrenceRecord(Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.deleteDriversNameFromAccount(Trigger.oldMap);
             }
         }
     } catch (Exception e) {

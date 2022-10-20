@@ -450,4 +450,174 @@ private class AccountTeamMemberTriggerHandlerTest {
 
         System.assertEquals(1, record.size());
     }
+
+    @IsTest
+    private static void testUpdateDriverNameOnAccountFromDriverAccountTeamMember_OnInsert() {
+        // create dp account and user
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        
+        User user = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'John', LastName = 'Stewart')
+        );    
+
+        // insert driver team member
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user.Id , TeamMemberRole = 'Driver')
+        );
+        Test.stopTest();
+
+        // query Account Driver Field
+        Account account = [
+                SELECT Id, DriverName__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+
+        // check results
+        System.assertEquals('John Stewart', account.DriverName__c, 'Expecting to have same name as user');
+    }
+
+    @IsTest
+    private static void testUpdateDriverNameOnAccountFromDriverAccountTeamMember_OnUpdateToDriver() {
+        // create dp account, user and team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        
+        User user = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'John', LastName = 'Stewart')
+        );    
+
+        AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user.Id , TeamMemberRole = 'TAM')
+        );
+        // update status
+        Test.startTest();
+        accountTeamMember.TeamMemberRole = 'Driver';
+        update accountTeamMember;
+        Test.stopTest();
+
+        // query Account Driver Field
+        Account account = [
+                SELECT Id, DriverName__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+
+        // check results
+        System.assertEquals('John Stewart', account.DriverName__c, 'Expecting to have same name as user');
+    }
+    
+    @IsTest
+    private static void testUpdateDriverNameOnAccountFromDriverAccountTeamMember_OnUpdateToNotDriver() {
+        // create dp account, user and team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        
+        User user = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'John', LastName = 'Stewart')
+        );    
+
+        AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user.Id , TeamMemberRole = 'Driver')
+        );
+        // update status
+        Test.startTest();
+        accountTeamMember.TeamMemberRole = 'TAM';
+        update accountTeamMember;
+        Test.stopTest();
+
+        // query Account Driver Field
+        Account account = [
+                SELECT Id, DriverName__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+        // check results
+        System.assertEquals(null, account.DriverName__c, 'Expecting to have same name as user');
+    }
+
+    @IsTest
+    private static void testUpdateDriverNameOnAccountFromDriverAccountTeamMember_OnDelete() {
+        // create dp account, user and team member
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        
+        User user = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'John', LastName = 'Stewart')
+        );    
+
+        AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user.Id , TeamMemberRole = 'Driver')
+        );
+        // delete team member
+        Test.startTest();
+        delete accountTeamMember;
+        Test.stopTest();
+
+        // query Account Driver Field
+        Account account = [
+                SELECT Id, DriverName__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+
+        // check results
+        System.assertEquals(null, account.DriverName__c, 'Expecting to have null value');
+    }
+    
+    @IsTest
+    private static void testUpdateDriverNameOnAccountFromDriverAccountTeamMember_OnMultipleInsertOrUpdate() {
+        // create dp account, users and team members
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+        );
+        
+        User user = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'John', LastName = 'Stewart')
+        );
+        
+        User user2 = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'Fred', LastName = 'Davies')
+        );
+        
+        User user3 = (User) TdfSObjectFactory.insertSObject(
+            new User(FirstName = 'Scott', LastName = 'Pippen')
+        );
+
+        AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user.Id , TeamMemberRole = 'TAM')
+        );
+        
+        AccountTeamMember accountTeamMember2 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user2.Id , TeamMemberRole = 'Driver')
+        );
+        
+        // update status on 2 members and insert another
+        Test.startTest();
+        TdfSObjectFactory.insertSObject(
+                new AccountTeamMember(AccountId = dpAccount.Id, UserId = user3.Id , TeamMemberRole = 'TAM Manager')
+        );
+        List<AccountTeamMember> atmList = new List<AccountTeamMember>();
+        accountTeamMember.TeamMemberRole = 'Driver';
+        accountTeamMember2.TeamMemberRole = 'TAM Manager';
+        atmList.add(accountTeamMember);
+        atmList.add(accountTeamMember2);
+        update atmList;
+        Test.stopTest();
+
+        // query Account Driver Field
+        Account account = [
+                SELECT Id, DriverName__c
+                FROM Account
+                WHERE Id = :dpAccount.Id
+        ];
+        // check results
+        System.assertEquals('John Stewart', account.DriverName__c, 'Expecting to have same name as user');
+    }
 }

@@ -15,7 +15,6 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
         }
         when AFTER_INSERT {
             AccountTriggerHandler.manageFocusProducts(Trigger.newMap);
-
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);

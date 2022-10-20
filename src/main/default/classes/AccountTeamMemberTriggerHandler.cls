@@ -156,4 +156,48 @@ public with sharing class AccountTeamMemberTriggerHandler {
         }
         return validAccountsForTeams;
     }
+
+	public static void updateDriverNameOnAccountFromDriverAccountTeamMember(List<AccountTeamMember> newAccountTeamMembers, Map<Id, AccountTeamMember> oldAccountTeamMembers){
+        Set<Id> accIds = new Set<Id>();
+        List<Account> accountsToUpdate = new List<Account>();
+        for (AccountTeamMember newAccountTeamMember : newAccountTeamMembers) {
+            AccountTeamMember oldAccountTeamMember = oldAccountTeamMembers?.get(newAccountTeamMember.Id);
+        	if(
+                (oldAccountTeamMember == null && newAccountTeamMember.TeamMemberRole == 'Driver') || 
+                (
+                    oldAccountTeamMember != null && 
+                    newAccountTeamMember.TeamMemberRole != oldAccountTeamMember.TeamMemberRole && 
+                    (newAccountTeamMember.TeamMemberRole == 'Driver' || oldAccountTeamMember.TeamMemberRole == 'Driver')
+            	)
+            ) {
+                accIds.add(newAccountTeamMember.AccountId);
+            }       
+        }
+        if(accIds.size() > 0){
+            List<Account> driverUsers = [SELECT Id, (SELECT Id, AccountId, User.Name, TeamMemberRole
+                                    FROM AccountTeamMembers WHERE TeamMemberRole = 'Driver') FROM Account WHERE Id IN :accIds];
+            for (Account driversAccount : driverUsers) {
+                Account acc = new Account(Id=driversAccount.Id);
+                if(driversAccount.AccountTeamMembers.size() > 0){
+                	acc.DriverName__c = driversAccount.AccountTeamMembers[0].User.Name;
+                    accountsToUpdate.add(acc);
+                }else{
+                    acc.DriverName__c = null;
+                    accountsToUpdate.add(acc);
+                }               
+            }    
+        } 
+        update accountsToUpdate;     
+    }
+
+    public static void deleteDriversNameFromAccount(Map<Id, AccountTeamMember> oldAccountTeamMembers) {
+        List<Account> accountsToUpdate = new List<Account>();
+        for (AccountTeamMember accountTeamMember : oldAccountTeamMembers.values()) {
+            if (accountTeamMember.TeamMemberRole == 'Driver') {
+                Account acc = new Account(Id = accountTeamMember.AccountId, DriverName__c = null);
+                accountsToUpdate.add(acc);
+            }
+        }
+        update accountsToUpdate;
+    }
 }
