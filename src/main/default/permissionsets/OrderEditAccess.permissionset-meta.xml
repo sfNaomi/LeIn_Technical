@@ -143,11 +143,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Order.TotalNumberOfCasesOnOrder__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Order.TotalOrderWeight__c</field>
         <readable>true</readable>
     </fieldPermissions>
