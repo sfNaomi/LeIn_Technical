@@ -3,7 +3,7 @@
     <fullName>MinOrderQuantityCalculation__c</fullName>
     <description>Hidden formula field to calculate if the value in parent account minimum order quantity field is greater than the total number of order items in an order. To be used on Order Page for component visibility.</description>
     <externalId>false</externalId>
-    <formula>IF(Account.MinOrderQuantity__c &gt; TotalQTY__c, true, false)</formula>
+    <formula>IF(Account.MinOrderQuantity__c &gt; TotalQuantity__c, true, false)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Min Order Quantity Calculation</label>
     <trackHistory>false</trackHistory>
