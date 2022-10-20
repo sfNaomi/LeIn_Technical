@@ -499,11 +499,11 @@
         <excludeButtons>New</excludeButtons>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.EFFECTIVE_DATE</fields>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <fields>ORDERS.STATUS</fields>
+        <fields>ORDER.RECORDTYPE</fields>
+        <fields>Clone__c</fields>
         <relatedList>RelatedOrderList</relatedList>
-        <sortField>ORDERS.EFFECTIVE_DATE</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>

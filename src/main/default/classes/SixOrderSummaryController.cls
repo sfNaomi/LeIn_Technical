@@ -72,7 +72,7 @@ public with sharing class SixOrderSummaryController {
             for (OrderItem ord: orders) {
                 SkuDto skuDto = new SkuDto();
                 skuDto.sku = ord.Product2.ProductCode;
-                skuDto.description = ord.Product2?.Description;
+                skuDto.description = ord.Product2?.Name;
                 skuDto.productId = ord.product2.id;
                 skuDto.isActive = ord.Product2.IsActive;
                 skuDto.totalQuantity = 0;
@@ -167,7 +167,6 @@ public with sharing class SixOrderSummaryController {
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem)
              AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-              AND Clone__c = true  
             AND Status IN: OrderService.COMPLETED_ORDER_STATUSES
             AND
             AccountId =: accountId
@@ -194,7 +193,6 @@ public with sharing class SixOrderSummaryController {
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem) AND AccountId =: accountId
              AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-              AND Clone__c = true  
             AND Status IN: OrderService.COMPLETED_ORDER_STATUSES
             ORDER BY EffectiveDate DESC Limit 6
         ];
@@ -214,7 +212,7 @@ public with sharing class SixOrderSummaryController {
     private static List < OrderItem > getAllOrderItems(List < String > orderIds) {
         List < OrderItem > orderItems = [
             select product2.ProductCode, quantity, product2.id, pricebookEntryId,
-            product2.description, order.id, order.effectivedate, UnitPrice,
+            product2.description, product2.name, order.id, order.effectivedate, UnitPrice,
             product2.isactive from orderitem where order.id in: orderIds and id != null
         ];
         return orderItems;

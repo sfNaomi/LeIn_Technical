@@ -40,7 +40,6 @@ public class SixOrderSummaryControllerTest {
 
     OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(orderId = newOrder1.id, quantity = 4));
 
-    newOrder1.Clone__c = true;
     newOrder1.Status = 'Activated';
     update newOrder1;
     orderDtosToReturn = SixOrderSummaryController.getOrdersList(dpAccount.id);
@@ -418,7 +417,6 @@ public class SixOrderSummaryControllerTest {
     OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(orderId = newOrder1.id, quantity = 4));
     List < SixOrderSummaryController.OrderDto > orderDtosToReturn = new List < SixOrderSummaryController.orderDto > ();
 
-    newOrder1.Clone__c = true;
     newOrder1.Status = 'Activated';
     update newOrder1;
     orderDtosToReturn = SixOrderSummaryController.getOrdersDates(dpAccount.id);
@@ -448,7 +446,6 @@ public class SixOrderSummaryControllerTest {
 
     Product2 prod = [SELECT id, productCode, StockKeepingUnit, isActive from product2 where id =: item1.Product2Id];
 
-    newOrder1.Clone__c = true;
     newOrder1.Status = 'Activated';
     update newOrder1;
     orderItems = SixOrderSummaryController.getLastOrderLists(dpAccount.id);

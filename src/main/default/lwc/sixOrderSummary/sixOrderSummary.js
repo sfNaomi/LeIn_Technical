@@ -5,8 +5,11 @@ import CreateOrder from "@salesforce/apex/SixOrderSummaryController.CreateOrder"
 import { NavigationMixin } from "lightning/navigation";
 import { processError } from "c/errorHandlingService";
 import { openRecordInSubTab } from "c/workspaceApiService";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
-export default class LastSixOrdersSummary extends NavigationMixin(LightningElement) {
+export default class LastSixOrdersSummary extends NavigationMixin(
+  LightningElement
+) {
   @api recordId;
 
   @track columns = [
@@ -57,6 +60,12 @@ export default class LastSixOrdersSummary extends NavigationMixin(LightningEleme
         accountId: this.recordId,
       });
       if (createdOrderId) {
+        const toastSuccess = new ShowToastEvent({
+          title: "Success",
+          message: "Order has been created",
+          variant: "success",
+        });
+        this.dispatchEvent(toastSuccess);
         let crOrdId = JSON.parse(JSON.stringify(createdOrderId));
         openRecordInSubTab(crOrdId, window);
       }
