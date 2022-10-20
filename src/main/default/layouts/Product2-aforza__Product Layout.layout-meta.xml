@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>aforza__Parent_Product__c</field>
+                <field>ProductCode</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -31,7 +31,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ProductCode</field>
+                <field>aforza__Parent_Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>StockKeepingUnit</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -139,10 +143,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>FocusFiveProduct__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>StockKeepingUnit</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -295,7 +295,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8d000005frGn</masterLabel>
+        <masterLabel>00h3N000003pokK</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

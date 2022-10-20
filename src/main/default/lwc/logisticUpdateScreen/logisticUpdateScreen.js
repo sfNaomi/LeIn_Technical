@@ -274,6 +274,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             this.isLoading = true;
             switch (this.selectedAction) {
                 case 'Print Pick Sheets':
+                    this.changeOrderStatus(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), 'Picking in Progress');
                     this.navigateToPage('AGBarrPickSheet', {'ids' : this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Picked':
@@ -305,6 +306,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                     break;
                 default:
             }
+            this.resetSelection();
         } catch (error) {
             processError(this, error);
         } finally {
@@ -356,36 +358,47 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         return selectedIds;
     }
 
+    /** Method to obtain ids of selected rows which have the status specified as input
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-19
+     */
+     getSelectedOrderIdsWithSpecifiedStatus(status) {
+         let selectedIds = [];
+         this.selectedRows.forEach((order) => {
+             if (order.Status === status) {
+                 selectedIds.push(order.Id);
+             }
+         });
+         return selectedIds;
+    }
+
     /** Method to call apex to change the status of the orders
      *
      * @author Svata Sejkora
      * @date 2022-10-07
      */
     async changeOrderStatus(orderIds, newStatus) {
-        await updateOrderStatus({orderIds: orderIds, newStatus: newStatus});
-        this.template.querySelector('.table').selectedRows = [];
-        const dynamicFilter = this.template.querySelector('c-dynamic-filter');
-        await dynamicFilter.handleFilterClick();
-        this.selectedRows = [];
-        this.selectedAction = '';
-        const toastSuccess = new ShowToastEvent({
-            title: 'Success',
-            message: 'Orders have been updated.',
-            variant: 'success'
-        });
-        this.dispatchEvent(toastSuccess);
+        if (orderIds.length > 0) {
+            await updateOrderStatus({orderIds: orderIds, newStatus: newStatus});
+            const dynamicFilter = this.template.querySelector('c-dynamic-filter');
+            await dynamicFilter.handleFilterClick();
+            const toastSuccess = new ShowToastEvent({
+                title: 'Success',
+                message: 'Orders have been updated.',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccess);
+        }
     }
 
-    /** Method to navigate to a web page with query params and refresh selection on logistics screen
+    /** Method to reset selection of data table and actions
      *
      * @author Magdalena Stanciu
-     * @date 2022-10-07
+     * @date 2022-10-18
      */
-    async navigateToPage(page, params) {
-        this.navigateToWebPage(page, params);
+    resetSelection(page, params) {
         this.template.querySelector('.table').selectedRows = [];
-        const dynamicFilter = this.template.querySelector('c-dynamic-filter');
-        await dynamicFilter.handleFilterClick();
         this.selectedRows = [];
         this.selectedAction = '';
     }

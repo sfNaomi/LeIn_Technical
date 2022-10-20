@@ -15,6 +15,10 @@
     </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Access Logistic Update Screen</label>
+    <pageAccesses>
+        <apexPage>AGBarrPickSheet</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <tabSettings>
         <tab>LogisticUpdateScreen</tab>
         <visibility>Visible</visibility>
