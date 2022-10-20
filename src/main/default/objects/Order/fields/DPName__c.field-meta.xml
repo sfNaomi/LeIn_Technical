@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Clone__c</fullName>
-    <defaultValue>false</defaultValue>
+    <fullName>DPName__c</fullName>
     <externalId>false</externalId>
-    <label>Clone?</label>
+    <label>DP Name</label>
+    <length>255</length>
+    <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Checkbox</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
-

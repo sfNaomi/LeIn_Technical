@@ -4,6 +4,7 @@
     <label>Field Sales Controller</label>
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>ClassBasicAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -460,6 +460,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>sixOrderSummary</componentName>
+                <identifier>c_sixOrderSummary</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-0e6c179c-c08b-4418-b813-819cf4ed4373</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
@@ -544,6 +554,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0e6c179c-c08b-4418-b813-819cf4ed4373</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Order Summary</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab6</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

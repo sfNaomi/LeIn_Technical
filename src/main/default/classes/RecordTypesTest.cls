@@ -31,9 +31,10 @@
         notNull(RecordTypes.ASSORTMENT_SEGMENT_ASSORTMENT);
         notNull(RecordTypes.ASSORTMENT_SEGMENT_ASSORTMENT_ID);
     }
-
-    @IsTest private static void testInventoryTypes() {
+      @IsTest private static void testInventoryRecordTypes() {
         notNull(RecordTypes.INVENTORY_BUILDING);
         notNull(RecordTypes.INVENTORY_BUILDING_ID);
+        notNull(RecordTypes.INVENTORY_VEHICLE);
+        notNull(RecordTypes.INVENTORY_VEHICLE_ID);
     }
 }

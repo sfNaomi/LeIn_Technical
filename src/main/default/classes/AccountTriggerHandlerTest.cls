@@ -118,9 +118,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToActiveProspect() {
-        // create attribute for New DP attribute flow automation
         aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
-
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -152,9 +150,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToTraders() {
-        // create attribute for New DP attribute flow automation
         aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
-
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -186,9 +182,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_CoverageAccountMovedToActiveProspect() {
-        // create attribute for New DP attribute flow automation
         aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
-
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -220,10 +214,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_CoverageAccountMovedToTraders() {
-        // create attribute for New DP attribute flow automation
         aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
-
-
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -522,6 +513,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testPullInfoOnDPFromRelatedCustomer_UpdateRelatedCustomerOnDP() {
+        
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PoRequired__c = true)
         );

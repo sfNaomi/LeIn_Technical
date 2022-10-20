@@ -1,3 +1,4 @@
+
 /**
  * Class provides functionality for creating default inventory product in test methods.
  *
@@ -11,6 +12,7 @@
  * @date    2022-10-15
  *
  */
+
 @IsTest
 public with sharing class TdfAforzaInventoryProductTemplate extends TdfSObjectTemplate {
     private Id productId;
@@ -29,7 +31,7 @@ public with sharing class TdfAforzaInventoryProductTemplate extends TdfSObjectTe
             productId = ((Product2) TdfSObjectFactory.insertSObject(new Product2())).Id;
         }
         if (userDefinedInventoryProduct.aforza__Inventory__c == null) {
-            inventoryId = ((aforza__Inventory__c) TdfSObjectFactory.insertSObject(new aforza__Inventory__c())).Id;
+            inventoryId =TdfSObjectFactory.insertSObject(new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)).Id;
         }
     }
 
@@ -51,4 +53,5 @@ public with sharing class TdfAforzaInventoryProductTemplate extends TdfSObjectTe
         template.PickingLocation__c = 'A1';
         return template;
     }
+
 }
