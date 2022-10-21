@@ -91,7 +91,7 @@ private with sharing class PickSheetPDFControllerTest {
 
         newOrder.Load__c = newLoad.Id;
         newOrder.PalletSequence__c = PALLET_SEQUENCE;
-        newOrder.PalletDescription__c = PALLET_DESCRIPTION;
+        newOrder.ShortDescription__c = PALLET_DESCRIPTION;
         ordersToUpdate.add(newOrder);
 
         update ordersToUpdate;
@@ -189,12 +189,12 @@ private with sharing class PickSheetPDFControllerTest {
 
         newOrder1.Load__c = newLoad.Id;
         newOrder1.PalletSequence__c = PALLET_SEQUENCE;
-        newOrder1.PalletDescription__c = PALLET_DESCRIPTION;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION;
         ordersToUpdate.add(newOrder1);
 
         newOrder2.Load__c = newLoad.Id;
         newOrder2.PalletSequence__c = PALLET_SEQUENCE;
-        newOrder2.PalletDescription__c = PALLET_DESCRIPTION;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION;
         ordersToUpdate.add(newOrder2);
 
         update ordersToUpdate;

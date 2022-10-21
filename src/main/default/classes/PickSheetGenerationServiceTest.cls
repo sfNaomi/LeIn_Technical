@@ -120,12 +120,12 @@ public with sharing class PickSheetGenerationServiceTest {
 
         newOrder1.Load__c = newLoad.Id;
         newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder1.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder1);
 
         newOrder2.Load__c = newLoad.Id;
         newOrder2.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder2.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder2);
 
         update ordersToUpdate;
@@ -283,12 +283,12 @@ public with sharing class PickSheetGenerationServiceTest {
 
         newOrder1.Load__c = newLoad.Id;
         newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder1.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder1);
 
         newOrder2.Load__c = newLoad.Id;
         newOrder2.PalletSequence__c = PALLET_SEQUENCE2;
-        newOrder2.PalletDescription__c = PALLET_DESCRIPTION2;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION2;
         ordersToUpdate.add(newOrder2);
 
         update ordersToUpdate;
@@ -477,12 +477,12 @@ public with sharing class PickSheetGenerationServiceTest {
 
         newOrder1.Load__c = newLoad1.Id;
         newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder1.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder1);
 
         newOrder2.Load__c = newLoad2.Id;
         newOrder2.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder2.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder2);
 
         update ordersToUpdate;
@@ -701,22 +701,22 @@ public with sharing class PickSheetGenerationServiceTest {
 
         newOrder1.Load__c = newLoad1.Id;
         newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder1.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder1);
 
         newOrder2.Load__c = newLoad1.Id;
         newOrder2.PalletSequence__c = PALLET_SEQUENCE2;
-        newOrder2.PalletDescription__c = PALLET_DESCRIPTION2;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION2;
         ordersToUpdate.add(newOrder2);
 
         newOrder3.Load__c = newLoad2.Id;
         newOrder3.PalletSequence__c = PALLET_SEQUENCE1;
-        newOrder3.PalletDescription__c = PALLET_DESCRIPTION1;
+        newOrder3.ShortDescription__c = PALLET_DESCRIPTION1;
         ordersToUpdate.add(newOrder3);
 
         newOrder4.Load__c = newLoad2.Id;
         newOrder4.PalletSequence__c = PALLET_SEQUENCE2;
-        newOrder4.PalletDescription__c = PALLET_DESCRIPTION2;
+        newOrder4.ShortDescription__c = PALLET_DESCRIPTION2;
         ordersToUpdate.add(newOrder4);
 
         update ordersToUpdate;

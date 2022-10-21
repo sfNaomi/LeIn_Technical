@@ -87,7 +87,7 @@ public with sharing class PickSheetGenerationService {
                 SELECT
                         Id, Product2Id, Product2.Name, Product2.ProductCode, Quantity, OrderId, Order.AccountId,
                         Order.Load__r.Name, Order.Load__r.DeliveryDate__c, Order.PalletSequence__c,
-                        Order.PalletDescription__c, Order.Grid__c, Order.Load__r.Driver__r.Name,
+                        Order.ShortDescription__c, Order.Grid__c, Order.Load__r.Driver__r.Name,
                         Order.Load__r.Vehicle__r.VehicleRegistration__c, Order.aforza__Inventory__c
                 FROM OrderItem
                 WHERE OrderId IN :orderIds AND Order.Load__c != NULL AND aforza__Type__c NOT IN ('Tax', 'Discount') AND IsDRSProduct__c = false
@@ -337,7 +337,7 @@ public with sharing class PickSheetGenerationService {
         public void distributeNewItem(OrderItem newOrderItem) {
             this.dps.add(newOrderItem.Order.AccountId);
             this.grids.add(newOrderItem.Order.Grid__c);
-            this.palletDescriptions.add(newOrderItem.Order.PalletDescription__c);
+            this.palletDescriptions.add(newOrderItem.Order.ShortDescription__c);
             this.totalCases += newOrderItem.Quantity == null ? 0 : newOrderItem.Quantity;
 
             this.addPalletSequenceItem(newOrderItem);
