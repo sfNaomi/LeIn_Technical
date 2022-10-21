@@ -8,8 +8,9 @@ private class VisitCallServiceTest {
     @IsTest
     private static void testManageVisitCalls_Weekly() {
         // create accounts, we are expecting that trigger will create needed recurring records
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
                 PrimaryStartDate__c = VisitCallService.toMonday(System.today()), CallPriority__c = 'P1', PrimaryCallDay__c = '1'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [
                 SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
@@ -30,8 +31,9 @@ private class VisitCallServiceTest {
     @IsTest
     private static void testManageVisitCalls_Monthly() {
         // create accounts, we are expecting that trigger will create needed recurring records
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201WEM',
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201WEM',
                 PrimaryStartDate__c = Date.today().addDays(-8), CallPriority__c = 'P2', PrimaryCallDay__c = '3'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [
                 SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
@@ -52,8 +54,10 @@ private class VisitCallServiceTest {
     @IsTest
     private static void testManageVisitCalls_Fortnightly() {
         // create accounts, we are expecting that trigger will create needed recurring records
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201TH1',
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201TH1',
                 PrimaryStartDate__c = Date.today().addDays(-8), CallPriority__c = 'P2', PrimaryCallDay__c = '4'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
+
 
         List<aforza__Recurring_Record__c> recurringRecords = [
                 SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
@@ -365,8 +369,10 @@ private class VisitCallServiceTest {
     @IsTest
     private static void testManageVisitCalls_AddVisits() {
         // create accounts, we are expecting that trigger will create needed recurring records
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
                 PrimaryStartDate__c = Date.today().addDays(-8), CallPriority__c = 'P1', PrimaryCallDay__c = '1'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
+
 
         List<aforza__Recurring_Record__c> recurringRecords = [
                 SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
@@ -401,8 +407,9 @@ private class VisitCallServiceTest {
     @IsTest
     private static void testManageVisitCalls_RemoveAndAddAllNew() {
         // create accounts, we are expecting that trigger will create needed recurring records
-        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '3C7201MOW',
                 PrimaryStartDate__c = Date.today().addDays(-8), CallPriority__c = 'P1', PrimaryCallDay__c = '1'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [
                 SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,

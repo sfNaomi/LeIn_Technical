@@ -10,15 +10,16 @@ public with sharing class DynamicFilterController {
      * @param returnFields input filter
      * @param queryFields input filter
      * @param limitRows number of rows to return
+     * @param defaultFilter default filter
      * @return List of SObjects which contains searchText in one of queryFields
      *
      * @author Svata Sejkora
      * @date 2022-09-20
      */
     @AuraEnabled
-    public static List<SObject> getResults(String sObjectName, List<String> returnFields, String queryFields, Integer limitRows) {
+    public static List<SObject> getResults(String sObjectName, List<String> returnFields, String queryFields, Integer limitRows, String defaultFilter) {
         try {
-            String sQuery = buildQuery(sObjectName, returnFields, queryFields, limitRows);
+            String sQuery = buildQuery(sObjectName, returnFields, queryFields, limitRows, defaultFilter);
             return Database.query(sQuery);
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
@@ -34,6 +35,7 @@ public with sharing class DynamicFilterController {
      * @param returnFields input filter
      * @param queryFields input filter
      * @param limitRows number of rows to return
+     * @param defaultFilter defaultFilter
      *
      * @return query string
      *
@@ -41,7 +43,7 @@ public with sharing class DynamicFilterController {
      * @date 2022-09-20
      */
     @TestVisible
-    private static String buildQuery(String sObjectName, List<String> returnFields, String queryFields, Integer limitRows) {
+    private static String buildQuery(String sObjectName, List<String> returnFields, String queryFields, Integer limitRows, String defaultFilter) {
         String sQuery = 'SELECT ';
         if (returnFields != null && returnFields.size() > 0) {
             sQuery += String.join(returnFields, ',');
@@ -56,6 +58,11 @@ public with sharing class DynamicFilterController {
                     populateFilterCondition(filterValueItem, sObjectName) + ' ';
         }
         sQuery += ' (' + likeField.removeStart(' AND ') + ')';
+
+        if (String.isNotEmpty(defaultFilter)) {
+            sQuery += defaultFilter;
+        }
+
         if (limitRows != null) {
             sQuery += ' LIMIT ' + limitRows;
         }
@@ -81,8 +88,10 @@ public with sharing class DynamicFilterController {
             return addTimeValueToDateIfComparedToDatetimeField(filterValue, sObjectName);
         } else if (filterValue.type == 'Integer') {
             return filterValue.value;
-        } else if (filterValue.type == 'Picklist') {
+        } else if (filterValue.type == 'Picklist' || filterValue.type == 'Lookup') {
             return '\'' + filterValue.value + '\'';
+        } else if (filterValue.type == 'Text') {
+            return '\'%' + filterValue.value + '%\'';
         } else {
             throw  new IllegalArgumentException('An unknown data type submitted: ' + filterValue.type);
         }
@@ -109,6 +118,9 @@ public with sharing class DynamicFilterController {
             }
             when 'equalSmaller' {
                 return ' <= ';
+            }
+            when 'contains' {
+                return ' LIKE ';
             }
             when else {
                 throw  new IllegalArgumentException('An unknown operand has been submitted: ' + operand);

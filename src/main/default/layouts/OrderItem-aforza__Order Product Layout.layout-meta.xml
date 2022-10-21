@@ -30,6 +30,10 @@
                 <behavior>Readonly</behavior>
                 <field>TotalProductWeight__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsDRSProduct__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -72,6 +76,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>aforza__Floor_Price__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>aforza__Tax__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -229,7 +237,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4J000001KHK8</masterLabel>
+        <masterLabel>00h1j000005Sz9E</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -13,7 +13,6 @@
  */
 @IsTest
 public class TdfOrderTemplate extends TdfSObjectTemplate {
-    private Id orderRecordTypeId;
     private Id accountId;
 
     /**
@@ -26,7 +25,9 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
     public override void init() {
         Order userDefinedOrder = (Order) userDefinedSObject;
         if (userDefinedOrder.AccountId == null) {
-            accountId = TdfSObjectFactory.insertSObject(new Account()).Id;
+            accountId = TdfSObjectFactory.insertSObject(
+                    new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+            ).Id;
         }
     }
 
@@ -44,10 +45,11 @@ public class TdfOrderTemplate extends TdfSObjectTemplate {
     protected override SObject createTemplateSObject() {
         Order template = new Order();
         template.Name = 'Order Name';
-        template.RecordTypeId = orderRecordTypeId;
         template.Status = 'Draft';
         template.EffectiveDate = System.today();
         template.Pricebook2Id = TdfPricebook2Template.standardPricebookId;
+        template.AccountId = accountId;
+        template.DeliveryDate__c = System.today().addDays(2);
         return template;
     }
 }

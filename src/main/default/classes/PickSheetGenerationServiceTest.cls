@@ -1,0 +1,822 @@
+/**
+ * Created by magdalena.stanciu on 16.10.2022.
+ */
+@IsTest
+public with sharing class PickSheetGenerationServiceTest {
+    private static final String GRID1 = '3C7201MOW';
+    private static final String GRID2 = '3C7201MOW';
+    private static final String VEHICLE_REGISTRATION_NUMBER = 'AA11 AAA';
+    private static final Date DELIVERY_DATE1 = Date.parse('12/10/2022');
+    private static final Date DELIVERY_DATE2 = Date.parse('12/12/2022');
+    private static final Integer PALLET_SEQUENCE1 = 1;
+    private static final String PALLET_DESCRIPTION1 = 'Description 1';
+    private static final Integer PALLET_SEQUENCE2 = 2;
+    private static final String PALLET_DESCRIPTION2 = 'Description 2';
+    private static final String PICK_LOCATION_PROD1 = 'A1';
+    private static final String PICK_LOCATION_PROD2 = 'A2';
+
+    @IsTest
+    private static void testLoadPlanGeneration_SingleLoadSingleSequence() {
+        // create products
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU2'));
+
+        // add new products to standard PB
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        
+        // create custom pricebook and add products to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry product1PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = newPricebook.Id)
+        );
+        PricebookEntry product2PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1
+        ));
+
+        // create inventory and add products to inventory
+        aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+        );
+        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct1.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD1
+                )
+        );
+        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct2.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD2
+                )
+        );
+
+        // create orders and add products to it
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem11 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem12 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 20,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem21 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem22 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 40,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        // create Vehicle
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+        );
+
+        // create Load
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+
+        // add orders to the load
+        List<Order> ordersToUpdate = new List<Order>();
+
+        newOrder1.Load__c = newLoad.Id;
+        newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder1);
+
+        newOrder2.Load__c = newLoad.Id;
+        newOrder2.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder2);
+
+        update ordersToUpdate;
+
+        Test.startTest();
+        PickSheetGenerationService service = new PickSheetGenerationService(new List<String>{newOrder1.Id, newOrder2.Id});
+        List<PickSheetGenerationService.LoadPlan> loadPlans = service.getLoadPlans();
+        Test.stopTest();
+
+        // Query data to be verified
+        Load__c insertedLoad = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad.Id
+                LIMIT 1
+        ];
+
+        // check load details
+        System.assertEquals(1, loadPlans.size());
+        System.assertEquals(insertedLoad.Name, loadPlans[0].load);
+        System.assertEquals(insertedLoad.Vehicle__r.VehicleRegistration__c, loadPlans[0].vehicle);
+        System.assertEquals(insertedLoad.Driver__r.Name, loadPlans[0].driver);
+        System.assertEquals(insertedLoad.DeliveryDate__c, loadPlans[0].deliveryDate);
+
+        // check pallet sequence
+        System.assertEquals(1, loadPlans[0].palletSequences.size());
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[0].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[0].palletSequences[0].palletDescription);
+        System.assertEquals(GRID1, loadPlans[0].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[0].numberOfDps);
+
+        Decimal totalCases = newOrderItem11.Quantity + newOrderItem12.Quantity + newOrderItem21.Quantity + newOrderItem22.Quantity;
+        System.assertEquals(totalCases, loadPlans[0].palletSequences[0].totalCases);
+
+        // check pallet sequence items
+        System.assertEquals(2, loadPlans[0].palletSequences[0].palletSequenceItems.size());
+
+        System.assertEquals(newProduct1.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[0].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[0].palletSequences[0].palletSequenceItems[0].pickLocation);
+
+        Decimal prod1Quantity = newOrderItem11.Quantity + newOrderItem21.Quantity;
+        System.assertEquals(prod1Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[0].quantity);
+
+        System.assertEquals(newProduct2.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[1].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[0].palletSequences[0].palletSequenceItems[1].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[0].palletSequences[0].palletSequenceItems[1].pickLocation);
+
+        Decimal prod2Quantity = newOrderItem12.Quantity + newOrderItem22.Quantity;
+        System.assertEquals(prod2Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[1].quantity);
+    }
+
+    @IsTest
+    private static void testLoadPlanGeneration_SingleLoadMultipleSequences() {
+        // create products
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU2'));
+
+        // add new products to standard PB
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        
+        // create custom pricebook and add products to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry product1PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = newPricebook.Id)
+        );
+        PricebookEntry product2PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1
+        ));
+
+        // create inventory and add products to inventory
+        aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+        );
+        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct1.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD1
+                )
+        );
+        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct2.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD2
+                )
+        );
+
+        // create orders and add products to it
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem11 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem12 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 20,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem21 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem22 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 40,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        // create Vehicle
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+        );
+
+        // create Load
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+
+        // add orders to the load
+        List<Order> ordersToUpdate = new List<Order>();
+
+        newOrder1.Load__c = newLoad.Id;
+        newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder1);
+
+        newOrder2.Load__c = newLoad.Id;
+        newOrder2.PalletSequence__c = PALLET_SEQUENCE2;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION2;
+        ordersToUpdate.add(newOrder2);
+
+        update ordersToUpdate;
+
+        Test.startTest();
+        PickSheetGenerationService service = new PickSheetGenerationService(new List<String>{newOrder1.Id, newOrder2.Id});
+        List<PickSheetGenerationService.LoadPlan> loadPlans = service.getLoadPlans();
+        Test.stopTest();
+
+        // Query data to be verified
+        Load__c insertedLoad = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad.Id
+                LIMIT 1
+        ];
+
+        // check load details
+        System.assertEquals(1, loadPlans.size());
+
+        System.assertEquals(insertedLoad.Name, loadPlans[0].load);
+        System.assertEquals(insertedLoad.Vehicle__r.VehicleRegistration__c, loadPlans[0].vehicle);
+        System.assertEquals(insertedLoad.Driver__r.Name, loadPlans[0].driver);
+        System.assertEquals(insertedLoad.DeliveryDate__c, loadPlans[0].deliveryDate);
+
+        // check pallet sequence
+        System.assertEquals(2, loadPlans[0].palletSequences.size());
+
+        // sequence 1
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[0].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[0].palletSequences[0].palletDescription);
+        System.assertEquals(GRID1, loadPlans[0].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[0].numberOfDps);
+
+        Decimal totalCasesSequence1 = newOrderItem11.Quantity + newOrderItem12.Quantity;
+        System.assertEquals(totalCasesSequence1, loadPlans[0].palletSequences[0].totalCases);
+
+        // sequence 2
+        System.assertEquals(PALLET_SEQUENCE2, loadPlans[0].palletSequences[1].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION2, loadPlans[0].palletSequences[1].palletDescription);
+        System.assertEquals(GRID2, loadPlans[0].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[1].numberOfDps);
+
+        Decimal totalCasesSequence2 = newOrderItem21.Quantity + newOrderItem22.Quantity;
+        System.assertEquals(totalCasesSequence2, loadPlans[0].palletSequences[1].totalCases);
+
+        // check pallet sequence items
+        System.assertEquals(2, loadPlans[0].palletSequences[0].palletSequenceItems.size());
+        System.assertEquals(2, loadPlans[0].palletSequences[1].palletSequenceItems.size());
+
+        // sequence 1 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[0].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[0].palletSequences[0].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem11.Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[0].quantity);
+
+        // sequence 1 - item 2
+        System.assertEquals(newProduct2.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[1].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[0].palletSequences[0].palletSequenceItems[1].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[0].palletSequences[0].palletSequenceItems[1].pickLocation);
+        System.assertEquals(newOrderItem12.Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[1].quantity);
+
+        // sequence 2 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[0].palletSequences[1].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[0].palletSequences[1].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[0].palletSequences[1].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem21.Quantity, loadPlans[0].palletSequences[1].palletSequenceItems[0].quantity);
+
+        // sequence 2 - item 2
+        System.assertEquals(newProduct2.ProductCode, loadPlans[0].palletSequences[1].palletSequenceItems[1].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[0].palletSequences[1].palletSequenceItems[1].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[0].palletSequences[1].palletSequenceItems[1].pickLocation);
+        System.assertEquals(newOrderItem22.Quantity, loadPlans[0].palletSequences[1].palletSequenceItems[1].quantity);
+    }
+
+    @IsTest
+    private static void testLoadPlanGeneration_MultipleLoadsSingleSequences() {
+        // create products
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU2'));
+
+        // add new products to standard PB
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        
+        // create custom pricebook and add products to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry product1PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = newPricebook.Id)
+        );
+        PricebookEntry product2PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1
+        ));
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID2
+        ));
+
+        // create inventory and add products to inventory
+        aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+        );
+        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct1.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD1
+                )
+        );
+        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct2.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD2
+                )
+        );
+
+        // create orders and add products to it
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem11 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem12 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 20,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount2.Id,
+                Grid__c = GRID2,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem21 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        OrderItem newOrderItem22 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 40,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        // create Vehicle
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+        );
+
+        // create Load
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+
+        // add orders to the load
+        List<Order> ordersToUpdate = new List<Order>();
+
+        newOrder1.Load__c = newLoad1.Id;
+        newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder1);
+
+        newOrder2.Load__c = newLoad2.Id;
+        newOrder2.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder2);
+
+        update ordersToUpdate;
+
+        Test.startTest();
+        PickSheetGenerationService service = new PickSheetGenerationService(new List<String>{newOrder1.Id, newOrder2.Id});
+        List<PickSheetGenerationService.LoadPlan> loadPlans = service.getLoadPlans();
+        Test.stopTest();
+
+        // Query data to be verified
+        Load__c insertedLoad1 = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad1.Id
+                LIMIT 1
+        ];
+        Load__c insertedLoad2 = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad2.Id
+                LIMIT 1
+        ];
+
+        // check load details
+        System.assertEquals(2, loadPlans.size());
+
+        // load 1
+        System.assertEquals(insertedLoad1.Name, loadPlans[0].load);
+        System.assertEquals(insertedLoad1.Vehicle__r.VehicleRegistration__c, loadPlans[0].vehicle);
+        System.assertEquals(insertedLoad1.Driver__r.Name, loadPlans[0].driver);
+        System.assertEquals(insertedLoad1.DeliveryDate__c, loadPlans[0].deliveryDate);
+
+        // load 2
+        System.assertEquals(insertedLoad2.Name, loadPlans[1].load);
+        System.assertEquals(insertedLoad2.Vehicle__r.VehicleRegistration__c, loadPlans[1].vehicle);
+        System.assertEquals(insertedLoad2.Driver__r.Name, loadPlans[1].driver);
+        System.assertEquals(insertedLoad2.DeliveryDate__c, loadPlans[1].deliveryDate);
+
+        // check pallet sequence
+        System.assertEquals(1, loadPlans[0].palletSequences.size());
+        System.assertEquals(1, loadPlans[1].palletSequences.size());
+
+        // load 1 - sequence 1
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[0].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[0].palletSequences[0].palletDescription);
+        System.assertEquals(GRID1, loadPlans[0].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[0].numberOfDps);
+
+        Decimal totalCasesLoad1Sequence1 = newOrderItem11.Quantity + newOrderItem12.Quantity;
+        System.assertEquals(totalCasesLoad1Sequence1, loadPlans[0].palletSequences[0].totalCases);
+
+        // load 2 - sequence 1
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[1].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[1].palletSequences[0].palletDescription);
+        System.assertEquals(GRID2, loadPlans[1].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[1].palletSequences[0].numberOfDps);
+
+        Decimal totalCasesLoad2Sequence1 = newOrderItem21.Quantity + newOrderItem22.Quantity;
+        System.assertEquals(totalCasesLoad2Sequence1, loadPlans[1].palletSequences[0].totalCases);
+
+        // check pallet sequence items
+        System.assertEquals(2, loadPlans[0].palletSequences[0].palletSequenceItems.size());
+        System.assertEquals(2, loadPlans[1].palletSequences[0].palletSequenceItems.size());
+
+        // load 1 - sequence 1 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[0].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[0].palletSequences[0].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem11.Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[0].quantity);
+
+        // load 1 - sequence 1 - item 2
+        System.assertEquals(newProduct2.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[1].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[0].palletSequences[0].palletSequenceItems[1].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[0].palletSequences[0].palletSequenceItems[1].pickLocation);
+        System.assertEquals(newOrderItem12.Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[1].quantity);
+
+        // load 2 - sequence 1 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[1].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[1].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[1].palletSequences[0].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem21.Quantity, loadPlans[1].palletSequences[0].palletSequenceItems[0].quantity);
+
+        // load 2 - sequence 1 - item 2
+        System.assertEquals(newProduct2.ProductCode, loadPlans[1].palletSequences[0].palletSequenceItems[1].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[1].palletSequences[0].palletSequenceItems[1].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[1].palletSequences[0].palletSequenceItems[1].pickLocation);
+        System.assertEquals(newOrderItem22.Quantity, loadPlans[1].palletSequences[0].palletSequenceItems[1].quantity);
+    }
+
+    @IsTest
+    private static void testLoadPlanGeneration_MultipleLoadsMultipleSequences() {
+        // create products
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU2'));
+
+        // add new products to standard PB
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+        
+        // create custom pricebook and add products to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry product1PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct1.Id, Pricebook2Id = newPricebook.Id)
+        );
+        PricebookEntry product2PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1
+        ));
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID2
+        ));
+
+        // create inventory and add products to inventory
+        aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+        );
+        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct1.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD1
+                )
+        );
+        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
+                new aforza__Inventory_Product__c(
+                        aforza__Inventory__c = newInventory.Id,
+                        aforza__Product__c = newProduct2.Id,
+                        PickingLocation__c = PICK_LOCATION_PROD2
+                )
+        );
+
+        // create orders and add products to it
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount2.Id,
+                Grid__c = GRID2,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 20,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        Order newOrder3 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder3.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+
+        Order newOrder4 = (Order) TdfSObjectFactory.insertSObject(new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID2,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id
+        ));
+        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+                OrderId = newOrder4.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 40,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+
+        // create Vehicle
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+        );
+
+        // create Load
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+                DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
+        ));
+
+        // add orders to the load
+        List<Order> ordersToUpdate = new List<Order>();
+
+        newOrder1.Load__c = newLoad1.Id;
+        newOrder1.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder1.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder1);
+
+        newOrder2.Load__c = newLoad1.Id;
+        newOrder2.PalletSequence__c = PALLET_SEQUENCE2;
+        newOrder2.ShortDescription__c = PALLET_DESCRIPTION2;
+        ordersToUpdate.add(newOrder2);
+
+        newOrder3.Load__c = newLoad2.Id;
+        newOrder3.PalletSequence__c = PALLET_SEQUENCE1;
+        newOrder3.ShortDescription__c = PALLET_DESCRIPTION1;
+        ordersToUpdate.add(newOrder3);
+
+        newOrder4.Load__c = newLoad2.Id;
+        newOrder4.PalletSequence__c = PALLET_SEQUENCE2;
+        newOrder4.ShortDescription__c = PALLET_DESCRIPTION2;
+        ordersToUpdate.add(newOrder4);
+
+        update ordersToUpdate;
+
+        Test.startTest();
+        PickSheetGenerationService service = new PickSheetGenerationService(
+                new List<String>{newOrder1.Id, newOrder2.Id, newOrder3.Id, newOrder4.Id}
+        );
+        List<PickSheetGenerationService.LoadPlan> loadPlans = service.getLoadPlans();
+        Test.stopTest();
+
+        // Query data to be verified
+        Load__c insertedLoad1 = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad1.Id
+                LIMIT 1
+        ];
+        Load__c insertedLoad2 = [
+                SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
+                FROM Load__c
+                WHERE Id = :newLoad2.Id
+                LIMIT 1
+        ];
+
+        // check load details
+        System.assertEquals(2, loadPlans.size());
+
+        // load 1
+        System.assertEquals(insertedLoad1.Name, loadPlans[0].load);
+        System.assertEquals(insertedLoad1.Vehicle__r.VehicleRegistration__c, loadPlans[0].vehicle);
+        System.assertEquals(insertedLoad1.Driver__r.Name, loadPlans[0].driver);
+        System.assertEquals(insertedLoad1.DeliveryDate__c, loadPlans[0].deliveryDate);
+
+        // load 2
+        System.assertEquals(insertedLoad2.Name, loadPlans[1].load);
+        System.assertEquals(insertedLoad2.Vehicle__r.VehicleRegistration__c, loadPlans[1].vehicle);
+        System.assertEquals(insertedLoad2.Driver__r.Name, loadPlans[1].driver);
+        System.assertEquals(insertedLoad2.DeliveryDate__c, loadPlans[1].deliveryDate);
+
+        // check pallet sequence
+        System.assertEquals(2, loadPlans[0].palletSequences.size());
+        System.assertEquals(2, loadPlans[1].palletSequences.size());
+
+        // load 1 - sequence 1
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[0].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[0].palletSequences[0].palletDescription);
+        System.assertEquals(GRID1, loadPlans[0].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[0].numberOfDps);
+        System.assertEquals(newOrderItem1.Quantity, loadPlans[0].palletSequences[0].totalCases);
+
+        // load 1 - sequence 2
+        System.assertEquals(PALLET_SEQUENCE2, loadPlans[0].palletSequences[1].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION2, loadPlans[0].palletSequences[1].palletDescription);
+        System.assertEquals(GRID2, loadPlans[0].palletSequences[1].grid);
+        System.assertEquals(1, loadPlans[0].palletSequences[1].numberOfDps);
+        System.assertEquals(newOrderItem2.Quantity, loadPlans[0].palletSequences[1].totalCases);
+
+        // load 2 - sequence 1
+        System.assertEquals(PALLET_SEQUENCE1, loadPlans[1].palletSequences[0].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION1, loadPlans[1].palletSequences[0].palletDescription);
+        System.assertEquals(GRID1, loadPlans[1].palletSequences[0].grid);
+        System.assertEquals(1, loadPlans[1].palletSequences[0].numberOfDps);
+        System.assertEquals(newOrderItem3.Quantity, loadPlans[1].palletSequences[0].totalCases);
+
+        // load 2 - sequence 2
+        System.assertEquals(PALLET_SEQUENCE2, loadPlans[1].palletSequences[1].sequenceNumber);
+        System.assertEquals(PALLET_DESCRIPTION2, loadPlans[1].palletSequences[1].palletDescription);
+        System.assertEquals(GRID2, loadPlans[1].palletSequences[1].grid);
+        System.assertEquals(1, loadPlans[1].palletSequences[1].numberOfDps);
+        System.assertEquals(newOrderItem4.Quantity, loadPlans[1].palletSequences[1].totalCases);
+
+        // check pallet sequence items
+        System.assertEquals(1, loadPlans[0].palletSequences[0].palletSequenceItems.size());
+        System.assertEquals(1, loadPlans[0].palletSequences[1].palletSequenceItems.size());
+        System.assertEquals(1, loadPlans[1].palletSequences[0].palletSequenceItems.size());
+        System.assertEquals(1, loadPlans[1].palletSequences[1].palletSequenceItems.size());
+
+        // load 1 - sequence 1 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[0].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[0].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[0].palletSequences[0].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem1.Quantity, loadPlans[0].palletSequences[0].palletSequenceItems[0].quantity);
+
+        // load 1 - sequence 2 - item 1
+        System.assertEquals(newProduct2.ProductCode, loadPlans[0].palletSequences[1].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[0].palletSequences[1].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[0].palletSequences[1].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem2.Quantity, loadPlans[0].palletSequences[1].palletSequenceItems[0].quantity);
+
+        // load 2 - sequence 1 - item 1
+        System.assertEquals(newProduct1.ProductCode, loadPlans[1].palletSequences[0].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct1.Name, loadPlans[1].palletSequences[0].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD1, loadPlans[1].palletSequences[0].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem3.Quantity, loadPlans[1].palletSequences[0].palletSequenceItems[0].quantity);
+
+        // load 2 - sequence 1 - item 2
+        System.assertEquals(newProduct2.ProductCode, loadPlans[1].palletSequences[1].palletSequenceItems[0].productCode);
+        System.assertEquals(newProduct2.Name, loadPlans[1].palletSequences[1].palletSequenceItems[0].productDescription);
+        System.assertEquals(PICK_LOCATION_PROD2, loadPlans[1].palletSequences[1].palletSequenceItems[0].pickLocation);
+        System.assertEquals(newOrderItem4.Quantity, loadPlans[1].palletSequences[1].palletSequenceItems[0].quantity);
+    }
+}

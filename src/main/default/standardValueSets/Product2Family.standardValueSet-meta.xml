@@ -36,4 +36,9 @@
         <default>false</default>
         <label>Bundle</label>
     </standardValue>
+    <standardValue>
+        <fullName>Deposit</fullName>
+        <default>false</default>
+        <label>Deposit</label>
+    </standardValue>
 </StandardValueSet>

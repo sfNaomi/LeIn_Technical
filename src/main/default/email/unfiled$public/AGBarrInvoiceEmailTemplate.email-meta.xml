@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>AGBarr</letterhead>
+    <name>AGBarr Invoice Email Template</name>
+    <style>freeForm</style>
+    <subject>AGBarr Invoice</subject>
+    <textOnly>Hello,
+
+We have attached your invoice PDF.
+
+Thank You,
+AGBarr Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

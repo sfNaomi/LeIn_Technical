@@ -40,7 +40,7 @@ private with sharing class ProductTriggerHandlerTest {
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductNoDRSCode() {
         Test.startTest();
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TBP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
@@ -53,12 +53,12 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductWithDRSCode() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
 
         Test.startTest();
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-                StockKeepingUnit = 'TBP',
-                DRSSKUCode__c = drsProduct.StockKeepingUnit,
+                ProductCode = 'TBP',
+                DRSSKUCode__c = drsProduct.ProductCode,
                 DRSGrossUnits__c = 12
         ));
         Test.stopTest();
@@ -77,14 +77,14 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCode() {
-        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP1'));
-        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP2'));
+        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP1'));
+        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP2'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct1.StockKeepingUnit, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct1.ProductCode, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
-        baseProduct.DRSSKUCode__c = drsProduct2.StockKeepingUnit;
+        baseProduct.DRSSKUCode__c = drsProduct2.ProductCode;
         update baseProduct;
         Test.stopTest();
 
@@ -102,11 +102,11 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNullToNotNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TBP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
 
         Test.startTest();
-        baseProduct.DRSSKUCode__c = drsProduct.StockKeepingUnit;
+        baseProduct.DRSSKUCode__c = drsProduct.ProductCode;
         update baseProduct;
         Test.stopTest();
 
@@ -124,9 +124,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNotNullToNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
@@ -145,9 +145,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSUnits() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
         Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(StockKeepingUnit = 'TBP', DRSSKUCode__c = drsProduct.StockKeepingUnit, DRSGrossUnits__c = 12)
+                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.ProductCode, DRSGrossUnits__c = 12)
         );
 
         Test.startTest();
@@ -165,5 +165,58 @@ private with sharing class ProductTriggerHandlerTest {
         System.assertEquals(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
         System.assertEquals(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
         System.assertEquals(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
+    }
+
+    @IsTest
+    private static void testManageFocusProducts() {
+        // create NonStockis attribute category
+        TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        Test.startTest();
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(FocusFiveProduct__c = true, FocusFiveGroup__c = 'GROUP'));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        System.debug(assets);
+        System.assertEquals(1, assets.size());
+
+        List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c = :prod.StockKeepingUnit];
+        System.assertEquals(1, attributes.size());
+    }
+
+    @IsTest
+    private static void testManageFocusProducts_UnCheck() {
+        // create NonStockis attribute category
+        TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(FocusFiveProduct__c = true, FocusFiveGroup__c = 'GROUP'));
+
+        Test.startTest();
+        prod.FocusFiveProduct__c = false;
+        update prod;
+        Test.stopTest();
+
+        // cant assert much as the batches run in random order after stopTest, so we cant deterministically say which one will happen first
+    }
+
+    @IsTest
+    private static void testManageFocusProducts_Check() {
+        // create NonStockis attribute category
+        TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(FocusFiveProduct__c = false, FocusFiveGroup__c = 'GROUP'));
+
+        Test.startTest();
+        prod.FocusFiveProduct__c = true;
+        update prod;
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        System.debug(assets);
+        System.assertEquals(1, assets.size());
+
+        List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c = :prod.StockKeepingUnit];
+        System.assertEquals(1, attributes.size());
     }
 }

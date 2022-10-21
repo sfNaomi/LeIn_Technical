@@ -336,6 +336,16 @@
             <field>UnitsPerPack__c</field>
             <table>Product2</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>FocusFiveProduct__c</field>
+            <table>Product2</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>FocusFiveGroup__c</field>
+            <table>Product2</table>
+        </columns>
         <masterLabel>Products</masterLabel>
     </sections>
 </ReportType>

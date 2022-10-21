@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A set of mappings that control what statuses are going to be set when order with certain status is removed from load.</description>
+    <label>Remove Orders From Load Status Mapping</label>
+    <pluralLabel>Remove Orders From Load Status Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

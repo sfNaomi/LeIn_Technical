@@ -27,7 +27,7 @@ public with sharing class TdfContactTemplate extends TdfSObjectTemplate {
         Contact userDefinedContact = (Contact) userDefinedSObject;
 
         if (userDefinedContact.AccountId == null) {
-            accountId = TdfSObjectFactory.insertSObject(new Account()).Id;
+            accountId = TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)).Id;
         }
     }
 

@@ -5,7 +5,6 @@
     <isExposed>true</isExposed>
     <masterLabel>Test Page</masterLabel>
     <targets>
-        <target>lightning__HomePage</target>
         <target>lightning__Tab</target>
     </targets>
 </LightningComponentBundle>

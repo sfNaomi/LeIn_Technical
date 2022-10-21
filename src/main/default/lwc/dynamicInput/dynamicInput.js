@@ -46,6 +46,30 @@ export default class DynamicInput extends LightningElement {
     }
 
     /**
+     * Check for Text DisplayType.
+     *
+     * @returns {boolean} - true for text
+     *
+     * @author Svata Sejkora
+     * @date 2022-10-05
+     */
+    get isText() {
+        return this.fieldDefinition.type === 'Text';
+    }
+
+    /**
+     * Check for Lookup DisplayType.
+     *
+     * @returns {boolean} - true for Lookup
+     *
+     * @author Svata Sejkora
+     * @date 2022-10-05
+     */
+    get isLookup() {
+        return this.fieldDefinition.type === 'Lookup';
+    }
+
+    /**
      * @description methods to fire an event to parent with changed data. Includes name of the Application object API name
      * and its value.
      *
@@ -55,6 +79,17 @@ export default class DynamicInput extends LightningElement {
         try {
             let updatedFieldDefinition = JSON.parse(JSON.stringify(this.fieldDefinition));
             updatedFieldDefinition.value = event.target.value;
+            this.sendChangeEvent(updatedFieldDefinition);
+        } catch (error) {
+            processError(this, error);
+        }
+    }
+
+    handleLookupSelection(event) {
+        try {
+            let updatedFieldDefinition = JSON.parse(JSON.stringify(this.fieldDefinition));
+            updatedFieldDefinition.value = event.detail.id;
+
             this.sendChangeEvent(updatedFieldDefinition);
         } catch (error) {
             processError(this, error);

@@ -613,15 +613,15 @@
     <picklistValues>
         <picklist>PrimaryPaymentMethod__c</picklist>
         <values>
-            <fullName>Buying Group Central Billing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Card Payment</fullName>
+            <fullName>Cash</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Credit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Debit</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventUpdateOfInventoryOnCompletedOrder</fullName>
+    <active>true</active>
+    <description>Prevents users from editing the Inventory or Depot fields on Order which are no longer in Draft.</description>
+    <errorConditionFormula>AND(NOT(ISPICKVAL(Status,&apos;Draft&apos;)), OR(ISCHANGED( aforza__Inventory__c ), ISCHANGED( Depot__c )))</errorConditionFormula>
+    <errorMessage>Changing the inventory/Depot of an order is only allowed if the order is in status &quot;Draft&quot;.</errorMessage>
+</ValidationRule>

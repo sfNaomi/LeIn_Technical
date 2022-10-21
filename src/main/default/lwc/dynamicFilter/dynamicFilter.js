@@ -17,6 +17,8 @@ export default class DynamicFilter extends LightningElement {
     @api sobjectApiName;
     @api toFlatten;
     @api limitOfRowsReturned;
+    @api filterSize;
+    @api defaultFilter = '';
     @track filterFieldsWithPopulatedFilters = [];
     @track isLoading = false;
     flattenedRecords = [];
@@ -26,6 +28,15 @@ export default class DynamicFilter extends LightningElement {
         filter,
         noRecordsShown
     };
+
+    connectedCallback() {
+        // make sure we get any preselected values to the list of populated ones
+        this.filterFields.forEach((filterField) => {
+            if (filterField.value !== null) {
+                this.addFilterValueToList(filterField);
+            }
+        });
+    }
 
     /**
      * @description method to handle any change on inputs for all child components. Event contains object with all field

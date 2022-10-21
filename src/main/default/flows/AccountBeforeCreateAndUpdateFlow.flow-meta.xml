@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <decisions>
+        <description>If DP account, assign &apos;Credit Status&apos; to on hold and assign attribute &apos;New DP&apos; to account</description>
+        <name>Copy_1_of_If_DP_Account</name>
+        <label>Copy 1 of If DP Account</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>UpdateBillingAddress</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isADPAccount</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Outlet</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active Prospect</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Put_Credit_status_on_Hold</targetReference>
+            </connector>
+            <label>isADPAccount</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Create_or_Updated</name>
+        <label>Create or Updated</label>
+        <locationX>336</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>UpdateBillingAddress</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>OnCreated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_If_DP_Account</targetReference>
+            </connector>
+            <label>On Created</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>DepotCharacter</name>
@@ -53,8 +118,8 @@
         <dataType>String</dataType>
         <expression>LEFT({!$Record.SecondaryGridNumber__c},1)</expression>
     </formulas>
-    <interviewLabel>AccountBeforeSaveFlow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>AccountBeforeSaveFlow</label>
+    <interviewLabel>AccountBeforeCreateAndUpdateFlow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>AccountBeforeCreateAndUpdateFlow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -75,10 +140,27 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <description>If new DP account update Credit Status to on hold</description>
+        <name>Put_Credit_status_on_Hold</name>
+        <label>Put Credit status on Hold</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <connector>
+            <targetReference>UpdateBillingAddress</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CreditStatus__c</field>
+            <value>
+                <stringValue>On Hold</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Record_Type_Name</name>
         <label>Update Record Type Name</label>
-        <locationX>176</locationX>
-        <locationY>671</locationY>
+        <locationX>336</locationX>
+        <locationY>1223</locationY>
         <inputAssignments>
             <field>RecordTypeName__c</field>
             <value>
@@ -90,8 +172,8 @@
     <recordUpdates>
         <name>UpdateBillingAddress</name>
         <label>UpdateBillingAddress</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>336</locationX>
+        <locationY>863</locationY>
         <connector>
             <targetReference>UpdatePrimaryGridFields</targetReference>
         </connector>
@@ -173,8 +255,8 @@
     <recordUpdates>
         <name>UpdatePrimaryGridFields</name>
         <label>Update Primary Grid Fields</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>336</locationX>
+        <locationY>983</locationY>
         <connector>
             <targetReference>UpdateSecondaryGridFields</targetReference>
         </connector>
@@ -222,8 +304,8 @@
     <recordUpdates>
         <name>UpdateSecondaryGridFields</name>
         <label>Update Secondary Grid Fields</label>
-        <locationX>176</locationX>
-        <locationY>551</locationY>
+        <locationX>336</locationX>
+        <locationY>1103</locationY>
         <connector>
             <targetReference>Update_Record_Type_Name</targetReference>
         </connector>
@@ -257,10 +339,10 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>210</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>UpdateBillingAddress</targetReference>
+            <targetReference>Create_or_Updated</targetReference>
         </connector>
         <object>Account</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

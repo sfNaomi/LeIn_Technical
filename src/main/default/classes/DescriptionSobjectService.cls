@@ -26,4 +26,16 @@ public with sharing class DescriptionSobjectService {
                 .getType();
         return String.valueOf(displayType);
     }
+
+    public static List<PicklistEntry> getPicklistEntries(String fieldName, String sObjectName) {
+        List<PicklistEntry> picklistEntries = Schema.getGlobalDescribe()
+                .get(sObjectName)
+                .getDescribe()
+                .fields
+                .getMap()
+                .get(fieldName)
+                .getDescribe()
+                .getPicklistValues();
+        return picklistEntries;
+    }
 }

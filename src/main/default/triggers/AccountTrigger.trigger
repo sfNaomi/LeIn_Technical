@@ -7,19 +7,19 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
         when BEFORE_INSERT {
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, null);
             AccountTriggerHandler.assignDefaultPriceBook(Trigger.new);
-            AccountTriggerHandler.updatePORequiredStartingWithDPs(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.pullInfoOnDPFromRelatedCustomer(Trigger.new, null);
         }
         when BEFORE_UPDATE {
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, Trigger.old);
-            AccountTriggerHandler.updatePORequiredStartingWithDPs(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.pullInfoOnDPFromRelatedCustomer(Trigger.new, Trigger.oldMap);
         }
         when AFTER_INSERT {
-            AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.manageFocusProducts(Trigger.newMap);
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.manageAccountTeamMembership(Trigger.new, Trigger.oldMap);
-            AccountTriggerHandler.updatePORequiredStartingWithCustomerAccs(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.pushInfoFromCustomerToRelatedDPs(Trigger.new, Trigger.oldMap);
         }
     }
 }

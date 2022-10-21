@@ -64,11 +64,12 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
                 'SELECT Id, LastOrderDate__c, Frequency__c, AccountStatus__c ' +
                 'FROM Account ' +
                 'WHERE AccountStatus__c IN ' + accountStatuses + ' ' +
-                'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' AND (' +
+                'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' AND LastOrderDate__c != null AND (' +
                     '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersUpperLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusUpperLimit__c + '\') OR ' +
                     '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersMidLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusMidLimit__c + '\') OR ' +
-                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusLowerLimit__c + '\') ' +
-                ')';
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusLowerLimit__c + '\') OR ' +
+            		'(LastOrderDate__c >= LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusRecentOrders__c + '\') ' +
+            	')';
         return query;
     }
 }

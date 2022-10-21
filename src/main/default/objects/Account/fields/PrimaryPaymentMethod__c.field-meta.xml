@@ -5,26 +5,10 @@
     <label>Primary Payment Method</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Card Payment</fullName>
-                <default>false</default>
-                <label>Card Payment</label>
-            </value>
-            <value>
-                <fullName>Credit</fullName>
-                <default>false</default>
-                <label>Credit</label>
-            </value>
-            <value>
-                <fullName>Buying Group Central Billing</fullName>
-                <default>false</default>
-                <label>Buying Group Central Billing</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>PaymentMethod</valueSetName>
     </valueSet>
 </CustomField>
