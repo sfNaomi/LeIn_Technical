@@ -81,8 +81,8 @@ export default class LastSixOrdersSummary extends NavigationMixin(
         accountId: this.recordId,
       });
       if (this.showOrdersHeaders) {
-        this.columnsP = JSON.parse(JSON.stringify(this.showOrdersHeaders));
-        this.columnsP = this.columnsP.map((dataRec) => {
+        const headerResult = JSON.parse(JSON.stringify(this.showOrdersHeaders));
+        this.columnsP = headerResult.map((dataRec) => {
           return {
             label: dataRec?.EffectiveDate,
             fieldName: dataRec.EffectiveDate,
@@ -145,7 +145,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
   MapData() {
     this.orderItemList = JSON.parse(JSON.stringify(this.showOrderItems));
 
-    this.orderItemList = this.orderItemList.map((dataRec) => {
+    this.skuList = this.orderItemList.map((dataRec) => {
       return {
         StockKeepingUnit: dataRec?.sku,
         Description: dataRec?.description,
@@ -159,7 +159,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
         Stock: dataRec?.stockRemaining,
       };
     });
-    const prodData = JSON.parse(JSON.stringify(this.orderItemList));
+   const prodData = JSON.parse(JSON.stringify(this.skuList));
 
     return prodData;
   }

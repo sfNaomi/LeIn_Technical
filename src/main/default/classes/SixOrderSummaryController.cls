@@ -212,8 +212,8 @@ public with sharing class SixOrderSummaryController {
     private static List < OrderItem > getAllOrderItems(List < String > orderIds) {
         List < OrderItem > orderItems = [
             select product2.ProductCode, quantity, product2.id, pricebookEntryId,
-            product2.description, product2.name, order.id, order.effectivedate, UnitPrice,
-            product2.isactive from orderitem where order.id in: orderIds and id != null
+            product2.description, product2.name, order.id, order.effectivedate, UnitPrice, product2.IsDRSProduct__c,
+            product2.isactive from orderitem where order.id in: orderIds and id != null and product2.isactive =true and product2.IsDRSProduct__c = false
         ];
         return orderItems;
        }
@@ -232,7 +232,7 @@ public with sharing class SixOrderSummaryController {
         InsertOrder(OrderToSkuList, orderId);
         return orderId;
     } catch (Exception e) {
-        throw PopulateAuraHandledException.newMessageException('Check all necessary order detail are associated to Account');
+        throw PopulateAuraHandledException.newMessageException('Check Pricebook entry matches products');
 
     }
     }
@@ -260,7 +260,7 @@ public with sharing class SixOrderSummaryController {
                 Product2Id = sku?.productId,
                 Quantity = sku?.quantity,
                 PricebookEntryId = sku?.pricebookentryid,
-                unitPrice = sku?.quantity);
+                unitPrice = sku?.unitPrice);
 
             orderItems.add(newI);
         }
