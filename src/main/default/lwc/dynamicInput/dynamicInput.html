@@ -1,0 +1,62 @@
+<!--
+ - Created by svatopluk.sejkora on 20.09.2022.
+ -->
+
+<!-- Dynamic Input -->
+<template>
+    <lightning-input
+            if:true={isDate}
+            type="date"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            value={fieldDefinition.value}
+            disabled={fieldDefinition.disabled}
+            onchange={handleSelection}
+    ></lightning-input>
+
+    <lightning-input
+            if:true={isWholeNumber}
+            type="number"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            value={fieldDefinition.value}
+            disabled={fieldDefinition.disabled}
+            onchange={handleSelection}
+    ></lightning-input>
+
+    <lightning-combobox
+            if:true={isCombobox}
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            options={fieldDefinition.options}
+            value={fieldDefinition.value}
+            disabled={fieldDefinition.disabled}
+            onchange={handleSelection}
+    ></lightning-combobox>
+
+    <lightning-input
+            if:true={isText}
+            type="text"
+            name={fieldDefinition.name}
+            label={fieldDefinition.label}
+            disabled={fieldDefinition.disabled}
+            onchange={handleSelection}
+    ></lightning-input>
+
+    <c-custom-lookup-input
+            if:true={isLookup}
+            object-name={fieldDefinition.lookupObject}
+            icon-name={fieldDefinition.lookupIcon}
+            label={fieldDefinition.label}
+            disabled={fieldDefinition.disabled}
+            return-fields={fieldDefinition.returnFields}
+            query-fields={fieldDefinition.queryFields}
+            main-field={fieldDefinition.mainField}
+            return-different-object-id={fieldDefinition.returnDifferentObjectId}
+            placeholder="Select"
+            onselected={handleLookupSelection}
+    ></c-custom-lookup-input>
+</template>
+
+
+

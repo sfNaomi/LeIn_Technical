@@ -1,0 +1,127 @@
+<!--
+ Component that mimics lightning input for lookup and allows more customizations.
+ Commented parts are advanced search in progress.
+
+ @author  Svatopluk Sejkora, BearingPoint
+ @date    2022-10-08
+ -->
+<template>
+    <div class="slds-form-element slds-form-element_stacked">
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class={comboboxClasses} aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                    <div class={iconClasses} role="none">
+                        <div if:true={inputReadOnly} class={inputIconClasses}>
+                            <span class="slds-icon_container slds-icon-utility-search slds-input__icon">
+                                <div>
+                                    <lightning-icon class="slds-icon slds-icon slds-icon_small"
+                                                    icon-name={iconName}
+                                                    size="small"
+                                                    alternative-text="icon"></lightning-icon>
+                                </div>
+                            </span>
+                        </div>
+                        <template if:true={displayLabel}>
+                            <template if:true={required}>
+                                <label class="slds-form-element__label">
+                                    <abbr class="slds-required" title="required">*</abbr>{label}</label>
+                            </template>
+
+                            <template if:false={required}>
+                                <label class="slds-form-element__label">{label}</label>
+                            </template>
+                        </template>
+                        <lightning-input
+                                class="custom-lookup-input"
+                                read-only={inputReadOnly}
+                                data-id="userinput"
+                                placeholder={placeholder}
+                                name="searchText"
+                                variant="label-hidden"
+                                onchange={handleInputChange}
+                                onfocus={openCombobox}
+                                value={selectRecordName}
+                                disabled={disabled}
+                                onblur={closeComboboxTimeout}
+                                autocomplete="off"></lightning-input>
+                        <div if:true={iconFlag}>
+                            <span class="slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                <lightning-icon icon-name="utility:search"
+                                                size="x-small"
+                                                alternative-text="icon"
+                                                class={rightIconStyles}></lightning-icon>
+                            </span>
+                        </div>
+                        <div if:true={showClearButton}>
+                            <button class={clearButtonStyles} onclick={resetData}>
+                                <lightning-icon icon-name="utility:clear"
+                                                size="xx-small"
+                                                alternative-text="icon"></lightning-icon>
+                            </button>
+                            <!--<button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon" onclick={resetData}>
+                                <lightning-icon class={rightIconStyles} icon-name="utility:clear" size="xx-small" alternative-text="icon" ></lightning-icon>
+                                <span class="slds-assistive-text">Clear</span></button>-->
+                        </div>
+                    </div>
+
+                    <!-- Second part display result -->
+                    <div class={dropdownClasses} role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <!--<li role="presentation" class="slds-listbox__item">
+                                <div class="slds-media slds-listbox__option slds-listbox__option_entity" role="option" onclick={handleAdvancedSearchClick}>
+                                        <span class="slds-media__figure">
+                                            <span class="slds-icon_container">
+                                                <lightning-icon icon-name="utility:search" class="slds-icon slds-icon slds-icon_small" size="x-small"></lightning-icon>
+                                            </span>
+                                        </span>
+                                    <span class="slds-media__body">
+                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">{currentSearchedText} in {objectName}</span>
+                                    </span>
+                                </div>
+                            </li>-->
+                            <li if:true={messageFlag}
+                                class="slds-listbox__item slds-p-horizontal_small slds-p-vertical_xx-small">
+                                {labels.noRecordFoundLabel}
+                            </li>
+                            <template for:each={searchRecordsDtos} for:item="serecord">
+                                <li role="presentation" class="slds-listbox__item" key={serecord.Id}>
+                                    <div data-id={serecord.Id} data-name={serecord.Name} onclick={setSelectedRecord}
+                                         class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                         role="option">
+                                        <span class="slds-media__figure">
+                                            <span class="slds-icon_container">
+                                                <lightning-icon icon-name={iconName}
+                                                                class="slds-icon slds-icon slds-icon_small"
+                                                                size="small"></lightning-icon>
+                                            </span>
+                                        </span>
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{serecord.Name}</span>
+                                            <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">
+                                                <template iterator:it={serecord.detailFields}>
+                                                    <span key={it.value}>
+                                                        <span>{it.value}</span>
+                                                        <template if:false={it.last}>
+                                                            <span>&#160;&#8226;&#160;</span>
+                                                        </template>
+                                                    </span>
+                                                </template>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<template if:true={openModal}>
+        <c-custom-advanced-search s-object-name={objectName}
+                                  search-text={currentSearchedText}
+                                  advanced-search-columns={advancedSearchColumns}
+        ></c-custom-advanced-search>
+        </template>-->
+    <!--<c-error-handler component-name="customLookupInput"></c-error-handler>-->
+</template>

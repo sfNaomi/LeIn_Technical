@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Drivers Mobile Configuration</label>
+    <protected>false</protected>
+    <values>
+        <field>aforza__Active__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>aforza__Assigned_Profiles_JSON__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Config_JSON__c</field>
+        <value xsi:type="xsd:string">{&quot;OrderComplete&quot;:[{&quot;Type&quot;:&quot;ACTION&quot;,&quot;Name&quot;:&quot;Offline-Action&quot;,&quot;Action&quot;:{&quot;Type&quot;:&quot;ENGINE&quot;,&quot;Title&quot;:&quot;Validate Order&quot;,&quot;Target&quot;:&quot;https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForDrivers.js&quot;}},{&quot;Type&quot;:&quot;FORM&quot;,&quot;Title&quot;:&quot;Section&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;PoNumber&quot;}]}],&quot;ObjectsToSync&quot;:[{&quot;RecordLimit&quot;:500,&quot;LayoutForm&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;StoreName__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;PreferredCallTimeTelesales__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;PreferredVisitTime__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;LastOrderDate__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;NextDeliveryDate__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;Depot__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;DeliveryPointReference__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;BarrDirectAppUser__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Title&quot;:&quot;Delivery Information&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;aforza__Operating_Hours__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;DeliveryPointCriteriaMet__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;ProofOfDeliveryRequired__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;ApplicableRecordTypes&quot;:[]},{&quot;Title&quot;:&quot;Address Information&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;ShippingCountry&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ShippingCity&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ShippingState&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ShippingStreet&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ShippingPostalCode&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingSameAsShipping__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingCountry&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingCity&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingState&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingStreet&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;BillingPostalCode&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;ApplicableRecordTypes&quot;:[]},{&quot;Title&quot;:&quot;Finance Information&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;PrimaryPaymentMethod__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;FormalCreditCheckAgreed__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;aforza__Credit_Amount__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;CreditStatus__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;AvailableCredit__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]}],&quot;ApplicableRecordTypes&quot;:[]},{&quot;Title&quot;:&quot;Additional Information&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;ClosedReason__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ClosedDate__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;ApplicableRecordTypes&quot;:[]},{&quot;Title&quot;:&quot;Grid Details&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;PrimaryGridNumber__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;SecondaryGridNumber__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;PrimaryCallDay__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;SecondaryCallDay__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]},{&quot;Name&quot;:&quot;Frequency__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false},&quot;ApplicableRecordTypes&quot;:[]}]}],&quot;InSideMenu&quot;:true,&quot;FilterGroups&quot;:[],&quot;CanEdit&quot;:true,&quot;CanDelete&quot;:false,&quot;CanCreate&quot;:false,&quot;APIName&quot;:&quot;Account&quot;},{&quot;RecordLimit&quot;:100,&quot;LayoutForm&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:true}},{&quot;Name&quot;:&quot;aforza__Monday_Start_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Monday_End_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Tuesday_Start_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Tuesday_End_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Wednesday_Start_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Wednesday_End_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Thursday_Start_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Thursday_End_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Friday_Start_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Friday_End_Time__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;InSideMenu&quot;:false,&quot;CanEdit&quot;:true,&quot;CanDelete&quot;:false,&quot;CanCreate&quot;:true,&quot;APIName&quot;:&quot;aforza__Hours__c&quot;},{&quot;RecordLimit&quot;:100,&quot;LayoutListView&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;LayoutForm&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;AccountId&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;DecisionMaker__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;DecisionMakerAuthorised__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Title&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Title&quot;:&quot;Contact Details&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;MobilePhone&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Phone&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Email&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Email2__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Description&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}]},{&quot;Title&quot;:&quot;GDPR&quot;,&quot;Fields&quot;:[{&quot;Name&quot;:&quot;DoNotCall&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;HasOptedOutOfEmail&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}]}],&quot;InSideMenu&quot;:true,&quot;CanEdit&quot;:false,&quot;CanDelete&quot;:false,&quot;CanCreate&quot;:false,&quot;APIName&quot;:&quot;Contact&quot;},{&quot;LayoutListView&quot;:[{&quot;Name&quot;:&quot;OrderNumber&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;AccountId&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;LayoutForm&quot;:[{&quot;Name&quot;:&quot;EffectiveDate&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;AccountId&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ShipToContactId&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Inventory__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Original_Order__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Type&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;Status&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;ActivatedDate&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;PoNumber&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;TotalAmount&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;aforza__Total_Commission__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;RecordTypeId&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;InSideMenu&quot;:true,&quot;CanEdit&quot;:true,&quot;CanDelete&quot;:false,&quot;CanCreate&quot;:true,&quot;APIName&quot;:&quot;Order&quot;,&quot;Actions&quot;:[]},{&quot;LayoutListView&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;LayoutForm&quot;:[{&quot;Name&quot;:&quot;Name&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;IsActive&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}},{&quot;Name&quot;:&quot;UnitsPerPack__c&quot;,&quot;Details&quot;:{&quot;Required&quot;:false}}],&quot;InSideMenu&quot;:true,&quot;CanEdit&quot;:false,&quot;CanDelete&quot;:false,&quot;CanCreate&quot;:false,&quot;APIName&quot;:&quot;Product2&quot;}],&quot;IsSupportEnabled&quot;:true,&quot;AutoDownloadVisitResources&quot;:false}</value>
+    </values>
+    <values>
+        <field>aforza__Custom_Config_JSON__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Default_Config_JSON__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Is_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>aforza__Mobile_Credit_Note_Document_Footer__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Credit_Note_Document_Header__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Credit_Note_Document_Logo__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Invoice_Document_Footer__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Invoice_Document_Header__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Invoice_Document_Logo__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Receipt_Document_Footer__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Receipt_Document_Header__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Mobile_Receipt_Document_Logo__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>aforza__Profiles_JSON__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

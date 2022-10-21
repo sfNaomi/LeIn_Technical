@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>OrgDefaultOrderSettings</label>
+    <protected>false</protected>
+    <values>
+        <field>CompletedOrderStatuses__c</field>
+        <value xsi:type="xsd:string">Activated,Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered,Receipted</value>
+    </values>
+    <values>
+        <field>RTsToCreateInvoice__c</field>
+        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder,StraightToJDEOrder</value>
+    </values>
+    <values>
+        <field>RTsToUpdateAccOnOrderCompletion__c</field>
+        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder</value>
+    </values>
+    <values>
+        <field>StatusToCreateInvoice__c</field>
+        <value xsi:type="xsd:string">Receipted</value>
+    </values>
+</CustomMetadata>

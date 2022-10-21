@@ -1,0 +1,55 @@
+<!--
+ - Created by svatopluk.sejkora on 20.09.2022.
+ -->
+
+<!-- Test Page -->
+<template>
+    <div class="slds-is-relative">
+        <div if:true={filterFields}>
+            <c-dynamic-filter
+                    filter-fields={filterFields}
+                    sobject-api-name={sObjectApiName}
+                    query-fields={queryFields}
+                    to-flatten={toFlatten}
+                    limit-of-rows-returned={limitOfRowsReturned}
+                    filter-size={filterSize}
+                    onreturneddata={processReturnedData}
+            ></c-dynamic-filter>
+        </div>
+        <lightning-card if:true={showTable}>
+            <lightning-layout class="slds-container_center slds-m-bottom_large">
+                <lightning-layout-item size="6"
+                                       class="slds-align_absolute-center slds-m-left_medium slds-m-right_medium slds-text-heading_small slds-m-top_large">
+                    {selectedRowsText}
+                </lightning-layout-item>
+                <lightning-layout-item size="2" class="slds-m-left_medium slds-m-right_medium">
+                    <lightning-combobox
+                            label={label.newTam}
+                            options={tamUsers}
+                            value={tamToMove}
+                            onchange={handleNewTamSelection}
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item
+                        size="2"
+                        class="slds-m-left_medium slds-m-right_medium slds-align_absolute-center slds-m-top_large">
+                    <lightning-button
+                            variant="brand"
+                            disabled={showMove}
+                            label={label.move}
+                            onclick={handleMoveClick}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div style="height: 50em">
+                <lightning-datatable
+                        class="table"
+                        key-field="id"
+                        data={tableData}
+                        columns={columns}
+                        onrowselection={getSelectedRows}
+                ></lightning-datatable>
+            </div>
+        </lightning-card>
+        <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+    </div>
+</template>

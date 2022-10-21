@@ -8,6 +8,10 @@
         {
             "name": "Aforza Analytics",
             "id": "04t8d000000YbTpAAK"
+        },
+        {
+            "name": "Create_Route_From_AcctLst",
+            "id": "04t4L000000UCHQQA4"
         }
     ],
     "apexPrePush": [
@@ -16,5 +20,35 @@
     "profile": "AG Barr Profile",
     "permsetGroups": [
         "Administrator"
+    ],
+    "ciForceignore": [
+        "**/src/main/default/permissionsetgroups/ApplicationSupport.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/BusinessDevelopmentRep.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/BusinessManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/BusinessSupport.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/CampaignActivationExec.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/CampaignActivationManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/CreditController.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/CreditManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/DepotManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/DepotOperations.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/DistributionAdmin.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/Driver.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/EnergyRep.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/FieldSalesController.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/FieldSalesManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/HelpDesk.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/Integration.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/LocalBusinessDevelopmentManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/OperationalSupportController.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/PricingProductManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/SalesController.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/SalesSupportExec.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/SalesSupportManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/TAM.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/TeamLeader.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/TerritoryManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/TransportManager.permissionsetgroup-meta.xml",
+        "**/src/main/default/permissionsetgroups/VanSales.permissionsetgroup-meta.xml"
     ]
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Depot Operations</label>
+    <permissionSets>AccountLogisticsAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryEditAccess</permissionSets>
+    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>LoadEditAccess</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OrderLogisticsAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Deliver</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

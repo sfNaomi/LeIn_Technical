@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RestrictTelesalesCallTime</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+ PreferredCallTimeTelesales__c &lt; TIMEVALUE(&quot;9:00:00.000&quot;),
+ PreferredCallTimeTelesales__c &gt; TIMEVALUE(&quot;17:00:00.000&quot;) )</errorConditionFormula>
+    <errorMessage>Please select a time for Preferred Call Time that is between 9:00am - 5:00pm to update this record</errorMessage>
+</ValidationRule>

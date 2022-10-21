@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MinimumCharactersOnVehicleRegistration</fullName>
+    <active>true</active>
+    <description>Vehicle Registration must a have a minimum of 8 characters.</description>
+    <errorConditionFormula>IF(LEN(VehicleRegistration__c) &lt; 8, true, false)</errorConditionFormula>
+    <errorMessage>Vehicle Registration field must a have a minimum of 8 characters (including 1 space)</errorMessage>
+</ValidationRule>

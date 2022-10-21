@@ -1,0 +1,55 @@
+.icon-margin-input-has-label {
+    position: absolute;
+    margin-top: .2rem;
+    margin-left: .3rem;
+}
+
+.icon-margin-input-has-label.mobile {
+    position: absolute;
+    margin-top: .4rem;
+    margin-left: .3rem;
+}
+
+.icon-margin-input-has-not-label {
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: .3rem;
+}
+
+.icon-margin-input-has-not-label.mobile {
+    position: absolute;
+    margin-top: 1rem;
+    margin-left: .3rem;
+}
+
+.right-icon-margin-input {
+    margin-top: .6rem;
+}
+
+.right-icon-margin-input.mobile {
+    margin-top: .8rem;
+}
+
+.right-icon-margin-input-has-not-label {
+    margin-top: 0;
+}
+
+.right-icon-margin-input-has-not-label.mobile {
+    margin-top: 0.2rem;
+}
+
+.right-icon-margin-input-error {
+    margin-top: 0;
+}
+
+.right-icon-margin-input-error.mobile {
+    margin-top: 0.2rem;
+}
+
+.right-clear-icon-margin-input-has-label {
+    margin-top: .2rem;
+}
+
+.right-clear-icon-margin-input-has-label.mobile {
+    margin-top: .4rem;
+}

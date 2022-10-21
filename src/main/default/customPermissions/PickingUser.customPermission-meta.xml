@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A Picking User has specific access to some components and other places in the system.</description>
+    <isLicensed>false</isLicensed>
+    <label>Picking User</label>
+</CustomPermission>

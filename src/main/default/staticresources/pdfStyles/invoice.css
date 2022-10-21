@@ -1,0 +1,72 @@
+.invoice-header-container {
+	display: inline-block;
+	width: 100%;
+	margin: 0px 0 10px 0;
+}
+.logo-container {
+	float: left;
+	width: 300px;
+	text-align: right;
+	padding: 0;
+	margin: 0;
+}
+.invoice-header-right-section {
+	float: right;
+	width: 20%;
+	text-align: right;
+}
+p {
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+}
+h2 {
+	padding: 0;
+	margin: 0px 0 10px 0;
+}
+.invoice-table-header {
+	border: 1px solid black;
+	font-size: 14px;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: #b6b8ba;
+}
+.invoice-table-rows {
+	text-align: center;
+	font-size: 12px;
+	border: 1px solid black;
+}
+.invoice-table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 100%;
+}
+.invoice-footer-container {
+	position: fixed;
+	text-align: center;
+	bottom: 0px;
+	width: 100%;
+}
+.discount-container {
+	text-align: left;
+}
+#invoice-line-items {
+	margin-left: auto;
+	margin-right: auto;
+}
+#vat-analysis-section {
+	float: left;
+	text-align: right;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+#order-summary-section {
+	float: right;
+	text-align: right;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+#footer-link {
+	padding-left: 5px;
+}
