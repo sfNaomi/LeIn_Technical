@@ -5,14 +5,20 @@
     "country": "GB",
     "language": "en_US",
     "features": [
+        "ContactsToMultipleAccounts",
+        "ForceComPlatform",
         "LightningSalesConsole",
         "LightningServiceConsole",
         "MarketingUser",
         "SalesUser",
         "ServiceCloud",
-        "ServiceUser"
+        "ServiceUser",
+        "StateAndCountryPicklist"
     ],
     "settings": {
+        "accountSettings": {
+            "enableAccountTeams": true
+        },
         "apexSettings": {
             "enableDisableParallelApexTesting": true
         },

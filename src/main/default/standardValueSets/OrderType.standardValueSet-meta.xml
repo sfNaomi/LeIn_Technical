@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Product Order</fullName>
+        <default>false</default>
+        <label>Product Order</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Return Order</fullName>
+        <default>false</default>
+        <label>Return Order</label>
+    </standardValue>
+</StandardValueSet>

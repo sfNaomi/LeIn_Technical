@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>OrgDefaultAccountSettings</label>
+    <protected>false</protected>
+    <values>
+        <field>DefaultPriceBookNames__c</field>
+        <value xsi:type="xsd:string">Default England,Default Scotland</value>
+    </values>
+    <values>
+        <field>RolesToBeRemovedFromAccountTeam__c</field>
+        <value xsi:type="xsd:string">Field Sales Rep,Field Sales Manager</value>
+    </values>
+    <values>
+        <field>StatusesToUpdateTeamMembership__c</field>
+        <value xsi:type="xsd:string">Traders,At Risk,Win Back,Lapsed</value>
+    </values>
+    <values>
+        <field>StatusesToUpdateWhenNoRecentOrders__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>CreditStatusesOrderActiveNotAllowed__c</field>
+        <value xsi:type="xsd:string">On Hold</value>
+    </values>
+    <values>
+        <field>StatusesWhereOrderCreationAllowed__c</field>
+        <value xsi:type="xsd:string">Active Prospect,Traders,At Risk,Win Back,Lapsed</value>
+    </values>
+</CustomMetadata>

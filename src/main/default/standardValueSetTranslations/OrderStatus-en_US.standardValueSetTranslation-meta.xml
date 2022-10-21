@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSetTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <valueTranslation>
+        <masterLabel>Activated</masterLabel>
+        <translation>Completed</translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Awaiting Approval</masterLabel>
+        <translation><!-- Awaiting Approval --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Cancelled</masterLabel>
+        <translation><!-- Cancelled --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Delivered</masterLabel>
+        <translation><!-- Delivered --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Delivery Failed</masterLabel>
+        <translation><!-- Delivery Failed --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Draft</masterLabel>
+        <translation><!-- Draft --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Pending Delivery</masterLabel>
+        <translation><!-- Pending Delivery --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Picking in Progress</masterLabel>
+        <translation><!-- Picking in Progress --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Ready to Load</masterLabel>
+        <translation><!-- Ready to Load --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Ready to Pick</masterLabel>
+        <translation><!-- Ready to Pick --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Receipted</masterLabel>
+        <translation><!-- Receipted --></translation>
+    </valueTranslation>
+    <valueTranslation>
+        <masterLabel>Unplanned</masterLabel>
+        <translation><!-- Unplanned --></translation>
+    </valueTranslation>
+</StandardValueSetTranslation>

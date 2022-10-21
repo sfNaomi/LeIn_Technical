@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <description>Will set either account name or empty string</description>
+        <name>Set_Short_Description_Value</name>
+        <label>Set Short Description Value</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ShortDescription__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ShortDescriptionValue</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <environments>Default</environments>
+    <formulas>
+        <name>ShortDescriptionValue</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.Account.SeparateLoad__c} == true, {!$Record.Account.Name}, &apos;&apos;)</expression>
+    </formulas>
+    <interviewLabel>OrderBeforeCreate {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>OrderBeforeCreate</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Short_Description_Value</targetReference>
+        </connector>
+        <object>Order</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

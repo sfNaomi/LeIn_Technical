@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreviousAccount__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Previous Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Only another Delivery Point with DP Status set to Closed can be selected.</errorMessage>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Outlet</value>
+        </filterItems>
+        <filterItems>
+            <field>Account.AccountStatus__c</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Previous Accounts</relationshipLabel>
+    <relationshipName>PreviousAccounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

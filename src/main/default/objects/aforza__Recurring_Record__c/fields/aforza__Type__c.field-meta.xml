@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of recurring record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The type of recurring record.</inlineHelpText>
+    <label>Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Promotion</fullName>
+                <default>false</default>
+                <label>Promotion</label>
+            </value>
+            <value>
+                <fullName>Visit</fullName>
+                <default>false</default>
+                <label>Visit</label>
+            </value>
+            <value>
+                <fullName>Phone Call</fullName>
+                <default>false</default>
+                <label>Phone Call</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
