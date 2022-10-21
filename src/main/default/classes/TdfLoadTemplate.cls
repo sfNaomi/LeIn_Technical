@@ -44,7 +44,8 @@ public with sharing class TdfLoadTemplate extends TdfSObjectTemplate {
         Load__c template = new Load__c(
                 DeliveryDate__c = System.today(),
                 Driver__c = UserInfo.getUserId(),
-                Vehicle__c = vehicleId
+                Vehicle__c = vehicleId,
+                Depot__c = 'M'
         );
 
         return template;

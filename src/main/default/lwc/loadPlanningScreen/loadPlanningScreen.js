@@ -350,14 +350,17 @@ export default class LoadPlanningScreen extends LightningElement {
     }
 
     handleBackButton() {
-        this.prepareSettingsForScenario(true, false, false, '', '');
         this.clearAllAttributes();
+        this.prepareSettingsForScenario(true, false, false, '', '');
     }
 
     clearAllAttributes() {
         this.loadOrderIds = [];
         // empty date field input field
-        this.template.querySelector('lightning-input').value = '';
+        const inputElement = this.template.querySelector('lightning-input');
+        if (inputElement) {
+            inputElement.value = '';
+        }
         this.deliveryDate = '';
         this.loadId = null;
         this.tableData = [];
@@ -380,12 +383,21 @@ export default class LoadPlanningScreen extends LightningElement {
      * @date 2022-09-20
      */
     handleSelectRowsEvent(event) {
-        const selectedRows = event.detail.selectedRows;
-        // properly populate unselected rows in load related orders
-        this.processSelectionChanges(selectedRows);
-        this.selectedRows = [];
-        this.selectedRows = [...selectedRows];
-        this.depot = this.selectedRows[0].Depot__c;
+        try {
+            const selectedRows = event.detail.selectedRows;
+            // properly populate unselected rows in load related orders
+            this.processSelectionChanges(selectedRows);
+            this.selectedRows = [];
+            this.selectedRows = [...selectedRows];
+            if (this.selectedRows.length > 0) {
+                this.depot = this.selectedRows[0].Depot__c;
+            }
+        } catch (error) {
+            processError(this, error);
+            console.error(error);
+        } finally {
+            this.isLoading = false;
+        }
     }
 
     handleSpinnerChange(event) {
@@ -393,15 +405,15 @@ export default class LoadPlanningScreen extends LightningElement {
     }
 
     processSelectionChanges(selectedRows) {
-        const selectedRowsSet = new Set(selectedRows.map(order => order.Id));
+        const selectedRowIdsSet = new Set(selectedRows.map(order => order.Id));
         const deselectedRowsSet = new Set(this.loadOrdersTableDataDeselected.map(order => order.Id));
         let deselectedOrders = [];
 
         this.loadOrdersTableData.forEach((order) => {
-            if (selectedRowsSet.has(order.Id) && deselectedRowsSet.has(order.Id)) {
+            if (selectedRowIdsSet.has(order.Id) && deselectedRowsSet.has(order.Id)) {
                 // deselected order selected again
                 this.loadOrdersTableDataDeselected.splice(this.loadOrdersTableDataDeselected.findIndex(orderDes => orderDes.Id === order.Id, 1));
-            } else if (!selectedRowsSet.has(order.Id) && !deselectedRowsSet.has(order.Id)) {
+            } else if (!selectedRowIdsSet.has(order.Id) && !deselectedRowsSet.has(order.Id)) {
                 // deselected order, only adding it once to the list
                 deselectedOrders.push(order);
             }
@@ -514,7 +526,7 @@ export default class LoadPlanningScreen extends LightningElement {
     }
 
     async getLoadDataAndPopulate(loadId) {
-        const loadData = await fetchLoadData({loadId : loadId});
+        const loadData = await fetchLoadData({loadId: loadId});
         this.loadDriver = loadData.Driver__c;
         this.loadDeliveryDate = loadData.DeliveryDate__c;
         this.loadVehicle = loadData.Vehicle__c;
@@ -541,7 +553,7 @@ export default class LoadPlanningScreen extends LightningElement {
             return order[fieldName];
         };
         // checking reverse direction
-        let isReverse = direction === 'asc' ? 1: -1;
+        let isReverse = direction === 'asc' ? 1 : -1;
         // sorting data
         parseData.sort((x, y) => {
             x = keyValue(x) ? keyValue(x) : ''; // handling null values

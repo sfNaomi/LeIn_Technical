@@ -172,7 +172,7 @@ export default class LoadPlanningAssignment extends LightningElement {
 
     fireToastWhenPickingInProgressOrderRemoved() {
         const pickingInProgress = this.ordersDeselectedFromLoad.findIndex((order) => {
-            return order.Status__c === 'Picking in Progress';
+            return order.Status === 'Picking in Progress';
         });
         if (pickingInProgress !== -1) {
             const pickingProgressOrder = new ShowToastEvent({

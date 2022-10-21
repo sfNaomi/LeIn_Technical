@@ -17,9 +17,13 @@ export default class LoadPlanningCalculation extends LightningElement {
     }
 
     set orders(value) {
-        this._orders = value;
-        this.calculateValues();
-        this.fireSendCalculatedValuesEvent();
+        if (value) {
+            this._orders = value;
+            this.calculateValues();
+            this.fireSendCalculatedValuesEvent();
+        } else {
+            this._orders = [];
+        }
     }
 
     calculateValues() {

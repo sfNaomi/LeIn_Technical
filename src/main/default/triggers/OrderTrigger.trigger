@@ -17,6 +17,7 @@ trigger OrderTrigger on Order (before insert, before update, after insert, after
             OrderTriggerHandler.updateLastOrderDateAndStatusOnParentAccount(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.cloneCompletedOrder(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.createInvoice(Trigger.new, Trigger.oldMap);
+            OrderTriggerHandler.populateLoadWhenAllLInkedOrdersShareStatus(Trigger.new, Trigger.oldMap);
         }
     }
 }

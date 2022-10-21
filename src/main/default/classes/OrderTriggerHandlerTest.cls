@@ -603,7 +603,7 @@ private with sharing class OrderTriggerHandlerTest {
                 Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
-        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+            TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
@@ -677,6 +677,46 @@ private with sharing class OrderTriggerHandlerTest {
             System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
+    }
+
+    @IsTest
+    private static void testPopulateLoadWhenAllLInkedOrdersShareStatus() {
+        // prepare orders and assign them to load
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
+        List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+                Load__c = load.Id, Status = 'Ready To Load'), 5);
+
+        for (Order order : orders) {
+            order.Status = 'Pending Delivery';
+        }
+
+        Test.startTest();
+        update orders;
+        Test.stopTest();
+
+        Load__c loadUpdated = [SELECT Id, CreateRoute__c FROM Load__c WHERE Id = :load.Id LIMIT 1][0];
+
+        Assert.areEqual(true, loadUpdated.CreateRoute__c);
+    }
+
+    @IsTest
+    private static void testPopulateLoadWhenAllLInkedOrdersShareStatus_NotAllChanged() {
+        // prepare orders and assign them to load
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
+        List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+                Load__c = load.Id, Status = 'Ready To Load'), 5);
+
+        for (Integer i = 0; i < 1; i++) {
+            orders[i].Status = 'Pending Delivery';
+        }
+
+        Test.startTest();
+        update orders;
+        Test.stopTest();
+
+        Load__c loadUpdated = [SELECT Id, CreateRoute__c FROM Load__c WHERE Id = :load.Id LIMIT 1][0];
+
+        Assert.areEqual(false, loadUpdated.CreateRoute__c);
     }
 }
 

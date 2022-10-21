@@ -62,6 +62,8 @@ public with sharing class LoadPlanningAssignmentController {
                     if (mappings.get(processedStatus).SetReplanToTrue__c) {
                         order.Replanned__c = true;
                     }
+                } else {
+                    order.Load__c = null;
                 }
             }
 

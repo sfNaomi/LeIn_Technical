@@ -67,7 +67,8 @@
                                                   onclick={handleBackButton}
                                 ></lightning-button>
                             </lightning-layout-item>
-                            <lightning-layout-item if:true={addOrdersToLoad} class="slds-m-left_xx-small slds-m-top_large">
+                            <lightning-layout-item if:true={addOrdersToLoad}
+                                                   class="slds-m-left_xx-small slds-m-top_large">
                                 <lightning-input
                                         type="date"
                                         name={labels.loadDeliveryDate}
@@ -98,8 +99,10 @@
                                 if:true={showSummary}
                                 class="slds-m-around_medium"
                                 size="2">
-                            <c-load-planning-calculation orders={originalTableData}
-                                                         section-name="Filtered Orders"></c-load-planning-calculation>
+                            <c-load-planning-calculation
+                                    orders={originalTableData}
+                                    section-name="Filtered Orders"
+                            ></c-load-planning-calculation>
                         </lightning-layout-item>
                         <lightning-layout-item
                                 if:true={showSummary}
