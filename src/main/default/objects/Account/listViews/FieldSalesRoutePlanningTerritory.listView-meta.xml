@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FieldSalesRoutePlanningTerritory</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>AccountStatus__c</columns>
+    <columns>ACCOUNT.ADDRESS2_STREET</columns>
+    <columns>ACCOUNT.ADDRESS2_ZIP</columns>
+    <columns>X4DigitPostalDistrict__c</columns>
+    <columns>IsCoverage__c</columns>
+    <columns>FieldSalesRegion__c</columns>
+    <columns>FieldSalesTerritory__c</columns>
+    <columns>aforza__Last_Visit__c</columns>
+    <columns>PreferredVisitTime__c</columns>
+    <columns>Symbol__c</columns>
+    <columns>SeasonalAccount__c</columns>
+    <columns>ACCOUNT.TYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>notEqual</operation>
+        <value>Account.Customer</value>
+    </filters>
+    <label>Field Sales Route Planning - Territory v</label>
+</ListView>

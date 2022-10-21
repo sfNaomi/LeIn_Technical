@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>OrderActivationPreventedDueToDPOnHold</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderActivationPreventedDueToDPOnHold</shortDescription>
+        <value>Order activation not allowed due to related DP account being "On Hold". Record needs to be submitted for approval.</value>
+    </labels>
+    <labels>
+        <fullName>OrderActivationPreventedDueToDPNegativeCredit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderActivationPreventedDueToDPNegativeCredit</shortDescription>
+        <value>Order activation not allowed due to related DP account negative available credit. Record needs to be submitted for approval.</value>
+    </labels>
+    <labels>
         <fullName>MissingContactDetailsOnPrimaryContact</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13,6 +27,13 @@
         <protected>false</protected>
         <shortDescription>NoPrimaryContactOnAccountErrorMessage</shortDescription>
         <value>No Primary Contact exists on this account.</value>
+    </labels>
+    <labels>
+        <fullName>MinOrderOnAccountNotMetErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MinOrderOnAccountNotMetErrorMessage</shortDescription>
+        <value>This order´s quantity is less than the minimum order quantity set on the account.</value>
     </labels>
     <labels>
         <fullName>OrderCreationActivationIsNotAllowedForCurrentAccountStatus</fullName>
@@ -127,7 +148,7 @@
     </labels>
     <labels>
         <fullName>DeliveryPointName</fullName>
-        <categories>CallBaseManagement</categories>
+        <categories>CallBaseManagement, LoadPlanningScreen</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Point Name</shortDescription>
@@ -140,14 +161,6 @@
         <protected>false</protected>
         <shortDescription>Delivery Point Post Code</shortDescription>
         <value>Delivery Point Post Code</value>
-    </labels>
-    <labels>
-        <fullName>Depot</fullName>
-        <categories>CallBaseManagement</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Depot</shortDescription>
-        <value>Depot</value>
     </labels>
     <labels>
         <fullName>DpReference</fullName>
@@ -212,5 +225,432 @@
         <protected>false</protected>
         <shortDescription>Visit Transfer Tab Name</shortDescription>
         <value>Call Base Management</value>
+    </labels>
+    <labels>
+        <fullName>DuplicateTamRoleError</fullName>
+        <categories>AccountTeamMemberTrigger</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate TAM Role Error</shortDescription>
+        <value>There can be only one TAM user assigned to each Account. Please change your data</value>
+    </labels>
+    <labels>
+        <fullName>NoParentCustomAccountErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoParentCustomAccountErrorMessage</shortDescription>
+        <value>This account doesn&apos;t have a parent Customer account. Please select a parent account in the Parent Account field before moving the account to Traders status.</value>
+    </labels>
+    <labels>
+        <fullName>SelectedNumberOfOrderRows</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectedNumberOfOrderRows</shortDescription>
+        <value>You have selected #0# orders.</value>
+    </labels>
+    <labels>
+        <fullName>Action</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>PrintUpdate</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PrintUpdate</shortDescription>
+        <value>Print / Update</value>
+    </labels>
+    <labels>
+        <fullName>LoadId</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LoadId</shortDescription>
+        <value>Load ID</value>
+    </labels>
+    <labels>
+        <fullName>Depot</fullName>
+        <categories>LogisticUpdateScreen, CallBaseManagement</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Depot</shortDescription>
+        <value>Depot</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryDate</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryDate</shortDescription>
+        <value>Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>OrderId</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderId</shortDescription>
+        <value>Order ID</value>
+    </labels>
+    <labels>
+        <fullName>AccountName</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountName</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>PickingSheetPrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PickingSheetPrinted</shortDescription>
+        <value>Picking Sheet Printed?</value>
+    </labels>
+    <labels>
+        <fullName>PickingCompleted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PickingCompleted</shortDescription>
+        <value>Picking Completed?</value>
+    </labels>
+    <labels>
+        <fullName>IsLoaded</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IsLoaded</shortDescription>
+        <value>Is Loaded?</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryManifestPrinted</shortDescription>
+        <value>Delivery Manifest Printed?</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryNotePrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryNotePrinted</shortDescription>
+        <value>Delivery Note Printed?</value>
+    </labels>
+    <labels>
+        <fullName>Receipt</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Receipt</shortDescription>
+        <value>Receipt?</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePrinted</fullName>
+        <categories>LogisticUpdateScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InvoicePrinted</shortDescription>
+        <value>Invoice Printed?</value>
+    </labels>
+    <labels>
+        <fullName>AWRS</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AWRS</shortDescription>
+        <value>AWRS #</value>
+    </labels>
+    <labels>
+        <fullName>Reg</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reg</shortDescription>
+        <value>Reg #</value>
+    </labels>
+    <labels>
+        <fullName>VAT</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VAT</shortDescription>
+        <value>VAT #</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine1</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 1</shortDescription>
+        <value>Invoice Address Line 1</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine2</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 2</shortDescription>
+        <value>Invoice Address Line 2</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAddressLine3</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Address Line 3</shortDescription>
+        <value>Invoice Address Line 3</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePhoneNumber</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Phone Number</shortDescription>
+        <value>Tel. 0345 345 3566</value>
+    </labels>
+    <labels>
+        <fullName>CompleteThisField</fullName>
+        <categories>Custom Lookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CompleteThisField</shortDescription>
+        <value>Fill value in required field.</value>
+    </labels>
+    <labels>
+        <fullName>NoRecordFound</fullName>
+        <categories>Custom Lookup</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoRecordFound</shortDescription>
+        <value>No Record Found</value>
+    </labels>
+    <labels>
+        <fullName>NoDriverOnDPAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoDriverOnDPAccount</shortDescription>
+        <value>No driver has been associated to the DP. Please contact Sales Support team for assistance.</value>
+    </labels>    
+    <labels>
+        <fullName>PickSheetDeliveryDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Delivery Date</shortDescription>
+        <value>Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetDescription</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetDriver</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Driver</shortDescription>
+        <value>Driver</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetGrid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Grid</shortDescription>
+        <value>Grid</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetLoadId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Load ID</shortDescription>
+        <value>Load ID</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetNoDPs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - No DPs</shortDescription>
+        <value>No. of DP&apos;s</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetPalletSequence</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Pallet Sequence</shortDescription>
+        <value>Pallet Sequence</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetPickLocation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Pick Location</shortDescription>
+        <value>Pick Location</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetQuantity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Quantity</shortDescription>
+        <value>QTY</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetSKUDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - SKU Description</shortDescription>
+        <value>SKU Description</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetSkuId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - SKU ID</shortDescription>
+        <value>SKU ID</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetTotalCases</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Total Cases</shortDescription>
+        <value>Total C/S</value>
+    </labels>
+    <labels>
+        <fullName>PickSheetVehicle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pick Sheet - Vehicle</shortDescription>
+        <value>Vehicle</value>
+    </labels>
+    <labels>
+        <fullName>CreateLoad</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateLoad</shortDescription>
+        <value>Create Load</value>
+    </labels>
+    <labels>
+        <fullName>UpdateLoad</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UpdateLoad</shortDescription>
+        <value>Update Load</value>
+    </labels>
+    <labels>
+        <fullName>CreateLoadTitle</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateLoadTitle</shortDescription>
+        <value>Planning a load when orders are not assigned</value>
+    </labels>
+    <labels>
+        <fullName>UpdateLoadTitle</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UpdateLoadTitle</shortDescription>
+        <value>New orders, remove orders or update data</value>
+    </labels>
+    <labels>
+        <fullName>LoadDeliveryDate</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LoadDeliveryDate</shortDescription>
+        <value>Load Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>Quantity</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>PostCode</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PostCode</shortDescription>
+        <value>Post Code</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryPointReference</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryPointReference</shortDescription>
+        <value>Delivery Point Reference</value>
+    </labels>
+    <labels>
+        <fullName>ShippingAddress</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ShippingAddress</shortDescription>
+        <value>Shipping Address</value>
+    </labels>
+    <labels>
+        <fullName>Weight</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Weight</shortDescription>
+        <value>Weight</value>
+    </labels>
+    <labels>
+        <fullName>OpeningTimes</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpeningTimes</shortDescription>
+        <value>Opening Times</value>
+    </labels>
+    <labels>
+        <fullName>FixedDeliveryInstructions</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FixedDeliveryInstructions</shortDescription>
+        <value>Fixed Delivery Instructions</value>
+    </labels>
+    <labels>
+        <fullName>OrderNotes</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderNotes</shortDescription>
+        <value>Order Notes</value>
+    </labels>
+    <labels>
+        <fullName>TamName</fullName>
+        <categories>LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TamName</shortDescription>
+        <value>TAM Name</value>
     </labels>
 </CustomLabels>

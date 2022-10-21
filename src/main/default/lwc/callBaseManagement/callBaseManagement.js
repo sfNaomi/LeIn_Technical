@@ -7,6 +7,7 @@ import changeOwnerOfVisits from "@salesforce/apex/CallBaseManagementController.c
 import fetchTamUsers from "@salesforce/apex/CallBaseManagementController.fetchTamUsers";
 import {replaceStringValues} from 'c/stringOperationsService';
 import {processError} from 'c/errorHandlingService';
+import {setTabNameAndIcon} from 'c/workspaceApiService';
 import selectedNumberOfRowsLabel from '@salesforce/label/c.SelectedNumberOfRows';
 import successMoveMessage from '@salesforce/label/c.SuccessMoveMessage'
 import move from '@salesforce/label/c.Move'
@@ -28,8 +29,6 @@ import secondaryGridLabel from '@salesforce/label/c.SecondaryGrid';
 import depotLabel from '@salesforce/label/c.Depot';
 import creditStatusLabel from '@salesforce/label/c.CreditStatus';
 import visitTransferTabNameLabel from '@salesforce/label/c.VisitTransferTabName'
-
-
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const columns = [
@@ -67,6 +66,7 @@ export default class CallBaseManagement extends LightningElement {
     tamUsers = [];
     limitOfRowsReturned = 900;
     sObjectApiName = 'aforza__Visit__c';
+    filterSize = 2;
     @track selectedIds = [];
     @track filterFields = [];
     @track tamToMove;
@@ -75,9 +75,9 @@ export default class CallBaseManagement extends LightningElement {
         newTam
     }
 
-    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Owner__r.LastName,' +
-        'aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,aforza__Account__r.DeliveryPointReference__c,' +
-        'aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
+    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Account__r.Owner.FirstName,' +
+        'aforza__Owner__r.LastName,aforza__Owner__r.FirstName,aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,' +
+        'aforza__Account__r.DeliveryPointReference__c,aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
         'toLabel(aforza__Account__r.Depot__c),aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c';
 
     /**
@@ -91,7 +91,7 @@ export default class CallBaseManagement extends LightningElement {
         Promise.all([this.fetchTamUsers()]).then(() => {
             this.prepareFieldDefinitionVisit();
         });
-        this.setTabNameAndIcon();
+        setTabNameAndIcon(visitTransferTabNameLabel, 'action:change_owner', visitTransferTabNameLabel, this);
     }
 
     /** Method to prepare filter fields definition for filter component
@@ -164,7 +164,10 @@ export default class CallBaseManagement extends LightningElement {
      */
     processReturnedData(event) {
         this.tableData = [];
+        console.log('processing data');
         this.tableData = event.detail.returnedData;
+        console.log('copy data?');
+        this.mergeNamesToSingleColumn();
     }
 
     /** Method to return true when there are data to show
@@ -212,9 +215,11 @@ export default class CallBaseManagement extends LightningElement {
             this.isLoading = true;
             const users = await fetchTamUsers();
             this.tamUsers.push({label: "", value: ""});
-            users.forEach((user) => {
-                this.tamUsers.push({label: user.FirstName + ' ' + user.LastName, value: user.Id});
-            });
+            if (users) {
+                users.forEach((user) => {
+                    this.tamUsers.push({label: user.FirstName + ' ' + user.LastName, value: user.Id});
+                });
+            }
         } catch (error) {
             processError(this, error);
         } finally {
@@ -235,6 +240,15 @@ export default class CallBaseManagement extends LightningElement {
         for (let i = 0; i < selectedRows.length; i++) {
             this.selectedIds.push(selectedRows[i].Id);
         }
+    }
+
+    mergeNamesToSingleColumn() {
+        this.tableData.forEach((visit) => {
+            const visitOwner = `${visit.aforza__Owner__rLastName} ${visit.aforza__Owner__rFirstName}`;
+            const accountOwner = `${visit.aforza__Account__rOwnerLastName} ${visit.aforza__Account__rOwnerFirstName}`;
+            visit.aforza__Owner__rLastName = visitOwner;
+            visit.aforza__Account__rOwnerLastName = accountOwner;
+        });
     }
 
     /** Method to assign new TAM owner to attribute
@@ -274,54 +288,5 @@ export default class CallBaseManagement extends LightningElement {
         } finally {
             this.isLoading = false;
         }
-    }
-
-    invokeWorkspaceAPI(methodName, methodArgs) {
-        return new Promise((resolve, reject) => {
-            const apiEvent = new CustomEvent("internalapievent", {
-                bubbles: true,
-                composed: true,
-                cancelable: false,
-                detail: {
-                    category: "workspaceAPI",
-                    methodName: methodName,
-                    methodArgs: methodArgs,
-                    callback: (err, response) => {
-                        if (err) {
-                            return reject(err);
-                        } else {
-                            return resolve(response);
-                        }
-                    }
-                }
-            });
-
-            this.dispatchEvent(apiEvent);
-        });
-    }
-
-    setTabNameAndIcon() {
-        this.invokeWorkspaceAPI('isConsoleNavigation').then(isConsole => {
-            if (isConsole) {
-                this.invokeWorkspaceAPI('getFocusedTabInfo').then(focusedTab => {
-                    this.invokeWorkspaceAPI('setTabLabel', {
-                        tabId: focusedTab.tabId,
-                        label: visitTransferTabNameLabel
-                    })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                    this.invokeWorkspaceAPI('setTabIcon', {
-                        tabId: focusedTab.tabId,
-                        icon: "action:change_owner",
-                        iconAlt: visitTransferTabNameLabel
-                    })
-                        .catch(function (error) {
-                            console.log(error);
-                        })
-
-                });
-            }
-        });
     }
 }

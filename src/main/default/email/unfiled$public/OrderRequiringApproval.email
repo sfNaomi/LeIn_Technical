@@ -1,0 +1,7 @@
+Hello!
+
+Order number {!Order.OrderNumber} from account {!Order.AccountName__c} is requiring your approval.
+
+To approve or reject, click here
+{!ApprovalRequest.External_URL}
+{!ApprovalRequest.Internal_URL}

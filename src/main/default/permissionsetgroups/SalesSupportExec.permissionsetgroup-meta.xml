@@ -3,20 +3,30 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Support Exec</label>
     <permissionSets>AccountSupportAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryEditAccess</permissionSets>
+    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
+    <permissionSets>PaymentTransactionEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

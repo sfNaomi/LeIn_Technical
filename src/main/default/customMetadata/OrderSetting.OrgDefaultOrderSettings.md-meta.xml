@@ -4,10 +4,18 @@
     <protected>false</protected>
     <values>
         <field>CompletedOrderStatuses__c</field>
-        <value xsi:type="xsd:string">Activated</value>
+        <value xsi:type="xsd:string">Activated,Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered,Receipted</value>
+    </values>
+    <values>
+        <field>RTsToCreateInvoice__c</field>
+        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder,StraightToJDEOrder</value>
     </values>
     <values>
         <field>RTsToUpdateAccOnOrderCompletion__c</field>
         <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder</value>
+    </values>
+    <values>
+        <field>StatusToCreateInvoice__c</field>
+        <value xsi:type="xsd:string">Receipted</value>
     </values>
 </CustomMetadata>

@@ -130,7 +130,7 @@ private class DynamicFilterControllerTest {
         List<String> queryList = queryFields.split(',');
 
         Test.startTest();
-        String query = DynamicFilterController.buildQuery('aforza__Visit__c', queryList, filterFields, 900);
+        String query = DynamicFilterController.buildQuery('aforza__Visit__c', queryList, filterFields, 900, '');
         Test.stopTest();
 
         String expectedQuery = 'SELECT Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,' +
@@ -138,6 +138,40 @@ private class DynamicFilterControllerTest {
                 'aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,toLabel(aforza__Account__r.Depot__c),' +
                 'aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c ' +
                 'FROM aforza__Visit__c WHERE  (aforza__Account__r.CallPriority__c = \'P2\' ) LIMIT 900';
+        System.assertEquals(expectedQuery, query);
+    }
+
+    @IsTest
+    private static void testBuildQuery_defaultFilter() {
+        // prepare filter definition object
+        DynamicFilterController.FilterValue filter = new DynamicFilterController.FilterValue();
+        filter.value = 'P2';
+        filter.type = 'Picklist';
+        filter.operand = 'equals';
+        filter.soqlName = 'aforza__Account__r.CallPriority__c';
+
+        List<DynamicFilterController.FilterValue> filterFieldsList = new List<DynamicFilterController.FilterValue>();
+        filterFieldsList.add(filter);
+
+        String filterFields = JSON.serialize(filterFieldsList);
+
+        String queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Owner__r.LastName,' +
+                'aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,aforza__Account__r.DeliveryPointReference__c,' +
+                'aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
+                'toLabel(aforza__Account__r.Depot__c),aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c';
+        List<String> queryList = queryFields.split(',');
+
+        String defaultFilter = ' AND (RecordType.DeveloperName = \'TelesalesOrder\')';
+
+        Test.startTest();
+        String query = DynamicFilterController.buildQuery('aforza__Visit__c', queryList, filterFields, 900, defaultFilter);
+        Test.stopTest();
+
+        String expectedQuery = 'SELECT Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,' +
+                'aforza__Owner__r.LastName,aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,aforza__Account__r.DeliveryPointReference__c,' +
+                'aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,toLabel(aforza__Account__r.Depot__c),' +
+                'aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c ' +
+                'FROM aforza__Visit__c WHERE  (aforza__Account__r.CallPriority__c = \'P2\' ) AND (RecordType.DeveloperName = \'TelesalesOrder\') LIMIT 900';
         System.assertEquals(expectedQuery, query);
     }
 
@@ -168,7 +202,7 @@ private class DynamicFilterControllerTest {
         List<String> queryList = queryFields.split(',');
 
         Test.startTest();
-        String query = DynamicFilterController.buildQuery('aforza__Visit__c', queryList, filterFields, 900);
+        String query = DynamicFilterController.buildQuery('aforza__Visit__c', queryList, filterFields, 900, '');
         Test.stopTest();
 
         System.debug(query);
@@ -186,6 +220,7 @@ private class DynamicFilterControllerTest {
     private static void testGetResult() {
         // get some visits
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [SELECT Id FROM aforza__Recurring_Record__c WHERE Account__c = :acc.Id LIMIT 1];
         System.assert(recurringRecords.size() == 1);
@@ -218,7 +253,7 @@ private class DynamicFilterControllerTest {
         List<String> queryList = queryFields.split(',');
 
         Test.startTest();
-        List<SObject> records = DynamicFilterController.getResults('aforza__Visit__c', queryList, filterFields, 40);
+        List<SObject> records = DynamicFilterController.getResults('aforza__Visit__c', queryList, filterFields, 40, '');
         Test.stopTest();
 
         System.assertEquals(20, records.size());
@@ -228,6 +263,7 @@ private class DynamicFilterControllerTest {
     private static void testGetResult_NoData() {
         // get some visits
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id));
 
         List<aforza__Recurring_Record__c> recurringRecords = [SELECT Id FROM aforza__Recurring_Record__c WHERE Account__c = :acc.Id LIMIT 1];
         System.assert(recurringRecords.size() == 1);
@@ -260,7 +296,7 @@ private class DynamicFilterControllerTest {
         List<String> queryList = queryFields.split(',');
 
         Test.startTest();
-        List<SObject> records = DynamicFilterController.getResults('aforza__Visit__c', queryList, filterFields, 40);
+        List<SObject> records = DynamicFilterController.getResults('aforza__Visit__c', queryList, filterFields, 40, '');
         Test.stopTest();
 
         System.assertEquals(0, records.size());
@@ -270,7 +306,7 @@ private class DynamicFilterControllerTest {
     private static void testGetResult_Exception() {
         Test.startTest();
         try {
-            DynamicFilterController.getResults(null, null, null, 40);
+            DynamicFilterController.getResults(null, null, null, 40, '');
             System.assert(false);
         } catch (Exception e) {
             System.assertEquals('System.AuraHandledException', e.getTypeName());

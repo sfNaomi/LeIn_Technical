@@ -1,0 +1,23 @@
+<!--
+  @description       : 
+  @author            : Ciuca Bianca BearingPoint GmbH
+  @group             : 
+  @last modified on  : 10-04-2022
+  @last modified by  : Ciuca Bianca, BearingPoint GmbH
+-->
+<template>
+	<lightning-quick-action-panel header="Generate PDF">
+		<div>
+			<div if:false={showSpinner} class="slds-modal__content slds-var-p-around_medium">
+				<p>Are you sure you want to generate a PDF for this invoice? The document will be stored in the Files related list.</p>
+			</div>
+			<div if:true={showSpinner} class="slds-is-relative" style="min-height: 10vh">
+				<lightning-spinner alternative-text="Loading..." variant="brand"> </lightning-spinner>
+			</div>
+		</div>
+		<div slot="footer">
+			<lightning-button variant="neutral" label="Cancel" onclick={closeModal}></lightning-button>
+			<lightning-button class="slds-var-m-left_x-small" variant="brand" label="Confirm" onclick={generatePDF}></lightning-button>
+		</div>
+	</lightning-quick-action-panel>
+</template>

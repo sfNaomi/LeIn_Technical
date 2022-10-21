@@ -19,6 +19,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>CreditStatusesOrderActiveNotAllowed__c</field>
+        <value xsi:type="xsd:string">On Hold</value>
+    </values>
+    <values>
         <field>StatusesWhereOrderCreationAllowed__c</field>
         <value xsi:type="xsd:string">Active Prospect,Traders,At Risk,Win Back,Lapsed</value>
     </values>

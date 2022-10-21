@@ -1,0 +1,12 @@
+<template>
+<div class="slds-clearfix">
+    <div class="slds-float_right">
+        <button class="slds-button slds-button_brand slds-m-right_small slds-m-bottom_small " onclick={handleClick}>Create
+            Suggested Order</button>
+</div>
+</div>
+    <lightning-datatable key-field="id" data={dataF} columns={columnsP} hide-checkbox-column="true">
+    </lightning-datatable>
+    
+    <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+</template>

@@ -47,6 +47,40 @@
         <layout>OrderSetting__mdt-Order Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Load__c-Load Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ECommerceOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.EDIOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.FieldDirectOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.ReturnOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.StraightToJDEOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.TelesalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-aforza__Order Layout</layout>
+        <recordType>Order.VanSalesOrder</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CallRecurrenceSetting__mdt-Call Recurrence Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -54,6 +88,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Product2-aforza__Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Vehicle__c-Vehicle Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>aforza__Recurring_Record__c-aforza__Recurring Record Layout</layout>
@@ -143,6 +180,10 @@
         <recordType>aforza__Visit__c.aforza__Template_Visit</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <pageAccesses>
+        <apexPage>AGBarrInvoice</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <tabVisibilities>
         <tab>standard-Account</tab>
         <visibility>DefaultOn</visibility>

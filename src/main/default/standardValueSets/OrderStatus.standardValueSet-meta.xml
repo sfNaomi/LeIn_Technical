@@ -3,6 +3,12 @@
     <groupingStringEnum>OrderStatusCode</groupingStringEnum>
     <sorted>false</sorted>
     <standardValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+        <label>Cancelled</label>
+        <groupingString>Draft</groupingString>
+    </standardValue>
+    <standardValue>
         <fullName>Draft</fullName>
         <default>false</default>
         <label>Draft</label>
@@ -66,12 +72,6 @@
         <fullName>Receipted</fullName>
         <default>false</default>
         <label>Receipted</label>
-        <groupingString>Draft</groupingString>
-    </standardValue>
-    <standardValue>
-        <fullName>Cancelled</fullName>
-        <default>false</default>
-        <label>Cancelled</label>
         <groupingString>Draft</groupingString>
     </standardValue>
 </StandardValueSet>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreateRoute__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field controlling when a Route and visits should be created. Logic will be triggered once, when the field is set to true. This field will be set to true automatically when all orders linked to the load are set to &quot;Pending Deliver&quot;.</description>
+    <externalId>false</externalId>
+    <label>Create Route</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

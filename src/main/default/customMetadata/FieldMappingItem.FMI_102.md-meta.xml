@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>FMI-102</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldMapping__c</field>
+        <value xsi:type="xsd:string">ORDER_ITEM_TO_INVOICE_ITEM</value>
+    </values>
+    <values>
+        <field>SourceField__c</field>
+        <value xsi:type="xsd:string">Quantity</value>
+    </values>
+    <values>
+        <field>StaticValue__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>TargetField__c</field>
+        <value xsi:type="xsd:string">Quantity__c</value>
+    </values>
+</CustomMetadata>

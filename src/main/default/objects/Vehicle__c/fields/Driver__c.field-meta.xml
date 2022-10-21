@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Driver__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>The Driver associated with this vehicle.</inlineHelpText>
+    <label>Driver</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>This user is not a Driver (need to add Driver as this user&apos;s role).</errorMessage>
+        <filterItems>
+            <field>User.UserRole.DeveloperName</field>
+            <operation>equals</operation>
+            <value>Driver</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Vehicles</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

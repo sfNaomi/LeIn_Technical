@@ -1,0 +1,159 @@
+<!--
+ - Created by svatopluk.sejkora on 12.10.2022.
+ -->
+
+<!-- Load Planning Screen -->
+<template>
+    <div class="slds-is-relative">
+        <div if:true={initialScreen} class="slds-form-element">
+            <lightning-card class="slds-form-element__control">
+                <div class="slds-visual-picker slds-visual-picker_large slds-m-around_medium">
+                    <input type="radio" id="createLoad" value="createLoad"
+                           name="example-unique-name-36" onchange={handleSelection}>
+                    <label for="createLoad">
+                        <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                            <span>
+                                <span class="slds-text-heading_large">{labels.createLoad}</span>
+                                <span class="slds-text-title">{labels.createLoadTitle}</span>
+                            </span>
+                        </span>
+                        <span class="slds-icon_container slds-visual-picker__text-check">
+                            <svg class="slds-icon slds-icon-text-check slds-icon_x-small" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                            </svg>
+                        </span>
+                    </label>
+                </div>
+                <div class="slds-visual-picker slds-visual-picker_large slds-m-around_medium">
+                    <input type="radio" id="updateLoad" value="updateLoad"
+                           name="example-unique-name-36" onchange={handleSelection}>
+                    <label for="updateLoad">
+                            <span class="slds-visual-picker__figure slds-visual-picker__text slds-align_absolute-center">
+                                <span>
+                                    <span class="slds-text-heading_large">{labels.updateLoad}</span>
+                                    <span class="slds-text-title">{labels.updateLoadTitle}</span>
+                                </span>
+                                <span class="slds-icon_container slds-visual-picker__text-check">
+                                    <svg class="slds-icon slds-icon-text-check slds-icon_x-small"
+                                         aria-hidden="true">
+                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                                    </svg>
+                                </span>
+                            </span>
+                    </label>
+                </div>
+            </lightning-card>
+        </div>
+        <div if:false={initialScreen}>
+            <lightning-card>
+                <lightning-layout if:true={filterDataReady}>
+                    <lightning-layout-item
+                            size="10">
+                        <c-dynamic-filter
+                                filter-fields={filterFields}
+                                sobject-api-name={sObjectApiName}
+                                query-fields={queryFields}
+                                to-flatten={toFlatten}
+                                limit-of-rows-returned={limitOfRowsReturned}
+                                filter-size={filterSize}
+                                default-filter={ordersDefaultFilter}
+                                onreturneddata={processReturnedData}
+                        ></c-dynamic-filter>
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        <lightning-layout multiple-rows="true" class="slds-m-right_medium slds-m-top_medium">
+                            <lightning-layout-item class="slds-m-bottom_large">
+                                <lightning-button variant="brand" label="Selection Screen"
+                                                  onclick={handleBackButton}
+                                ></lightning-button>
+                            </lightning-layout-item>
+                            <lightning-layout-item if:true={addOrdersToLoad}
+                                                   class="slds-m-left_xx-small slds-m-top_large">
+                                <lightning-input
+                                        type="date"
+                                        name={labels.loadDeliveryDate}
+                                        label={labels.loadDeliveryDate}
+                                        value={deliveryDate}
+                                        onchange={handleDeliveryDateSelection}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item>
+                                <c-custom-lookup-input
+                                        if:true={showLoadLookup}
+                                        data-id="load"
+                                        object-name="Load__c"
+                                        icon-name="standard:webcart"
+                                        label="Load Id"
+                                        select-record-id={loadId}
+                                        filter={loadSelectionFilter}
+                                        placeholder="Select a Load"
+                                        onselected={handleLookupSelection}
+                                ></c-custom-lookup-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <div>
+                    <lightning-layout>
+                        <lightning-layout-item
+                                if:true={showSummary}
+                                class="slds-m-around_medium"
+                                size="2">
+                            <c-load-planning-calculation
+                                    orders={originalTableData}
+                                    section-name="Filtered Orders"
+                            ></c-load-planning-calculation>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                                if:true={showSummary}
+                                class="slds-m-around_medium"
+                                size="2">
+                            <c-load-planning-calculation
+                                    orders={selectedRows}
+                                    section-name="Selected Orders"
+                                    onvaluescalculated={handleValuesCalculatedEvent}
+                            ></c-load-planning-calculation>
+                        </lightning-layout-item>
+                        <lightning-layout-item
+                                if:true={showAssignment}
+                                class="slds-m-around_medium"
+                                size="8">
+                            <c-load-planning-assignment
+                                    selected-orders-weight={selectedOrdersWeight}
+                                    selected-orders-ids={selectedOrdersIds}
+                                    new-order-status={targetStatus}
+                                    planned-delivery-date={loadDeliveryDate}
+                                    driver-id={loadDriver}
+                                    vehicle-id={loadVehicle}
+                                    orders-deselected-from-load={loadOrdersTableDataDeselected}
+                                    load-id={loadId}
+                                    operation={selectedScenario}
+                                    operation-label={assignmentOperationLabel}
+                                    load-order-ids={loadOrderIds}
+                                    depot={depot}
+                                    selected-orders-quantity={selectedOrdersQuantity}
+                                    selected-orders-delivery-points={selectedOrdersDeliveryPoints}
+                                    onfilterresetevent={handleFilterResetEvent}
+                                    onspinnerchange={handleSpinnerChange}
+                            ></c-load-planning-assignment>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div if:true={showTable} style="height: 50em">
+                    <lightning-datatable
+                            class="table"
+                            key-field="Id"
+                            sorted-by={sortBy}
+                            sorted-direction={sortDirection}
+                            data={tableData}
+                            columns={columns}
+                            selected-rows={loadOrderIds}
+                            onrowselection={handleSelectRowsEvent}
+                            onsort={doSorting}
+                    ></lightning-datatable>
+                </div>
+            </lightning-card>
+        </div>
+        <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+    </div>
+</template>
