@@ -19,6 +19,7 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
     <permissionSets>OrderAdminAccess</permissionSets>
+    <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>OutletAssetAdminAccess</permissionSets>
     <permissionSets>PaymentTransactionAdminAccess</permissionSets>
     <permissionSets>PickingUser</permissionSets>
