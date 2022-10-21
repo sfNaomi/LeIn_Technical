@@ -4,6 +4,16 @@
 
 @IsTest
 private with sharing class OrderTriggerHandlerTest {
+
+    @TestSetup
+    private static void recalculatePermSetGroups() {
+        PermissionSetGroup adminPermSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'Administrator'][0];
+
+        Test.calculatePermissionSetGroup(new Id[]{
+                adminPermSetGroup.Id
+        });
+    }
+
     @IsTest
     private static void validateOrderCreationOrCompletion_ProspectAccountNewOrder() {
          // create attribute for New DP attribute flow automation
