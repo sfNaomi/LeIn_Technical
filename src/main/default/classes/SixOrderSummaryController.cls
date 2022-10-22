@@ -14,6 +14,8 @@ public with sharing class SixOrderSummaryController {
         @AuraEnabled public Decimal unitPrice;
         @AuraEnabled public Decimal stock;
         @AuraEnabled public Decimal stockRemaining;
+        @AuraEnabled public String effectiveDateFieldName;
+        @AuraEnabled public String orderId;
 
     }
 
@@ -22,6 +24,7 @@ public with sharing class SixOrderSummaryController {
         @AuraEnabled public String EffectiveDate;
         @AuraEnabled public List < SkuDto > skus;
         @AuraEnabled public String sku;
+        @AuraEnabled public String effectiveDateFieldName;
     }
 
 
@@ -71,6 +74,7 @@ public with sharing class SixOrderSummaryController {
        
             for (OrderItem ord: orders) {
                 SkuDto skuDto = new SkuDto();
+                String orderDate = ord.order?.EffectiveDate.format();
                 skuDto.sku = ord.Product2.ProductCode;
                 skuDto.description = ord.Product2?.Name;
                 skuDto.productId = ord.product2.id;
@@ -82,7 +86,8 @@ public with sharing class SixOrderSummaryController {
                 skudto.id = ord.id;
                 skudto.unitPrice = ord.unitPrice;
                 skuDto.pricebookentryid = ord.pricebookentryid;
-                skudto.effectiveDate = ord.order?.EffectiveDate.format();
+                skuDto.effectiveDateFieldName = (orderDate+ord.order.id);
+                skudto.effectiveDate =  ord.order?.EffectiveDate.format();  
                 skuDto.stockRemaining = 0;
                 skudto.stock = prodInventMap.get(ord.Product2.id)?.aforza__Stock_Quantity__c;
                 skuDtoMap.put(ord.Product2.id, skuDto);
@@ -174,9 +179,12 @@ public with sharing class SixOrderSummaryController {
         ];
         system.debug('orderList ' + orderList);
         for (Order ord: orderList) {
+            String orderDate = ord.EffectiveDate.format();
             OrderDto orderDto = new OrderDto();
-            orderDto.effectiveDate = ord.effectiveDate.format();
+            orderDto.effectiveDate = orderDate;
+            orderDto.status = ord.status;
             orderDto.id = ord.Id;
+            orderDto.effectiveDateFieldName = (orderDate+ord.id);
             orderDtoList.add(orderDto);
         }
         return orderDtoList;
@@ -213,7 +221,7 @@ public with sharing class SixOrderSummaryController {
         List < OrderItem > orderItems = [
             select product2.ProductCode, quantity, product2.id, pricebookEntryId,
             product2.description, product2.name, order.id, order.effectivedate, UnitPrice, product2.IsDRSProduct__c,
-            product2.isactive from orderitem where order.id in: orderIds and id != null and product2.isactive =true and product2.IsDRSProduct__c = false
+            product2.isactive from orderitem where order.id in: orderIds and id != null and product2.IsDRSProduct__c = false
         ];
         return orderItems;
        }
