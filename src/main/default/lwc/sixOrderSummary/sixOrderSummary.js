@@ -84,8 +84,8 @@ export default class LastSixOrdersSummary extends NavigationMixin(
         const headerResult = JSON.parse(JSON.stringify(this.showOrdersHeaders));
         this.columnsP = headerResult.map((dataRec) => {
           return {
-            label: dataRec?.EffectiveDate,
-            fieldName: dataRec.EffectiveDate,
+            label: dataRec.EffectiveDate,
+            fieldName: dataRec.effectiveDateFieldName,
             wrapText: true,
             hideDefaultActions: true,
           };
@@ -150,6 +150,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
         StockKeepingUnit: dataRec?.sku,
         Description: dataRec?.description,
         [dataRec?.effectiveDate]: dataRec?.quantity,
+        [dataRec?.effectiveDateFieldName]: dataRec?.quantity,
         Average: dataRec?.average,
         isActive: dataRec?.isActive,
         Id: dataRec?.id,
