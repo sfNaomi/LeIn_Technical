@@ -182,7 +182,6 @@ public with sharing class SixOrderSummaryController {
             String orderDate = ord.EffectiveDate.format();
             OrderDto orderDto = new OrderDto();
             orderDto.effectiveDate = orderDate;
-            orderDto.status = ord.status;
             orderDto.id = ord.Id;
             orderDto.effectiveDateFieldName = (orderDate+ord.id);
             orderDtoList.add(orderDto);
