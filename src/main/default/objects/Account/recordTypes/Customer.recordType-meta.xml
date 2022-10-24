@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Customer</fullName>
     <active>true</active>
-    <compactLayoutAssignment>DPAccountCompactLayout</compactLayoutAssignment>
+    <compactLayoutAssignment>CustomerCompactLayout</compactLayoutAssignment>
     <label>Customer</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
