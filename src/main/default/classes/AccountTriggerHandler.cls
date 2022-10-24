@@ -178,4 +178,17 @@ public with sharing class AccountTriggerHandler {
 
         AccountSyncService.syncAccounts(accountsRequireSync, operation);
     }
+
+    public static void populateDefaultInventory(List<Account> newAccounts, Map<Id, Account> oldAccounts){  
+        Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
+        for (Account newAccount : newAccounts) {
+            Account oldAccount = oldAccounts?.get(newAccount.Id);
+            if (
+                (oldAccount == null && newAccount.Depot__c != null) ||
+                (oldAccount != null && newAccount.Depot__c != oldAccount.Depot__c) 
+            ){
+            	newAccount.DefaultInventory__c = inventoryIdMap.get(newAccount.Depot__c);
+            }
+        } 
+    }
 }

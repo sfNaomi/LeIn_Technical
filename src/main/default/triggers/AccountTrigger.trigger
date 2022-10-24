@@ -8,10 +8,12 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, null);
             AccountTriggerHandler.assignDefaultPriceBook(Trigger.new);
             AccountTriggerHandler.pullInfoOnDPFromRelatedCustomer(Trigger.new, null);
+            AccountTriggerHandler.populateDefaultInventory(Trigger.new, null);
         }
         when BEFORE_UPDATE {
             AccountTriggerHandler.copyContactDetailsFromPrimaryContact(Trigger.new, Trigger.old);
             AccountTriggerHandler.pullInfoOnDPFromRelatedCustomer(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.populateDefaultInventory(Trigger.new, Trigger.oldMap);
         }
         when AFTER_INSERT {
             AccountTriggerHandler.manageFocusProducts(Trigger.newMap);

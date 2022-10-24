@@ -737,4 +737,41 @@ private with sharing class AccountTriggerHandlerTest {
         // batches run the account is here and thus the Asset is created twice
         System.assertEquals(2, assets.size());
     }
+    
+    @IsTest
+    private static void testPopulateDefaultInventory() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        insert inventory;
+        
+        Test.startTest();
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '2M203FRW')
+        );
+        Test.stopTest();
+
+        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id =:acc.Id];
+       
+        System.assertEquals('M', account.Depot__c);
+        System.assertEquals(inventory.Id, account.DefaultInventory__c);
+    }
+    
+    @IsTest
+    private static void testPopulateDefaultInventory_setToNull() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        insert inventory;
+        
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '2M203FRW')
+        );
+        
+        Test.startTest();
+        acc.Depot__c = null;
+        update acc;
+        Test.stopTest();
+
+        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id =:acc.Id];
+       
+        System.assertEquals(null, account.Depot__c);
+        System.assertEquals(null, account.DefaultInventory__c);
+    }
 }

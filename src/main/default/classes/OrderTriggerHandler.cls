@@ -207,6 +207,18 @@ public with sharing class OrderTriggerHandler {
         insert clonedOrderItems;
     }
 
+    public static void populateDefaultInventory(List<Order> newOrders, Map<Id, Order> oldOrders){
+        Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
+        for (Order newOrder : newOrders) {
+            Order oldOrder = oldOrders?.get(newOrder.Id);
+            if (
+                (oldOrder == null && newOrder.Depot__c != null) ||
+                (oldOrder != null && newOrder.Depot__c != oldOrder.Depot__c)
+            ){
+            		newOrder.aforza__Inventory__c = inventoryIdMap.get(newOrder.Depot__c);
+            }
+        }   
+    }  
 
     public static void populateLoadWhenAllLInkedOrdersShareStatus(List<Order> orders, Map<Id, Order> oldOrdersMap) {
         Set<Id> loadIds = new Set<Id>();
