@@ -172,7 +172,7 @@ public with sharing class SixOrderSummaryController {
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem)
              AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES
+            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES And Clone__c != TRUE
             AND
             AccountId =: accountId
             ORDER BY EffectiveDate DESC Limit 6
@@ -200,7 +200,7 @@ public with sharing class SixOrderSummaryController {
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem) AND AccountId =: accountId
              AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES
+            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES AND Clone__c != TRUE
             ORDER BY EffectiveDate DESC Limit 6
         ];
         system.debug(orderList);
@@ -218,9 +218,9 @@ public with sharing class SixOrderSummaryController {
     @TestVisible 
     private static List < OrderItem > getAllOrderItems(List < String > orderIds) {
         List < OrderItem > orderItems = [
-            select product2.ProductCode, quantity, product2.id, pricebookEntryId,
+            SELECT product2.ProductCode, quantity, product2.id, pricebookEntryId,
             product2.description, product2.name, order.id, order.effectivedate, UnitPrice, product2.IsDRSProduct__c,
-            product2.isactive from orderitem where order.id in: orderIds and id != null and product2.IsDRSProduct__c = false
+            product2.isactive FROM orderitem WHERE order.id IN: orderIds AND id != null AND product2.IsDRSProduct__c = FALSE
         ];
         return orderItems;
        }
@@ -267,7 +267,8 @@ public with sharing class SixOrderSummaryController {
                 Product2Id = sku?.productId,
                 Quantity = sku?.quantity,
                 PricebookEntryId = sku?.pricebookentryid,
-                unitPrice = sku?.unitPrice);
+                unitPrice = sku?.unitPrice,
+                aforza__Type__c = 'Product');
 
             orderItems.add(newI);
         }
@@ -292,6 +293,7 @@ public with sharing class SixOrderSummaryController {
         Order newOrder = new Order();
         newOrder.put('Name', 'Suggested Order: ' + String.valueof(Date.today()));
         newOrder.status = 'Draft';
+        newOrder.type = 'Product Order';
         newOrder.RecordTypeId = RecordTypes.ORDER_TELESALES_ID;
         newOrder.accountId = accountId;
         newOrder.EffectiveDate = Date.today();
