@@ -1,40 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
-        <headerColor>#0070D2</headerColor>
+        <headerColor>#46CCC2</headerColor>
+        <logo>aforza__AforzaServiceAppIcon</logo>
+        <logoVersion>4</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
-    <description>Telesales desktop app.</description>
+    <description>Requests, Invoices, Deliveries</description>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
-    <label>TAM Desktop App</label>
-    <navType>Standard</navType>
-    <profileActionOverrides>
-        <actionName>Tab</actionName>
-        <content>Home_Page_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>standard-home</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>AG Barr Profile</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>Tab</actionName>
-        <content>Home_Page_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>standard-home</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>AG Barr Platform User Driver</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>Tab</actionName>
-        <content>Home_Page_Default</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>standard-home</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>AG Barr Platform User</profile>
-    </profileActionOverrides>
+    <label>Aforza Service</label>
+    <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>CustomerAccountRecordPage</content>
@@ -90,11 +68,71 @@
         <profile>Admin</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
+    <tabs>standard-Feed</tabs>
     <tabs>standard-Account</tabs>
-    <tabs>aforza__Visit__c</tabs>
+    <tabs>aforza__Request__c</tabs>
+    <tabs>aforza__Claim__c</tabs>
+    <tabs>aforza__Delivery__c</tabs>
+    <tabs>aforza__Invoice__c</tabs>
+    <tabs>aforza__Payment_Transaction__c</tabs>
     <tabs>standard-Order</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Contract</tabs>
+    <tabs>aforza__Assessment_Response__c</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>TAMDesktopAppUtilityBar</utilityBar>
+    <utilityBar>aforza__Aforza_Service_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <fieldName>aforza__Account__c</fieldName>
+            <tab>aforza__Assessment_Response__c</tab>
+        </mappings>
+        <mappings>
+            <tab>aforza__Claim__c</tab>
+        </mappings>
+        <mappings>
+            <fieldName>aforza__Account__c</fieldName>
+            <tab>aforza__Delivery__c</tab>
+        </mappings>
+        <mappings>
+            <fieldName>aforza__Account__c</fieldName>
+            <tab>aforza__Invoice__c</tab>
+        </mappings>
+        <mappings>
+            <fieldName>aforza__Account__c</fieldName>
+            <tab>aforza__Payment_Transaction__c</tab>
+        </mappings>
+        <mappings>
+            <fieldName>aforza__Account__c</fieldName>
+            <tab>aforza__Request__c</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Account</tab>
+        </mappings>
+        <mappings>
+            <fieldName>AccountId</fieldName>
+            <tab>standard-Contact</tab>
+        </mappings>
+        <mappings>
+            <fieldName>AccountId</fieldName>
+            <tab>standard-Contract</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Dashboard</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Feed</tab>
+        </mappings>
+        <mappings>
+            <fieldName>AccountId</fieldName>
+            <tab>standard-Order</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-report</tab>
+        </mappings>
+    </workspaceConfig>
 </CustomApplication>
