@@ -1,15 +1,62 @@
 {
-  "apiVersion": "53.0",
-  "objects": [
-    {
-      "query": "SELECT Name, Description, ParentId, Phone, Website FROM Account",
-      "operation": "Upsert",
-      "externalId": "Name"
-    },
-    {
-      "query": "SELECT Name, AccountId, Email, FirstName, LastName, MobilePhone, Phone FROM Contact",
-      "operation": "Upsert",
-      "externalId": "Name"
-    }
-  ]
+    "apiVersion": "53.0",
+    "objects": [
+        {
+            "query": "SELECT Id,AccountStatus__c,BarrDirectAppUser__c,BillToReference__c,BillingCity,BillingCountry,BillingCountryCode,BillingGeoCodeAccuracy,BillingLatitude,BillingLongitude,BillingPostalCode,BillingSameAsShipping__c,BillingState,BillingStateCode,BillingStreet,ClosedDate__c,ClosedReason__c,CreditStatus__c,CustomerShopNumber__c,CustomerTier__c,DeliveryPointCriteriaMet__c,Depot__c,Email__C,ExternalDBID__c,FieldSalesRegion__c,FieldSalesTerritory__c,FixedDeliveryInstructions__c,FormalCreditCheckAgreed__c,Frequency__c,InvoiceType__c,LastOrderDate__c,MinOrderQuantity__c,Name,PORequired__c,ParentId,Phone,PreferredCallTimeTelesales__c,PreferredVisitTime__c,PreviousAccount__c,PricedUnpricedInvoice__c,PrimaryCallDay__c,PrimaryDeliveryDay__c,PrimaryGridNumber__c,PrimaryPaymentMethod__c,PrimaryStartDate__c,RecordTypeId,SeasonalAccount__c,SeasonalEndDate__c,SeasonalStartDate__c,SecondaryCallDay__c,SecondaryDeliveryDay__c,SecondaryGridNumber__c,SecondaryStartDate__c,SeparateLoad__c,ShippingCity,ShippingCountry,ShippingCountryCode,ShippingGeoCodeAccuracy,ShippingLatitude,ShippingLongitude,ShippingPostalCode,ShippingState,ShippingStateCode,ShippingStreet,StoreName__c,SupplierRef__c,Symbol__c,Type,aforza__Active__c,aforza__Credit_Amount__c,aforza__Credit_Length__c,aforza__Default_Price_Book__c,aforza__Last_Visit__c,aforza__Operating_Hours__c,aforza__Primary_Contact__c FROM Account WHERE Account.CreatedBy.LastName = 'McCartney'",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id,Name,Description,IsActive,IsStandard,TaxCode__c,aforza__Default_Price_Book__c FROM PriceBook2 WHERE IsActive = TRUE",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id,Name,aforza__Code__c,aforza__Description__c,aforza__Sequence__c,aforza__Type__c FROM aforza__Attribute_Category__c",
+            "operation": "Upsert",
+            "externalId": "aforza__Code__c"
+        },
+        {
+            "query": "SELECT Id,aforza__Active__c,aforza__Attribute_Category__c,Name,aforza__Code__c,aforza__Description__c,aforza__Sequence__c,aforza__Type__c,aforza__Values__c FROM aforza__Attribute__c",
+            "operation": "Upsert",
+            "externalId": "aforza__Code__c"
+        },
+        {
+            "query": "SELECT Id,Name,Description,DrsGrossPack__c,DrsSkuCode__c,DrinkType__c,Family,FocusFiveGroup__c,FocusFiveProduct__c,HeightDimension__c,InnerPackCode__c,IsActive,LoyaltyProduct__c,Multiple__c,OffSale__c,OuterPackCode__c,PackPrice__C,PackSize__c,PackagingType__c,PacksPerCase__c,PriceMarkedPack__c,ProductCategory__c,ProductCode,WeightUnit__c,StockKeepingUnit,aforza__Endorsed_Message__c,aforza__Endorsed__c,aforza__Height__c,aforza__Parent_Product__c,aforza__Type__c,aforza__Typical_Quantity__c,aforza__Weight__c,aforza__Width__c FROM Product2 WHERE Name != 'Discount' AND Name != 'Tax' AND Name != 'Promotion' AND IsActive = TRUE",
+            "operation": "Upsert",
+            "externalId": "StockKeepingUnit"
+        },
+        {
+            "query": "SELECT Id, Pricebook2Id,Pricebook2.Name,Product2Id,Product2.Name,UnitPrice,UseStandardPrice,IsActive,aforza__Cost__c,aforza__Floor_Price__c,aforza__Sales_Commission_Percent__c,aforza__Tax_Percent__c FROM PriceBookEntry WHERE Product2.Name != 'Discount' AND Product2.Name != 'Tax' AND Product2.Name != 'Promotion' AND IsActive = TRUE AND PriceBook2.IsActive = TRUE",
+            "operation": "Insert"
+        },
+        {
+            "query": "SELECT Id, aforza__Active__c, Name, aforza__Description__c, aforza__Effective_From__c, aforza__Effective_To__c, aforza__Eligible_Sizes__c, aforza__Eligible_Types__c, aforza__Inheritable__c, aforza__Priority__c, aforza__Segmentation_Channel_Ecommerce__c, aforza__Segmentation_Channel_Mobile__c, aforza__Segmentation_Channel_Telesales__c, aforza__Segmentation_Profiles__c, aforza__Segmentation_Proximity__c, aforza__Segmentation_Proximity_Account__c, aforza__Segmentation_Rules__c,aforza__Segmentation_Rules_Formatted__c, aforza__Simulation_Percentage__c,aforza__Simulation_Total_Accounts__c,aforza__Simulation_Total_Eligible_Accounts__c, aforza__Target_Account__c, aforza__Target_Segment__c FROM aforza__Assortment__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id, aforza__Assortment__c, Name, aforza__Product__c FROM aforza__Assortment_Product__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id,aforza__City__c,aforza__Country__c,Name,aforza__Inventory_Owner__c,aforza__Location__c,aforza__Postal_Code__c,RecordTypeId,aforza__State__c,aforza__Street__c,aforza__Vehicle_Manufacturer__c,aforza__Vehicle_Registration_Number__c,aforza__Vehicle_Type__c FROM aforza__Inventory__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id,aforza__Inventory__c,Name,PickingLocation__c,aforza__Product__c,aforza__Stock_Quantity__c FROM aforza__Inventory_Product__c",
+            "operation": "Insert"
+        },
+        {
+            "query": "SELECT Id,Name,aforza__Account__c,aforza__Attribute__c,aforza__Product__c,aforza__Value__c FROM aforza__Attribute_Assignment__c",
+            "operation": "Insert"
+        },
+        {
+            "query": "SELECT Id,Name,aforza__Description__c,aforza__Segmentation_Channel_Ecommerce__c,aforza__Segmentation_Channel_Mobile__c,aforza__Segmentation_Channel_Telesales__c,aforza__Segmentation_Profiles__c,aforza__Segmentation_Proximity__c,aforza__Segmentation_Proximity_Account__c,aforza__Segmentation_Rules__c,aforza__Segmentation_Rules_Formatted__c,aforza__Simulation_Percentage__c,aforza__Simulation_Total_Accounts__c,aforza__Simulation_Total_Eligible_Accounts__c FROM aforza__Segment__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        }
+    ]
 }

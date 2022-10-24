@@ -1,0 +1,11 @@
+Id,Name,Description,IsActive,IsStandard,TaxCode__c,aforza__Default_Price_Book__c
+01s8d0000052c0sAAA,Standard Price Book,OCR Band 3,true,true,,false
+01s2z000001SSnpAAG,Barr Direct GOLD,GOLD pricing,true,false,,false
+01s2z000001SSnqAAG,Baxter Story,BAXTER STOREY - 15% ORD - CC030 / SDSD_PL_421,true,false,,false
+01s2z000001T1epAAC,FIXED BAND 3 - PMP @ DSD,FIXED BAND 3 - PMP @ DSD - G183 / SDSD_PL_530,true,false,,false
+01s2z000001T1X5AAK,GENUINE DINING,GENUINE DINING - E208,true,false,,false
+01s2z000001T4AJAA0,CENTRAL GROUP,"CENTRAL GROUP (RT STUART) - plain mostly band 4, PMPs mostly 30p off DSD but not <C&C - SDSD_PL_173",true,false,,false
+01s2z000001T0s4AAC,SODEXO DIRECT,SODEXO DIRECT - CC166 / SDSD_PL_820,true,false,,false
+01s2z000001TJ9mAAG,Scotland Price Book,Price Book for Scotland products,true,false,,false
+01s2z000001TJ9wAAG,England Price Book,Price Book for England products,true,false,,false
+01s2z000001TK0LAAW,WAITROSE,WAITROSE - SDSD_PL_432,true,false,,false

@@ -10,7 +10,7 @@ private class AttributesServiceTest {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = prod.StockKeepingUnit, aforza__Active__c = false));
 
         Test.startTest();
-        Map<String, aforza__Attribute__c> mapOfAttributes =  AttributesService.getExistingInActiveAttributes(new List<Product2>{prod});
+        Map<String, aforza__Attribute__c> mapOfAttributes =  AttributesService.getExistingAttributes(new List<Product2>{prod});
         Test.stopTest();
 
         System.assertEquals(1, mapOfAttributes.size());

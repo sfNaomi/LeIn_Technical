@@ -2,8 +2,6 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
         <headerColor>#46CCC2</headerColor>
-        <logo>aforza__AforzaSalesAppIcon</logo>
-        <logoVersion>3</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
     <description>Accounts, Visits, Tasks, Orders</description>
