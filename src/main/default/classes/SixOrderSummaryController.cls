@@ -199,7 +199,7 @@ public with sharing class SixOrderSummaryController {
             EffectiveDate, Status, Description, id, (SELECT OrderId FROM OrderItems)
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem) AND AccountId =: accountId
-             AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
+            AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
             AND Status IN: OrderService.COMPLETED_ORDER_STATUSES AND Clone__c != TRUE
             ORDER BY EffectiveDate DESC Limit 6
         ];
@@ -218,9 +218,12 @@ public with sharing class SixOrderSummaryController {
     @TestVisible 
     private static List < OrderItem > getAllOrderItems(List < String > orderIds) {
         List < OrderItem > orderItems = [
-            SELECT product2.ProductCode, quantity, product2.id, pricebookEntryId,
-            product2.description, product2.name, order.id, order.effectivedate, UnitPrice, product2.IsDRSProduct__c,
-            product2.isactive FROM orderitem WHERE order.id IN: orderIds AND id != null AND product2.IsDRSProduct__c = FALSE
+            SELECT product2.ProductCode, quantity, product2.id, pricebookEntryId, product2.IsDRSProduct__c,
+            product2.description, product2.name, order.id, order.effectivedate, UnitPrice, order.status,
+            product2.isactive FROM orderitem WHERE order.id IN: orderIds AND product2.IsDRSProduct__c != TRUE
+            AND order.RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
+            AND order.Status IN: OrderService.COMPLETED_ORDER_STATUSES
+            AND id != null ORDER BY order.EffectiveDate DESC
         ];
         return orderItems;
        }
