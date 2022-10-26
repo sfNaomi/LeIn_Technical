@@ -62,7 +62,8 @@ public with sharing class TdfOrderItemTemplate extends TdfSObjectTemplate {
             Product2Id = product2Id,
             PricebookEntryId = pricebookEntryId,
             Quantity = 1,
-            UnitPrice = 10
+            UnitPrice = 10,
+            aforza__Type__c = 'Product'
         );
 
         return template;

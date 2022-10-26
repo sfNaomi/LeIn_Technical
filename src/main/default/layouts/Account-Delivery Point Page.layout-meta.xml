@@ -139,7 +139,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>aforza__Operating_Hours__c</field>
+                <field>OpeningTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

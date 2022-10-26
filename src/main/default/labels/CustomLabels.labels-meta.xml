@@ -447,7 +447,7 @@
         <protected>false</protected>
         <shortDescription>NoDriverOnDPAccount</shortDescription>
         <value>No driver has been associated to the DP. Please contact Sales Support team for assistance.</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>PickSheetDeliveryDate</fullName>
         <language>en_US</language>
@@ -652,5 +652,173 @@
         <protected>false</protected>
         <shortDescription>TamName</shortDescription>
         <value>TAM Name</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestDeliveryDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Delivery Date</shortDescription>
+        <value>Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestDeliveryInstructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Delivery Instructions</shortDescription>
+        <value>Delivery Instructions</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestDeliveryPoint</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Delivery Point</shortDescription>
+        <value>Delivery Point</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestDescription</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestDriver</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Driver</shortDescription>
+        <value>Driver</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestLoadId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Load ID</shortDescription>
+        <value>Load ID</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestNumberOfDps</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Number of DPs</shortDescription>
+        <value>No: DP&apos;s</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestNumberOfPallets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Number of Pallets</shortDescription>
+        <value>No: Pallets</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestOpeningTimes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Opening Times</shortDescription>
+        <value>Opening Times</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPalletSequence</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Pallet Sequence</shortDescription>
+        <value>Pallet Sequence</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPaymentMethod</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Payment Method</shortDescription>
+        <value>Payment Method</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPhone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestPostCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Post Code</shortDescription>
+        <value>Post Code</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestQuantity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestShippingAddress</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Shipping Address</shortDescription>
+        <value>Ship Address</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestTam</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - TAM</shortDescription>
+        <value>TAM</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestVehicle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Vehicle</shortDescription>
+        <value>Vehicle</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestVehiclePayload</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Vehicle Payload</shortDescription>
+        <value>Vehicle Payload</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestWeight</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Weight</shortDescription>
+        <value>Weight</value>
+    </labels>
+    <labels>
+        <fullName>Delivery_Manifest_Number_of_Pallets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Number of Pallets</shortDescription>
+        <value>No: Pallets</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - C/S</shortDescription>
+        <value>C/S</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestKG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - KG</shortDescription>
+        <value>KG</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestGrid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Grid</shortDescription>
+        <value>Grid</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryManifestNotes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Manifest - Notes</shortDescription>
+        <value>Notes</value>
     </labels>
 </CustomLabels>

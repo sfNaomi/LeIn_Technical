@@ -5,7 +5,7 @@
 import {LightningElement, track} from 'lwc';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenController.fetchNeededPicklistValues'
-import updateOrderStatus from '@salesforce/apex/LogisticUpdateScreenController.updateOrderStatus'
+import updateOrderFields from '@salesforce/apex/LogisticUpdateScreenController.updateOrderFields'
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
@@ -274,35 +274,35 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             this.isLoading = true;
             switch (this.selectedAction) {
                 case 'Print Pick Sheets':
-                    this.changeOrderStatus(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), 'Picking in Progress');
+                    this.updateOrders(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), {'Status': 'Picking in Progress', 'PickingSheetPrinted__c' : true});
                     this.navigateToPage('AGBarrPickSheet', {'ids' : this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Picked':
-                    this.changeOrderStatus(this.getSelectedOrdersIds(), 'Ready to Load');
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Ready to Load', 'PickingCompleted__c' : true});
                     break;
                 case 'Print Manifest':
-                    //TODO add proper action once this is finished
-                    this.showActionNotYetImplemented(this.selectedAction);
+                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryManifestPrinted__c' : true});
+                    this.navigateToPage('AGBarrDeliveryManifest', {'ids' : this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Print Delivery Note':
                     //TODO add proper action once this is finished
                     this.showActionNotYetImplemented(this.selectedAction);
                     break;
                 case 'Loaded':
-                    this.changeOrderStatus(this.getSelectedOrdersIds(), 'Pending Delivery');
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Pending Delivery', 'IsLoaded__c' : true});
                     break;
                 case 'Receipted':
-                    this.changeOrderStatus(this.getSelectedOrdersIds(), 'Receipted');
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Receipted', 'Receipt__c' : true});
                     break;
                 case 'Print Invoices':
                     //TODO add proper action once this is finished
                     this.showActionNotYetImplemented(this.selectedAction);
                     break;
                 case 'Cancel Order':
-                    this.changeOrderStatus(this.getSelectedOrdersIds(), 'Cancelled');
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Cancelled', 'DeliveryFailed__c' : true});
                     break;
                 case 'Replan':
-                    this.changeOrderStatus(this.getSelectedOrdersIds(), 'Unplanned');
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Unplanned', 'Replanned__c' : true});
                     break;
                 default:
             }
@@ -373,14 +373,14 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
          return selectedIds;
     }
 
-    /** Method to call apex to change the status of the orders
+    /** Method to call apex to change the order fields (different fields based on selected action)
      *
      * @author Svata Sejkora
      * @date 2022-10-07
      */
-    async changeOrderStatus(orderIds, newStatus) {
+    async updateOrders(orderIds, fieldValues) {
         if (orderIds.length > 0) {
-            await updateOrderStatus({orderIds: orderIds, newStatus: newStatus});
+            await updateOrderFields({orderIds: orderIds, fieldValues: fieldValues});
             const dynamicFilter = this.template.querySelector('c-dynamic-filter');
             await dynamicFilter.handleFilterClick();
             const toastSuccess = new ShowToastEvent({
@@ -445,7 +445,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Picking in Progress']);
                 break;
             case 'Print Manifest':
-                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Receipted']);
+                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Pending Delivery', 'Receipted']);
                 break;
             case 'Print Delivery Note':
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Receipted']);

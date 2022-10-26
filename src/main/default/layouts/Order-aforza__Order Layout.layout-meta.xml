@@ -359,15 +359,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>aforza__Date__c</fields>
-        <fields>aforza__Status__c</fields>
-        <fields>aforza__Type__c</fields>
-        <relatedList>aforza__Delivery__c.aforza__Order__c</relatedList>
-        <sortField>aforza__Date__c</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>aforza__Issued_Date__c</fields>
         <fields>Gross__c</fields>
         <fields>aforza__Status__c</fields>
@@ -378,6 +369,9 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
