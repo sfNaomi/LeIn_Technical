@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PS_Product_Scotland__c</fullName>
+    <externalId>false</externalId>
+    <formula>aforza__Outlet_Asset__r.PS_Product_Scotland__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>PS Product Scotland</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

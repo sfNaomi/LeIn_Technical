@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Perfect_Store_Met__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates if the perfect store condition is met</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Indicates if the perfect store condition is met</inlineHelpText>
+    <label>Perfect Store Met?</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
