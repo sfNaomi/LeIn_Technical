@@ -305,10 +305,7 @@ public with sharing class SixOrderSummaryController {
         newOrder.SalesRepresentative__c = dpData?.SalesRepresentative__c;
         newOrder.SalesRepresentativeCode__c = dpData?.SalesRepresentativeCode__c;
         newOrder.ownerId = UserInfo.getUserId();
-        newOrder.DefaultPriceBook__c = dPData.aforza__Default_Price_Book__c;
         newOrder.aforza__Inventory__c = dpData?.DefaultInventory__c;
-        newOrder.DPName__c = dPData.Name;
-        newOrder.DPReference__c = dpData?.DeliveryPointReference__c;
         newOrder.BillingCity = dpData?.BillingCity;
         newOrder.BillingPostalCode = dpData?.BillingPostalCode;
         newOrder.BillingState = dpData?.BillingState;
