@@ -6,6 +6,7 @@
     <permissionSets>AccountEditAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
@@ -18,6 +19,7 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentTransactionBaseAccess</permissionSets>
     <permissionSets>PaymentTransactionEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>

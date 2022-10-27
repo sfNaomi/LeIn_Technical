@@ -161,37 +161,37 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Product_Scotland__c</field>
+                <field>PsProductScotland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Category_Scotland__c</field>
+                <field>PsCategoryScotland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Rate_Scotland__c</field>
+                <field>PsRateScotland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Weight_Scotland__c</field>
+                <field>PsWeightScotland__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Product_England__c</field>
+                <field>PsProductEngland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Category_England__c</field>
+                <field>PsCategoryEngland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Rate_England__c</field>
+                <field>PsRateEngland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PS_Weight_England__c</field>
+                <field>PsWeightEngland__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

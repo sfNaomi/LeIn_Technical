@@ -59,19 +59,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Perfect_Store_Met__c</field>
+                <field>PerfectStoreMet__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Product_Scotland__c</field>
+                <field>PsProductScotland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Rate_Scotland__c</field>
+                <field>PsRateScotland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Weight_Scotland__c</field>
+                <field>PsWeightScotland__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -80,15 +80,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Product_England__c</field>
+                <field>PsProductEngland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Rate_England__c</field>
+                <field>PsRateEngland__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PS_Weight_England__c</field>
+                <field>PsWeightEngland__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -105,35 +105,35 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Presented_Priority_Brand_1__c</field>
+                <field>PresentedPriorityBrand1__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Presented_another_missing_brand__c</field>
+                <field>PresentedAnotherMissingBrand__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Merchandised_Replenished_the_Fixture__c</field>
+                <field>MerchandisedReplenishedTheFixture__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Put_up_POS__c</field>
+                <field>PutUpPos__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Did_the_retailer_agree_to_buy_any_New_SK__c</field>
+                <field>DidRetailerAgreeToBuyAnyNewSk__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Other_Flavoured_Sparkling_water_stocked__c</field>
+                <field>OtherFlavouredSparklingWaterStocked__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Does_the_Outlet_Stock_Rubicon_Mango_Stil__c</field>
+                <field>DoesTheOutletStockRubiconMangoStil__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Number_of_AG_Barr_POS_are_In_Situ__c</field>
+                <field>NumberOfAgBarrPosAreInSitu__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -142,27 +142,27 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Presented_Priority_Brand_2__c</field>
+                <field>PresentedPriorityBrand2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Merchandised_Replenished_the_Chiller__c</field>
+                <field>MerchandisedReplenishedTheChiller__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Built_a_Display__c</field>
+                <field>BuiltDisplay__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sold_Stock_from_Car__c</field>
+                <field>SoldStockFromCar__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Does_the_Outlet_Stock_Coke_Zero_500_mL_P__c</field>
+                <field>DoesTheOutletStockCokeZero500MlP__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Is_Irn_Bru_PHENOMENAL_POS_In_Situ__c</field>
+                <field>IsIrnBruPhenomenalPosInSitu__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -175,60 +175,60 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Buyer_Availability__c</field>
+                <field>BuyerAvailability__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Rubicon_Family_All_SKU_s_Count__c</field>
+                <field>RubiconFamilyAllSkusCount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Irn_Bru_Family_All_SKUs_inc_IBE__c</field>
+                <field>IrnBruFamilyAllSkusIncIbe__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>No_cases_opened_merchandised__c</field>
+                <field>NoCasesOpenedMerchandised__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>KA_Family_All_SKU_s__c</field>
+                <field>KaFamilyAllSkus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Other_Barr_Products__c</field>
+                <field>OtherBarrProducts__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Add_call_to_your_coverage_and_baseline__c</field>
+                <field>AddCallToYourCoverageAndBaseline__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>In_Call_Productivity__c</field>
+                <field>InCallProductivity__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>No_of_Competitor_Soft_Drink_POS_in_Situ__c</field>
+                <field>NoOfCompetitorSoftDrinkPosInSitu__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>No_NEW_pieces_of_POS_placed_today__c</field>
+                <field>NoNewPiecesOfPOSPlacedToday__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Barr_Family_All_SKU_s__c</field>
+                <field>BarrFamilyAllSkus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Sun_Exotic_Family_All_Brands__c</field>
+                <field>SunExoticFamilyAllBrands__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Franchise_Snapple_San_Ben_Bundaberg__c</field>
+                <field>FranchiseSnappleSanBenBundaberg__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

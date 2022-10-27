@@ -4,6 +4,8 @@
     <label>Sales Support Exec</label>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AuditAssetBaseAccess</permissionSets>
+    <permissionSets>AuditAssetEditAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
@@ -17,10 +19,12 @@
     <permissionSets>OrderEditAccess</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentTransactionBaseAccess</permissionSets>
     <permissionSets>PaymentTransactionEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>ProductSupportAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
