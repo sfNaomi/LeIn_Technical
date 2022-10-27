@@ -65,6 +65,12 @@
                 <label>Delivery</label>
             </value>
             <value>
+                <fullName>Merchandise Audit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Merchandise Audit</label>
+            </value>
+            <value>
                 <fullName>Merchandise Review</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -81,6 +87,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Promotion Compliance</label>
+            </value>
+            <value>
+                <fullName>Stock Audit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Stock Audit</label>
             </value>
             <value>
                 <fullName>Survey</fullName>
