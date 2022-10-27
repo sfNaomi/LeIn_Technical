@@ -22,25 +22,25 @@ public with sharing class SixOrderSummaryController {
     public class OrderDto {
         @AuraEnabled public String Id;
         @AuraEnabled public String EffectiveDate;
-        @AuraEnabled public List < SkuDto > skus;
+        @AuraEnabled public List <SkuDto> skus;
         @AuraEnabled public String sku;
         @AuraEnabled public String effectiveDateFieldName;
     }
 
 
     @AuraEnabled(cacheable = true)
-    public static List < skudto > getOrdersList(String accountId) {
+    public static List <skudto> getOrdersList(String accountId) {
 
-        Map < String, SkuDto > skuDtoMap = new Map < String, SkuDto > ();
-        Map < String, Integer > totalQuantityMap = new Map < String, Integer > ();
+        Map <String, SkuDto> skuDtoMap = new Map <String, SkuDto> ();
+        Map <String, Integer> totalQuantityMap = new Map <String, Integer> ();
 
-        List < skudto > orderDtosToReturn = new List < skudto > ();
-        Set < String > assignedSkus = new Set < String > ();
-        Set < String > productIDs = new Set < String > ();
-        Map < String, String > skuProductIDmap = new Map < String, String > ();
-        Map < String, List < Decimal >> mapProductEntity = new Map < String, List < Decimal >> ();
-        List < OrderItem > orders = getLastOrderLists(accountId);
-        Map < String, aforza__Inventory_Product__c > prodInventMap = getInventoryMap(orders, productIDs);  
+        List <skudto> orderDtosToReturn = new List <skudto> ();
+        Set <String> assignedSkus = new Set <String> ();
+        Set <String> productIDs = new Set <String> ();
+        Map <String, String> skuProductIDmap = new Map <String, String> ();
+        Map <String, List <Decimal>> mapProductEntity = new Map <String, List <Decimal>> ();
+        List <OrderItem> orders = getLastOrderLists(accountId);
+        Map <String, aforza__Inventory_Product__c> prodInventMap = getInventoryMap(orders, productIDs);  
         orderDtosToReturn = createSkus(orders, prodInventMap, skuDtoMap, totalQuantityMap, orderDtosToReturn); 
         mapProductEntity = addInventoryQuantity(orders, mapProductEntity);
 
@@ -52,15 +52,15 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static Map < String, aforza__Inventory_Product__c > getInventoryMap(List < orderItem > orders, Set < String > productIDs) {
+    private static Map <String, aforza__Inventory_Product__c> getInventoryMap(List <orderItem> orders, Set <String> productIDs) {
 
         for (OrderItem ord: orders) {
             productIDs.add(ord.product2.id);
         }
-        List < aforza__Inventory_Product__c > InventoryProducts = [Select id, aforza__Stock_Quantity__c, aforza__Product__c
+        List <aforza__Inventory_Product__c> InventoryProducts = [Select id, aforza__Stock_Quantity__c, aforza__Product__c
             from aforza__Inventory_Product__c where aforza__Product__c in: productIDs
         ];
-        Map < String, aforza__Inventory_Product__c > ProdIDAforzaInventMap = new Map < String, aforza__Inventory_Product__c > ();
+        Map <String, aforza__Inventory_Product__c> ProdIDAforzaInventMap = new Map <String, aforza__Inventory_Product__c> ();
         for (aforza__Inventory_Product__c objCS: InventoryProducts) {
             prodIDAforzaInventMap.put(objCS.aforza__Product__c, objCS);
         }
@@ -68,9 +68,9 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static List < skuDto > createSkus(List < ORderItem > orders, Map < String, aforza__Inventory_Product__c > prodInventMap, Map < String, skuDto > skuDtoMap, Map < String, Decimal > totalQuantityMap, List < skuDto > orderDtosToReturn) {
+    private static List <skuDto> createSkus(List <ORderItem> orders, Map <String, aforza__Inventory_Product__c> prodInventMap, Map <String, skuDto> skuDtoMap, Map <String, Decimal> totalQuantityMap, List <skuDto> orderDtosToReturn) {
         try {
-        Map < String, Decimal > quantityMap = new Map < String, Decimal > ();
+        Map <String, Decimal> quantityMap = new Map <String, Decimal> ();
        
             for (OrderItem ord: orders) {
                 SkuDto skuDto = new SkuDto();
@@ -96,7 +96,7 @@ public with sharing class SixOrderSummaryController {
                 quantityMap.put(ord.Product2.id, (quantityMap.get(ord.Product2.id) + ord.quantity));
                 totalQuantityMap.put(ord.Product2.id, 1);
 
-                if (ord.quantity != null && ord.quantity > 0) {
+                if (ord.quantity != null && ord.quantity> 0) {
                     orderDtosToReturn.add(skuDto);
                 }
             }
@@ -110,13 +110,13 @@ public with sharing class SixOrderSummaryController {
 
 
     @TestVisible 
-    private static Map < String, List < Decimal >> addInventoryQuantity(List < OrderItem > orders, Map < String, List < Decimal >> mapProductEntity) {
+    private static Map <String, List <Decimal>> addInventoryQuantity(List <OrderItem> orders, Map <String, List <Decimal>> mapProductEntity) {
 
         for (OrderItem et: orders) {
             if (mapProductEntity.containsKey(et.Product2.id)) {
                 mapProductEntity.get(et.Product2.id).add(et.quantity);
             } else {
-                mapProductEntity.put(et.Product2.id, new List < Decimal > {
+                mapProductEntity.put(et.Product2.id, new List <Decimal> {
                     et.quantity
                 });
             }
@@ -125,9 +125,9 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static Map < String, skuDto > getQuantityAndTotalOrders(Map < String, skuDto > skuDtoMap, Map < String, List < Decimal >> mapProductEntity) {
+    private static Map <String, skuDto> getQuantityAndTotalOrders(Map <String, skuDto> skuDtoMap, Map <String, List <Decimal>> mapProductEntity) {
         for (String st: skuDtoMap.keyset()) {
-            List < Decimal > thisList = mapProductEntity.get(st);
+            List <Decimal> thisList = mapProductEntity.get(st);
             Integer size = thisList.size();
             skuDtoMap.get(st).totalOrders = size;
             Decimal count = 0;
@@ -140,7 +140,7 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static List < skuDto > calculateAverage(Map < String, skuDto > skuDtoMap, List < skuDto > orderDtosToReturn) {
+    private static List <skuDto> calculateAverage(Map <String, skuDto> skuDtoMap, List <skuDto> orderDtosToReturn) {
         for (String st: skuDtoMap.keyset()) {
             skuDtoMap.get(st).Average = Integer.valueOf((skuDtoMap.get(st).totalQuantity / skuDtoMap.get(st).totalOrders).round(RoundingMode.UP));
             orderDtosToReturn.add(skuDtoMap.get(st));
@@ -149,7 +149,7 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static List < skuDto > calculateStockLeft(Map < String, skuDto > skuDtoMap, List < skuDto > orderDtosToReturn) {
+    private static List <skuDto> calculateStockLeft(Map <String, skuDto> skuDtoMap, List <skuDto> orderDtosToReturn) {
         for (String st: skuDtoMap.keyset()) {
          if(skuDtoMap.get(st).stock != null){
             skuDtoMap.get(st).stockRemaining = Integer.valueOf((skuDtoMap.get(st).stock - skuDtoMap.get(st).Average));
@@ -164,10 +164,10 @@ public with sharing class SixOrderSummaryController {
     }
 
     @AuraEnabled(cacheable = true)
-    public static List < OrderDto > getOrdersDates(String accountId) {
-        List < String > orderNumbers = new List < String > ();
-        List < OrderDto > orderDtoList = new List < OrderDto > ();
-        List < Order > orderList = [
+    public static List <OrderDto> getOrdersDates(String accountId) {
+        List <String> orderNumbers = new List <String> ();
+        List <OrderDto> orderDtoList = new List <OrderDto> ();
+        List <Order> orderList = [
             SELECT Id, EffectiveDate, Clone__c, Status, AccountId, Description, (SELECT OrderId FROM OrderItems)
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem)
@@ -177,8 +177,10 @@ public with sharing class SixOrderSummaryController {
             AccountId =: accountId
             ORDER BY EffectiveDate DESC Limit 6
         ];
-        system.debug('orderList ' + orderList);
-        for (Order ord: orderList) {
+        List<Order> orderdOrderList = [ SELECT Id, EffectiveDate, Clone__c, Status, AccountId, Description, (SELECT OrderId FROM OrderItems)
+        FROM Order WHERE Id IN: orderList ORDER BY EffectiveDate ASC];
+        
+        for (Order ord: orderdOrderList) {
             String orderDate = ord.EffectiveDate.format();
             OrderDto orderDto = new OrderDto();
             orderDto.effectiveDate = orderDate;
@@ -186,15 +188,16 @@ public with sharing class SixOrderSummaryController {
             orderDto.effectiveDateFieldName = (orderDate+ord.id);
             orderDtoList.add(orderDto);
         }
+        
         return orderDtoList;
     }
 
     @AuraEnabled(cacheable = true)   
-    public static List < OrderItem > getLastOrderLists(String accountId) {
+    public static List <OrderItem> getLastOrderLists(String accountId) {
         try{
-        List < String > orderNumbers = new List < String > ();
-        List < OrderItem > orderItemsList = new List < OrderItem > ();
-        List < Order > orderList = [
+        List <String> orderNumbers = new List <String> ();
+        List <OrderItem> orderItemsList = new List <OrderItem> ();
+        List <Order> orderList = [
             SELECT
             EffectiveDate, Status, Description, id, (SELECT OrderId FROM OrderItems)
             FROM Order
@@ -216,8 +219,8 @@ public with sharing class SixOrderSummaryController {
         }
 
     @TestVisible 
-    private static List < OrderItem > getAllOrderItems(List < String > orderIds) {
-        List < OrderItem > orderItems = [
+    private static List <OrderItem> getAllOrderItems(List <String> orderIds) {
+        List <OrderItem> orderItems = [
             SELECT product2.ProductCode, quantity, product2.id, pricebookEntryId, product2.IsDRSProduct__c,
             product2.description, product2.name, order.id, order.effectivedate, UnitPrice, order.status,
             product2.isactive FROM orderitem WHERE order.id IN: orderIds AND product2.IsDRSProduct__c != TRUE
@@ -229,11 +232,11 @@ public with sharing class SixOrderSummaryController {
        }
 
     @AuraEnabled
-    public static String CreateOrder(List < Map < String, String >> orderJSON, String accountId) {
+    public static String CreateOrder(List <Map <String, String>> orderJSON, String accountId) {
     try{
-        List < SkuDto > OrderToSkuList = new List < SkuDto > ();
+        List <SkuDto> OrderToSkuList = new List <SkuDto> ();
 
-        for (Map < String, String > mapJ: orderJson) {
+        for (Map <String, String> mapJ: orderJson) {
             skuDto newSku = MapJson(mapJ);
             OrderToSkuList.add(newSku);
         }
@@ -248,7 +251,7 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static skuDto MapJson(Map < String, String > orderJSON) {
+    private static skuDto MapJson(Map <String, String> orderJSON) {
 
         SkuDto sku = new skuDto();
         sku.productId = orderJSON.get('productId');
@@ -259,9 +262,9 @@ public with sharing class SixOrderSummaryController {
     }
 
     @TestVisible 
-    private static String InsertOrder(List < skuDto > skuList, Id ordId) {
+    private static String InsertOrder(List <skuDto> skuList, Id ordId) {
 
-        list < OrderItem > orderItems = new list < OrderItem > ();
+        list <OrderItem> orderItems = new list <OrderItem> ();
 
         OrderItem newI;
         for (SkuDto sku: skuList) {
@@ -285,7 +288,7 @@ public with sharing class SixOrderSummaryController {
 
         try {
         Account dPData = [SELECT aforza__Default_Price_Book__c, BillingPostalCode, BillingCity,
-            BillingState, BillingStateCode, BillingStreet, Depot__c, NextDeliveryDate__c,
+            BillingCountryCode, BillingState, BillingStateCode, BillingStreet, Depot__c, NextDeliveryDate__c,
             ShippingAddress, ShippingCity, ShippingCountry, ShippingCountryCode, ShippingStateCode,
             ShippingStreet, Name, SalesRepresentativeCode__c, SalesRepresentative__c,
             DefaultInventory__c,
@@ -308,10 +311,12 @@ public with sharing class SixOrderSummaryController {
         newOrder.aforza__Inventory__c = dpData?.DefaultInventory__c;
         newOrder.BillingCity = dpData?.BillingCity;
         newOrder.BillingPostalCode = dpData?.BillingPostalCode;
-        newOrder.BillingState = dpData?.BillingState;
+        newOrder.BillingStateCode = dpData?.BillingStateCode;
+        newOrder.BillingCountryCode = dpData?.BillingCountryCode;
         newOrder.BillingStreet = dpData?.BillingStreet;
         newOrder.ShippingCity = dpData?.ShippingCity;
-        newOrder.ShippingCountry = dpData?.ShippingCountry;
+        newOrder.ShippingCountryCode = dpData?.ShippingCountryCode;
+        newOrder.ShippingStateCode = dpData?.ShippingStateCode;
         newOrder.ShippingPostalCode = dpData?.ShippingPostalCode;
         newOrder.ShippingStreet = dpData?.ShippingStreet;
         newOrder.Pricebook2Id = dpData.aforza__Default_Price_Book__c;
