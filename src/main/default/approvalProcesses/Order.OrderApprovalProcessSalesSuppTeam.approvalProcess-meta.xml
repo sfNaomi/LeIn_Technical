@@ -30,6 +30,10 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
+            <name>IsAprovedEqualsTrue</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
             <name>UpdateOrderStatusToCompleted</name>
             <type>FieldUpdate</type>
         </action>
