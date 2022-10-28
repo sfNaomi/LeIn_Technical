@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Record_Types__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Enter the developer name(s) of record types you wish to restrict this functionality to. Separate multiple names with a comma</inlineHelpText>
+    <label>Record Type(s)</label>
+    <required>false</required>
+    <type>TextArea</type>
+</CustomField>
