@@ -221,9 +221,9 @@ public with sharing class SixOrderSummaryController {
     @TestVisible 
     private static List <OrderItem> getAllOrderItems(List <String> orderIds) {
         List <OrderItem> orderItems = [
-            SELECT product2.ProductCode, quantity, product2.id, pricebookEntryId, product2.IsDRSProduct__c,
+            SELECT product2.ProductCode, product2.family, quantity, product2.id, pricebookEntryId, product2.IsDRSProduct__c,
             product2.description, product2.name, order.id, order.effectivedate, UnitPrice, order.status,
-            product2.isactive FROM orderitem WHERE order.id IN: orderIds AND product2.IsDRSProduct__c != TRUE
+            product2.isactive FROM orderitem WHERE order.id IN: orderIds AND product2.family = 'Product' AND product2.IsDRSProduct__c = FALSE
             AND order.RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
             AND order.Status IN: OrderService.COMPLETED_ORDER_STATUSES
             AND id != null ORDER BY order.EffectiveDate DESC

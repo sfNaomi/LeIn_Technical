@@ -444,7 +444,7 @@ public class SixOrderSummaryControllerTest {
     OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(orderId = newOrder1.id, quantity = 4));
     OrderItem item1 = [SELECT id, Product2Id, pricebookEntryId FROM orderitem where id =: newOrderItem1.id];
 
-    Product2 prod = [SELECT id, productCode, StockKeepingUnit, isActive from product2 where id =: item1.Product2Id];
+    Product2 prod = [SELECT id, family, productCode, StockKeepingUnit, isActive from product2 where id =: item1.Product2Id];
 
     newOrder1.Status = 'Activated';
     update newOrder1;
