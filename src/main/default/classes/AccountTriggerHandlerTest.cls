@@ -43,7 +43,7 @@ private with sharing class AccountTriggerHandlerTest {
         Account testDPAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
                         RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                        Phone = '+404234234234',
+                        Phone = '+441234234234',
                         Email__c = 'test@test.com'
                 )
         );
