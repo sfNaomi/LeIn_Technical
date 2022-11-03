@@ -47,6 +47,7 @@ private with sharing class OutletAssetTriggerHandlerTest {
 
 
         assets[0].PerfectStoreMet__c = true;
+        assets[0].aforza__Audit_Date__c = System.now();
         update assets;
         // no asserts here. As we cannot set proper shipping state because we cannot set country and state picklists for scratch.
         // there is now ay this logic would have any values.
