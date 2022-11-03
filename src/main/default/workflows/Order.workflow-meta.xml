@@ -20,6 +20,9 @@
         <description>Rejected Order</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>SalesSupportExec</recipient>
             <type>role</type>
         </recipients>
