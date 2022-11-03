@@ -17,6 +17,7 @@
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
+    <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderEditAccess</permissionSets>
@@ -29,6 +30,7 @@
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductSupportAccess</permissionSets>
+    <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
