@@ -31,6 +31,7 @@ public with sharing class OutletAssetTriggerHandler {
             if (outletAsset.PerfectStoreMet__c == true && outletAsset.aforza__Audit_Date__c != null && outletAsset.BenchmarkDate__c == null && outletAsset.BenchmarkScore__c == 0) {
                 outletAsset.BenchmarkDate__c = outletAsset.aforza__Audit_Date__c.date();
                 outletAsset.BenchmarkScore__c = outletAsset.Score__c;
+                assetsToUpdate.add(outletAsset);
             }
         }
 
