@@ -87,10 +87,10 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo Last successful commit used: ${{ steps.check-success-commit.outputs.fromCommit }}                   
+                    echo Last successful commit used: ${{ steps.check-success-commit.outputs.FROM_COMMIT }}                   
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
 
-                    sfdx sgd:source:delta --to "HEAD" --from ${{ steps.check-success-commit.outputs.fromCommit }}  --output . -i .sgdignore
+                    sfdx sgd:source:delta --to "HEAD" --from ${{ steps.check-success-commit.outputs.FROM_COMMIT }}  --output . -i .sgdignore
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     echo "LINES_DESTRUCTIVE=$(wc -l < destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
                     cat package/package.xml
