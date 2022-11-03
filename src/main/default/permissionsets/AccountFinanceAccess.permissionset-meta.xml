@@ -293,6 +293,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.PerfectStoreScoreEligible__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.PreferredCallTimeTelesales__c</field>
         <readable>true</readable>
     </fieldPermissions>

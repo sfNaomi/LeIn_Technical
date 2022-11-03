@@ -3,7 +3,7 @@
  */
 
 @IsTest
-private class FocusProductsServiceTest {
+private class OutletAssetServiceTest {
     @IsTest
     private static void testGetAccountsOutletAssets() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
@@ -15,7 +15,7 @@ private class FocusProductsServiceTest {
         TdfSObjectFactory.insertSObject(new aforza__Outlet_Asset__c(aforza__Account__c = acc.Id, aforza__Product__c = prod2.Id));
 
         Test.startTest();
-        Map<Id, Map<Id, Date>> outlets = FocusProductsService.getAccountsOutletAssets(new Set<Id>{acc.Id});
+        Map<Id, Map<Id, Date>> outlets = OutletAssetService.getAccountsOutletAssets(new Set<Id>{acc.Id});
         Test.stopTest();
 
         System.assertEquals(1, outlets.size());
@@ -28,7 +28,7 @@ private class FocusProductsServiceTest {
         Product2 prod1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         Test.startTest();
-        aforza__Outlet_Asset__c outletAsset = FocusProductsService.createOutletAsset(acc.Id, prod1);
+        aforza__Outlet_Asset__c outletAsset = OutletAssetService.createOutletAsset(acc.Id, prod1);
         Test.stopTest();
 
         System.assertEquals(acc.Id, outletAsset.aforza__Account__c);
@@ -43,7 +43,7 @@ private class FocusProductsServiceTest {
         Product2 prod1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         Test.startTest();
-        FocusProductsService.addNewFocusProducts(new Set<Id>{acc.Id}, new List<Product2>{prod1});
+        OutletAssetService.addNewOutletAssets(new Set<Id>{acc.Id}, new List<Product2>{prod1});
         Test.stopTest();
 
         List<aforza__Outlet_Asset__c> assets = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod1.Id];
@@ -51,7 +51,7 @@ private class FocusProductsServiceTest {
     }
 
     @IsTest
-    private static void testCreateFocusProductsForAccounts() {
+    private static void testCreateOutletAssetsForAccounts() {
         // create NonStockis attribute category
         TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
 
@@ -62,8 +62,24 @@ private class FocusProductsServiceTest {
         List<aforza__Outlet_Asset__c> assetsBefore = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
         System.assertEquals(0, assetsBefore.size());
 
-        List<aforza__Outlet_Asset__c> assetsToInsert =  FocusProductsService.createFocusProductsForAccounts(new Set<Id>{acc.Id});
+        List<aforza__Outlet_Asset__c> assetsToInsert =  OutletAssetService.createOutletAssetsForAccounts(new Set<Account>{acc}, AccountTriggerHandler.OutletAssetType.FOCUS);
         insert assetsToInsert;
+
+        List<aforza__Outlet_Asset__c> assetsAfter = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        System.assertEquals(1, assetsAfter.size());
+    }
+
+    @IsTest
+    private static void testCreateOutletAssetsForAccounts_PerfectScore() {
+        TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        List<aforza__Outlet_Asset__c> assetsBefore = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        System.assertEquals(0, assetsBefore.size());
+
+        Test.startTest();
+        List<aforza__Outlet_Asset__c> assetsToInsert =  OutletAssetService.createOutletAssetsForAccounts(new Set<Account>{acc}, AccountTriggerHandler.OutletAssetType.PERFECT_SCORE);
+        insert assetsToInsert;
+        Test.stopTest();
 
         List<aforza__Outlet_Asset__c> assetsAfter = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
         System.assertEquals(1, assetsAfter.size());

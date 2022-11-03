@@ -302,8 +302,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.ParentId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.PerfectStoreScoreEligible__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

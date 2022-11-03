@@ -30,6 +30,27 @@ private with sharing class OutletAssetTriggerHandlerTest {
 
         List<aforza__Attribute_Assignment__c> assignmentsAfterDel = [SELECT Id FROM aforza__Attribute_Assignment__c WHERE aforza__Account__c = :acc.Id];
         System.assertEquals(0, assignmentsAfterDel.size());
+    }
 
+    @IsTest
+    private static void testPopulateBenchmarkFields() {
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+
+        Test.startTest();
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c, BenchmarkDate__c, BenchmarkScore__c FROM aforza__Outlet_Asset__c WHERE aforza__Product__c = :prod.Id];
+        Assert.areEqual(1, assets.size());
+        Assert.areEqual(null, assets[0].BenchmarkDate__c);
+        Assert.areEqual(0, assets[0].BenchmarkScore__c);
+
+
+        assets[0].PerfectStoreMet__c = true;
+        update assets;
+        // no asserts here. As we cannot set proper shipping state because we cannot set country and state picklists for scratch.
+        // there is now ay this logic would have any values.
+        // TODO fix once we can add states via API/Apex
+        // we have it here just for coverage :(
     }
 }

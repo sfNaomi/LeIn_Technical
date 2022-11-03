@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Score__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(PsProductScotland__c = true,  PsRateScotland__c *  PsWeightScotland__c, IF(PsProductEngland__c = true, PsRateEngland__c *  PsWeightEngland__c, 0))</formula>
+    <formula>IF (PerfectStoreMet__c = TRUE, PerfectScoreRate__c * PerfectScoreWeight__c, 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Score</label>
     <precision>18</precision>

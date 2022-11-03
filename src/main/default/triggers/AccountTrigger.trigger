@@ -17,12 +17,14 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
         }
         when AFTER_INSERT {
             AccountTriggerHandler.manageFocusProducts(Trigger.newMap);
+            AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterInsert(Trigger.newMap);
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.manageAccountTeamMembership(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.pushInfoFromCustomerToRelatedDPs(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterUpdate(Trigger.New, Trigger.Old);
         }
         when BEFORE_DELETE {

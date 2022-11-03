@@ -17,11 +17,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.BenchmarkRate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>aforza__Outlet_Asset__c.BenchmarkScore__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -153,36 +148,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Outlet_Asset__c.PresentedPriorityBrand2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsProductEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsProductScotland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsRateEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsRateScotland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsWeightEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Outlet_Asset__c.PsWeightScotland__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -19,6 +19,11 @@ public with sharing class AccountTriggerHandler {
         DELETION
     }
 
+    public enum OutletAssetType {
+        FOCUS,
+        PERFECT_SCORE
+    }
+
     public static void copyContactDetailsFromPrimaryContact(List<Account> newAccounts, List<Account> oldAccounts) {
         List<Account> accountsToUpdateContactDetails = new List<Account>();
         for (Integer index = 0; index < newAccounts.size(); index++) {
@@ -148,13 +153,13 @@ public with sharing class AccountTriggerHandler {
     }
 
     public static void manageFocusProducts(Map<Id, Account> accountsMap) {
-        Set<Id> dpAccounts = new Set<Id>();
+        Set<Account> dpAccounts = new Set<Account>();
         for (Account acc : accountsMap.values()) {
             if (acc.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
-                dpAccounts.add(acc.Id);
+                dpAccounts.add(acc);
             }
         }
-        Database.executeBatch(new CreateOutletAssetsAccountBatch(dpAccounts));
+        Database.executeBatch(new CreateOutletAssetsAccountBatch(dpAccounts, OutletAssetType.FOCUS));
     }
 
     public static void pullInfoOnDPFromRelatedCustomer(List<Account> newAccounts, Map<Id, Account> oldMap) {
@@ -179,16 +184,29 @@ public with sharing class AccountTriggerHandler {
         AccountSyncService.syncAccounts(accountsRequireSync, operation);
     }
 
-    public static void populateDefaultInventory(List<Account> newAccounts, Map<Id, Account> oldAccounts){  
+    public static void populateDefaultInventory(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
         Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
         for (Account newAccount : newAccounts) {
             Account oldAccount = oldAccounts?.get(newAccount.Id);
             if (
-                (oldAccount == null && newAccount.Depot__c != null) ||
-                (oldAccount != null && newAccount.Depot__c != oldAccount.Depot__c) 
-            ){
-            	newAccount.DefaultInventory__c = inventoryIdMap.get(newAccount.Depot__c);
+                    (oldAccount == null && newAccount.Depot__c != null) ||
+                            (oldAccount != null && newAccount.Depot__c != oldAccount.Depot__c)
+            ) {
+                newAccount.DefaultInventory__c = inventoryIdMap.get(newAccount.Depot__c);
             }
-        } 
+        }
+    }
+
+    public static void addPerfectScoreProducts(List<Account> accounts, Map<Id, Account> accountsOld) {
+        Set<Account> accountsForPerfectScore = new Set<Account>();
+        for (Account acc : accounts) {
+            if (acc.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && acc.PerfectStoreScoreEligible__c && (accountsOld == null ||
+                    accountsOld.get(acc.Id).PerfectStoreScoreEligible__c == false)) {
+                accountsForPerfectScore.add(acc);
+            }
+        }
+        if (accountsForPerfectScore.size() > 0) {
+            Database.executeBatch(new CreateOutletAssetsAccountBatch(accountsForPerfectScore, OutletAssetType.PERFECT_SCORE));
+        }
     }
 }

@@ -3,41 +3,6 @@
     <description>Admin access for Audit Asset object - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsProductEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsProductScotland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsRateEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsRateScotland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsWeightEngland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Audit_Asset__c.PsWeightScotland__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>aforza__Audit_Asset__c.Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>aforza__Audit_Asset__c.aforza__Asset__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -114,6 +79,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Audit_Asset__c.aforza__Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Audit_Asset__c.PerfectScoreProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Audit_Asset__c.PerfectScoreRate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Audit_Asset__c.PerfectScoreWeight__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Audit_Asset__c.Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

@@ -25,4 +25,16 @@ public with sharing class OutletAssetTriggerHandler {
         delete assignmentsToDelete;
     }
 
+    public static void populateBenchmarkFields(List<aforza__Outlet_Asset__c> outletAssets) {
+        List<aforza__Outlet_Asset__c> assetsToUpdate = new List<aforza__Outlet_Asset__c>();
+        for (aforza__Outlet_Asset__c outletAsset : outletAssets) {
+            if (outletAsset.PerfectStoreMet__c && outletAsset.BenchmarkDate__c == null && outletAsset.BenchmarkScore__c == 0) {
+                outletAsset.BenchmarkDate__c = outletAsset.aforza__Audit_Date__c.date();
+                outletAsset.BenchmarkScore__c = outletAsset.Score__c;
+            }
+        }
+
+        update assetsToUpdate;
+    }
+
 }

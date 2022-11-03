@@ -118,7 +118,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToActiveProspect() {
-        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -150,7 +150,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_NonCoverageAccountMovedToTraders() {
-        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -182,7 +182,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_CoverageAccountMovedToActiveProspect() {
-        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -214,7 +214,7 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testManageAccountTeamMembership_CoverageAccountMovedToTraders() {
-        aforza__Attribute__c attribute = (aforza__Attribute__c) TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         // create dp account and add team member
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
                 new Account(
@@ -498,12 +498,12 @@ private with sharing class AccountTriggerHandlerTest {
     @IsTest
     private static void testPullInfoOnDPFromRelatedCustomer_InsertDPRelatedToCustomer() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PoRequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
 
         Test.startTest();
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id, PoRequired__c = false)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, ParentId = customerAccount.Id, PORequired__c = false)
         );
         Test.stopTest();
 
@@ -513,13 +513,13 @@ private with sharing class AccountTriggerHandlerTest {
 
     @IsTest
     private static void testPullInfoOnDPFromRelatedCustomer_UpdateRelatedCustomerOnDP() {
-        
+
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PoRequired__c = true)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
         );
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PoRequired__c = false)
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PORequired__c = false)
         );
 
         Test.startTest();
@@ -569,7 +569,7 @@ private with sharing class AccountTriggerHandlerTest {
                 new Account(
                         RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
                         BillingStreet = null,
-                        BillingCity =  null,
+                        BillingCity = null,
                         BillingStateCode = null,
                         BillingCountryCode = null,
                         BillingPostalCode = null,
@@ -614,7 +614,7 @@ private with sharing class AccountTriggerHandlerTest {
                 new Account(
                         RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
                         BillingStreet = null,
-                        BillingCity =  null,
+                        BillingCity = null,
                         BillingStateCode = null,
                         BillingCountryCode = null,
                         BillingPostalCode = null,
@@ -683,7 +683,7 @@ private with sharing class AccountTriggerHandlerTest {
         Test.stopTest();
 
         Account updatedDpAccount = [SELECT Id, CreditStatus__c FROM Account WHERE Id = :dpAccount.Id];
-      
+
         System.assertEquals('Good', updatedDpAccount.CreditStatus__c);
     }
 
@@ -737,41 +737,73 @@ private with sharing class AccountTriggerHandlerTest {
         // batches run the account is here and thus the Asset is created twice
         System.assertEquals(2, assets.size());
     }
-    
+
     @IsTest
     private static void testPopulateDefaultInventory() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Moston', InventoryCode__c = 'M');
         insert inventory;
-        
+
         Test.startTest();
         Account acc = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '2M203FRW')
         );
         Test.stopTest();
 
-        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id =:acc.Id];
-       
+        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id = :acc.Id];
+
         System.assertEquals('M', account.Depot__c);
         System.assertEquals(inventory.Id, account.DefaultInventory__c);
     }
-    
+
     @IsTest
     private static void testPopulateDefaultInventory_setToNull() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Moston', InventoryCode__c = 'M');
         insert inventory;
-        
+
         Account acc = (Account) TdfSObjectFactory.insertSObject(
                 new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryGridNumber__c = '2M203FRW')
         );
-        
+
         Test.startTest();
         acc.Depot__c = null;
         update acc;
         Test.stopTest();
 
-        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id =:acc.Id];
-       
+        Account account = [SELECT Id, Depot__c, DefaultInventory__c FROM Account WHERE Id = :acc.Id];
+
         System.assertEquals(null, account.Depot__c);
         System.assertEquals(null, account.DefaultInventory__c);
+    }
+
+    @IsTest
+    private static void testAddPerfectScoreProducts() {
+        // create product with perfect Score
+        TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+
+        Test.startTest();
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        // given the fact that batches will be only run after stop test, and there is also batch to add new perfect store product to account. At the time
+        // batches run the account is here and thus the Asset is created twice
+        System.assertEquals(2, assets.size());
+    }
+
+    @IsTest
+    private static void testAddPerfectScoreProducts_update() {
+        // create product with perfect Score
+        TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        Test.startTest();
+        acc.PerfectStoreScoreEligible__c = true;
+        update acc;
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        // given the fact that batches will be only run after stop test, and there is also batch to add new perfect store product to account. At the time
+        // batches run the account is here and thus the Asset is created twice
+        System.assertEquals(2, assets.size());
     }
 }

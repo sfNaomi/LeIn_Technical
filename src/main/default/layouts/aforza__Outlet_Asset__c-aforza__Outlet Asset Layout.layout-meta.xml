@@ -61,18 +61,6 @@
                 <behavior>Edit</behavior>
                 <field>PerfectStoreMet__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PsProductScotland__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PsRateScotland__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PsWeightScotland__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -84,15 +72,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PsProductEngland__c</field>
+                <field>PerfectScoreProduct__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PsRateEngland__c</field>
+                <field>PerfectScoreRate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PsWeightEngland__c</field>
+                <field>PerfectScoreWeight__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -106,10 +94,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BenchmarkDate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>BenchmarkRate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

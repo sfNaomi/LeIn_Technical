@@ -2,8 +2,8 @@
  * Created by magdalena.stanciu on 13.09.2022.
  */
 
-public with sharing class AccountStatusUpdateBatch implements Database.Batchable<sObject>, Schedulable {
-    private Map<Integer, String> orderFrequencyToBeProcessed = new Map<Integer, String>{
+public with sharing class AccountStatusUpdateBatch implements Database.Batchable<SObject>, Schedulable {
+    private final Map<Integer, String> orderFrequencyToBeProcessed = new Map<Integer, String>{
             1 => 'W',
             2 => 'F',
             3 => 'M'
@@ -65,10 +65,10 @@ public with sharing class AccountStatusUpdateBatch implements Database.Batchable
                 'FROM Account ' +
                 'WHERE AccountStatus__c IN ' + accountStatuses + ' ' +
                 'AND Frequency__c = \'' + setting.AccountFrequency__c + '\' AND LastOrderDate__c != null AND (' +
-                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersUpperLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusUpperLimit__c + '\') OR ' +
-                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersMidLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusMidLimit__c + '\') OR ' +
-                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusLowerLimit__c + '\') OR ' +
-            		'(LastOrderDate__c >= LAST_N_DAYS:' + (Integer.ValueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusRecentOrders__c + '\') ' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.valueOf(setting.NoOfWeeksNoOrdersUpperLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusUpperLimit__c + '\') OR ' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.valueOf(setting.NoOfWeeksNoOrdersMidLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusMidLimit__c + '\') OR ' +
+                    '(LastOrderDate__c < LAST_N_DAYS:' + (Integer.valueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusLowerLimit__c + '\') OR ' +
+            		'(LastOrderDate__c >= LAST_N_DAYS:' + (Integer.valueOf(setting.NoOfWeeksNoOrdersLowerLimit__c) * 7) + ' AND AccountStatus__c != \'' + setting.UpdatedAccountStatusRecentOrders__c + '\') ' +
             	')';
         return query;
     }

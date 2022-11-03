@@ -47,6 +47,7 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.ShippingCity = 'Best City';
         template.ShippingPostalCode = '56789';
         template.ShippingStreet = 'Awesome Street 234';
+        template.ShippingCountryCode = 'GB';
         template.RecordTypeId = accountRecordTypeId;
         template.PrimaryGridNumber__c = '3C7201MOW';
         template.PrimaryStartDate__c = Date.parse('05/09/2022');
