@@ -28,7 +28,8 @@
         "salesforce-source-gen": "latest"
     },
     "dependencies": {
-        "@actions/core": "^1.9.1",
+        "@actions/core": "^1.10.0",
+        "@actions/github": "^5.1.1",
         "xml2js": "^0.4.23"
     }
 }
