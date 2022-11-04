@@ -4,7 +4,8 @@
     <protected>false</protected>
     <values>
         <field>aforza__Active__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
+
     </values>
     <values>
         <field>aforza__Assigned_Profiles_JSON__c</field>
