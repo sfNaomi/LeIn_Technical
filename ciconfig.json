@@ -8,6 +8,14 @@
         {
             "name": "Aforza Analytics",
             "id": "04t8d000000YbTpAAK"
+        },
+        {
+            "name": "Blackthorn Payments",
+            "id": "04t4N000000xBkFQAU"
+        },
+        {
+            "name": "Blackthorn | PayLink",
+            "id": "04t1I000003VrWiQAK"
         }
     ],
     "apexPrePush": [
