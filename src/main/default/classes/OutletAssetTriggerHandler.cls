@@ -36,7 +36,6 @@ public with sharing class OutletAssetTriggerHandler {
                 assetsToUpdate.add(assetToUpdate);
             }
         }
-
         update assetsToUpdate;
     }
 

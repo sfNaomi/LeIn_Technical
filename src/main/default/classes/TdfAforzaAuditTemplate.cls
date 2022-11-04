@@ -27,7 +27,7 @@ public with sharing class TdfAforzaAuditTemplate extends TdfSObjectTemplate {
         aforza__Audit__c userDefinedAudit = (aforza__Audit__c) userDefinedSObject;
 
         if (userDefinedAudit.aforza__Account__c == null) {
-            accountId = TdfSObjectFactory.insertSObject(new Account()).Id;
+            accountId = TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)).Id;
         }
     }
 
@@ -46,7 +46,7 @@ public with sharing class TdfAforzaAuditTemplate extends TdfSObjectTemplate {
         template.aforza__Account__c = accountId;
         template.aforza__Status__c = 'Completed';
         template.aforza__Type__c = 'Stock Check';
-        template.aforza__Submitted_Date__c = System.Now().date();
+        template.aforza__Submitted_Date__c = System.today();
         return template;
     }
 }

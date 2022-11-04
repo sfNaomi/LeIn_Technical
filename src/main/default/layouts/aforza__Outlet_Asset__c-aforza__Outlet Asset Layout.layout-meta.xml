@@ -58,22 +58,19 @@
         <label>Perfect Store</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PerfectStoreMet__c</field>
+                <behavior>Readonly</behavior>
+                <field>PerfectScoreProduct__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Readonly</behavior>
+                <field>PerfectStoreMet__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Score__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PerfectScoreProduct__c</field>
-            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>PerfectScoreRate__c</field>
@@ -404,7 +401,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3O0000024Ste</masterLabel>
+        <masterLabel>00h7a000002gBCP</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
