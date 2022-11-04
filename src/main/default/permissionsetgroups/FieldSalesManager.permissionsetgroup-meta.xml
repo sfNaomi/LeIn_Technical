@@ -17,7 +17,7 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
-    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentTransactionBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
