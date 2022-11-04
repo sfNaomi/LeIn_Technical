@@ -170,11 +170,9 @@ public with sharing class SixOrderSummaryController {
         List <Order> orderList = [
             SELECT Id, EffectiveDate, Clone__c, Status, AccountId, Description, (SELECT OrderId FROM OrderItems)
             FROM Order
-            WHERE Id IN(SELECT OrderId FROM OrderItem)
+            WHERE Id IN(SELECT OrderId FROM OrderItem) AND AccountId =: accountId
              AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES And Clone__c != TRUE
-            AND
-            AccountId =: accountId
+            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES And Clone__c = FALSE
             ORDER BY EffectiveDate DESC Limit 6
         ];
         List<Order> orderdOrderList = [ SELECT Id, EffectiveDate, Clone__c, Status, AccountId, Description, (SELECT OrderId FROM OrderItems)
@@ -203,7 +201,7 @@ public with sharing class SixOrderSummaryController {
             FROM Order
             WHERE Id IN(SELECT OrderId FROM OrderItem) AND AccountId =: accountId
             AND  RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES AND Clone__c != TRUE
+            AND Status IN: OrderService.COMPLETED_ORDER_STATUSES AND Clone__c = FALSE
             ORDER BY EffectiveDate DESC Limit 6
         ];
         system.debug(orderList);
@@ -225,7 +223,7 @@ public with sharing class SixOrderSummaryController {
             product2.description, product2.name, order.id, order.effectivedate, UnitPrice, order.status,
             product2.isactive FROM orderitem WHERE order.id IN: orderIds AND product2.family = 'Product' AND product2.IsDRSProduct__c = FALSE
             AND order.RecordType.DeveloperName IN :OrderService.RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION 
-            AND order.Status IN: OrderService.COMPLETED_ORDER_STATUSES
+            AND order.Status IN: OrderService.COMPLETED_ORDER_STATUSES AND Order.Clone__c = FALSE
             AND id != null ORDER BY order.EffectiveDate DESC
         ];
         return orderItems;
