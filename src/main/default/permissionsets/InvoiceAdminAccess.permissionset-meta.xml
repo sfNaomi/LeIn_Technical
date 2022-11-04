@@ -218,6 +218,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>aforza__Invoice__c.PushedtoJde__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.Route__c</field>
         <readable>true</readable>
     </fieldPermissions>
