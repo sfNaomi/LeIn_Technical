@@ -43,9 +43,11 @@ public with sharing class OutletAssetService {
                     productsToLinkOutletAssetsTo = PERFECT_STORE_PRODUCTS.get(acc.ShippingState);
                 }
             }
-
-            for (Product2 product : productsToLinkOutletAssetsTo) {
-                outletAssetsToImport.add(createOutletAsset(acc.Id, product));
+            // condition for a case, when there is no Shipping State on an account
+            if (productsToLinkOutletAssetsTo != null) {
+                for (Product2 product : productsToLinkOutletAssetsTo) {
+                    outletAssetsToImport.add(createOutletAsset(acc.Id, product));
+                }
             }
         }
         return outletAssetsToImport;

@@ -5,6 +5,7 @@
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
+    <permissionSets>AuditAssetEditAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -13,6 +14,7 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
+    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentTransactionBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>

@@ -54,4 +54,38 @@ private with sharing class OutletAssetTriggerHandlerTest {
         // TODO fix once we can add states via API/Apex
         // we have it here just for coverage :(
     }
+
+    @IsTest
+    private static void testPopulateEmptyBenchmarkForNotAuditedAssets() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Product2 prod = (Product2) TdfSObjectFactory.createSObject(new Product2(PsProductEngland__c = true));
+        Product2 prod2 = (Product2) TdfSObjectFactory.createSObject(new Product2(PsProductEngland__c = true, Name = 'Prod 2'));
+
+        List<Product2> products = new List<Product2>{prod, prod2};
+        Test.startTest();
+        insert products;
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c, BenchmarkDate__c, BenchmarkScore__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        Assert.areEqual(2, assets.size());
+        Assert.areEqual(null, assets[0].BenchmarkDate__c);
+        Assert.areEqual(0, assets[0].BenchmarkScore__c);
+        Assert.areEqual(null, assets[1].BenchmarkDate__c);
+        Assert.areEqual(0, assets[1].BenchmarkScore__c);
+
+        Datetime dateNow = System.now();
+
+        assets[0].PerfectStoreMet__c = true;
+        assets[0].aforza__Audit_Date__c = dateNow;
+        update assets;
+
+        List<aforza__Outlet_Asset__c> assets2 = [SELECT Id, aforza__Product_Code__c, BenchmarkDate__c, BenchmarkScore__c, aforza__Audit_Date__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
+        Assert.areEqual(2, assets2.size());
+        Assert.areEqual(dateNow.date(), assets2[0].BenchmarkDate__c);
+        Assert.areEqual(dateNow, assets2[0].aforza__Audit_Date__c);
+        Assert.areEqual(0, assets2[0].BenchmarkScore__c);
+        Assert.areEqual(dateNow.date(), assets2[1].BenchmarkDate__c);
+        Assert.areEqual(dateNow, assets2[1].aforza__Audit_Date__c);
+        Assert.areEqual(0, assets2[1].BenchmarkScore__c);
+    }
 }

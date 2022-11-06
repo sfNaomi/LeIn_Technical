@@ -131,6 +131,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Outlet_Asset__c.PerfectScoreProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Outlet_Asset__c.PerfectScoreRate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Outlet_Asset__c.PerfectScoreWeight__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Outlet_Asset__c.PerfectStoreMet__c</field>
         <readable>true</readable>
