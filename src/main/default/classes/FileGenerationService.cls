@@ -3,7 +3,7 @@
  */
 
 public with sharing class FileGenerationService {
-    public Enum DocumentType {
+    public enum documentType {
         INVOICE,
         DELIVERY_NOTE
     }
@@ -19,7 +19,7 @@ public with sharing class FileGenerationService {
     * @author Magdalena Stanciu
     * @date 2022-10-10
     */
-    public static Map<Id, ContentVersion> generateDocuments(DocumentType docType, Set<Id> recordIds) {
+    public static Map<Id, ContentVersion> generateDocuments(documentType docType, Set<Id> recordIds) {
         if (recordIds.isEmpty()) {
             return null;
         }
@@ -35,13 +35,13 @@ public with sharing class FileGenerationService {
 
         // link files to records
         Map<Id, ContentVersion> insertedContentVersions = new Map<Id, ContentVersion>([
-                SELECT Id, ContentDocumentId
-                FROM ContentVersion
-                WHERE Id IN :contentVersionsByLinkedRecordId.values()
+            SELECT Id, ContentDocumentId
+            FROM ContentVersion
+            WHERE Id IN :contentVersionsByLinkedRecordId.values()
         ]);
 
         List<ContentDocumentLink> contentDocumentsLinksToInsert = new List<ContentDocumentLink>();
-        for (Id recordId : contentVersionsByLinkedRecordId.keyset()) {
+        for (Id recordId : contentVersionsByLinkedRecordId.keySet()) {
             Id contentVersionId = contentVersionsByLinkedRecordId.get(recordId)?.Id;
             ContentVersion insertedContentVersion = insertedContentVersions.get(contentVersionId);
 
@@ -67,7 +67,7 @@ public with sharing class FileGenerationService {
     * @date 2022-10-10
     */
     @TestVisible
-    private static ContentVersion generateContentVersion(DocumentType docType, sObject record) {
+    private static ContentVersion generateContentVersion(documentType docType, SObject record) {
         PageReference pageRef = null;
         String documentName = null;
         String documentType = null;
@@ -78,11 +78,11 @@ public with sharing class FileGenerationService {
                 documentName = 'Invoice ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
                 documentType = 'Invoice';
             }
-            //when DELIVERY_NOTE {
-                //pageRef = ;
-                //documentName = 'Delivery Note ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
-                //documentType = 'Delivery Note';
-            //}
+            when DELIVERY_NOTE {
+                pageRef = Page.DeliveryNotePDF;
+                documentName = 'Delivery Note ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
+                documentType = 'Delivery Note';
+            }
             when else {
                 throw new FileGenerationException('Invalid document type');
             }
@@ -150,8 +150,8 @@ public with sharing class FileGenerationService {
     * @date 2022-10-10
     */
     @TestVisible
-    public static String getSObjectType(Id recordId) {
-        return recordId.getSObjectType().getDescribe().getName();
+    private static String getSObjectType(Id recordId) {
+        return recordId.getSobjectType().getDescribe().getName();
     }
 
     /**

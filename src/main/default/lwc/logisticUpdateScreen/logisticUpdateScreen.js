@@ -274,35 +274,35 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             this.isLoading = true;
             switch (this.selectedAction) {
                 case 'Print Pick Sheets':
-                    this.updateOrders(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), {'Status': 'Picking in Progress', 'PickingSheetPrinted__c' : true});
-                    this.navigateToPage('AGBarrPickSheet', {'ids' : this.getSelectedOrdersIds().join(',')});
+                    this.updateOrders(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), {'Status': 'Picking in Progress', 'PickingSheetPrinted__c': true});
+                    this.navigateToPage('AGBarrPickSheet', {'ids': this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Picked':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Ready to Load', 'PickingCompleted__c' : true});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Ready to Load', 'PickingCompleted__c': true});
                     break;
                 case 'Print Manifest':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryManifestPrinted__c' : true});
-                    this.navigateToPage('AGBarrDeliveryManifest', {'ids' : this.getSelectedOrdersIds().join(',')});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryManifestPrinted__c': true});
+                    this.navigateToPage('AGBarrDeliveryManifest', {'ids': this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Print Delivery Note':
-                    //TODO add proper action once this is finished
-                    this.showActionNotYetImplemented(this.selectedAction);
+                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryNotePrinted__c' : true});
+                    this.navigateToPage('DeliveryNotePDF', {'id': this.getSelectedOrdersIds().join(',')});
                     break;
                 case 'Loaded':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Pending Delivery', 'IsLoaded__c' : true});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Pending Delivery', 'IsLoaded__c': true});
                     break;
                 case 'Receipted':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Receipted', 'Receipt__c' : true});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Receipted', 'Receipt__c': true});
                     break;
                 case 'Print Invoices':
                     //TODO add proper action once this is finished
                     this.showActionNotYetImplemented(this.selectedAction);
                     break;
                 case 'Cancel Order':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Cancelled', 'DeliveryFailed__c' : true});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Cancelled', 'DeliveryFailed__c': true});
                     break;
                 case 'Replan':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Unplanned', 'Replanned__c' : true});
+                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Unplanned', 'Replanned__c': true});
                     break;
                 default:
             }
@@ -312,6 +312,34 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         } finally {
             this.isLoading = false;
         }
+    }
+
+    /** Method to navigate to a web page with query params
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-07
+     */
+    navigateToPage(page, params) {
+        let queryString = this.generateUrlQueryString(params);
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: '/apex/' + page + queryString
+            }
+        });
+    }
+
+    /** Method to to generate url query string from params received as object
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-07
+     */
+    generateUrlQueryString(params) {
+        let queryString = '?';
+        Object.keys(params).forEach(key => {
+            queryString += key + '=' + params[key];
+        });
+        return queryString;
     }
 
     handleLoadIdSelection(event) {
@@ -363,14 +391,14 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @author Magdalena Stanciu
      * @date 2022-10-19
      */
-     getSelectedOrderIdsWithSpecifiedStatus(status) {
-         let selectedIds = [];
-         this.selectedRows.forEach((order) => {
-             if (order.Status === status) {
-                 selectedIds.push(order.Id);
-             }
-         });
-         return selectedIds;
+    getSelectedOrderIdsWithSpecifiedStatus(status) {
+        let selectedIds = [];
+        this.selectedRows.forEach((order) => {
+            if (order.Status === status) {
+                selectedIds.push(order.Id);
+            }
+        });
+        return selectedIds;
     }
 
     /** Method to call apex to change the order fields (different fields based on selected action)
@@ -408,7 +436,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @author Magdalena Stanciu
      * @date 2022-10-07
      */
-     navigateToPage(page, params) {
+    navigateToPage(page, params) {
         let queryString = this.generateUrlQueryString(params);
         this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
