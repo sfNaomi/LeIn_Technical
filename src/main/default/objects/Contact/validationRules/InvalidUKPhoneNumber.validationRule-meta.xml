@@ -3,11 +3,15 @@
     <fullName>InvalidUKPhoneNumber</fullName>
     <active>true</active>
     <description>Phone Number should follow E61 format, starting will +44 (and not followed by 0)</description>
-    <errorConditionFormula>AND
-(
+
+    <errorConditionFormula>OR(
+AND(
 NOT(
-REGEX(Phone, &quot;^\\+44[1-9]\\d{1,12}$&quot;)
-)
-,NOT ISBLANK(Phone))</errorConditionFormula>
+REGEX(Phone, "^\\+44[1-9]\\d{1,12}$")
+),NOT ISBLANK(Phone)),
+AND(
+NOT(
+REGEX(MobilePhone, "^\\+44[1-9]\\d{1,12}$")
+),NOT ISBLANK( MobilePhone )))</errorConditionFormula>
     <errorMessage>Please enter a valid UK number starting with +44</errorMessage>
 </ValidationRule>
