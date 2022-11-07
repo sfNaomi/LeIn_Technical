@@ -32,11 +32,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.BillToAccounts__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Account.BillToName__c</field>
         <readable>true</readable>
@@ -153,16 +148,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.OutletType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.WhatAreTheOutletRtm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.ExternalDBID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -223,11 +208,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.JDENumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.Jigsaw</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -279,6 +259,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.OpeningTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.OutletType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -362,9 +347,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-            <editable>true</editable>
-            <field>Account.ProofOfDeliveryRequired__c</field>
-            <readable>true</readable>
+        <editable>true</editable>
+        <field>Account.ProofOfDeliveryRequired__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -478,12 +463,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.TradingFrequency__c</field>
+        <field>Account.TradingFrequencyBucketed__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.TradingFrequencyBucketed__c</field>
+        <field>Account.TradingFrequency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -499,6 +484,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.WeeksSinceLastOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.WhatAreTheOutletRtm__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

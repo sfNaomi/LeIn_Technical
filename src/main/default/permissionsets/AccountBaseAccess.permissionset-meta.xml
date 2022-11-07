@@ -33,11 +33,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.JDENumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.RecordTypeName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -114,11 +109,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.BarrDirectAppUser__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.BillToAccounts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -211,7 +201,7 @@
         <field>Account.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+        <fieldPermissions>
         <editable>false</editable>
         <field>Account.ExternalDBID__c</field>
         <readable>true</readable>

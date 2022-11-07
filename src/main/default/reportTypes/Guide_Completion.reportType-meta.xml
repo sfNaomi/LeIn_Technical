@@ -321,15 +321,10 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Account__c.BillToAccounts__c</field>
-            <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>aforza__Account__c.BillToName__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
         </columns>
-        <columns>
+                <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>aforza__Account__c.BillToReference__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
@@ -557,11 +552,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>aforza__Account__c.IsNew__c</field>
-            <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Account__c.JDENumber__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
         </columns>
         <columns>
