@@ -41,6 +41,10 @@
                 <behavior>Edit</behavior>
                 <field>OffSale__c</field>
             </layoutItems>
+             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ResourceUrlLink__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

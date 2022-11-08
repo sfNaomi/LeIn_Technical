@@ -136,6 +136,11 @@
         <field>Product2.PsWeightScotland__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.ResourceUrlLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.StockKeepingUnit</field>
