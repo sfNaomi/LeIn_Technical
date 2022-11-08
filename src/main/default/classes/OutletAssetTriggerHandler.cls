@@ -1,9 +1,5 @@
-/**
- * Created by svatopluk.sejkora on 04.10.2022.
- */
-
 public with sharing class OutletAssetTriggerHandler {
-
+    
     public static void deleteAttributesForFocusedProducts(Map<Id, aforza__Outlet_Asset__c> outletAssetsByIds) {
         Set<Id> accountIds = new Set<Id>();
         Set<String> productSkus = new Set<String>();
