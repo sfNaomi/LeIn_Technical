@@ -11,53 +11,178 @@ private class LogisticUpdateScreenControllerTest {
         List<LogisticUpdateScreenController.PicklistDto> picklists = LogisticUpdateScreenController.fetchNeededPicklistValues('Order', new List<String>{'Status', 'Depot__c'});
         Test.stopTest();
 
-        System.assert(!picklists.isEmpty(), 'There should be values in the returned list of picklists');
+        Assert.isTrue(!picklists.isEmpty(), 'There should be values in the returned list of picklists');
     }
 
     @IsTest
-    private static void testUpdateOrderStatus() {
-        String newStatus = 'Picking in Progress';
-        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID));
+    private static void testUpdateOrderFields_PrintPickSheet() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Picking in Progress', 'PickingSheetPrinted__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderStatus(new List<String>{order.Id}, newStatus);
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
-        List<Order> updatedOrder = [ SELECT Id, Status FROM Order];
+        List<Order> updatedOrder = [SELECT Id, Status, PickingSheetPrinted__c FROM Order];
 
-        System.assertEquals(1, updatedOrder.size());
-        System.assertEquals(newStatus, updatedOrder[0].Status);
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('PickingSheetPrinted__c'), updatedOrder[0].PickingSheetPrinted__c);
     }
 
     @IsTest
-    private static void testUpdateOrderStatus_Cancelled() {
-        String newStatus = 'Cancelled';
-        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID));
+    private static void testUpdateOrderFields_Picked() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Ready to Load', 'PickingCompleted__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderStatus(new List<String>{order.Id}, newStatus);
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
-        List<Order> updatedOrder = [ SELECT Id, Status, DeliveryFailed__c FROM Order];
+        List<Order> updatedOrder = [SELECT Id, Status, PickingCompleted__c FROM Order];
 
-        System.assertEquals(1, updatedOrder.size());
-        System.assertEquals(newStatus, updatedOrder[0].Status);
-        System.assertEquals(true, updatedOrder[0].DeliveryFailed__c);
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('PickingCompleted__c'), updatedOrder[0].PickingCompleted__c);
     }
 
     @IsTest
-    private static void testUpdateOrderStatus_Unplanned() {
-        String newStatus = 'Unplanned';
-        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID));
+    private static void testUpdateOrderFields_PrintManifest() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'DeliveryManifestPrinted__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderStatus(new List<String>{order.Id}, newStatus);
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
-        List<Order> updatedOrder = [ SELECT Id, Status, Replanned__c FROM Order];
+        List<Order> updatedOrder = [SELECT Id, DeliveryManifestPrinted__c FROM Order];
 
-        System.assertEquals(1, updatedOrder.size());
-        System.assertEquals(newStatus, updatedOrder[0].Status);
-        System.assertEquals(true, updatedOrder[0].Replanned__c);
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('DeliveryManifestPrinted__c'), updatedOrder[0].DeliveryManifestPrinted__c);
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_Loaded() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Pending Delivery', 'IsLoaded__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, Status, IsLoaded__c FROM Order];
+
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('IsLoaded__c'), updatedOrder[0].IsLoaded__c);
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_Receipted() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Receipted', 'Receipt__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, Status, Receipt__c FROM Order];
+
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('Receipt__c'), updatedOrder[0].Receipt__c);
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_CancelOrder() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Cancelled', 'DeliveryFailed__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, Status, DeliveryFailed__c FROM Order];
+
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('DeliveryFailed__c'), updatedOrder[0].DeliveryFailed__c);
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_Replan() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Unplanned', 'Replanned__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, Status, Replanned__c FROM Order];
+
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('Status'), updatedOrder[0].Status);
+        Assert.areEqual(fieldValues.get('Replanned__c'), updatedOrder[0].Replanned__c);
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_NoOrderIds() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Status' => 'Unplanned', 'Replanned__c' => true
+        };
+
+        Test.startTest();
+        try {
+            LogisticUpdateScreenController.updateOrderFields(new List<String>(), fieldValues);
+            Assert.isTrue(false);
+        } catch (PopulateAuraHandledException ex) {
+            Assert.isTrue(true);
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_NoFieldValues() {
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        try {
+            LogisticUpdateScreenController.updateOrderFields(new List<String>{newOrder.Id}, new Map<String, Object>());
+            Assert.isTrue(false);
+        } catch (PopulateAuraHandledException ex) {
+            Assert.isTrue(true);
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testUpdateOrderFields_WrongFieldName() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'Test' => 'Test'
+        };
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        try {
+            LogisticUpdateScreenController.updateOrderFields(new List<String>{newOrder.Id}, fieldValues);
+            Assert.isTrue(false);
+        } catch (PopulateAuraHandledException ex) {
+            Assert.isTrue(true);
+        }
+        Test.stopTest();
     }
 }

@@ -1,0 +1,19 @@
+.body-default{
+   /* overflow: auto; */
+    min-height: 25rem;
+}
+.image-cls{
+    cursor: pointer;
+}
+.input-width{
+    width: 16rem;
+}
+.input{
+    width: 15rem;
+}
+.input-date{
+    width: 13rem; 
+}
+.THIS.removeicon {/* Replace this class name "slds-form-element__icon" by your finding. */
+    display: none !important;
+}

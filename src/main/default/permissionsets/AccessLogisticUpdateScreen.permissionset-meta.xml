@@ -13,8 +13,20 @@
         <apexClass>CustomLookupInputController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>DeliveryManifestPDFController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PickSheetPDFController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Access Logistic Update Screen</label>
+    <pageAccesses>
+        <apexPage>AGBarrDeliveryManifest</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <pageAccesses>
         <apexPage>AGBarrPickSheet</apexPage>
         <enabled>true</enabled>

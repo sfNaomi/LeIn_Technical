@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EpoStatus__c</fullName>
+    <externalId>false</externalId>
+    <label>EPOS Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1 - KEY Store Allowing Access to their Data</fullName>
+                <default>false</default>
+                <label>1 - KEY Store Allowing Access to their Data</label>
+            </value>
+            <value>
+                <fullName>2 - KEY Store not Allowing Access to their Data</fullName>
+                <default>false</default>
+                <label>2 - KEY Store not Allowing Access to their Data</label>
+            </value>
+            <value>
+                <fullName>3 - EPOS Store Allowing Access to their Data</fullName>
+                <default>false</default>
+                <label>3 - EPOS Store Allowing Access to their Data</label>
+            </value>
+            <value>
+                <fullName>4 - EPOS Store not Allowing Access to their Data</fullName>
+                <default>false</default>
+                <label>4 - EPOS Store not Allowing Access to their Data</label>
+            </value>
+            <value>
+                <fullName>5 - No EPOS Data Captured</fullName>
+                <default>false</default>
+                <label>5 - No EPOS Data Captured</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

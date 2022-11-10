@@ -3,6 +3,21 @@
     <description>Read access for Inventory, Inventory Product and Inventory User objects - Read on object and Read on all fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Inventory_Product__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Inventory_Product__c.JdeStockQuantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Inventory_Product__c.NonSalableStock__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Inventory_Product__c.PickingLocation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34,6 +49,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>aforza__Inventory_User__c.aforza__User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Inventory__c.InventoryCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

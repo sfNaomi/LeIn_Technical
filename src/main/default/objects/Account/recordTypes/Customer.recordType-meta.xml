@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Customer</fullName>
     <active>true</active>
-    <compactLayoutAssignment>DPAccountCompactLayout</compactLayoutAssignment>
+    <compactLayoutAssignment>CustomerCompactLayout</compactLayoutAssignment>
     <label>Customer</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
@@ -736,10 +736,6 @@
     <picklistValues>
         <picklist>Symbol__c</picklist>
         <values>
-            <fullName>Best-One</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Costcutter</fullName>
             <default>false</default>
         </values>
@@ -760,19 +756,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Nisa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>None</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>One-O-One</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>

@@ -196,6 +196,71 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>EpoStatus__c</picklist>
+            <values>
+                <fullName>1 - KEY Store Allowing Access to their Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 - KEY Store not Allowing Access to their Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 - EPOS Store Allowing Access to their Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4 - EPOS Store not Allowing Access to their Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5 - No EPOS Data Captured</fullName>
+                <default>false</default>
+            </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OutletType__c</picklist>
+            <values>
+                <fullName>1 - Symbol Store (Active)</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2 - Large Convenience Store - Double Front Store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3 - Small Convenience Store - Single Front Store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4 - CTN (No Alcohol or Frozen Food)</fullName>
+                <default>false</default>
+            </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>WhatAreTheOutletRtm__c</picklist>
+            <values>
+                <fullName>Barr Direct</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bestway</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other C&amp;C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered Wholesaler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DirectDebitSetUp__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -724,7 +789,11 @@
     <picklistValues>
         <picklist>Symbol__c</picklist>
         <values>
-            <fullName>Best-One</fullName>
+            <fullName>Best In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Budgens</fullName>
             <default>false</default>
         </values>
         <values>
@@ -733,6 +802,14 @@
         </values>
         <values>
             <fullName>Day-Today</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Go Local</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Independent Outlet</fullName>
             <default>false</default>
         </values>
         <values>
@@ -748,11 +825,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Nisa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>None</fullName>
+            <fullName>NISA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -760,7 +833,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
+            <fullName>Other (Detail)</fullName>
             <default>false</default>
         </values>
         <values>
@@ -769,6 +842,10 @@
         </values>
         <values>
             <fullName>Spar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unitas Buying Group</fullName>
             <default>false</default>
         </values>
     </picklistValues>

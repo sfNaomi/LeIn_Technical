@@ -24,12 +24,19 @@
     <emailTemplate>unfiled$public/OrderRequiringApproval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <formula>AND(
+        <formula>OR(
+				AND(
 				(ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;) ||  Account.AvailableCredit__c &lt; 0),
     (RecordType.DeveloperName = &quot;ECommerceOrder&quot;	|| RecordType.DeveloperName = &quot;EDIOrder&quot;
-    || RecordType.DeveloperName = &quot;FieldDirectOrder&quot;))</formula>
+    || RecordType.DeveloperName = &quot;FieldDirectOrder&quot;)),
+				AND(Account.AvailableCredit__c &lt; 0, RecordType.DeveloperName = &quot;TelesalesOrder&quot;)
+			)</formula>
     </entryCriteria>
     <finalApprovalActions>
+        <action>
+            <name>IsAprovedEqualsTrue</name>
+            <type>FieldUpdate</type>
+        </action>
         <action>
             <name>UpdateOrderStatusToActivated</name>
             <type>FieldUpdate</type>

@@ -241,5 +241,16 @@ public with sharing class LoadTriggerHandler {
         return Datetime.newInstance(visitDate, visitTime.time());
     }
 
-
+    public static void populateDefaultInventory(List<Load__c> newLoads, Map<Id, Load__c> oldLoads){
+        Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
+        for (Load__c newLoad : newLoads) {
+            Load__c oldLoad = oldLoads?.get(newLoad.Id);
+            if (
+                (oldLoad == null && newLoad.Depot__c != null) ||
+                (oldLoad != null && newLoad.Depot__c != oldLoad.Depot__c)
+            ){
+            		newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
+            }
+        }   
+    }  
 }

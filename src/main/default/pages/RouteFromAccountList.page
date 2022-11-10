@@ -1,0 +1,21 @@
+<apex:page standardController="Account" extensions="CreateRouteFromAccountList" recordSetVar="accounts" lightningStylesheets="true">
+<apex:sectionHeader title="New Route"/>
+<apex:form >
+    <apex:pageblock >
+        <apex:pageblockSection >
+            <apex:pageblockSectionItem >
+                <apex:outputLabel >Route Name</apex:outputLabel>
+                <apex:inputText value="{!routeName}" required="true"/>
+            </apex:pageblockSectionItem>
+       
+            <apex:pageBlockTable value="{!selected}" var="a">
+                <apex:column value="{!a.Name}"/>
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+        <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Create Route" action="{!createRoute}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockButtons>
+    </apex:pageblock>
+</apex:form>
+</apex:page>

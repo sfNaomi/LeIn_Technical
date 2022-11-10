@@ -1,0 +1,6 @@
+Id,aforza__City__c,aforza__Country__c,Name,aforza__Inventory_Owner__c,aforza__Location__c,aforza__Postal_Code__c,RecordTypeId,aforza__State__c,aforza__Street__c,aforza__Vehicle_Manufacturer__c,aforza__Vehicle_Registration_Number__c,aforza__Vehicle_Type__c,aforza__Inventory_Owner__r.Name,RecordType.$$DeveloperName$NamespacePrefix$SobjectType
+a0X2z0000000iOsEAI,,,Dagenham,,[object Object],,0128d000001HhaxAAC,,,,,,,Building;aforza;aforza__Inventory__c
+a0X2z0000000kmGEAQ,,,Walmart Provider,0058d000003Uel0AAC,,,0128d000001HhaxAAC,,,,,,Admin User,Building;aforza;aforza__Inventory__c
+a0X2z0000001nQhEAI,Lisbon,Portugal,Training Session - Building Inventory Example,0058d000003Uel0AAC,[object Object],2700-410,0128d000001HhaxAAC,,Main Street,,,,Admin User,Building;aforza;aforza__Inventory__c
+a0X2z0000001o4UEAQ,,,Training Session - Moston Depot,0058d000003Uel0AAC,,,0128d000001HhaxAAC,,,,,,Admin User,Building;aforza;aforza__Inventory__c
+a0X2z0000001o4KEAQ,,,Training Session - Van Sales,0052z000003MhGfAAK,,,0128d000001HhayAAC,,,,,Van,Andy Pryke,Vehicle;aforza;aforza__Inventory__c

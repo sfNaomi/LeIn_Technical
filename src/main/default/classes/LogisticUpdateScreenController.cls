@@ -24,27 +24,23 @@ public with sharing class LogisticUpdateScreenController {
     }
 
     @AuraEnabled
-    public static void updateOrderStatus(List<String> orderIds, String newStatus) {
+    public static void updateOrderFields(List<String> orderIds, Map<String, Object> fieldValues) {
         try {
             if (orderIds.isEmpty()) {
                 throw new Exceptions.BadDataException('Order Id provided is empty. Please make sure there is a value');
             }
-            if (String.isEmpty(newStatus)) {
-                throw new Exceptions.BadDataException('Order Status provided is empty. Please make sure there is a value');
+            if (fieldValues.isEmpty()) {
+                throw new Exceptions.BadDataException('Field values not provided. Please make sure valid field values are provided');
             }
 
             List<Order> ordersToUpdate = new List<Order>();
             for (String orderId : orderIds) {
-                Order order = new Order();
-                order.Id = orderId;
-                order.Status = newStatus;
-                if (newStatus == 'Cancelled') {
-                    order.DeliveryFailed__c = true;
+                Order orderToUpdate = new Order();
+                orderToUpdate.Id = orderId;
+                for (String field : fieldValues.keyset()) {
+                    orderToUpdate.put(field, fieldValues.get(field));
                 }
-                if (newStatus == 'Unplanned') {
-                    order.Replanned__c = true;
-                }
-                ordersToUpdate.add(order);
+                ordersToUpdate.add(orderToUpdate);
             }
             update ordersToUpdate;
 

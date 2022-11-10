@@ -7,11 +7,6 @@
         <label>Product</label>
     </standardValue>
     <standardValue>
-        <fullName>Merchandise</fullName>
-        <default>false</default>
-        <label>Merchandise</label>
-    </standardValue>
-    <standardValue>
         <fullName>Category</fullName>
         <default>false</default>
         <label>Category</label>
@@ -40,5 +35,25 @@
         <fullName>Deposit</fullName>
         <default>false</default>
         <label>Deposit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Perfect Store V&amp;D</fullName>
+        <default>false</default>
+        <label>Perfect Store V&amp;D</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Perfect Store C&amp;E</fullName>
+        <default>false</default>
+        <label>Perfect Store C&amp;E</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Visit-Marketing</fullName>
+        <default>false</default>
+        <label>Visit-Marketing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Visit-Productivity</fullName>
+        <default>false</default>
+        <label>Visit-Productivity</label>
     </standardValue>
 </StandardValueSet>

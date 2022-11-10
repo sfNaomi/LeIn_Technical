@@ -55,7 +55,8 @@ public with sharing class TdfAforzaOutletAssetTemplate extends TdfSObjectTemplat
                 aforza__Name__c = productName,
                 aforza__Product__c = productId,
                 aforza__Account__c = accountId,
-                aforza__Type__c = 'Product'
+                aforza__Type__c = 'Product',
+                BuyerAvailability__c = 'Buyer Was Available'
         );
 
         return template;

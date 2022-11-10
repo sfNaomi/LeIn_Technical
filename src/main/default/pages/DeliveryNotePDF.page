@@ -1,0 +1,166 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf" applyBodyTag="False" applyHtmlTag="false"
+    controller="DeliveryNotePDFController">
+
+    <head>
+        <apex:stylesheet value="{!$Resource.invoiceCustomCss}" />
+        <style>
+            @page {
+                @bottom-right {
+                    content: "Page " counter(page) " of " counter(pages);
+                }
+            }
+
+            .signatureSection {
+                float: right;
+                width: 15%;
+                text-align: left;
+                padding: 0px;
+            }
+        </style>
+    </head>
+
+    <apex:repeat value="{!mapIdOrder}" var="key">
+        <div style="page-break-after: always;">
+            <apex:image url="{!$Resource.AGBarrLogo2}" width="100%" />
+            <br />
+            <br/>
+
+            <table class="invoice-table" id="invoice-line-items">
+                <tr style="color: black">
+                    <th class="invoice-table-header">Order Number</th>
+                    <th class="invoice-table-header">PO Ref#</th>
+                    <th class="invoice-table-header">Delivery Date</th>
+                    <th class="invoice-table-header">Customer Shop No</th>
+                    <th class="invoice-table-header">Delivery Instructions</th>
+                </tr>
+                <tr>
+                    <td class="invoice-table-rows">
+                        <apex:outputField value="{!mapIdOrder[key].OrderReferenceNumber}" />
+                    </td>
+                    <td class="invoice-table-rows">
+                        <apex:outputField value="{!mapIdOrder[key].PoNumber}" />
+                    </td>
+                    <td class="invoice-table-rows">
+                        <apex:outputField value="{!mapIdOrder[key].DeliveryDate__c}" />
+                    </td>
+                    <td class="invoice-table-rows">
+                        <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].CustomerShopNumber__c}" />
+                    </td>
+                    <td class="invoice-table-rows">
+                        <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].FixedDeliveryInstructions__c}" />
+                    </td>
+                </tr>
+            </table>
+
+
+            <br/>
+            <br/>
+            <div style="width: 20%; border: solid; border-width: thin;">
+                <table style="font-family: sans-serif">
+                    <tr style="color: black">
+                        <th style="padding-left: 5px; padding-right: 50px; width: 50px">Delivery Address:</th>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 5px; font-size: 12px;font-weight: normal;">
+                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingStreet != ''}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingStreet}" />
+                                <br/> </apex:outputPanel>
+                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingCity != ''}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingCity}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingState != ''}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingState}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingPostalCode != ''}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingPostalCode}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingCountry != ''}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingCountry}" />
+                                <br/>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="font-family: sans-serif">
+                    <tr style="color: black">
+                        <th style="padding-left: 5px; padding-right: 50px; width: 50px">DP Ref#:</th>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 5px; font-size: 12px;font-weight: normal;">
+                            <apex:outputField value="{!mapIdOrder[key].DeliveryPointReference__c}" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <table class="invoice-table" id="invoice-line-items">
+                <tr style="color: black">
+                    <th class="invoice-table-header" width="20%">SKU Code</th>
+                    <th class="invoice-table-header" width="60%">Description</th>
+                    <th class="invoice-table-header" width="20%">Quantity</th>
+                </tr>
+            </table>
+            <apex:pageBlock >
+                <apex:variable value="{!1}" var="num" />
+                <apex:repeat rendered="{!if(contains(strOrderIdsContainsOrdItem,key),'true','false')}" value="{!mapOrderIdlstOrderItem[key]}"
+                             var="orderLineItem">
+
+                    <table class="invoice-table" id="invoice-line-items">
+                        <tr>
+                            <td class="invoice-table-rows" width="20%" style="font-weight: normal;">
+                                <apex:outputField value="{!orderLineItem.product2.StockKeepingUnit}" />
+                            </td>
+                            <td class="invoice-table-rows" width="60%" style="font-weight: normal;">
+                                <apex:outputField value="{!orderLineItem.product2.Description}" />
+                            </td>
+                            <td class="invoice-table-rows" width="20%" style="font-weight: normal;">
+                                <apex:outputField value="{!orderLineItem.Quantity}" />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <apex:outputpanel rendered="{!num == 9 || num ==30  || num == 50 || num == 70 || num == 90 || num == 110 || num == 130 || num == 150}">
+                        <div style="page-break-after: always;">&nbsp; </div>
+                    </apex:outputpanel>
+                    <apex:variable value="{!num+1}" var="num" />
+
+                </apex:repeat>
+
+            </apex:pageBlock>
+            <br/>
+            <br/>
+            <br/>
+            <div class="signatureSection">
+                <apex:outputPanel rendered="{!if(contains(strOrderIdsContainsSig,key),'true','false')}">
+                    <table style="font-family: sans-serif;">
+                        <tr style="color: black">
+                            <th style="padding-left: 5px; padding-right: 50px; width: 20%">Signature: </th>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 5px; font-size: 12px">
+                                <apex:image url="/sfc/servlet.shepherd/version/download/{!mapOrderIdContentDoc[key].ContentDocument.LatestPublishedVersionId}"
+                                    alt="{!signature.ContentDocument.LatestPublishedVersion.Title}" width="100px" height="50px"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <table style="font-family: sans-serif;">
+                    <tr style="color: black">
+                        <th style="padding-left: 5px; padding-right: 50px; width: 20%">Name: </th>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 5px; font-size: 14px;font-weight: normal;">
+                            <apex:outputField value="{!mapIdOrder[key].PrintName__c}" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </apex:repeat>
+</apex:page>

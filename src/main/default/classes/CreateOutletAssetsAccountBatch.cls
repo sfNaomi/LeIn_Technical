@@ -4,14 +4,16 @@
 
 public with sharing class CreateOutletAssetsAccountBatch implements Database.Batchable<SObject> {
 
-    private final Set<Id> accountIds;
+    private final Set<Account> accounts;
+    private final AccountTriggerHandler.OutletAssetType outletAssetType;
 
-    public CreateOutletAssetsAccountBatch(Set<Id> accountIds){
-        this.accountIds = accountIds;
+    public CreateOutletAssetsAccountBatch(Set<Account> accounts, AccountTriggerHandler.OutletAssetType outletAssetType){
+        this.accounts = accounts;
+        this.outletAssetType = outletAssetType;
     }
 
     public Iterable<SObject> start(Database.BatchableContext batchableContext) {
-        return FocusProductsService.createFocusProductsForAccounts(accountIds);
+        return OutletAssetService.createOutletAssetsForAccounts(accounts, outletAssetType);
     }
 
     public void execute(Database.BatchableContext batchableContext, List<SObject> outletAssets) {

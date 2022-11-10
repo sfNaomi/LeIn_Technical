@@ -5,15 +5,71 @@
     <label>Symbol</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
-                <fullName>None</fullName>
+                <fullName>Best In</fullName>
                 <default>false</default>
-                <label>None</label>
+                <label>Best In</label>
+            </value>
+            <value>
+                <fullName>Budgens</fullName>
+                <default>false</default>
+                <label>Budgens</label>
+            </value>
+            <value>
+                <fullName>Costcutter</fullName>
+                <default>false</default>
+                <label>Costcutter</label>
+            </value>
+            <value>
+                <fullName>Day-Today</fullName>
+                <default>false</default>
+                <label>Day-Today</label>
+            </value>
+            <value>
+                <fullName>Go Local</fullName>
+                <default>false</default>
+                <label>Go Local</label>
+            </value>
+            <value>
+                <fullName>Independent Outlet</fullName>
+                <default>false</default>
+                <label>Independent Outlet</label>
+            </value>
+            <value>
+                <fullName>Keystore</fullName>
+                <default>false</default>
+                <label>Keystore</label>
+            </value>
+            <value>
+                <fullName>Londis</fullName>
+                <default>false</default>
+                <label>Londis</label>
+            </value>
+            <value>
+                <fullName>McColls</fullName>
+                <default>false</default>
+                <label>McColls</label>
+            </value>
+            <value>
+                <fullName>NISA</fullName>
+                <default>false</default>
+                <label>NISA</label>
+            </value>
+            <value>
+                <fullName>One-O-One</fullName>
+                <default>false</default>
+                <label>One-O-One</label>
+            </value>
+            <value>
+                <fullName>Other (Detail)</fullName>
+                <default>false</default>
+                <label>Other (Detail)</label>
             </value>
             <value>
                 <fullName>Premier</fullName>
@@ -26,49 +82,9 @@
                 <label>Spar</label>
             </value>
             <value>
-                <fullName>Costcutter</fullName>
+                <fullName>Unitas Buying Group</fullName>
                 <default>false</default>
-                <label>Costcutter</label>
-            </value>
-            <value>
-                <fullName>Londis</fullName>
-                <default>false</default>
-                <label>Londis</label>
-            </value>
-            <value>
-                <fullName>Keystore</fullName>
-                <default>false</default>
-                <label>Keystore</label>
-            </value>
-            <value>
-                <fullName>Day-Today</fullName>
-                <default>false</default>
-                <label>Day-Today</label>
-            </value>
-            <value>
-                <fullName>Best-One</fullName>
-                <default>false</default>
-                <label>Best-One</label>
-            </value>
-            <value>
-                <fullName>McColls</fullName>
-                <default>false</default>
-                <label>McColls</label>
-            </value>
-            <value>
-                <fullName>One-O-One</fullName>
-                <default>false</default>
-                <label>One-O-One</label>
-            </value>
-            <value>
-                <fullName>Nisa</fullName>
-                <default>false</default>
-                <label>Nisa</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
+                <label>Unitas Buying Group</label>
             </value>
         </valueSetDefinition>
     </valueSet>

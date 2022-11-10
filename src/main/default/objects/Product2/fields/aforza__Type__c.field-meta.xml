@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of product.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The type of product.</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Family</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Beverages</fullName>
+                <default>false</default>
+                <label>Beverages</label>
+            </value>
+            <value>
+                <fullName>Miscellaneous</fullName>
+                <default>false</default>
+                <label>Miscellaneous</label>
+            </value>
+            <value>
+                <fullName>Energy</fullName>
+                <default>false</default>
+                <label>Energy</label>
+            </value>
+            <value>
+                <fullName>Regular</fullName>
+                <default>false</default>
+                <label>Regular</label>
+            </value>
+            <value>
+                <fullName>Still</fullName>
+                <default>false</default>
+                <label>Still</label>
+            </value>
+            <value>
+                <fullName>Sparkling</fullName>
+                <default>false</default>
+                <label>Sparkling</label>
+            </value>
+            <value>
+                <fullName>Baby</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Baby</label>
+            </value>
+            <value>
+                <fullName>Beer, Wine &amp; Spirits</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Beer, Wine &amp; Spirits</label>
+            </value>
+            <value>
+                <fullName>Bins &amp; Fridges</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bins &amp; Fridges</label>
+            </value>
+            <value>
+                <fullName>Bread &amp; Bakery</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bread &amp; Bakery</label>
+            </value>
+            <value>
+                <fullName>Breakfast &amp; Cereal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Breakfast &amp; Cereal</label>
+            </value>
+            <value>
+                <fullName>Brochures &amp; Handouts</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Brochures &amp; Handouts</label>
+            </value>
+            <value>
+                <fullName>Canned Goods &amp; Soups</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Canned Goods &amp; Soups</label>
+            </value>
+            <value>
+                <fullName>Cleaning Supplies</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cleaning Supplies</label>
+            </value>
+            <value>
+                <fullName>Condiments/Spices &amp; Bake</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Condiments/Spices &amp; Bake</label>
+            </value>
+            <value>
+                <fullName>Cookies, Snacks &amp; Candy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cookies, Snacks &amp; Candy</label>
+            </value>
+            <value>
+                <fullName>Dairy, Eggs &amp; Cheese</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dairy, Eggs &amp; Cheese</label>
+            </value>
+            <value>
+                <fullName>Deli &amp; Signature Cafe</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Deli &amp; Signature Cafe</label>
+            </value>
+            <value>
+                <fullName>Fixtures</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fixtures</label>
+            </value>
+            <value>
+                <fullName>Flowers</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Flowers</label>
+            </value>
+            <value>
+                <fullName>Frozen Foods</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Frozen Foods</label>
+            </value>
+            <value>
+                <fullName>Fruits &amp; Vegetables</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fruits &amp; Vegetables</label>
+            </value>
+            <value>
+                <fullName>Gondolas</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gondolas</label>
+            </value>
+            <value>
+                <fullName>Grains, Pasta &amp; Sides</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Grains, Pasta &amp; Sides</label>
+            </value>
+            <value>
+                <fullName>Health &amp; Beauty</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Health &amp; Beauty</label>
+            </value>
+            <value>
+                <fullName>International Cuisine</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>International Cuisine</label>
+            </value>
+            <value>
+                <fullName>Meat &amp; Seafood</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Meat &amp; Seafood</label>
+            </value>
+            <value>
+                <fullName>Paper Products</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Paper Products</label>
+            </value>
+            <value>
+                <fullName>Personal Care &amp; Pharmacy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Personal Care &amp; Pharmacy</label>
+            </value>
+            <value>
+                <fullName>Pet Care</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pet Care</label>
+            </value>
+            <value>
+                <fullName>Promotional Displays</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Promotional Displays</label>
+            </value>
+            <value>
+                <fullName>Signage</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Signage</label>
+            </value>
+            <value>
+                <fullName>Tobacco</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tobacco</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Beverages</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Miscellaneous</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Energy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Regular</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Still</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product</controllingFieldValue>
+            <valueName>Sparkling</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Route__c</fullName>
     <externalId>false</externalId>
-    <formula>MID( Grid__c , 2, 2)</formula>
+    <formula>MID( Grid__c , 3, 2)</formula>
     <label>Route</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

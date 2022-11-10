@@ -1,0 +1,14 @@
+Id,Name,aforza__Code__c,aforza__Description__c,aforza__Sequence__c,aforza__Type__c
+a0B2z000001NB07EAG,Key account,PS-003,Used to manage the key account attribute.  Created by Phil 24/10/2022.,,Account
+a0B2z000001Mw15EAC,New DP Cat,erwer,,,Account
+a0B2z000001MwPWEA0,Specifics,AC-0013,Category to identify customer or order size.,4,Account
+a0B2z000001MwPMEA0,Relationship,AC-0011,This category aims to group customers by relationship,2,Account
+a0B2z000001MwPgEAK,JK Test,JK_001,also sell alcohol,7,Account
+a0B2z000001MwPREA0,Specialities,AC-0012,Category to identify products.,3,Account
+a0B2z000001MwP7EAK,Geographical,AC-0010,This category aims to organized customers by geography.,1,Account
+a0B2z000001MwPbEAK,Marie Test,M-001,Marie Test,1,Account
+a0B2z000001MzWJEA0,Non Stockist,NonStockis,,,Account
+a0B2z000001MzWOEA0,Phils - assortment attribute category,PS-002,,,Account
+a0B2z000001MyfoEAC,Marie Test 2,M-002,Near a College or University,8,Account
+a0B2z000001N1D8EAK,Symbol choice,AC0021,"Allows allocation of stores to Symbol Groups, where applicable",11,Account
+a0B2z000001N1D3EAK,Priority type,AC0020,Store categorisation,10,Account

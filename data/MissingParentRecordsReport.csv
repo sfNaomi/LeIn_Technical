@@ -1,0 +1,5 @@
+Date update,Child Id,Child Lookup Id Field,Child Lookup Reference Field,Child SObject,Parent SObject,Parent ExternalId Field,Missing expected parent ExternalID value
+2022-11-04  11:54:28.518,a0X2z0000000kmGEAQ,aforza__Inventory_Owner__c,aforza__Inventory_Owner__r.Name,aforza__Inventory__c,User,Name,Admin User
+2022-11-04  11:54:28.518,a0X2z0000001nQhEAI,aforza__Inventory_Owner__c,aforza__Inventory_Owner__r.Name,aforza__Inventory__c,User,Name,Admin User
+2022-11-04  11:54:28.518,a0X2z0000001o4UEAQ,aforza__Inventory_Owner__c,aforza__Inventory_Owner__r.Name,aforza__Inventory__c,User,Name,Admin User
+2022-11-04  11:54:28.518,a0X2z0000001o4KEAQ,aforza__Inventory_Owner__c,aforza__Inventory_Owner__r.Name,aforza__Inventory__c,User,Name,Andy Pryke

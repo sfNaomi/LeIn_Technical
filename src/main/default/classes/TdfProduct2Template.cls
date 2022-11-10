@@ -43,7 +43,8 @@ public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
                 Name = 'Test Product',
                 IsActive = true,
                 StockKeepingUnit = 'uniqueSKU' + ++counter,
-                ProductCode = 'uniqueCode' + ++counter
+                ProductCode = 'uniqueCode' + ++counter,
+                Family = 'Product'
         );
 
         return template;
