@@ -219,4 +219,82 @@ private with sharing class ProductTriggerHandlerTest {
         List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c = :prod.StockKeepingUnit];
         System.assertEquals(1, attributes.size());
     }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+
+        Test.startTest();
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
+        System.assertEquals(1, assets.size());
+    }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts_UnCheck() {
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
+
+        Test.startTest();
+        prod.PsProductEngland__c = false;
+        update prod;
+        Test.stopTest();
+
+        // cant assert much as the batches run in random order after stopTest, so we cant deterministically say which one will happen first
+    }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts_Check() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+
+        Test.startTest();
+        prod.PsProductEngland__c = true;
+        update prod;
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
+        System.assertEquals(1, assets.size());
+    }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts_Scotland() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+
+        Test.startTest();
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductScotland__c = true));
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
+        System.assertEquals(1, assets.size());
+    }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts_ScotlandUnCheck() {
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductScotland__c = true));
+
+        Test.startTest();
+        prod.PsProductScotland__c = false;
+        update prod;
+        Test.stopTest();
+
+        // cant assert much as the batches run in random order after stopTest, so we cant deterministically say which one will happen first
+    }
+
+    @IsTest
+    private static void testManagePerfectScoreProducts_ScotlandCheck() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+
+        Test.startTest();
+        prod.PsProductScotland__c = true;
+        update prod;
+        Test.stopTest();
+
+        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
+        System.assertEquals(1, assets.size());
+    }
 }

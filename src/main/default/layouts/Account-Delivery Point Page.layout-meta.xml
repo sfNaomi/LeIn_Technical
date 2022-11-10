@@ -139,7 +139,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>aforza__Operating_Hours__c</field>
+                <field>OpeningTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -223,6 +223,14 @@
                 <behavior>Edit</behavior>
                 <field>Symbol__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OutletType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EpoStatus__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -244,6 +252,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>aforza__Active__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>WhatAreTheOutletRtm__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -269,6 +281,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SalesRepresentativeCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PerfectStoreScoreEligible__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -395,6 +411,11 @@
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>FeedItem.QuestionPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>ChangeOwnerOne</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
@@ -428,11 +449,6 @@
             <actionName>AccountHierarchy</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>16</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.QuestionPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>CallHighlightAction</actionName>
@@ -504,7 +520,6 @@
         <fields>ORDER.RECORDTYPE</fields>
         <fields>Clone__c</fields>
         <relatedList>RelatedOrderList</relatedList>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
@@ -678,7 +693,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003pon4</masterLabel>
+        <masterLabel>00h7a000002Z6Pn</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

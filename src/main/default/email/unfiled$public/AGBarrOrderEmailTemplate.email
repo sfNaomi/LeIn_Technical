@@ -1,0 +1,23 @@
+<messaging:emailTemplate subject="Delivery Note" recipientType="Contact" relatedToType="Order">
+
+<messaging:htmlEmailBody >
+<apex:image id="theImage" value="https://computing-agility-2505.file.force.com/servlet/servlet.ImageServer?id=0153G000000uv8P&oid=00D3G0000001jjo" width="200" height="100"/>
+<br/>
+<br/>
+{!relatedTo.ShippingStreet} <br/>
+{!relatedTo.ShippingCity}, <br/>
+{!relatedTo.ShippingState} {!relatedTo.ShippingPostalCode} <br/>
+{!relatedTo.ShippingCountry} <br/>
+DP Ref: {!relatedTo.DeliveryPointReference__c} <br/>
+<br/>
+<br/>
+This e-mail contains an delivery note from Barr Soft Drinks relating to your recent delivery.
+<br/>
+<br/>
+Should you wish to query this invoice, please contact 0800 434 6260 quoting reference {!relatedTo.OrderNumber}/{!relatedTo.DeliveryPointReference__c}
+<br/>
+<br/>
+Yours sincerely <br/>
+Barr Soft Drinks
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

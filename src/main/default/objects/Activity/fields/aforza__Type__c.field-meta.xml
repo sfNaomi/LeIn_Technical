@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of visit task.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The type of visit task.</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Order</fullName>
+                <default>false</default>
+                <label>Order</label>
+            </value>
+            <value>
+                <fullName>Stock Check</fullName>
+                <default>false</default>
+                <label>Stock Check</label>
+            </value>
+            <value>
+                <fullName>Payment Collection</fullName>
+                <default>false</default>
+                <label>Payment Collection</label>
+            </value>
+            <value>
+                <fullName>Guide</fullName>
+                <default>false</default>
+                <label>Guide</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Core &amp; Energy</fullName>
+                <default>false</default>
+                <label>Perfect Store Core &amp; Energy</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Visibility &amp; Display</fullName>
+                <default>false</default>
+                <label>Perfect Store Visibility &amp; Display</label>
+            </value>
+            <value>
+                <fullName>Call Productivity</fullName>
+                <default>false</default>
+                <label>Call Productivity</label>
+            </value>
+            <value>
+                <fullName>Marketing Audit</fullName>
+                <default>false</default>
+                <label>Marketing Audit</label>
+            </value>
+            <value>
+                <fullName>Competitor Intel</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Competitor Intel</label>
+            </value>
+            <value>
+                <fullName>Delivery</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Delivery</label>
+            </value>
+            <value>
+                <fullName>Merchandise Audit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Merchandise Audit</label>
+            </value>
+            <value>
+                <fullName>Merchandise Review</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Merchandise Review</label>
+            </value>
+            <value>
+                <fullName>Presentation</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presentation</label>
+            </value>
+            <value>
+                <fullName>Promotion Compliance</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Promotion Compliance</label>
+            </value>
+            <value>
+                <fullName>Stock Audit</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Stock Audit</label>
+            </value>
+            <value>
+                <fullName>Survey</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Survey</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

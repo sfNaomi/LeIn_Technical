@@ -21,17 +21,24 @@ jobs:
             -   uses: actions/setup-node@v3
                 with:
                     node-version: 16
-            -   uses: nrwl/last-successful-commit-action@v1
+
+            # Checkout the source code
+            -   name: Checkout source code
+                uses: actions/checkout@v3
+
+            # Run Action to get last successful commit
+            -   uses: ./.github/actions/getLastSuccessfulCommit
                 id: last_commit
                 with:
                     branch: ${{ github.ref_name }}
                     workflow_id: 'deltaDeploy.yml'
                     github_token: ${{ secrets.GITHUB_TOKEN }}
 
+            # Export value of the last successful commit
             -   name: Export value
                 id: export_value
                 run: |
-                    echo "::set-output name=commit::${{ steps.last_commit.outputs.commit_hash }}"
+                    echo "COMMIT=${{ steps.last_commit.outputs.commit_hash }}" >> $GITHUB_OUTPUT
 
     Deployment:
         runs-on: ubuntu-latest
@@ -65,9 +72,9 @@ jobs:
                     if [ "${{ needs.getLastSuccessCommit.outputs.last_commit }}" == "" ]; then
                         firstCommitFull=$(git log ${{ github.ref_name }} --oneline | tail -1)
                         firstCommit="${firstCommitFull:0:7}"
-                        echo "::set-output name=fromCommit::${firstCommit}"
+                        echo "FROM_COMMIT=${firstCommit}" >> $GITHUB_OUTPUT
                     else
-                        echo ::set-output name=fromCommit::${{needs.getLastSuccessCommit.outputs.last_commit}}
+                        echo "FROM_COMMIT=${{needs.getLastSuccessCommit.outputs.last_commit}}" >> $GITHUB_OUTPUT
                     fi
 
             # remove unneeded items from PS
@@ -80,10 +87,10 @@ jobs:
             # prepare delta
             -   name: Prepare Delta
                 run: |
-                    echo Last successful commit used: ${{ steps.check-success-commit.outputs.fromCommit }}                   
+                    echo Last successful commit used: ${{ steps.check-success-commit.outputs.FROM_COMMIT }}                   
                     echo Last Commit to which the delta is prepared: ${{ github.sha }}
 
-                    sfdx sgd:source:delta --to "HEAD" --from ${{ steps.check-success-commit.outputs.fromCommit }}  --output . -i .sgdignore
+                    sfdx sgd:source:delta --to "HEAD" --from ${{ steps.check-success-commit.outputs.FROM_COMMIT }}  --output . -s src -i .sgdignore
                     echo "LINES=$(wc -l < package/package.xml)" >> $GITHUB_ENV
                     echo "LINES_DESTRUCTIVE=$(wc -l < destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
                     cat package/package.xml

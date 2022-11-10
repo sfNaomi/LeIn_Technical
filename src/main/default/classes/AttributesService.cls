@@ -18,7 +18,7 @@ public with sharing class AttributesService {
 
     public static void createAttributes(List<Product2> products) {
         List<aforza__Attribute__c> attributesToCreate = new List<aforza__Attribute__c>();
-        Map<String, aforza__Attribute__c> existingDeactivatedAttributes = getExistingInActiveAttributes(products);
+        Map<String, aforza__Attribute__c> existingDeactivatedAttributes = getExistingAttributes(products);
         for (Product2 product : products) {
             if (existingDeactivatedAttributes.containsKey(product.StockKeepingUnit)) {
                 aforza__Attribute__c existingAttribute = existingDeactivatedAttributes.get(product.StockKeepingUnit);
@@ -34,7 +34,7 @@ public with sharing class AttributesService {
 
     public static void deactivateAttributes(Set<String> productSkus) {
         List<aforza__Attribute__c> attributesToDeactivate = new List<aforza__Attribute__c>();
-        for (aforza__Attribute__c attribute : [SELECT Id, aforza__Active__c FROM aforza__Attribute__c WHERE aforza__Code__c IN :productSkus]) {
+        for (aforza__Attribute__c attribute : [SELECT Id, aforza__Active__c, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c IN :productSkus]) {
             attribute.aforza__Active__c = false;
             attributesToDeactivate.add(attribute);
         }
@@ -151,14 +151,14 @@ public with sharing class AttributesService {
     }
 
     @TestVisible
-    private static Map<String, aforza__Attribute__c> getExistingInActiveAttributes(List<Product2> products) {
+    private static Map<String, aforza__Attribute__c> getExistingAttributes(List<Product2> products) {
         Set<String> skusToSearch = new Set<String>();
         for (Product2 product : products) {
             skusToSearch.add(product.StockKeepingUnit);
         }
 
         Map<String, aforza__Attribute__c> skuToAttributeMap = new Map<String, aforza__Attribute__c>();
-        for (aforza__Attribute__c attribute : [SELECT Id, aforza__Active__c, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c IN :skusToSearch AND aforza__Active__c = FALSE]) {
+        for (aforza__Attribute__c attribute : [SELECT Id, aforza__Active__c, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c IN :skusToSearch]) {
             skuToAttributeMap.put(attribute.aforza__Code__c, attribute);
         }
         return skuToAttributeMap;

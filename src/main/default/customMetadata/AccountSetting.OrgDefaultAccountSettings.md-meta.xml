@@ -3,6 +3,10 @@
     <label>OrgDefaultAccountSettings</label>
     <protected>false</protected>
     <values>
+        <field>CreditStatusesOrderActiveNotAllowed__c</field>
+        <value xsi:type="xsd:string">On Hold</value>
+    </values>
+    <values>
         <field>DefaultPriceBookNames__c</field>
         <value xsi:type="xsd:string">Default England,Default Scotland</value>
     </values>
@@ -17,10 +21,6 @@
     <values>
         <field>StatusesToUpdateWhenNoRecentOrders__c</field>
         <value xsi:nil="true"/>
-    </values>
-    <values>
-        <field>CreditStatusesOrderActiveNotAllowed__c</field>
-        <value xsi:type="xsd:string">On Hold</value>
     </values>
     <values>
         <field>StatusesWhereOrderCreationAllowed__c</field>

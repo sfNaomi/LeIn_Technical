@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PsProductScotland__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to identify a PS product, and used in the Audit filter on mobile</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to identify a PS product, and used in the Audit filter on mobile</inlineHelpText>
+    <label>PS Product Scotland</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

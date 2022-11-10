@@ -41,6 +41,9 @@
         },
         "surveySettings": {
             "enableSurvey": true
+        },
+        "enhancedNotesSettings": {
+            "enableEnhancedNotes": true
         }
     }
 }

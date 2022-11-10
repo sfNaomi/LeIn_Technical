@@ -196,6 +196,11 @@
         <field>aforza__Invoice__c.PrimaryContactName__c</field>
         <readable>true</readable>
     </fieldPermissions>
+        <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.PushedtoJde__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>aforza__Invoice__c.Route__c</field>

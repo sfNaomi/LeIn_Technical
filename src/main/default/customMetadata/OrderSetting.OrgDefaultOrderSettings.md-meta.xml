@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Activated,Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered,Receipted</value>
     </values>
     <values>
+        <field>RtsStockUpdate__c</field>
+        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder</value>
+    </values>
+    <values>
         <field>RTsToCreateInvoice__c</field>
         <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder,StraightToJDEOrder</value>
     </values>
@@ -17,5 +21,9 @@
     <values>
         <field>StatusToCreateInvoice__c</field>
         <value xsi:type="xsd:string">Receipted</value>
+    </values>
+    <values>
+        <field>UnfulfilledOrders__c</field>
+        <value xsi:type="xsd:string">Draft,Awaiting Approval,Cancelled</value>
     </values>
 </CustomMetadata>

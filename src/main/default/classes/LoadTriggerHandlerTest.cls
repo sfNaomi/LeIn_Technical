@@ -185,4 +185,41 @@ private class LoadTriggerHandlerTest {
 
     }
 
+    @IsTest
+    private static void testPopulateDefaultInventory() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Wednesbury', InventoryCode__c = 'W');
+        insert inventory;
+        
+        Test.startTest();
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+                new Load__c(Depot__c = 'C')
+        );
+        Test.stopTest();
+
+        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id =:newLoad.Id];
+     
+        System.assertEquals('C', load.Depot__c);
+        System.assertEquals(inventory.Id, load.SiteNo__c);
+    }
+
+    @IsTest
+    private static void testPopulateDefaultInventory_setToNull() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        insert inventory;
+        
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+                new Load__c(Depot__c = 'M')
+        );
+        
+        Test.startTest();
+        newLoad.Depot__c = null;
+        update newLoad;
+        Test.stopTest();
+
+        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id =:newLoad.Id];
+       
+        System.assertEquals(null, load.Depot__c);
+        System.assertEquals(null, load.SiteNo__c);
+    }
+
 }

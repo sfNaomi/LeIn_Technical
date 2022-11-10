@@ -35,6 +35,60 @@
         <type>Flexipage</type>
         <profile>AG Barr Platform User</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Platform User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Platform User Driver</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Platform User Sales Rep England</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Platform User Sales Rep Scotland</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>aforza__Visit__c</tabs>

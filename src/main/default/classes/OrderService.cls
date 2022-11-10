@@ -42,6 +42,27 @@ public with sharing class OrderService {
         }
         set;
     }
+    public static final Set<String> UNFULFILLED_ORDER_STATUS {
+        get {
+            if (UNFULFILLED_ORDER_STATUS == null) {
+                UNFULFILLED_ORDER_STATUS = new Set<String>(SETTINGS.UnfulfilledOrders__c.split(','));
+            }
+            return UNFULFILLED_ORDER_STATUS;
+        }
+        set;
+    }
+
+    public static final Set<String> RECORD_TYPES_FOR_STOCK_UPDATE {
+        get {
+            if (RECORD_TYPES_FOR_STOCK_UPDATE == null) {
+                RECORD_TYPES_FOR_STOCK_UPDATE = new Set<String>(SETTINGS.RtsStockUpdate__c.split(','));
+            }
+            return RECORD_TYPES_FOR_STOCK_UPDATE;
+        }
+        set;
+    }
+
+
 
     public static Boolean isOrderCompleted(String orderStatus) {
         return COMPLETED_ORDER_STATUSES.contains(orderStatus);

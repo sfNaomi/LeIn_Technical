@@ -1,0 +1,175 @@
+<!--
+ - Created by magdalena.stanciu on 21.10.2022.
+ -->
+
+
+<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="DeliveryManifestPDFController">
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'deliveryManifest.css')}"/>
+    <apex:repeat value="{!loads}" var="load">
+        <div class="page-break"/>
+        <table class="document-table document-table-fixed">
+            <tr>
+                <td class="document-table-header">
+                    {!$Label.DeliveryManifestDriver}
+                </td>
+                <td>
+                    {!load.driver}
+                </td>
+                <td class="document-table-header">
+                    {!$Label.DeliveryManifestVehicle}
+                </td>
+                <td>
+                    {!load.vehicle}
+                </td>
+                <td class="document-table-header">
+                    {!$Label.DeliveryManifestGrid}
+                </td>
+                <td>
+                    {!load.grid}
+                </td>
+            </tr>
+            <tr>
+                <td class="document-table-header">
+                    {!$Label.DeliveryManifestDeliveryDate}
+                </td>
+                <td>
+                    <apex:outputText value="{0,date,dd/MM/yyyy}">
+                        <apex:param value="{!load.deliveryDate}"/>
+                    </apex:outputText>
+                </td>
+                <td class="document-table-header">
+                    {!$Label.DeliveryManifestLoadId}
+                </td>
+                <td>
+                    {!load.loadID}
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <table class="document-table document-table-fixed">
+            <tr>
+                <th>
+                    {!$Label.DeliveryManifestQuantity}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestWeight}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestVehiclePayload}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestNumberOfDps}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestNumberOfPallets}
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {!load.totalQuantity}
+                </td>
+                <td>
+                    {!load.totalWeight}
+                </td>
+                <td>
+                    {!load.vehicleCapacity}
+                </td>
+                <td>
+                    {!load.numberOfDps}
+                </td>
+                <td>
+                    {!load.numberOfPallets}
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <table class="document-table">
+            <tr>
+                <th>
+                    {!$Label.DeliveryManifestPalletSequence}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestDescription}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestDeliveryPoint}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestShippingAddress}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestPostCode}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestQuantity}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestDeliveryInstructions}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestNotes}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestPhone}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestOpeningTimes}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestTam}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestPaymentMethod}
+                </th>
+                <th>
+                    {!$Label.DeliveryManifestWeight}
+                </th>
+            </tr>
+            <apex:variable value="{!1}" var="itemIndex"/>
+            <apex:repeat value="{!load.loadItems}" var="loadItem">
+                <tr class="{!IF(mod(itemIndex,2)==0, 'gray-bkg', '')}">
+                    <td>
+                        {!loadItem.palletSequence}
+                    </td>
+                    <td>
+                        {!loadItem.palletDescription}
+                    </td>
+                    <td>
+                        {!loadItem.accountName}
+                    </td>
+                    <td>
+                        {!loadItem.shippingAddress}
+                    </td>
+                    <td>
+                        {!loadItem.shippingPostalCode}
+                    </td>
+                    <td>
+                        {!loadItem.quantity}
+                    </td>
+                    <td>
+                        {!loadItem.deliveryInstructions}
+                    </td>
+                    <td>
+                        <apex:outputText value="{!loadItem.notes}" escape="false" />
+                    </td>
+                    <td>
+                        {!loadItem.phone}
+                    </td>
+                    <td>
+                        {!loadItem.openingTime}
+                    </td>
+                    <td>
+                        {!loadItem.tam}
+                    </td>
+                    <td>
+                        {!loadItem.paymentMethod}
+                    </td>
+                    <td>
+                        {!loadItem.weight}
+                    </td>
+                </tr>
+                <apex:variable value="{!itemIndex+1}" var="itemIndex"/>
+            </apex:repeat>
+        </table>
+    </apex:repeat>
+</apex:page>

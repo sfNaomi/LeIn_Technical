@@ -20,6 +20,9 @@
         <description>Rejected Order</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>SalesSupportExec</recipient>
             <type>role</type>
         </recipients>
@@ -38,6 +41,16 @@
         <senderType>CurrentUser</senderType>
         <template>AutomationEmails/WinBackEmail</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>IsAprovedEqualsTrue</fullName>
+        <field>IsApproved__c</field>
+        <literalValue>1</literalValue>
+        <name>Is Aproved Equals True</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>LeaveAsAwaitingApproval</fullName>
         <field>Status</field>

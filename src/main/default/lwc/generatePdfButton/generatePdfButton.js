@@ -1,38 +1,47 @@
-import { LightningElement, api } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { CloseActionScreenEvent } from 'lightning/actions';
-import attachPDF from '@salesforce/apex/InvoicePDFController.attachPDF';
+import {LightningElement, api} from 'lwc';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import {CloseActionScreenEvent} from 'lightning/actions';
+import {processError} from 'c/errorHandlingService';
+import attachInvoicePDF from '@salesforce/apex/InvoicePDFController.attachPDF';
+import attachDeliveryNotePDF from '@salesforce/apex/DeliveryNotePDFController.attachPDF';
+
 export default class GeneratePdfButton extends LightningElement {
-	@api recordId;
-	showSpinner = false;
+    @api recordId;
+    @api objectApiName;
+    @api isAura;
+    showSpinner = false;
 
-	closeModal() {
-		this.dispatchEvent(new CloseActionScreenEvent());
-	}
+    closeModal() {
+        if (this.isAura) {
+            this.dispatchEvent(new CustomEvent('closeaction'));
+        } else {
+            this.dispatchEvent(new CloseActionScreenEvent());
+        }
+    }
 
-	generatePDF() {
-		this.showSpinner = true;
-		attachPDF({ invoiceId: this.recordId })
-			.then(() => {
-				this.closeModal();
-				this.dispatchEvent(
-					new ShowToastEvent({
-						title: 'Success',
-						message: 'PDF Created Succesfully',
-						variant: 'success'
-					})
-				);
-			})
-			.catch((error) => {
-				this.closeModal();
-				console.log(error);
-				this.dispatchEvent(
-					new ShowToastEvent({
-						title: 'Error',
-						message: 'Error Generating PDF',
-						variant: 'error'
-					})
-				);
-			});
-	}
+    async generatePDF() {
+        this.showSpinner = true;
+        try {
+            switch (this.objectApiName) {
+                case 'aforza__Invoice__c':
+                    await attachInvoicePDF({invoiceId: this.recordId});
+                    break;
+                case 'Order':
+                    await attachDeliveryNotePDF({orderId: this.recordId});
+                    break;
+                default:
+                    break;
+            }
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'PDF Created Succesfully',
+                    variant: 'success'
+                })
+            );
+        } catch (error) {
+            processError(error);
+        }
+        this.closeModal();
+    }
 }

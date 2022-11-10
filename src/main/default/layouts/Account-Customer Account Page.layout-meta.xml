@@ -16,11 +16,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CustomerReference__c</field>
+                <field>MinOrderQuantity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>MinOrderQuantity__c</field>
+                <field>BillToReference__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -31,10 +31,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PORequired__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillToReference__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

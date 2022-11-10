@@ -8,64 +8,64 @@ public with sharing class FileGenerationServiceTest {
     public static void testGenerateDocuments_ValidDocumentTypeInput() {
         // create product
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(Name = 'Test Product', ProductCode = 'SKU1')
+            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
         );
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
 
         // create pricebook and add products to pricebook
         Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
         PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
         );
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(
-                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                        AccountStatus__c = 'Traders',
-                        aforza__Default_Price_Book__c = newPricebook.Id
-                )
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                AccountStatus__c = 'Traders',
+                aforza__Default_Price_Book__c = newPricebook.Id
+            )
         );
 
         // create order and add items to the order
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(
-                        RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
-                        AccountId = dpAccount.Id,
-                        Status = 'Draft',
-                        Pricebook2Id = newPricebook.Id
-                )
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
+                AccountId = dpAccount.Id,
+                Status = 'Draft',
+                Pricebook2Id = newPricebook.Id
+            )
         );
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-                new OrderItem(
-                        OrderId = newOrder.Id,
-                        Product2Id = newProduct.Id,
-                        PricebookEntryId = newPricebookEntry.Id
-                )
+            new OrderItem(
+                OrderId = newOrder.Id,
+                Product2Id = newProduct.Id,
+                PricebookEntryId = newPricebookEntry.Id
+            )
         );
 
         // create invoice with line items
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
-                new aforza__Invoice__c(
-                        aforza__Account__c = dpAccount.Id,
-                        aforza__Order__c = newOrder.Id,
-                        aforza__Reference__c = '10'
-                )
+            new aforza__Invoice__c(
+                aforza__Account__c = dpAccount.Id,
+                aforza__Order__c = newOrder.Id,
+                aforza__Reference__c = '10'
+            )
         );
         aforza__Invoice_Line_Item__c newInvoiceLineItem = (aforza__Invoice_Line_Item__c) TdfSObjectFactory.insertSObject(
-                new aforza__Invoice_Line_Item__c(
-                        aforza__Invoice__c = newInvoice.Id,
-                        OrderProduct__c = newOrderItem.Id
-                )
+            new aforza__Invoice_Line_Item__c(
+                aforza__Invoice__c = newInvoice.Id,
+                OrderProduct__c = newOrderItem.Id
+            )
         );
 
         Test.startTest();
-        FileGenerationService.generateDocuments(FileGenerationService.DocumentType.INVOICE, new Set<Id>{
-                newInvoice.Id
+        FileGenerationService.generateDocuments(FileGenerationService.documentType.INVOICE, new Set<Id>{
+            newInvoice.Id
         });
         Test.stopTest();
 
@@ -83,60 +83,60 @@ public with sharing class FileGenerationServiceTest {
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
 
         // create pricebook and add products to pricebook
         Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
         PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
         );
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(
-                        RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                        AccountStatus__c = 'Traders',
-                        aforza__Default_Price_Book__c = newPricebook.Id
-                )
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                AccountStatus__c = 'Traders',
+                aforza__Default_Price_Book__c = newPricebook.Id
+            )
         );
 
         // create order and add items to the order
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(
-                        RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
-                        AccountId = dpAccount.Id,
-                        Status = 'Draft',
-                        Pricebook2Id = newPricebook.Id
-                )
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
+                AccountId = dpAccount.Id,
+                Status = 'Draft',
+                Pricebook2Id = newPricebook.Id
+            )
         );
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-                new OrderItem(
-                        OrderId = newOrder.Id,
-                        Product2Id = newProduct.Id,
-                        PricebookEntryId = newPricebookEntry.Id
-                )
+            new OrderItem(
+                OrderId = newOrder.Id,
+                Product2Id = newProduct.Id,
+                PricebookEntryId = newPricebookEntry.Id
+            )
         );
 
         // create invoice with line items
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
-                new aforza__Invoice__c(
-                        aforza__Account__c = dpAccount.Id,
-                        aforza__Order__c = newOrder.Id,
-                        aforza__Reference__c = '10'
-                )
+            new aforza__Invoice__c(
+                aforza__Account__c = dpAccount.Id,
+                aforza__Order__c = newOrder.Id,
+                aforza__Reference__c = '10'
+            )
         );
         aforza__Invoice_Line_Item__c newInvoiceLineItem = (aforza__Invoice_Line_Item__c) TdfSObjectFactory.insertSObject(
-                new aforza__Invoice_Line_Item__c(
-                        aforza__Invoice__c = newInvoice.Id,
-                        OrderProduct__c = newOrderItem.Id
-                )
+            new aforza__Invoice_Line_Item__c(
+                aforza__Invoice__c = newInvoice.Id,
+                OrderProduct__c = newOrderItem.Id
+            )
         );
 
         Test.startTest();
         try {
             FileGenerationService.generateDocuments(null, new Set<Id>{
-                    newInvoice.Id
+                newInvoice.Id
             });
         } catch (FileGenerationService.FileGenerationException ex) {
             System.assertEquals('Invalid document type', ex.getMessage(), 'Incorrect error returned.');
@@ -147,17 +147,17 @@ public with sharing class FileGenerationServiceTest {
     @IsTest
     public static void testGenerateContentVersion() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
-                new aforza__Invoice__c(aforza__Account__c = dpAccount.Id)
+            new aforza__Invoice__c(aforza__Account__c = dpAccount.Id)
         );
         aforza__Invoice__c insertedInvoice = [SELECT Id, Name FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
 
         Test.startTest();
         ContentVersion generatedFile = FileGenerationService.generateContentVersion(
-                FileGenerationService.DocumentType.INVOICE,
-                insertedInvoice
+            FileGenerationService.documentType.INVOICE,
+            insertedInvoice
         );
         Test.stopTest();
 

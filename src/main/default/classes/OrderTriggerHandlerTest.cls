@@ -690,6 +690,42 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testPopulateDefaultInventory() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Wednesbury', InventoryCode__c = 'W');
+        insert inventory;
+        
+        Test.startTest();
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'C')
+        );
+        Test.stopTest();
+
+        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id =:newOrder.Id];
+     
+        System.assertEquals('C', order.Depot__c);
+        System.assertEquals(inventory.Id, order.aforza__Inventory__c);
+    }
+
+    @IsTest
+    private static void testPopulateDefaultInventory_setToNull() {
+		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        insert inventory;
+        
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'M')
+        );
+        
+        Test.startTest();
+        newOrder.Depot__c = null;
+        update newOrder;
+        Test.stopTest();
+
+        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id =:newOrder.Id];
+       
+        System.assertEquals(null, order.Depot__c);
+        System.assertEquals(null, order.aforza__Inventory__c);
+    }
+    
     private static void testPopulateLoadWhenAllLInkedOrdersShareStatus() {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());

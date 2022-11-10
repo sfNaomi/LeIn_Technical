@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Field Sales access for Product object and fields</description>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.Rating__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.ScoreWeightage__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Product Field Sales Access</label>
     <objectPermissions>

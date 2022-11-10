@@ -6,6 +6,8 @@
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
+    <permissionSets>AccountModifyAllAccess</permissionSets>
+    <permissionSets>AuditAssetAdminAccess</permissionSets>
     <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -263,16 +263,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Rating__c</field>
-            <table>Product2</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ScoreWeightage__c</field>
-            <table>Product2</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>aforza__Singles_Quantity__c</field>
             <table>Product2</table>
         </columns>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvalidUKPhoneNumber</fullName>
+    <active>true</active>
+    <description>Phone Number should follow E61 format, starting will +44 (and not followed by 0)</description>
+
+    <errorConditionFormula>OR(
+AND(
+NOT(
+REGEX(Phone, "^\\+44[1-9]\\d{1,12}$")
+),NOT ISBLANK(Phone)),
+AND(
+NOT(
+REGEX(MobilePhone, "^\\+44[1-9]\\d{1,12}$")
+),NOT ISBLANK( MobilePhone )))</errorConditionFormula>
+    <errorMessage>Please enter a valid UK number starting with +44</errorMessage>
+</ValidationRule>

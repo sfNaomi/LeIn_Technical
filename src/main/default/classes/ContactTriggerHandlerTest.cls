@@ -17,7 +17,7 @@ private with sharing class ContactTriggerHandlerTest {
         );
 
         primaryContact.Email = 'newemail@test.com';
-        primaryContact.Phone = '+4043423423423424';
+        primaryContact.Phone = '+443423423423424';
         update primaryContact;
         Test.stopTest();
 
