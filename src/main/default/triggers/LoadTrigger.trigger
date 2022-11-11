@@ -12,7 +12,7 @@ trigger LoadTrigger on Load__c (before insert, before update, after update) {
         }
         when AFTER_UPDATE {
             LoadTriggerHandler.createRouteAndVisitsAndTasks(Trigger.new, Trigger.oldMap);
-            LoadTriggerHandler.updateDriver(Trigger.newMap, Trigger.oldMap);
+            LoadTriggerHandler.updateDriverAndDeliveryDate(Trigger.newMap, Trigger.oldMap);
         }
     }
 }

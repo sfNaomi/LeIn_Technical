@@ -6,8 +6,8 @@
 private with sharing class OrderTriggerHandlerTest {
     @IsTest
     private static void validateOrderCreationOrCompletion_ProspectAccountNewOrder() {
-         // create attribute for New DP attribute flow automation
-         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        // create attribute for New DP attribute flow automation
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -106,7 +106,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         // retrieve updated account
         Account updatedDPAccount = [
-            SELECT Id, AccountStatus__c, LastOrderdate__c
+            SELECT Id, AccountStatus__c, LastOrderDate__c
             FROM Account
             WHERE Id = :dpAccount.Id
         ];
@@ -162,7 +162,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         // retrieve updated account
         Account updatedDPAccount = [
-            SELECT Id, AccountStatus__c, LastOrderdate__c
+            SELECT Id, AccountStatus__c, LastOrderDate__c
             FROM Account
             WHERE Id = :dpAccount.Id
         ];
@@ -215,7 +215,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         // retrieve updated account
         Account updatedDPAccount = [
-            SELECT Id, AccountStatus__c, LastOrderdate__c
+            SELECT Id, AccountStatus__c, LastOrderDate__c
             FROM Account
             WHERE Id = :dpAccount.Id
         ];
@@ -373,9 +373,10 @@ private with sharing class OrderTriggerHandlerTest {
             WHERE aforza__Order__c = :newOrder.Id
         ];
         List<aforza__Invoice_Line_Item__c> invoiceLineItems = [
-            SELECT Id FROM aforza__Invoice_Line_Item__c
+            SELECT Id
+            FROM aforza__Invoice_Line_Item__c
             WHERE aforza__Invoice__c
-            IN :invoices
+                IN :invoices
         ];
 
         System.assertEquals(1, invoices.size(), 'Expected invoice to be created');
@@ -560,11 +561,13 @@ private with sharing class OrderTriggerHandlerTest {
 
         // retrieve invoice and invoice line items, validate results
         List<aforza__Invoice__c> invoices = [
-            SELECT Id FROM aforza__Invoice__c
+            SELECT Id
+            FROM aforza__Invoice__c
             WHERE aforza__Order__c = :newOrder.Id
         ];
         List<aforza__Invoice_Line_Item__c> invoiceLineItems = [
-            SELECT Id FROM aforza__Invoice_Line_Item__c
+            SELECT Id
+            FROM aforza__Invoice_Line_Item__c
             WHERE aforza__Invoice__c IN :invoices
         ];
 
@@ -603,7 +606,7 @@ private with sharing class OrderTriggerHandlerTest {
                 Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
-            TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
@@ -644,7 +647,7 @@ private with sharing class OrderTriggerHandlerTest {
             )
         );
 
-        AccountTeamMember atm = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = dpAccount.Id, TeamMemberRole = 'TAM')
         );
 
@@ -662,8 +665,8 @@ private with sharing class OrderTriggerHandlerTest {
         // create invoice
         TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(
-                aforza__Reference__c= '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
-                aforza__Status__c ='Outstanding', aforza__Amount_Due__c = 300
+                aforza__Reference__c = '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
+                aforza__Status__c = 'Outstanding', aforza__Amount_Due__c = 300
             )
         );
 
@@ -681,46 +684,47 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testPopulateDefaultInventory() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Wednesbury', InventoryCode__c = 'W');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Wednesbury', InventoryCode__c = 'W');
         insert inventory;
-        
+
         Test.startTest();
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'C')
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'C')
         );
         Test.stopTest();
 
-        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id =:newOrder.Id];
-     
+        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id = :newOrder.Id];
+
         System.assertEquals('C', order.Depot__c);
         System.assertEquals(inventory.Id, order.aforza__Inventory__c);
     }
 
     @IsTest
     private static void testPopulateDefaultInventory_setToNull() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Moston', InventoryCode__c = 'M');
         insert inventory;
-        
+
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'M')
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'M')
         );
-        
+
         Test.startTest();
         newOrder.Depot__c = null;
         update newOrder;
         Test.stopTest();
 
-        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id =:newOrder.Id];
-       
+        Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id = :newOrder.Id];
+
         System.assertEquals(null, order.Depot__c);
         System.assertEquals(null, order.aforza__Inventory__c);
     }
-    
+
+    @IsTest
     private static void testPopulateLoadWhenAllLInkedOrdersShareStatus() {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
         List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
-                Load__c = load.Id, Status = 'Ready To Load'), 5);
+            Load__c = load.Id, Status = 'Ready To Load'), 5);
 
         for (Order order : orders) {
             order.Status = 'Pending Delivery';
@@ -740,7 +744,7 @@ private with sharing class OrderTriggerHandlerTest {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
         List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
-                Load__c = load.Id, Status = 'Ready To Load'), 5);
+            Load__c = load.Id, Status = 'Ready To Load'), 5);
 
         for (Integer i = 0; i < 1; i++) {
             orders[i].Status = 'Pending Delivery';
@@ -754,5 +758,124 @@ private with sharing class OrderTriggerHandlerTest {
 
         Assert.areEqual(false, loadUpdated.CreateRoute__c);
     }
+
+    @IsTest
+    private static void testRemoveOrdersFromLoad() {
+        // prepare orders and assign them to load
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
+        Account acc1 = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(AccountId = acc1.Id, RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Ready To Load'), 5);
+
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Ready To Load'));
+        orders.add(order);
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            orders[i].Status = 'Pending Delivery';
+        }
+
+        update orders;
+
+        // check that all data are created as expected
+        Assert.areNotEqual(acc1.Id, acc.Id);
+        List<aforza__Route_Location__c> routeLocations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.areEqual(2, routeLocations.size());
+
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.areEqual(2, visits.size());
+
+        List<Task> tasks = [SELECT Id FROM Task];
+        Assert.areEqual(6, tasks.size());
+
+        Test.startTest();
+        orders[0].Status = 'Unplanned';
+        orders[0].Replanned__c = true;
+        orders[0].Load__c = null;
+        orders[5].Status = 'Unplanned';
+        orders[5].Replanned__c = true;
+        orders[5].Load__c = null;
+        update orders;
+        Test.stopTest();
+
+        List<aforza__Route_Location__c> routeLocationAcc1 = [SELECT Id FROM aforza__Route_Location__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(1, routeLocationAcc1.size(), 'There should still be route location for this account.');
+
+        List<aforza__Visit__c> visitAcc1 = [SELECT Id FROM aforza__Visit__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(1, visitAcc1.size(), 'There should still be visit for this account.');
+
+        List<Task> tasksAcc1 = [SELECT Id FROM Task WHERE aforza__Order__r.AccountId = :acc1.Id];
+        Assert.areEqual(4, tasksAcc1.size(), 'There should be one less task, as one order was removed');
+
+        List<aforza__Route__c> routeAcc = [SELECT Id FROM aforza__Route__c WHERE LoadId__c = :load.Id];
+        Assert.areEqual(1, routeAcc.size(), 'There should be Route, as not all orders were removed');
+
+        List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
+        Assert.areEqual(1, loadAcc.size(), 'There should be load, as not all orders were removed');
+
+        List<aforza__Route_Location__c> routeLocationAcc = [SELECT Id FROM aforza__Route_Location__c WHERE aforza__Account__c = :acc.Id];
+        Assert.areEqual(0, routeLocationAcc.size(), 'There should not be any route location as order was removed.');
+
+        List<aforza__Visit__c> visitAcc = [SELECT Id FROM aforza__Visit__c WHERE aforza__Account__c = :acc.Id];
+        Assert.areEqual(0, visitAcc.size(), 'There should not be any visit as order was removed.');
+
+        List<Task> tasksAcc = [SELECT Id FROM Task WHERE aforza__Order__r.AccountId = :acc.Id];
+        Assert.areEqual(0, tasksAcc.size(), 'There should ot be any task left for this account, as order was removed');
+    }
+
+    @IsTest
+    private static void testRemoveOrdersFromLoad_TwoOrdersRemoved() {
+        // prepare orders and assign them to load
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
+        Account acc1 = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(AccountId = acc1.Id, RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Ready To Load'), 2);
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            orders[i].Status = 'Pending Delivery';
+        }
+
+        update orders;
+
+        // check that all data are created as expected
+        List<aforza__Route_Location__c> routeLocations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.areEqual(1, routeLocations.size());
+
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.areEqual(1, visits.size());
+
+        List<Task> tasks = [SELECT Id FROM Task];
+        Assert.areEqual(2, tasks.size());
+
+        List<aforza__Route__c> route = [SELECT Id FROM aforza__Route__c WHERE LoadId__c = :load.Id];
+        Assert.areEqual(1, route.size());
+
+        Test.startTest();
+        orders[0].Status = 'Unplanned';
+        orders[0].Replanned__c = true;
+        orders[0].Load__c = null;
+        orders[1].Status = 'Unplanned';
+        orders[1].Replanned__c = true;
+        orders[1].Load__c = null;
+        update orders;
+        Test.stopTest();
+
+        List<aforza__Route_Location__c> routeLocationAcc = [SELECT Id FROM aforza__Route_Location__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(0, routeLocationAcc.size(), 'There should not be any route location as order was removed.');
+
+        List<aforza__Visit__c> visitAcc = [SELECT Id FROM aforza__Visit__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(0, visitAcc.size(), 'There should not be any visit as order was removed.');
+
+        List<Task> tasksAcc = [SELECT Id FROM Task WHERE aforza__Order__r.AccountId = :acc1.Id];
+        Assert.areEqual(0, tasksAcc.size(), 'There should ot be any task left for this account, as order was removed');
+
+        List<aforza__Route__c> routeAcc = [SELECT Id FROM aforza__Route__c WHERE LoadId__c = :load.Id];
+        Assert.areEqual(0, routeAcc.size(), 'There should not be Route anymore, as all orders were removed');
+
+        List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
+        Assert.areEqual(0, loadAcc.size(), 'There should not be load anymore, as all orders were removed');
+    }
+
 }
 

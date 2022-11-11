@@ -73,7 +73,7 @@ private class LoadTriggerHandlerTest {
     @IsTest
     private static void testMapDataToVisit() {
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(DeliveryDate__c = System.today()));
-        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
+        TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
 
         Order orderWithNeededData = [
                 SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
@@ -113,7 +113,7 @@ private class LoadTriggerHandlerTest {
     @IsTest
     private static void testMapDataToRoute() {
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
-        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
+        TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
         Map<String, Id> territories = LoadTriggerHandler.checkIfTerritoryExistsCreateNewIfNot();
         Order orderWithNeededData = [
                 SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
@@ -220,6 +220,79 @@ private class LoadTriggerHandlerTest {
        
         System.assertEquals(null, load.Depot__c);
         System.assertEquals(null, load.SiteNo__c);
+    }
+
+    @IsTest
+    private static void testUpdateDriverAndDeliveryDate() {
+        User newDriver = (User) TdfSObjectFactory.insertSObject(new User());
+
+        // having start here already to be able to insert user above.
+        Test.startTest();
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
+        TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Pending Delivery'), 5);
+
+        load.CreateRoute__c = true;
+        update load;
+
+        List<Task> tasks = [SELECT Id, aforza__Visit__r.aforza__Planned_Time__c, aforza__Visit__r.aforza__Planned_End_Time__c, aforza__Visit__r.aforza__Owner__c, OwnerId FROM Task];
+        Assert.areEqual(5, tasks.size());
+        Assert.areEqual(UserInfo.getUserId(), tasks[0].OwnerId);
+        Assert.areEqual(UserInfo.getUserId(), tasks[0].aforza__Visit__r.aforza__Owner__c);
+
+
+        // update values
+        load.Driver__c = newDriver.Id;
+        update load;
+        Test.stopTest();
+
+        aforza__Route__c updatedRoute = [SELECT Id, Name FROM aforza__Route__c][0];
+
+        Assert.isTrue(updatedRoute.Name.contains(newDriver.LastName));
+        Assert.isTrue(updatedRoute.Name.contains(newDriver.FirstName));
+
+        List<Task> updatedTasks = [SELECT Id, aforza__Visit__r.aforza__Planned_Time__c, aforza__Visit__r.aforza__Planned_End_Time__c, aforza__Visit__r.aforza__Owner__c, OwnerId FROM Task];
+        Assert.areEqual(5, tasks.size());
+        Assert.areEqual(newDriver.Id, updatedTasks[0].OwnerId);
+        Assert.areEqual(newDriver.Id, updatedTasks[1].OwnerId);
+        Assert.areEqual(newDriver.Id, updatedTasks[2].OwnerId);
+        Assert.areEqual(newDriver.Id, updatedTasks[3].OwnerId);
+        Assert.areEqual(newDriver.Id, updatedTasks[4].OwnerId);
+        Assert.areEqual(newDriver.Id, updatedTasks[0].aforza__Visit__r.aforza__Owner__c);
+
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.areEqual(1, visits.size());
+    }
+
+    @IsTest
+    private static void testUpdateDriverAndDeliveryDate_DeliveryDate() {
+        Date deliveryDate = System.today();
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false, DeliveryDate__c = deliveryDate));
+
+        TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Pending Delivery'), 5);
+
+        load.CreateRoute__c = true;
+        update load;
+
+        List<Task> tasks = [SELECT Id, aforza__Visit__r.aforza__Planned_Time__c, aforza__Visit__r.aforza__Planned_End_Time__c, aforza__Visit__r.aforza__Owner__c, OwnerId FROM Task];
+        Assert.areEqual(5, tasks.size());
+        Assert.areEqual(deliveryDate, tasks[0].aforza__Visit__r.aforza__Planned_Time__c.date());
+        Assert.areEqual(deliveryDate, tasks[0].aforza__Visit__r.aforza__Planned_End_Time__c.date());
+
+        Test.startTest();
+        // update values
+        load.DeliveryDate__c = deliveryDate.addDays(5);
+        update load;
+        Test.stopTest();
+
+        List<Task> updatedTasks = [SELECT Id, aforza__Visit__r.aforza__Planned_Time__c, aforza__Visit__r.aforza__Planned_End_Time__c, aforza__Visit__r.aforza__Owner__c, OwnerId FROM Task];
+        Assert.areEqual(5, tasks.size());
+        Assert.areEqual(deliveryDate.addDays(5), updatedTasks[0].aforza__Visit__r.aforza__Planned_Time__c.date());
+        Assert.areEqual(deliveryDate.addDays(5), updatedTasks[0].aforza__Visit__r.aforza__Planned_End_Time__c.date());
+
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.areEqual(1, visits.size());
     }
 
 }

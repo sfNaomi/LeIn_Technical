@@ -17,6 +17,7 @@ trigger OrderTrigger on Order (before insert, before update, after insert, after
             OrderTriggerHandler.createInvoice(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.populateLoadWhenAllLInkedOrdersShareStatus(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.validateAndSendDeliveryNoteEmail(Trigger.new, Trigger.oldMap);
+            OrderTriggerHandler.removeOrdersFromLoad(Trigger.newMap, Trigger.oldMap);
         }
     }
 }
