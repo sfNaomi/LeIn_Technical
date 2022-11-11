@@ -37,4 +37,14 @@
         notNull(RecordTypes.INVENTORY_VEHICLE);
         notNull(RecordTypes.INVENTORY_VEHICLE_ID);
     }
+
+    @IsTest private static void testPaymentMethodRecordTypes() {
+        notNull(RecordTypes.PAYMENT_METHOD_CREDIT_CARD);
+        notNull(RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID);
+    }
+
+    @IsTest private static void testBtPaymentMethodRecordTypes() {
+        notNull(RecordTypes.BT_PAYMENT_METHOD_CARD);
+        notNull(RecordTypes.BT_PAYMENT_METHOD_CARD_ID);
+    }
 }

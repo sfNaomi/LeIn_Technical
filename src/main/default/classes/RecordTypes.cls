@@ -207,8 +207,40 @@ public inherited sharing class RecordTypes {
         private set;
     }
 
-       public static Id INVENTORY_BUILDING_ID {
-        get { return INVENTORY_BUILDING.getRecordTypeId(); }
+    public static Id INVENTORY_BUILDING_ID {
+        get { 
+            return INVENTORY_BUILDING.getRecordTypeId(); 
+        }
         private set;
     }
+
+    public static RecordTypeInfo PAYMENT_METHOD_CREDIT_CARD {
+        get {
+            return PAYMENT_METHOD_CREDIT_CARD = PAYMENT_METHOD_CREDIT_CARD != null
+                    ? PAYMENT_METHOD_CREDIT_CARD : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('Credit_Card');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_CREDIT_CARD_ID {
+        get { 
+            return PAYMENT_METHOD_CREDIT_CARD.getRecordTypeId(); 
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo BT_PAYMENT_METHOD_CARD {
+        get {
+            return BT_PAYMENT_METHOD_CARD = BT_PAYMENT_METHOD_CARD != null
+                    ? BT_PAYMENT_METHOD_CARD : Schema.SObjectType.bt_stripe__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('Charge_Card');
+        }
+        private set;
+    }
+
+    public static Id BT_PAYMENT_METHOD_CARD_ID {
+        get { 
+            return BT_PAYMENT_METHOD_CARD.getRecordTypeId(); 
+        }
+        private set;
+    }  
 }
