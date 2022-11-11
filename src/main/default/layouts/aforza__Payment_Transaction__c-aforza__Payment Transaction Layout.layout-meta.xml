@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>aforza__Request__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BtTransaction__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

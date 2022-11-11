@@ -176,6 +176,15 @@
                 <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>bt_stripe:VirtualTerminal</componentName>
+                <identifier>bt_stripe_VirtualTerminal</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>

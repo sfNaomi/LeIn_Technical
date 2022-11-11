@@ -115,6 +115,11 @@
         <editable>true</editable>
         <field>Order.PoNumber</field>
         <readable>true</readable>
+    </fieldPermissions>.
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PreAuthCaptured__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

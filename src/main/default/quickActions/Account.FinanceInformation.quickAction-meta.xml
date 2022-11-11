@@ -7,6 +7,11 @@
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>bt_stripe__Default_Payment_Method__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>PrimaryPaymentMethod__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>

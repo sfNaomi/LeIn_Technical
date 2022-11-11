@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Base access for Payment Transaction object - Read on object and Read on relevant fields</description>
+    <description>Base access for Payment Transaction and to some fields from BT Transaction objects - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>aforza__Payment_Transaction__c.OrderNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Payment_Transaction__c.BtTransaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -51,6 +56,16 @@
         <field>aforza__Payment_Transaction__c.aforza__Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>bt_stripe__Transaction__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>bt_stripe__Transaction__c.Invoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Payment Transaction Base Access</label>
     <objectPermissions>
@@ -71,8 +86,33 @@
         <object>aforza__Payment_Transaction__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>bt_stripe__Transaction__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>bt_stripe__Transaction__c.bt_stripe__Charge</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>bt_stripe__Transaction__c.bt_stripe__Payout</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>bt_stripe__Transaction__c.bt_stripe__Transfer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <tabSettings>
         <tab>aforza__Payment_Transaction__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>bt_stripe__Transaction__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

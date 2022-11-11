@@ -31,6 +31,10 @@
                 <behavior>Edit</behavior>
                 <field>TAMCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PreAuthCaptured__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -53,7 +57,7 @@
                 <behavior>Edit</behavior>
                 <field>Route__c</field>
             </layoutItems>
-             <layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PushedtoJde__c</field>
             </layoutItems>
@@ -389,6 +393,16 @@
         <fields>aforza__Payment_Transaction__c.aforza__Payment_Method__c</fields>
         <fields>aforza__Payment_Transaction__c.aforza__Type__c</fields>
         <relatedList>aforza__Invoice_Payment__c.aforza__Invoice__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>bt_stripe__Amount__c</fields>
+        <fields>bt_stripe__Transaction_Status__c</fields>
+        <fields>bt_stripe__Payment_Status__c</fields>
+        <fields>bt_stripe__Payment_Method__c</fields>
+        <fields>bt_stripe__Processed_Date__c</fields>
+        <fields>bt_stripe__Due_Date__c</fields>
+        <relatedList>bt_stripe__Transaction__c.Invoice__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>

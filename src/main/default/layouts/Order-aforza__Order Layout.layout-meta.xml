@@ -173,6 +173,10 @@
                 <behavior>Readonly</behavior>
                 <field>NetTotal__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PreAuthCaptured__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -391,6 +395,16 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>bt_stripe__Amount__c</fields>
+        <fields>bt_stripe__Transaction_Status__c</fields>
+        <fields>bt_stripe__Payment_Status__c</fields>
+        <fields>bt_stripe__Payment_Method__c</fields>
+        <fields>bt_stripe__Processed_Date__c</fields>
+        <fields>bt_stripe__Due_Date__c</fields>
+        <relatedList>bt_stripe__Transaction__c.Order__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
