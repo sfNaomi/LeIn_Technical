@@ -15,7 +15,7 @@ private with sharing class PickSheetPDFControllerTest {
         PageReference pageRef = Page.AGBarrPickSheet;
         Test.setCurrentPage(pageRef);
 
-        ApexPages.currentPage().getParameters().put('ids', 'test');
+        ApexPages.currentPage().getParameters().put('p', 'test');
 
         Test.startTest();
         PickSheetPDFController ctrl = new PickSheetPDFController();
@@ -28,25 +28,25 @@ private with sharing class PickSheetPDFControllerTest {
     private static void testInitializePageWithCorrectParameters_SingleOrder() {
         // create product
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(Name = 'Test Product', ProductCode = 'SKU1')
+            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
         );
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
 
         // create pricebook and add products to pricebook
         Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
         PricebookEntry productPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
         );
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
-                aforza__Default_Price_Book__c = newPricebook.Id,
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                PrimaryGridNumber__c = GRID
+            aforza__Default_Price_Book__c = newPricebook.Id,
+            RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+            PrimaryGridNumber__c = GRID
         ));
 
         // create inventory and add products to inventory
@@ -54,26 +54,26 @@ private with sharing class PickSheetPDFControllerTest {
                 new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
         );
         aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-                new aforza__Inventory_Product__c(
-                        aforza__Inventory__c = newInventory.Id,
-                        aforza__Product__c = newProduct.Id,
-                        PickingLocation__c = PICK_LOCATION_PROD
-                )
+            new aforza__Inventory_Product__c(
+                aforza__Inventory__c = newInventory.Id,
+                aforza__Product__c = newProduct.Id,
+                PickingLocation__c = PICK_LOCATION_PROD
+            )
         );
 
         // create orders and add products to it
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(
-                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id,
-                Grid__c = GRID,
-                Pricebook2Id = newPricebook.Id,
-                aforza__Inventory__c = newInventory.Id
+            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+            AccountId = dpAccount.Id,
+            Grid__c = GRID,
+            Pricebook2Id = newPricebook.Id,
+            aforza__Inventory__c = newInventory.Id
         ));
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-                OrderId = newOrder.Id,
-                Product2Id = newProduct.Id,
-                Quantity = 10,
-                PricebookEntryId = productPricebookEntry.Id
+            OrderId = newOrder.Id,
+            Product2Id = newProduct.Id,
+            Quantity = 10,
+            PricebookEntryId = productPricebookEntry.Id
         ));
 
         // create Vehicle
@@ -99,7 +99,7 @@ private with sharing class PickSheetPDFControllerTest {
         PageReference pageRef = Page.AGBarrPickSheet;
         Test.setCurrentPage(pageRef);
 
-        ApexPages.currentPage().getParameters().put('ids', newOrder.Id);
+        ApexPages.currentPage().getParameters().put('p', newOrder.Id);
 
         Test.startTest();
         PickSheetPDFController ctrl = new PickSheetPDFController();
@@ -112,71 +112,71 @@ private with sharing class PickSheetPDFControllerTest {
     private static void testInitializePageWithCorrectParameters_MultipleOrders() {
         // create product
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(Name = 'Test Product', ProductCode = 'SKU1')
+            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
         );
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
 
         // create pricebook and add products to pricebook
         Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
         PricebookEntry productPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
         );
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
-                aforza__Default_Price_Book__c = newPricebook.Id,
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                PrimaryGridNumber__c = GRID
+            aforza__Default_Price_Book__c = newPricebook.Id,
+            RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+            PrimaryGridNumber__c = GRID
         ));
 
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
-                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+            new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
         );
-        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-                new aforza__Inventory_Product__c(
-                        aforza__Inventory__c = newInventory.Id,
-                        aforza__Product__c = newProduct.Id,
-                        PickingLocation__c = PICK_LOCATION_PROD
-                )
+        TdfSObjectFactory.insertSObject(
+            new aforza__Inventory_Product__c(
+                aforza__Inventory__c = newInventory.Id,
+                aforza__Product__c = newProduct.Id,
+                PickingLocation__c = PICK_LOCATION_PROD
+            )
         );
 
         // create orders and add products to it
         Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
-                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id,
-                Grid__c = GRID,
-                Pricebook2Id = newPricebook.Id,
-                aforza__Inventory__c = newInventory.Id
+            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+            AccountId = dpAccount.Id,
+            Grid__c = GRID,
+            Pricebook2Id = newPricebook.Id,
+            aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-                OrderId = newOrder1.Id,
-                Product2Id = newProduct.Id,
-                Quantity = 10,
-                PricebookEntryId = productPricebookEntry.Id
+        TdfSObjectFactory.insertSObject(new OrderItem(
+            OrderId = newOrder1.Id,
+            Product2Id = newProduct.Id,
+            Quantity = 10,
+            PricebookEntryId = productPricebookEntry.Id
         ));
 
         Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
-                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-                AccountId = dpAccount.Id,
-                Grid__c = GRID,
-                Pricebook2Id = newPricebook.Id,
-                aforza__Inventory__c = newInventory.Id
+            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+            AccountId = dpAccount.Id,
+            Grid__c = GRID,
+            Pricebook2Id = newPricebook.Id,
+            aforza__Inventory__c = newInventory.Id
         ));
         OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-                OrderId = newOrder1.Id,
-                Product2Id = newProduct.Id,
-                Quantity = 20,
-                PricebookEntryId = productPricebookEntry.Id
+            OrderId = newOrder1.Id,
+            Product2Id = newProduct.Id,
+            Quantity = 20,
+            PricebookEntryId = productPricebookEntry.Id
         ));
 
         // create Vehicle
         Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+            new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
         );
 
         // create Load
@@ -202,7 +202,7 @@ private with sharing class PickSheetPDFControllerTest {
         PageReference pageRef = Page.AGBarrPickSheet;
         Test.setCurrentPage(pageRef);
 
-        ApexPages.currentPage().getParameters().put('ids', newOrder1.Id + ',' + newOrder2.Id);
+        ApexPages.currentPage().getParameters().put('p', newOrder1.Id + ',' + newOrder2.Id);
 
         Test.startTest();
         PickSheetPDFController ctrl = new PickSheetPDFController();

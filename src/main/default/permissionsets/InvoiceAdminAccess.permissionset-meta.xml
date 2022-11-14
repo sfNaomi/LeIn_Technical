@@ -133,6 +133,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>aforza__Invoice__c.DiscountTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.DpAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -203,6 +208,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>aforza__Invoice__c.PaymentTerms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.PhoneNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -219,6 +229,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Invoice__c.PrimaryContactName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Invoice__c.PrintName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

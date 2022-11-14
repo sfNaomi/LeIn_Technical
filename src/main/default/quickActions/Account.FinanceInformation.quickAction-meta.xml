@@ -32,6 +32,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>PaymentTerms__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>aforza__Invoice_Email_Address__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>

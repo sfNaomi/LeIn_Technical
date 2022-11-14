@@ -11,7 +11,7 @@
 DP Ref: {!relatedTo.DeliveryPointReference__c} <br/>
 <br/>
 <br/>
-This e-mail contains an delivery note from Barr Soft Drinks relating to your recent delivery.
+This e-mail contains a delivery note from Barr Soft Drinks relating to your recent delivery.
 <br/>
 <br/>
 Should you wish to query this invoice, please contact 0800 434 6260 quoting reference {!relatedTo.OrderNumber}/{!relatedTo.DeliveryPointReference__c}

@@ -145,14 +145,14 @@ public with sharing class FileGenerationServiceTest {
     }
 
     @IsTest
-    public static void testGenerateContentVersion() {
+    public static void testGenerateContentVersion_Invoice() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(aforza__Account__c = dpAccount.Id)
         );
-        aforza__Invoice__c insertedInvoice = [SELECT Id, Name FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
+        aforza__Invoice__c insertedInvoice = [SELECT Id, aforza__Order__r.OrderNumber FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
 
         Test.startTest();
         ContentVersion generatedFile = FileGenerationService.generateContentVersion(
@@ -161,12 +161,49 @@ public with sharing class FileGenerationServiceTest {
         );
         Test.stopTest();
 
-        System.assertEquals('S', generatedFile.ContentLocation);
-        System.assertEquals('C', generatedFile.Origin);
-        System.assertEquals(UserInfo.getUserId(), generatedFile.OwnerId);
-        System.assertEquals(FileGenerationService.getContentAsBlob(newInvoice.Id, Page.AGBarrInvoice), generatedFile.VersionData);
-        System.assertEquals('Invoice ' + insertedInvoice.get('Name') + ' ' + System.today().format() + '.pdf', generatedFile.PathOnClient);
-        System.assertEquals('Invoice ' + insertedInvoice.get('Name') + ' ' + System.today().format() + '.pdf', generatedFile.Title);
-        System.assertEquals('Invoice', generatedFile.DocumentType__c);
+        String expectedContentLocation = 'S';
+        String expectedOrigin = 'C';
+        String expectedFileOwner = UserInfo.getUserId();
+        Blob expectedVersionData = FileGenerationService.getContentAsBlob(newInvoice.Id, Page.AGBarrInvoice);
+        String expectedFileName = 'Invoice ' + insertedInvoice?.aforza__Order__r?.OrderNumber + ' ' + System.today().format() + '.pdf';
+        String expectedDocumentType = 'Invoice';
+
+        System.assertEquals(expectedContentLocation, generatedFile.ContentLocation);
+        System.assertEquals(expectedOrigin, generatedFile.Origin);
+        System.assertEquals(expectedFileOwner, generatedFile.OwnerId);
+        System.assertEquals(expectedVersionData, generatedFile.VersionData);
+        System.assertEquals(expectedFileName, generatedFile.PathOnClient);
+        System.assertEquals(expectedFileName, generatedFile.Title);
+        System.assertEquals(expectedDocumentType, generatedFile.DocumentType__c);
+    }
+
+    @IsTest
+    public static void testGenerateContentVersion_DeliveryNote() {
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID)
+        );
+        Order insertedOrder = [SELECT Id, OrderNumber FROM Order WHERE Id = :newOrder.Id];
+
+        Test.startTest();
+        ContentVersion generatedFile = FileGenerationService.generateContentVersion(
+            FileGenerationService.documentType.DELIVERY_NOTE,
+            insertedOrder
+        );
+        Test.stopTest();
+
+        String expectedContentLocation = 'S';
+        String expectedOrigin = 'C';
+        String expectedFileOwner = UserInfo.getUserId();
+        Blob expectedVersionData = FileGenerationService.getContentAsBlob(newOrder.Id, Page.DeliveryNotePDF);
+        String expectedFileName = 'Delivery Note ' + insertedOrder.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
+        String expectedDocumentType = 'Delivery Note';
+
+        System.assertEquals(expectedContentLocation, generatedFile.ContentLocation);
+        System.assertEquals(expectedOrigin, generatedFile.Origin);
+        System.assertEquals(expectedFileOwner, generatedFile.OwnerId);
+        System.assertEquals(expectedVersionData, generatedFile.VersionData);
+        System.assertEquals(expectedFileName, generatedFile.PathOnClient);
+        System.assertEquals(expectedFileName, generatedFile.Title);
+        System.assertEquals(expectedDocumentType, generatedFile.DocumentType__c);
     }
 }

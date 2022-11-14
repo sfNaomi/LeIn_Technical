@@ -21,7 +21,7 @@
 
     <apex:repeat value="{!mapIdOrder}" var="key">
         <div style="page-break-after: always;">
-            <apex:image url="{!$Resource.AGBarrLogo2}" width="100%" />
+            <apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%"/>
             <br />
             <br/>
 

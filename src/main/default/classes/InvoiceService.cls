@@ -5,14 +5,17 @@
 public with sharing class InvoiceService {
 	private static final String INVOICE_EMAIL_TEMPLATE_NAME = 'AGBarrInvoiceEmailTemplate';
 
+	private static final String DD_PAYMENT_METHOD = 'Direct Debit';
+	private static final String PAID_INVOICE_STATUS = 'Paid in Full';
+
 	private static final Id INVOICE_EMAIL_TEMPLATE_ID {
 		get {
 			if (INVOICE_EMAIL_TEMPLATE_ID == null) {
 				List<EmailTemplate> templates = new List<EmailTemplate>([
-						SELECT Id
-						FROM EmailTemplate
-						WHERE DeveloperName = :INVOICE_EMAIL_TEMPLATE_NAME
-						LIMIT 1
+					SELECT Id
+					FROM EmailTemplate
+					WHERE DeveloperName = :INVOICE_EMAIL_TEMPLATE_NAME
+					LIMIT 1
 				]);
 				INVOICE_EMAIL_TEMPLATE_ID = templates.isEmpty() ? null : templates[0].Id;
 			}
@@ -124,9 +127,9 @@ public with sharing class InvoiceService {
 	@TestVisible
 	private static List<aforza__Payment_Transaction__c> getPaymentTransactions(Set<Id> orderIds) {
 		List<aforza__Payment_Transaction__c> transactions = [
-				SELECT Id, OrderNumber__c, aforza__Invoice__c
-				FROM aforza__Payment_Transaction__c
-				WHERE OrderNumber__c IN :orderIds
+			SELECT Id, OrderNumber__c, aforza__Invoice__c
+			FROM aforza__Payment_Transaction__c
+			WHERE OrderNumber__c IN :orderIds
 		];
 		return transactions;
 	}
@@ -145,11 +148,92 @@ public with sharing class InvoiceService {
 	@TestVisible
 	private static void generateInvoiceFromOrder(aforza__Invoice__c newInvoice, Order existingOrder) {
 		// set fixed fields
-		newInvoice.aforza__Issued_Date__c = newInvoice.aforza__Issued_Date__c != null ? newInvoice.aforza__Issued_Date__c : System.today();
-		newInvoice.aforza__Due_Date__c = newInvoice.aforza__Issued_Date__c + 28;
+		newInvoice.aforza__Issued_Date__c = computeInvoiceIssuedDate(newInvoice.aforza__Issued_Date__c);
+		newInvoice.aforza__Due_Date__c = calculateInvoiceDueDate(existingOrder.Account.PaymentTerms__c, newInvoice.aforza__Issued_Date__c);
+		newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.Account.PrimaryPaymentMethod__c, newInvoice.aforza__Status__c);
 
 		// populate fields on the new invoice based on mapping
 		CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
+	}
+
+	/**
+	 * @description calculates invoice issued date
+	 *
+	 * @param currentIssuedDate current invoice issued date
+	 *
+	 * @return invoice issued date
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-11-10
+	 */
+	@TestVisible
+	private static Date computeInvoiceIssuedDate(Date currentIssuedDate) {
+		return currentIssuedDate != null ? currentIssuedDate : System.today();
+	}
+
+	/**
+	 * @description computes invoice status based on the payment method of the related account
+	 *
+	 * @param paymentMethod payment method of related account
+	 * @param currentStatus current invoice status
+	 *
+	 * @return invoice status
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-11-10
+	 */
+	@TestVisible
+	private static String computeInvoiceStatus(String paymentMethod, String currentStatus) {
+		return paymentMethod == DD_PAYMENT_METHOD ? PAID_INVOICE_STATUS : currentStatus;
+	}
+
+	/**
+	 * @description calculates invoice due date based on invoice issued date and payment terms
+	 *
+	 * @param paymentTerms payment terms of the related dp
+	 * @param issuedDate date when invoice was issued
+	 *
+	 * @return invoice due date
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-11-10
+	 */
+	@TestVisible
+	private static Date calculateInvoiceDueDate(String paymentTerms, Date issuedDate) {
+		Date dueDate = issuedDate;
+		switch on paymentTerms {
+			when 'STD'{
+				dueDate = toEndOfTheMonth(issuedDate.addMonths(1)).addDays(30);
+			}
+			when 'TMA'{
+				dueDate = toEndOfTheMonth(issuedDate.addMonths(2));
+			}
+			when 'TWA'{
+				Date endOfSecondMonth = toEndOfTheMonth(issuedDate.addMonths(2));
+				dueDate = Date.newInstance(endOfSecondMonth.year(), endOfSecondMonth.month(), 15);
+			}
+			when '50D'{
+				dueDate = issuedDate.addDays(50);
+			}
+			when '21D'{
+				dueDate = issuedDate.addDays(21);
+			}
+		}
+		return dueDate;
+	}
+
+	/**
+	 * @description returns the date corresponding to the end of the month for provided date
+	 *
+	 * @param newDate date to calculate end of the month for
+	 *
+	 * @return end of the month for provided date
+	 *
+	 * @author Magdalena Stanciu
+	 * @date 2022-11-10
+	 */
+	private static Date toEndOfTheMonth(Date newDate) {
+		return newDate.addMonths(1).toStartOfMonth().addDays(-1);
 	}
 
 	/**
@@ -173,9 +257,7 @@ public with sharing class InvoiceService {
 
 		// populate fields on the new invoice based on mapping
 		CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(
-				newInvoiceLineItem,
-				existingOrderItem,
-				ORDER_ITEM_TO_INVOICE_ITEM_MAPPING
+			newInvoiceLineItem, existingOrderItem, ORDER_ITEM_TO_INVOICE_ITEM_MAPPING
 		);
 
 		return newInvoiceLineItem;
@@ -195,20 +277,16 @@ public with sharing class InvoiceService {
 	@TestVisible
 	private static List<Order> getOrders(Set<Id> orderIds) {
 		List<String> orderFields = new List<String>(
-				CommonUtility.getFieldsToQueryFromMapping(ORDER_TO_INVOICE_MAPPING, CommonUtility.QueryFieldType.SOURCE)
+			CommonUtility.getFieldsToQueryFromMapping(ORDER_TO_INVOICE_MAPPING, CommonUtility.QueryFieldType.SOURCE)
 		);
 		List<String> orderItemFields = new List<String>(
-				CommonUtility.getFieldsToQueryFromMapping(ORDER_ITEM_TO_INVOICE_ITEM_MAPPING, CommonUtility.QueryFieldType.SOURCE)
+			CommonUtility.getFieldsToQueryFromMapping(ORDER_ITEM_TO_INVOICE_ITEM_MAPPING, CommonUtility.QueryFieldType.SOURCE)
 		);
 
 		String queryString =
-				'SELECT ' +
-						String.join(orderFields, ',') +
-						', ' +
-						'(SELECT ' +
-						String.join(orderItemFields, ',') +
-						' FROM OrderItems) ' +
-						'FROM Order WHERE Id IN :orderIds';
+			'SELECT ' + String.join(orderFields, ',') + ', ' +
+			'(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
+			'FROM Order WHERE Id IN :orderIds';
 		List<Order> orders = Database.query(queryString);
 
 		return orders;
@@ -227,13 +305,12 @@ public with sharing class InvoiceService {
 	@TestVisible
 	private static List<aforza__Invoice__c> getInvoices(Set<Id> orderIds) {
 		Set<String> invoiceFields = CommonUtility.getFieldsToQueryFromMapping(
-				ORDER_TO_INVOICE_MAPPING,
-				CommonUtility.QueryFieldType.TARGET
+			ORDER_TO_INVOICE_MAPPING,CommonUtility.QueryFieldType.TARGET
 		);
 
 		// fields set to fixed values in code - not based on mapping
 		Set<String> FIXED_INVOICE_FIELDS = new Set<String>{
-				'aforza__Issued_Date__c', 'aforza__Due_Date__c'
+			'aforza__Issued_Date__c', 'aforza__Due_Date__c'
 		};
 		invoiceFields.addAll(FIXED_INVOICE_FIELDS);
 
@@ -281,16 +358,16 @@ public with sharing class InvoiceService {
 	 */
 	public static Map<Id, aforza__Invoice__c> getInvoicesWhichRequireInvoiceSendingViaEmail(Set<Id> invoiceIds) {
 		Map<Id, aforza__Invoice__c> invoices = new Map<Id, aforza__Invoice__c>([
-				SELECT
-						Id,
-						aforza__Account__r.aforza__Invoice_Email_Address__c,
-						aforza__Account__r.aforza__Primary_Contact__c
-				FROM aforza__Invoice__c
-				WHERE
-						Id IN :invoiceIds
-						AND aforza__Account__r.InvoiceType__c = 'Email'
-						AND aforza__Account__r.aforza__Invoice_Email_Address__c != NULL
-						AND aforza__Account__r.aforza__Primary_Contact__c != NULL
+			SELECT
+				Id,
+				aforza__Account__r.aforza__Invoice_Email_Address__c,
+				aforza__Account__r.aforza__Primary_Contact__c
+			FROM aforza__Invoice__c
+			WHERE
+				Id IN :invoiceIds
+				AND aforza__Account__r.InvoiceType__c = 'Email'
+				AND aforza__Account__r.aforza__Invoice_Email_Address__c != NULL
+				AND aforza__Account__r.aforza__Primary_Contact__c != NULL
 		]);
 		return invoices;
 	}
@@ -307,7 +384,7 @@ public with sharing class InvoiceService {
 	 */
 	public static Map<Id, ContentVersion> generateInvoiceDocuments(Set<Id> invoiceIds) {
 		Map<Id, ContentVersion> contentVersionsByInvoiceId = FileGenerationService.generateDocuments(
-				FileGenerationService.DocumentType.INVOICE, invoiceIds
+			FileGenerationService.DocumentType.INVOICE, invoiceIds
 		);
 		return contentVersionsByInvoiceId;
 	}
@@ -323,10 +400,7 @@ public with sharing class InvoiceService {
 	 * @author Magdalena Stanciu
 	 * @date 2022-10-10
 	 */
-	public static void sendInvoiceDocumentsViaEmail(
-			Map<Id, aforza__Invoice__c> invoices,
-			Map<Id, ContentVersion> contentVersionsByInvoiceId
-	) {
+	public static void sendInvoiceDocumentsViaEmail(Map<Id, aforza__Invoice__c> invoices, Map<Id, ContentVersion> contentVersionsByInvoiceId) {
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 		for (Id invoiceId : invoices.keySet()) {
 			aforza__Invoice__c invoice = invoices.get(invoiceId);

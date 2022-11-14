@@ -14,7 +14,7 @@ public with sharing class PickSheetPDFController {
     * @date 2022-10-18
     */
     public PickSheetPDFController () {
-        String urlParam = ApexPages.currentPage().getParameters().get('ids');
+        String urlParam = ApexPages.currentPage().getParameters().get('p');
 
         List<String> orderIds = new List<String>();
         if (!String.isEmpty(urlParam)) {

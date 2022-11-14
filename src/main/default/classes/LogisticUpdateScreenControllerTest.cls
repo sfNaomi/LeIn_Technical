@@ -22,7 +22,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, PickingSheetPrinted__c FROM Order];
@@ -40,7 +40,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, PickingCompleted__c FROM Order];
@@ -58,13 +58,47 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, DeliveryManifestPrinted__c FROM Order];
 
         Assert.areEqual(1, updatedOrder.size());
         Assert.areEqual(fieldValues.get('DeliveryManifestPrinted__c'), updatedOrder[0].DeliveryManifestPrinted__c);
+    }
+
+    @IsTest
+    private static void testUpdateRecords_PrintInvoice() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'InvoicePrinted__c' => true
+        };
+        aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c());
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateRecords(new List<String>{newInvoice.Id}, fieldValues);
+        Test.stopTest();
+
+        List<aforza__Invoice__c> updatedInvoice = [SELECT Id, InvoicePrinted__c FROM aforza__Invoice__c];
+
+        Assert.areEqual(1, updatedInvoice.size());
+        Assert.areEqual(fieldValues.get('InvoicePrinted__c'), updatedInvoice[0].InvoicePrinted__c);
+    }
+
+    @IsTest
+    private static void testUpdateRecords_PrintDeliveryNote() {
+        Map<String, Object> fieldValues = new Map<String, Object>{
+            'DeliveryNotePrinted__c' => true
+        };
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
+
+        Test.startTest();
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, DeliveryNotePrinted__c FROM Order];
+
+        Assert.areEqual(1, updatedOrder.size());
+        Assert.areEqual(fieldValues.get('DeliveryNotePrinted__c'), updatedOrder[0].DeliveryNotePrinted__c);
     }
 
     @IsTest
@@ -75,7 +109,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, IsLoaded__c FROM Order];
@@ -93,7 +127,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, Receipt__c FROM Order];
@@ -111,7 +145,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, DeliveryFailed__c FROM Order];
@@ -129,7 +163,7 @@ private class LogisticUpdateScreenControllerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
 
         Test.startTest();
-        LogisticUpdateScreenController.updateOrderFields(new List<String>{order.Id}, fieldValues);
+        LogisticUpdateScreenController.updateRecords(new List<String>{order.Id}, fieldValues);
         Test.stopTest();
 
         List<Order> updatedOrder = [SELECT Id, Status, Replanned__c FROM Order];
@@ -147,7 +181,7 @@ private class LogisticUpdateScreenControllerTest {
 
         Test.startTest();
         try {
-            LogisticUpdateScreenController.updateOrderFields(new List<String>(), fieldValues);
+            LogisticUpdateScreenController.updateRecords(new List<String>(), fieldValues);
             Assert.isTrue(false);
         } catch (PopulateAuraHandledException ex) {
             Assert.isTrue(true);
@@ -161,7 +195,7 @@ private class LogisticUpdateScreenControllerTest {
 
         Test.startTest();
         try {
-            LogisticUpdateScreenController.updateOrderFields(new List<String>{newOrder.Id}, new Map<String, Object>());
+            LogisticUpdateScreenController.updateRecords(new List<String>{newOrder.Id}, new Map<String, Object>());
             Assert.isTrue(false);
         } catch (PopulateAuraHandledException ex) {
             Assert.isTrue(true);
@@ -178,7 +212,7 @@ private class LogisticUpdateScreenControllerTest {
 
         Test.startTest();
         try {
-            LogisticUpdateScreenController.updateOrderFields(new List<String>{newOrder.Id}, fieldValues);
+            LogisticUpdateScreenController.updateRecords(new List<String>{newOrder.Id}, fieldValues);
             Assert.isTrue(false);
         } catch (PopulateAuraHandledException ex) {
             Assert.isTrue(true);

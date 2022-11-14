@@ -370,62 +370,6 @@
         <value>Invoice Printed?</value>
     </labels>
     <labels>
-        <fullName>AWRS</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AWRS</shortDescription>
-        <value>AWRS #</value>
-    </labels>
-    <labels>
-        <fullName>Reg</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Reg</shortDescription>
-        <value>Reg #</value>
-    </labels>
-    <labels>
-        <fullName>VAT</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>VAT</shortDescription>
-        <value>VAT #</value>
-    </labels>
-    <labels>
-        <fullName>InvoiceAddressLine1</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Invoice Address Line 1</shortDescription>
-        <value>Invoice Address Line 1</value>
-    </labels>
-    <labels>
-        <fullName>InvoiceAddressLine2</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Invoice Address Line 2</shortDescription>
-        <value>Invoice Address Line 2</value>
-    </labels>
-    <labels>
-        <fullName>InvoiceAddressLine3</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Invoice Address Line 3</shortDescription>
-        <value>Invoice Address Line 3</value>
-    </labels>
-    <labels>
-        <fullName>InvoicePhoneNumber</fullName>
-        <categories>Invoice</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Invoice Phone Number</shortDescription>
-        <value>Tel. 0345 345 3566</value>
-    </labels>
-    <labels>
         <fullName>CompleteThisField</fullName>
         <categories>Custom Lookup</categories>
         <language>en_US</language>
@@ -450,6 +394,7 @@
     </labels>
     <labels>
         <fullName>PickSheetDeliveryDate</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Delivery Date</shortDescription>
@@ -457,7 +402,7 @@
     </labels>
     <labels>
         <fullName>PickSheetDescription</fullName>
-        <categories>LoadPlanningScreen</categories>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Description</shortDescription>
@@ -465,6 +410,7 @@
     </labels>
     <labels>
         <fullName>PickSheetDriver</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Driver</shortDescription>
@@ -472,6 +418,7 @@
     </labels>
     <labels>
         <fullName>PickSheetGrid</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Grid</shortDescription>
@@ -479,6 +426,7 @@
     </labels>
     <labels>
         <fullName>PickSheetLoadId</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Load ID</shortDescription>
@@ -486,6 +434,7 @@
     </labels>
     <labels>
         <fullName>PickSheetNoDPs</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - No DPs</shortDescription>
@@ -501,6 +450,7 @@
     </labels>
     <labels>
         <fullName>PickSheetPickLocation</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Pick Location</shortDescription>
@@ -508,6 +458,7 @@
     </labels>
     <labels>
         <fullName>PickSheetQuantity</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Quantity</shortDescription>
@@ -515,6 +466,7 @@
     </labels>
     <labels>
         <fullName>PickSheetSKUDescription</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - SKU Description</shortDescription>
@@ -522,6 +474,7 @@
     </labels>
     <labels>
         <fullName>PickSheetSkuId</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - SKU ID</shortDescription>
@@ -529,6 +482,7 @@
     </labels>
     <labels>
         <fullName>PickSheetTotalCases</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Total Cases</shortDescription>
@@ -536,6 +490,7 @@
     </labels>
     <labels>
         <fullName>PickSheetVehicle</fullName>
+        <categories>Pick Sheet</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Pick Sheet - Vehicle</shortDescription>
@@ -655,6 +610,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestDeliveryDate</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Delivery Date</shortDescription>
@@ -662,6 +618,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestDeliveryInstructions</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Delivery Instructions</shortDescription>
@@ -669,6 +626,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestDeliveryPoint</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Delivery Point</shortDescription>
@@ -676,6 +634,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestDescription</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Description</shortDescription>
@@ -683,6 +642,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestDriver</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Driver</shortDescription>
@@ -690,6 +650,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestLoadId</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Load ID</shortDescription>
@@ -697,6 +658,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestNumberOfDps</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Number of DPs</shortDescription>
@@ -704,6 +666,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestNumberOfPallets</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Number of Pallets</shortDescription>
@@ -711,6 +674,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestOpeningTimes</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Opening Times</shortDescription>
@@ -718,6 +682,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestPalletSequence</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Pallet Sequence</shortDescription>
@@ -725,6 +690,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestPaymentMethod</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Payment Method</shortDescription>
@@ -732,6 +698,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestPhone</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Phone</shortDescription>
@@ -739,6 +706,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestPostCode</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Post Code</shortDescription>
@@ -746,6 +714,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestQuantity</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Quantity</shortDescription>
@@ -753,6 +722,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestShippingAddress</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Shipping Address</shortDescription>
@@ -760,6 +730,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestTam</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - TAM</shortDescription>
@@ -767,6 +738,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestVehicle</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Vehicle</shortDescription>
@@ -774,6 +746,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestVehiclePayload</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Vehicle Payload</shortDescription>
@@ -781,20 +754,15 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestWeight</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Weight</shortDescription>
         <value>Weight</value>
     </labels>
     <labels>
-        <fullName>Delivery_Manifest_Number_of_Pallets</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Delivery Manifest - Number of Pallets</shortDescription>
-        <value>No: Pallets</value>
-    </labels>
-    <labels>
         <fullName>DeliveryManifestCS</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - C/S</shortDescription>
@@ -802,6 +770,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestKG</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - KG</shortDescription>
@@ -809,6 +778,7 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestGrid</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Grid</shortDescription>
@@ -816,10 +786,211 @@
     </labels>
     <labels>
         <fullName>DeliveryManifestNotes</fullName>
+        <categories>Delivery Manifest</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Delivery Manifest - Notes</shortDescription>
         <value>Notes</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceBillToRef</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Bill To Ref</shortDescription>
+        <value>Bill To Ref#</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceCustomerShopNumber</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Customer Shop Number</shortDescription>
+        <value>Customer Shop Number</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDate</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Date</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDeliveredTo</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Delivered To</shortDescription>
+        <value>DELIVERED TO:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDescription</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDiscountApplied</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Discount Applied</shortDescription>
+        <value>Discount already applied to Total Payable:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDpRef</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - DP Ref</shortDescription>
+        <value>DP Ref#</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceDueDate</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Due Date</shortDescription>
+        <value>Invoice Due Date</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceFooterNote</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Footer Note</shortDescription>
+        <value>All sales are subject to A.G.Barr plc&apos;s terms and conditions of sales. Copies of which are available on request or from</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceFooterNoteLink</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Footer Note Link</shortDescription>
+        <value>http://www.agbarr.co.uk/termsofbusiness</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceGoodsValue</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Goods Value</shortDescription>
+        <value>Goods Value</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceInvoiceTo</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Invoice To</shortDescription>
+        <value>INVOICE TO:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceNo</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - No.</shortDescription>
+        <value>Invoice No.</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePaymentMethod</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Payment Method</shortDescription>
+        <value>Payment Method</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePaymentTerms</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Payment Terms</shortDescription>
+        <value>Payment Terms</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePoRef</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - PO Ref</shortDescription>
+        <value>PO Ref#</value>
+    </labels>
+    <labels>
+        <fullName>InvoicePrintName</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Print Name</shortDescription>
+        <value>Print Name:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceQuantity</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Quantity</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceSignature</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Signature</shortDescription>
+        <value>Signature:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceSkuCode</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - SKU Code</shortDescription>
+        <value>SKU Code</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceTotalGoodsValue</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Total Goods Value</shortDescription>
+        <value>Total Goods Value</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceTotalPayable</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Total Payable</shortDescription>
+        <value>Total Payable</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceUnitPrice</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Unit Price</shortDescription>
+        <value>Unit Price</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceVatRate</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - VAT Rate</shortDescription>
+        <value>VAT Rate</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceVatValue</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - VAT Value</shortDescription>
+        <value>VAT Value</value>
     </labels>
     <labels>
         <fullName>CancelButton</fullName>

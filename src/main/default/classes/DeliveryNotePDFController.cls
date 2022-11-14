@@ -13,7 +13,7 @@ public without sharing class DeliveryNotePDFController {
     public Map<Id, ContentDocumentLink> mapOrderIdContentDoc { get; set; }
 
     public DeliveryNotePDFController() {
-        String orderID = ApexPages.currentPage().getParameters().get('id');
+        String orderID = ApexPages.currentPage().getParameters().get('p');
         this.mapIdOrder = new Map<Id, Order>();
         this.mapOrderIdAccount = new Map<Id, Account>();
         this.mapOrderIdlstOrderItem = new Map<Id, List<OrderItem>>();
@@ -79,18 +79,6 @@ public without sharing class DeliveryNotePDFController {
         ]) {
             mapOrderIdContentDoc.put(contentDocLink.LinkedEntityId, contentDocLink);
             strOrderIdsContainsSig = strOrderIdsContainsSig + ';' + contentDocLink.LinkedEntityId;
-        }
-    }
-
-    @AuraEnabled
-    public static void attachPDF(Id orderId) {
-        try {
-            DeliveryNoteService.generateOrderAttachmentsAndSendDeliveryEmails(new Set<Id>{
-                orderId
-            });
-        } catch (Exception e) {
-            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            throw PopulateAuraHandledException.newMessageException(e.getMessage());
         }
     }
 }

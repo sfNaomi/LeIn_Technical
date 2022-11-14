@@ -75,12 +75,12 @@ public with sharing class FileGenerationService {
         switch on docType {
             when INVOICE {
                 pageRef = Page.AGBarrInvoice;
-                documentName = 'Invoice ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
+                documentName = 'Invoice ' + record?.getSObject('aforza__Order__r')?.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
                 documentType = 'Invoice';
             }
             when DELIVERY_NOTE {
                 pageRef = Page.DeliveryNotePDF;
-                documentName = 'Delivery Note ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
+                documentName = 'Delivery Note ' + record.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
                 documentType = 'Delivery Note';
             }
             when else {
@@ -134,9 +134,19 @@ public with sharing class FileGenerationService {
     @TestVisible
     private static List<SObject> getRecords(Set<Id> recordIds) {
         String objectName = getSObjectType((new List<Id>(recordIds)).get(0));
-        String query = 'SELECT Id, Name FROM ' + objectName + ' WHERE Id IN :recordIds';
-        List<SObject> records = new List<SObject>(Database.query(query));
-        return records;
+        String fieldsToQuery = 'Id';
+
+        switch on objectName {
+            when 'aforza__Invoice__c' {
+                fieldsToQuery += ',aforza__Order__r.OrderNumber';
+            }
+            when 'Order' {
+                fieldsToQuery += ',OrderNumber';
+            }
+        }
+
+        String query = 'SELECT ' + fieldsToQuery + ' FROM ' + objectName + ' WHERE Id IN :recordIds';
+        return Database.query(query);
     }
 
     /**
@@ -167,7 +177,7 @@ public with sharing class FileGenerationService {
     */
     @TestVisible
     private static Blob getContentAsBlob(Id recordId, PageReference pageRef) {
-        pageRef.getParameters().put('id', recordId);
+        pageRef.getParameters().put('p', recordId);
         Blob pdfBlob = Test.isRunningTest() ? Blob.valueOf('Test Page') : pageRef.getContent();
         return pdfBlob;
     }

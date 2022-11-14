@@ -1,46 +1,17 @@
-/* DocumentStyleSheet */
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.document-table {
-	border-collapse: collapse;
-	width: 100%;
-	text-align: left;
-	font-size: 12px;
-	table-layout: fixed;
-}
-
-.document-table, .document-table th, .document-table td {
-    border: 1px solid #868687;
-}
-
-.document-table th, .document-table td {
-    padding: 2px 5px;
-}
-
-.document-table th, .document-table-header {
-	background-color: #e7e6e6;
-}
-
-.gray-bkg {
-	background-color: #e7e6e6;
-}
-
-.no-border {
-    border: none!important;
-}
-
 .double-border-bottom {
     border-left: none!important;
     border-right: none!important;
     border-bottom: 3px double #868687!important;
 }
 
-.page-break {
-    page-break-before: always;
+.no-border {
+    border: none!important;
 }
 
-.page-break:first-child {
-    page-break-before: avoid;
+@page{
+    @bottom-right {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        content: "Page " counter(page) " of " counter(pages);
+    }
 }

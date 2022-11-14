@@ -122,7 +122,7 @@ private with sharing class DeliveryManifestGenerationServiceTest {
             new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder1.Id)
         );
         TdfSObjectFactory.insertSObject(
-                new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder2.Id)
+            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder2.Id)
         );
 
         Test.startTest();
@@ -261,7 +261,7 @@ private with sharing class DeliveryManifestGenerationServiceTest {
 
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
-                new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+            new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
         );
 
         // create orders and add products to it
