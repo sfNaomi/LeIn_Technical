@@ -30,10 +30,10 @@
         $ npm run data:export --source=orgAlias
         ``` 
     * Before committing a new configuration or data, ensure that import works just fine to prevent others having issues.
-* Deployment
-    * Be careful here, see more info on [SFDX-Git-Delta](https://github.com/scolladon/sfdx-git-delta).
-```sh
-    $ sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output . -i .sgdignore
-    $ sfdx force:source:deploy -x package/package.xml -u targetOrg
-    $ sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u targetOrg
-```
+    * Deployment
+        * Be careful here, see more info on [SFDX-Git-Delta](https://github.com/scolladon/sfdx-git-delta).
+      ```sh
+          $ sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output . -i .sgdignore
+          $ sfdx force:source:deploy -x package/package.xml -u targetOrg
+          $ sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u targetOrg
+      ```
