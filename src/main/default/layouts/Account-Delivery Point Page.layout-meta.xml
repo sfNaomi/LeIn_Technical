@@ -116,6 +116,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>PrimaryRouteReference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Frequency__c</field>
             </layoutItems>
         </layoutColumns>
@@ -135,6 +139,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SecondaryDeliveryDay__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SecondaryRouteReference__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
