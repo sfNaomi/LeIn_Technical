@@ -51,7 +51,7 @@ public without sharing class DeliveryNotePDFController {
         }
 
         for (OrderItem ordItem : [
-            SELECT Id, Product2Id, Product2.StockKeepingUnit, Product2.Description, Quantity, OrderId
+            SELECT Id, Product2Id, Product2.StockKeepingUnit, Product2.Name, Quantity, OrderId
             FROM OrderItem
             WHERE OrderId IN :mapIdOrder.keySet()
         ]) {

@@ -149,6 +149,12 @@ public with sharing class FileGenerationServiceTest {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
+        Contact newContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = dpAccount.Id, Email = 'test@test.com')
+        );
+        dpAccount.aforza__Primary_Contact__c = newContact.Id;
+        update dpAccount;
+        
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(aforza__Account__c = dpAccount.Id)
         );

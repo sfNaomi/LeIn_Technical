@@ -100,7 +100,7 @@
             <table class="invoice-table" id="invoice-line-items">
                 <tr style="color: black">
                     <th class="invoice-table-header" width="20%">SKU Code</th>
-                    <th class="invoice-table-header" width="60%">Description</th>
+                    <th class="invoice-table-header" width="60%">Name</th>
                     <th class="invoice-table-header" width="20%">Quantity</th>
                 </tr>
             </table>
@@ -115,7 +115,7 @@
                                 <apex:outputField value="{!orderLineItem.product2.StockKeepingUnit}" />
                             </td>
                             <td class="invoice-table-rows" width="60%" style="font-weight: normal;">
-                                <apex:outputField value="{!orderLineItem.product2.Description}" />
+                                <apex:outputField value="{!orderLineItem.product2.Name}" />
                             </td>
                             <td class="invoice-table-rows" width="20%" style="font-weight: normal;">
                                 <apex:outputField value="{!orderLineItem.Quantity}" />
