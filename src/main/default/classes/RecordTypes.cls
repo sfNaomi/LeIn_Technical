@@ -242,5 +242,20 @@ public inherited sharing class RecordTypes {
             return BT_PAYMENT_METHOD_CARD.getRecordTypeId(); 
         }
         private set;
-    }  
+    }
+
+    public static RecordTypeInfo BT_TRANSACTION_CHARGE {
+        get {
+            return BT_TRANSACTION_CHARGE = BT_TRANSACTION_CHARGE != null
+                ? BT_TRANSACTION_CHARGE : Schema.SObjectType.bt_stripe__Transaction__c.getRecordTypeInfosByDeveloperName().get('Charge');
+        }
+        private set;
+    }
+
+    public static Id BT_TRANSACTION_CHARGE_ID {
+        get {
+            return BT_TRANSACTION_CHARGE.getRecordTypeId();
+        }
+        private set;
+    }
 }

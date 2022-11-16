@@ -88,7 +88,7 @@ public with sharing class OrderTriggerHandler {
                     newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
                     newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
-                    && newOrder.RecordTypeId != RecordTypes.ORDER_FIELD_DIRECT_ID && newOrder.IsApproved__c == false) {
+                    && newOrder.RecordTypeId != RecordTypes.ORDER_FIELD_DIRECT_ID && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToDPOnHold);
                 }
                 if (relatedAccount.AvailableCredit__c < 0 && newOrder.IsApproved__c == false) {

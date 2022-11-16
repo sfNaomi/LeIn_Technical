@@ -23,8 +23,6 @@
     <permissionSets>OrderAdminAccess</permissionSets>
     <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>OutletAssetAdminAccess</permissionSets>
-    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
-    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
     <permissionSets>PaymentTransactionAdminAccess</permissionSets>
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
@@ -37,5 +35,7 @@
     <permissionSets>VehicleAdminAccess</permissionSets>
     <permissionSets>VisitAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
+    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
+    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

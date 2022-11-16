@@ -56,6 +56,8 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.OwnerId = UserInfo.getUserId();
         template.FieldSalesRegion__c = 'England North';
         template.aforza__Last_Visit__c = System.now();
+        template.aforza__Invoice_Email_Address__c = 'test@test.com';
+        template.InvoiceType__c = 'Email';
 
         if (accountRecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
             template.AccountStatus__c = 'Traders';
