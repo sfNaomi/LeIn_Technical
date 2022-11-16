@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PerfectStoreCEProductsEngland</fullName>
+    <columns>PRODUCT2.FAMILY</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>PRODUCT2.CUSTOMER_PRODUCT_ID</columns>
+    <columns>PRODUCT2.DESCRIPTION</columns>
+    <columns>PsProductEngland__c</columns>
+    <columns>PsCategoryEngland__c</columns>
+    <columns>PsRateEngland__c</columns>
+    <columns>PsWeightEngland__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.FAMILY</field>
+        <operation>equals</operation>
+        <value>Perfect Store C&amp;E</value>
+    </filters>
+    <label>Perfect Store C&amp;E Products England</label>
+</ListView>
