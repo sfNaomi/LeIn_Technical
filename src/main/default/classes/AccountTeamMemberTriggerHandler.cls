@@ -3,9 +3,9 @@
  */
 
 public with sharing class AccountTeamMemberTriggerHandler {
-
     private static final String TAM_ROLE_NAME = 'TAM';
-
+    private static final String FIELD_SALES_REP_ROLE_NAME = 'Field Sales Rep';
+    private static final String DRIVER_ROLE_NAME = 'Driver';
 
     /**
      * @description prepares data and checks them if the recurring record should be updated. On account team a user cannot be changed,
@@ -40,6 +40,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
                 accountsToHandleRecurringRecordFor.add(acc);
             }
         }
+
         if (accountTeamMembersForDeletion.size() > 0) {
             deleteReoccurrenceRecord(accountTeamMembersForDeletion);
         }
@@ -65,65 +66,115 @@ public with sharing class AccountTeamMemberTriggerHandler {
     }
 
     /**
-     * @description checks that only one team member would be allowed to be created for any one record
+     * @description checks that only one user with a specified role can be added to the account team of an account
      *
      * @param newAccountTeamMembers list with new team members
      *
      * @author Svata Sejkora
      * @date 2022-10-01
      */
-    public static void allowOnlyOneTamUserPerAccount(List<AccountTeamMember> newAccountTeamMembers) {
-        Map<Id, Integer> accountIdsInCurrentOperation = new Map<Id, Integer>();
+    public static void allowOnlyOneUserWithSpecifiedRolePerAccount(List<AccountTeamMember> newAccountTeamMembers) {
+        // roles for which only one account team member is allowed
+        final Set<String> UNIQUE_ROLES = new Set<String>{TAM_ROLE_NAME, FIELD_SALES_REP_ROLE_NAME, DRIVER_ROLE_NAME};
 
+        // accounts ids to team roles by count
+        Map<Id, Map<String, Integer>> accountIdsInCurrentOperation = buildRolesCountMapForAccounts(newAccountTeamMembers, UNIQUE_ROLES);
+
+        // get existing team members for verified roles
+        Map<Id, Account> accountWithTeamMembers = getAccountsWithTeamMembersHavingSpecifiedRoles(accountIdsInCurrentOperation.keySet(), UNIQUE_ROLES);
+
+        // build helper maps
+        Map<Id, Map<String, AccountTeamMember>> accountIdsWithExistingUserRoles = new Map<Id, Map<String, AccountTeamMember>>();
+        for (Account newAccount : accountWithTeamMembers.values()) {
+            Map<String, AccountTeamMember> existingUserRoles = new Map<String, AccountTeamMember>();
+            for (AccountTeamMember member : newAccount.AccountTeamMembers) {
+                existingUserRoles.put(member.TeamMemberRole, member);
+            }
+            accountIdsWithExistingUserRoles.put(newAccount.Id, existingUserRoles);
+        }
+
+        Map<Id, AccountTeamMember> newAccountTeamMembersMap = new Map<Id, AccountTeamMember>();
         for (AccountTeamMember accountTeamMember : newAccountTeamMembers) {
-            if (accountTeamMember.TeamMemberRole == TAM_ROLE_NAME) {
-                Id accountId = accountTeamMember.AccountId;
-                //checking for adding multiple tams within single operation
-                if (accountIdsInCurrentOperation.containsKey(accountId)) {
-                    Integer actualCount = accountIdsInCurrentOperation.get(accountId) + 1;
-                    accountIdsInCurrentOperation.put(accountId, actualCount);
-                } else {
-                    accountIdsInCurrentOperation.put(accountId, 1);
-                }
+            if (accountTeamMember.Id != null) {
+                newAccountTeamMembersMap.put(accountTeamMember.Id, accountTeamMember);
             }
         }
-        // get accounts for current team members and check if there are any TAMs already
-        Map<Id, Account> accountsWithTeamMembers = new Map<Id, Account>();
-        if (accountIdsInCurrentOperation.size() > 0) {
-            accountsWithTeamMembers = getAccountsWithTamTeamMembers(accountIdsInCurrentOperation.keySet());
-        }
 
-        if (accountIdsInCurrentOperation.size() > 0) {
-            for (AccountTeamMember accountTeamMember : newAccountTeamMembers) {
-                Id accountId = accountTeamMember.AccountId;
-                if (accountIdsInCurrentOperation.get(accountId) > 1 || accountsWithTeamMembers.get(accountId).AccountTeamMembers.size() > 0) {
-                    accountTeamMember.addError(Label.DuplicateTamRoleError);
+        // check if multiple users with the same role have been inserted/updated for an account
+        for (AccountTeamMember accountTeamMember : newAccountTeamMembers) {
+            Id accountId = accountTeamMember.AccountId;
+            String userRole = accountTeamMember.TeamMemberRole;
+
+            if (!UNIQUE_ROLES.contains(userRole)) {
+                continue;
+            }
+
+            String errorMessage = String.format(Label.DuplicateTeamMemberRole, new List<String>{userRole});
+
+            if (accountIdsInCurrentOperation.get(accountId).get(userRole) > 1) {
+                accountTeamMember.addError(errorMessage);
+            }
+
+            // check for following edge case: we have a field sales rep account team member and in one transaction, we
+            // update the role of the existing field sales rep to field sales rep manager + insert a new fields sales rep
+            // no error should be thrown, as in the end, the account will only have one field sales rep
+            AccountTeamMember existingMemberWithSameRole = accountIdsWithExistingUserRoles?.get(accountId)?.get(userRole);
+            if (existingMemberWithSameRole != null && existingMemberWithSameRole.Id != accountTeamMember.Id) {
+                AccountTeamMember existingMemberInCurrentTransaction = newAccountTeamMembersMap?.get(existingMemberWithSameRole.Id);
+
+                if (existingMemberInCurrentTransaction == null ||
+                    (existingMemberInCurrentTransaction != null && existingMemberInCurrentTransaction.TeamMemberRole == existingMemberWithSameRole.TeamMemberRole)
+                ) {
+                    accountTeamMember.addError(errorMessage);
                 }
             }
         }
     }
 
     /**
-     * @description fetches accounts with their tea members to a map. Only gets Team member when the role is TAM
-     *
-     * @param accountIds list with new team members
-     *
-     * @return map of Account IDs to Accounts
-     *
-     * @author Svata Sejkora
-     * @date 2022-10-01
-     */
-    private static Map<Id, Account> getAccountsWithTamTeamMembers(Set<Id> accountIds) {
-        Map<Id, Account> accountsByIds = new Map<Id, Account>([
-                SELECT Id, (
-                        SELECT Id
-                        FROM AccountTeamMembers
-                        WHERE TeamMemberRole = :TAM_ROLE_NAME
-                )
-                FROM Account
-                WHERE Id IN :accountIds
-        ]);
-        return accountsByIds;
+    * @description copy information from team members with relevant roles (e.g. driver, field sales rep) to accounts
+    *
+    * @param modifiedTeamMembers list of modified accounts (inserted/updated/deleted)
+    *
+    * @return accounts - list of accounts based on conditions
+    *
+    * @author Magdalena Stanciu
+    * @date 2022-11-15
+    */
+	public static void copyInformationFromAccountTeamMemberToAccount(List<AccountTeamMember> modifiedTeamMembers){
+        // relevant roles
+        final Set<String> ROLES_TO_UPDATE_ACCOUNTS = new Set<String>{FIELD_SALES_REP_ROLE_NAME, DRIVER_ROLE_NAME};
+
+        // get accounts ids to query existing data
+        Set<Id> accountIdsInCurrentOperation = new Set<Id>();
+        for (AccountTeamMember newAccountTeamMember : modifiedTeamMembers) {
+            accountIdsInCurrentOperation.add(newAccountTeamMember.AccountId);
+        }
+
+        // get existing team members for verified roles
+        Map<Id, Account> accountWithTeamMembers = getAccountsWithTeamMembersHavingSpecifiedRoles(accountIdsInCurrentOperation, ROLES_TO_UPDATE_ACCOUNTS);
+
+        // build helper maps
+        Map<Account, Map<String, AccountTeamMember>> accountIdsWithExistingUserRoles = buildAccountTeamMembersByAccountIdsAndRoles(accountWithTeamMembers.values());
+
+        // copy information from account team members to accounts and update accounts (where needed)
+        List<Account> accountsToUpdate = new List<Account>();
+        for (Account newAccount : accountIdsWithExistingUserRoles.keyset()) {
+
+            AccountTeamMember driver = accountIdsWithExistingUserRoles.get(newAccount).get(DRIVER_ROLE_NAME);
+            AccountTeamMember fieldSalesRep = accountIdsWithExistingUserRoles.get(newAccount).get(FIELD_SALES_REP_ROLE_NAME);
+
+            String driverName = driver?.User?.Name;
+            String fieldSalesRepId = fieldSalesRep?.UserId;
+
+            if (newAccount.DriverName__c != driverName || newAccount.FieldSalesRepId__c != fieldSalesRepId) {
+                newAccount.DriverName__c = driverName;
+                newAccount.FieldSalesRepId__c = fieldSalesRepId;
+                accountsToUpdate.add(newAccount);
+            }
+        }
+
+        update accountsToUpdate;
     }
 
     /**
@@ -139,17 +190,15 @@ public with sharing class AccountTeamMemberTriggerHandler {
     private static List<Account> fetchValidAccountsForTeamRoles(Set<Id> accountIds) {
         List<Account> validAccountsForTeams = new List<Account>();
         for (Account account : [
-                SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c, SecondaryStartDate__c,
-                        CallPriority__c, PrimaryCallDay__c, SecondaryCallDay__c, PrimaryGridNumber__c, SecondaryGridNumber__c,
-                        CreateCalls__c, AccountStatus__c, RecordTypeId
-                FROM Account
-                WHERE Id IN :accountIds
+            SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c, SecondaryStartDate__c,
+                    CallPriority__c, PrimaryCallDay__c, SecondaryCallDay__c, PrimaryGridNumber__c, SecondaryGridNumber__c,
+                    CreateCalls__c, AccountStatus__c, RecordTypeId
+            FROM Account
+            WHERE Id IN :accountIds
         ]) {
-            if (account.CreateCalls__c &&
-                    AccountTriggerHandler.VISIT_STATUSES.contains(account.AccountStatus__c) &&
-                    account.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID &&
-                    String.isNotEmpty(account.PrimaryGridNumber__c) &&
-                    account.PrimaryStartDate__c != null
+            if (account.CreateCalls__c && AccountTriggerHandler.VISIT_STATUSES.contains(account.AccountStatus__c) &&
+                account.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && String.isNotEmpty(account.PrimaryGridNumber__c) &&
+                account.PrimaryStartDate__c != null
             ) {
                 validAccountsForTeams.add(account);
             }
@@ -157,47 +206,82 @@ public with sharing class AccountTeamMemberTriggerHandler {
         return validAccountsForTeams;
     }
 
-	public static void updateDriverNameOnAccountFromDriverAccountTeamMember(List<AccountTeamMember> newAccountTeamMembers, Map<Id, AccountTeamMember> oldAccountTeamMembers){
-        Set<Id> accIds = new Set<Id>();
-        List<Account> accountsToUpdate = new List<Account>();
-        for (AccountTeamMember newAccountTeamMember : newAccountTeamMembers) {
-            AccountTeamMember oldAccountTeamMember = oldAccountTeamMembers?.get(newAccountTeamMember.Id);
-        	if(
-                (oldAccountTeamMember == null && newAccountTeamMember.TeamMemberRole == 'Driver') || 
-                (
-                    oldAccountTeamMember != null && 
-                    newAccountTeamMember.TeamMemberRole != oldAccountTeamMember.TeamMemberRole && 
-                    (newAccountTeamMember.TeamMemberRole == 'Driver' || oldAccountTeamMember.TeamMemberRole == 'Driver')
-            	)
-            ) {
-                accIds.add(newAccountTeamMember.AccountId);
-            }       
-        }
-        if(accIds.size() > 0){
-            List<Account> driverUsers = [SELECT Id, (SELECT Id, AccountId, User.Name, TeamMemberRole
-                                    FROM AccountTeamMembers WHERE TeamMemberRole = 'Driver') FROM Account WHERE Id IN :accIds];
-            for (Account driversAccount : driverUsers) {
-                Account acc = new Account(Id=driversAccount.Id);
-                if(driversAccount.AccountTeamMembers.size() > 0){
-                	acc.DriverName__c = driversAccount.AccountTeamMembers[0].User.Name;
-                    accountsToUpdate.add(acc);
-                }else{
-                    acc.DriverName__c = null;
-                    accountsToUpdate.add(acc);
-                }               
-            }    
-        } 
-        update accountsToUpdate;     
+    /**
+     * @description fetches accounts with their team members to a map (retrieves only members having roles which should be unique within the team)
+     *
+     * @param accountIds list with new team members
+     * @param roles list pf roles
+     *
+     * @return map of Account IDs to team members
+     *
+     * @author Svata Sejkora
+     * @date 2022-10-01
+     */
+    private static Map<Id, Account> getAccountsWithTeamMembersHavingSpecifiedRoles(Set<Id> accountIds, Set<String> roles) {
+        Map<Id, Account> accountsWithTeamMembers = new Map<Id, Account>([
+            SELECT Id, FieldSalesRepId__c, DriverName__c, (
+                SELECT Id, TeamMemberRole, UserId, User.Name
+                FROM AccountTeamMembers
+                WHERE TeamMemberRole IN :roles
+            )
+            FROM Account
+            WHERE Id IN :accountIds
+        ]);
+        return accountsWithTeamMembers;
     }
 
-    public static void deleteDriversNameFromAccount(Map<Id, AccountTeamMember> oldAccountTeamMembers) {
-        List<Account> accountsToUpdate = new List<Account>();
-        for (AccountTeamMember accountTeamMember : oldAccountTeamMembers.values()) {
-            if (accountTeamMember.TeamMemberRole == 'Driver') {
-                Account acc = new Account(Id = accountTeamMember.AccountId, DriverName__c = null);
-                accountsToUpdate.add(acc);
+    /**
+    * @description builds a helper map from a list of account team members
+    *
+    * @param teamMembers list of team members
+    *
+    * @return map with accounts ids as keys to account team members by roles
+    *
+    * @author Magdalena Stanciu
+    * @date 2022-11-15
+    */
+    private static Map<Account, Map<String, AccountTeamMember>> buildAccountTeamMembersByAccountIdsAndRoles(List<Account> newAccounts) {
+        Map<Account, Map<String, AccountTeamMember>> accountIdsWithExistingUserRoles = new Map<Account, Map<String, AccountTeamMember>>();
+        for (Account newAccount : newAccounts) {
+            Map<String, AccountTeamMember> existingUserRoles = new Map<String, AccountTeamMember>();
+            for (AccountTeamMember member : newAccount.AccountTeamMembers) {
+                existingUserRoles.put(member.TeamMemberRole, member);
+            }
+            accountIdsWithExistingUserRoles.put(newAccount, existingUserRoles);
+        }
+        return accountIdsWithExistingUserRoles;
+    }
+
+    /**
+    * @description builds a helper map from a list of account team members
+    *
+    * @param teamMembers list of team members
+    * @param roles set of relevant roles
+    *
+    * @return map with accounts ids as keys to roles by count
+    *
+    * @author Magdalena Stanciu
+    * @date 2022-11-15
+    */
+    private static Map<Id, Map<String, Integer>> buildRolesCountMapForAccounts(List<AccountTeamMember> teamMembers, Set<String> roles) {
+        Map<Id, Map<String, Integer>> accountIdsInCurrentOperation = new Map<Id, Map<String, Integer>>();
+        for (AccountTeamMember accountTeamMember : teamMembers) {
+            if (roles.contains(accountTeamMember.TeamMemberRole)) {
+
+                Id accountId = accountTeamMember.AccountId;
+                String userRole = accountTeamMember.TeamMemberRole;
+
+                Map<String, Integer> actualCountByRole = accountIdsInCurrentOperation.get(accountId);
+                if (actualCountByRole == null) {
+                    actualCountByRole = new Map<String, Integer>();
+                }
+
+                Integer actualCount = actualCountByRole.get(userRole) == null ? 0 : actualCountByRole.get(userRole);
+
+                actualCountByRole.put(userRole, ++actualCount);
+                accountIdsInCurrentOperation.put(accountId, actualCountByRole);
             }
         }
-        update accountsToUpdate;
+        return accountIdsInCurrentOperation;
     }
 }

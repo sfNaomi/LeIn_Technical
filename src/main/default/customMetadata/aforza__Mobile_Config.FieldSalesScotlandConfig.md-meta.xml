@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>aforza__Active__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>aforza__Assigned_Profiles_JSON__c</field>
@@ -12,1042 +12,1040 @@
     </values>
     <values>
         <field>aforza__Config_JSON__c</field>
-        <value xsi:type="xsd:string">{
-    &quot;AuditTypes&quot;: [
-        {
-            &quot;Button&quot;: &quot;Core &amp; Energy Complete&quot;,
-            &quot;CanAddProducts&quot;: true,
-            &quot;CanCreateOrders&quot;: false,
-            &quot;CanTakePhotos&quot;: true,
-            &quot;FilterGroups&quot;: [
+        <value xsi:type="xsd:string">
+            {
+              "SideMenu": [
                 {
-                    &quot;Filters&quot;: [
-                        {
-                            &quot;Key&quot;: &quot;aforza__Type__c&quot;,
-                            &quot;Operator&quot;: &quot;eq&quot;,
-                            &quot;Value&quot;: &quot;Perfect Store C&amp;E&quot;
-                        }
-                    ]
+                  "Type": "ACTION",
+                  "Name": "Marketing-Materials",
+                  "Action": {
+                    "Type": "WEB",
+                    "Title": "Marketing Materials",
+                    "Target": "https://sites.google.com/agbarr.co.uk/barrdirect/home"
+                  }
                 }
-            ],
-            &quot;LayoutForm&quot;: [
+              ],
+              "OrderComplete": [
                 {
-                    &quot;Name&quot;: &quot;aforza__Submitted_Date__c&quot;
-                }
-            ],
-            &quot;OutletAssetToAuditAssetFieldMapping&quot;: [
-                {
-                    &quot;FromName&quot;: &quot;aforza__Name__c&quot;,
-                    &quot;ToName&quot;: &quot;aforza__Name__c&quot;
+                  "Type": "ACTION",
+                  "Name": "Offline-Action",
+                  "Action": {
+                    "Type": "ENGINE",
+                    "Title": "Validate Order",
+                    "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForFieldSales.js"
+                  }
                 },
                 {
-                    &quot;FromName&quot;: &quot;PerfectStoreMet__c&quot;,
-                    &quot;ToName&quot;: &quot;PerfectStoreMet__c&quot;
-                }
-            ],
-            &quot;QuickAdd&quot;: {
-                &quot;Layout&quot;: [
+                  "Type": "ACTION",
+                  "Name": "Offline-Action2",
+                  "Action": {
+                    "Type": "ENGINE",
+                    "Title": "Check Account Credit Limit",
+                    "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
+                  }
+                },
+                {
+                  "Type": "FORM",
+                  "Title": "Section",
+                  "Fields": [
                     {
-                        &quot;Details&quot;: {
-                            &quot;Required&quot;: true
-                        },
-                        &quot;Name&quot;: &quot;aforza__Status__c&quot;
+                      "Name": "PoNumber"
                     }
-                ]
-            },
-            &quot;Tabs&quot;: [
-                {
-                    &quot;Layout&quot;: [
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PerfectStoreMet__c&quot;
-                        }
-                    ],
-                    &quot;Title&quot;: &quot;PS Products&quot;,
-                    &quot;Type&quot;: &quot;FORM&quot;
+                  ]
                 }
-            ],
-            &quot;Title&quot;: &quot;Core &amp; Energy Range Stocked?&quot;,
-            &quot;Type&quot;: &quot;Perfect Store Core Energy&quot;
-        },
-        {
-            &quot;Button&quot;: &quot;Visibility &amp; Display Complete&quot;,
-            &quot;CanAddProducts&quot;: true,
-            &quot;CanCreateOrders&quot;: false,
-            &quot;CanTakePhotos&quot;: true,
-            &quot;FilterGroups&quot;: [
+              ],
+              "ObjectsToSync": [
                 {
-                    &quot;Filters&quot;: [
-                        {
-                            &quot;Key&quot;: &quot;aforza__Type__c&quot;,
-                            &quot;Operator&quot;: &quot;eq&quot;,
-                            &quot;Value&quot;: &quot;Perfect Store V&amp;D&quot;
-                        }
-                    ]
-                }
-            ],
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Name&quot;: &quot;aforza__Submitted_Date__c&quot;
-                }
-            ],
-            &quot;OutletAssetToAuditAssetFieldMapping&quot;: [
-                {
-                    &quot;FromName&quot;: &quot;aforza__Name__c&quot;,
-                    &quot;ToName&quot;: &quot;aforza__Name__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;PerfectStoreMet__c&quot;,
-                    &quot;ToName&quot;: &quot;PerfectStoreMet__c&quot;
-                }
-            ],
-            &quot;QuickAdd&quot;: {
-                &quot;Layout&quot;: [
+                  "RecordLimit": 500,
+                  "LayoutListView": [
                     {
-                        &quot;Details&quot;: {
-                            &quot;Required&quot;: false
-                        },
-                        &quot;Name&quot;: &quot;aforza__Status__c&quot;
+                      "Name": "Name"
                     }
-                ]
-            },
-            &quot;Tabs&quot;: [
-                {
-                    &quot;Layout&quot;: [
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PerfectStoreMet__c&quot;
-                        }
-                    ],
-                    &quot;Title&quot;: &quot;Visibility &amp; Display&quot;,
-                    &quot;Type&quot;: &quot;FORM&quot;
-                }
-            ],
-            &quot;Title&quot;: &quot;Visibility &amp; Display?&quot;,
-            &quot;Type&quot;: &quot;Perfect Store Visibility &amp; Display&quot;
-        },
-        {
-            &quot;Button&quot;: &quot;Call Productivity Audit Complete&quot;,
-            &quot;CanAddProducts&quot;: true,
-            &quot;CanCreateOrders&quot;: false,
-            &quot;CanTakePhotos&quot;: true,
-            &quot;FilterGroups&quot;: [
-                {
-                    &quot;Filters&quot;: [
-                        {
-                            &quot;Key&quot;: &quot;aforza__Type__c&quot;,
-                            &quot;Operator&quot;: &quot;eq&quot;,
-                            &quot;Value&quot;: &quot;Visit-Productivity&quot;
-                        }
-                    ]
-                }
-            ],
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Name&quot;: &quot;aforza__Submitted_Date__c&quot;
-                }
-            ],
-            &quot;OutletAssetToAuditAssetFieldMapping&quot;: [
-                {
-                    &quot;FromName&quot;: &quot;aforza__Name__c&quot;,
-                    &quot;ToName&quot;: &quot;aforza__Name__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;BuyerAvailability__c&quot;,
-                    &quot;ToName&quot;: &quot;BuyerAvailability__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;RubiconFamilyAllSkusCount__c&quot;,
-                    &quot;ToName&quot;: &quot;RubiconFamilyAllSkusCount__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;IrnBruFamilyAllSkusIncIbe__c&quot;,
-                    &quot;ToName&quot;: &quot;IrnBruFamilyAllSkusIncIbe__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;KaFamilyAllSkus__c&quot;,
-                    &quot;ToName&quot;: &quot;KaFamilyAllSkus__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;SunExoticFamilyAllBrands__c&quot;,
-                    &quot;ToName&quot;: &quot;SunExoticFamilyAllBrands__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;BarrFamilyAllSkus__c&quot;,
-                    &quot;ToName&quot;: &quot;BarrFamilyAllSkus__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;OtherBarrProducts__c&quot;,
-                    &quot;ToName&quot;: &quot;OtherBarrProducts__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;FranchiseSnappleSanBenBundaberg__c&quot;,
-                    &quot;ToName&quot;: &quot;FranchiseSnappleSanBenBundaberg__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;NoCasesOpenedMerchandised__c&quot;,
-                    &quot;ToName&quot;: &quot;NoCasesOpenedMerchandised__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;NoNewPiecesOfPOSPlacedToday__c&quot;,
-                    &quot;ToName&quot;: &quot;NoNewPiecesOfPOSPlacedToday__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;,
-                    &quot;ToName&quot;: &quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;InCallProductivity__c&quot;,
-                    &quot;ToName&quot;: &quot;InCallProductivity__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;AddCallToYourCoverageAndBaseline__c&quot;,
-                    &quot;ToName&quot;: &quot;AddCallToYourCoverageAndBaseline__c&quot;
-                }
-            ],
-            &quot;QuickAdd&quot;: {
-                &quot;Layout&quot;: [
+                  ],
+                  "LayoutForm": [
                     {
-                        &quot;Details&quot;: {
-                            &quot;Required&quot;: false
+                      "Name": "Name",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "StoreName__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "PreferredCallTimeTelesales__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "PreferredVisitTime__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "LastOrderDate__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "NextDeliveryDate__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "Depot__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "DeliveryPointReference__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Name": "BarrDirectAppUser__c",
+                      "Details": {
+                        "Required": false
+                      },
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Title": "Delivery Information",
+                      "Fields": [
+                        {
+                          "Name": "aforza__Operating_Hours__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
                         },
-                        &quot;Name&quot;: &quot;aforza__Status__c&quot;
+                        {
+                          "Name": "DeliveryPointCriteriaMet__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "PORequired__c",
+                          "Details": {
+                            "Required": false
+                          }
+                        }
+                      ],
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Title": "Address Information",
+                      "Fields": [
+                        {
+                          "Name": "ShippingCountry",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "ShippingCity",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "ShippingState",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "ShippingStreet",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "ShippingPostalCode",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingSameAsShipping__c",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingCountry",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingCity",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingState",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingStreet",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "BillingPostalCode",
+                          "Details": {
+                            "Required": false
+                          }
+                        }
+                      ],
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Title": "Finance Information",
+                      "Fields": [
+                        {
+                          "Name": "PrimaryPaymentMethod__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "FormalCreditCheckAgreed__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "aforza__Credit_Amount__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "CreditStatus__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "AvailableCredit__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        }
+                      ],
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Title": "Additional Information",
+                      "Fields": [
+                        {
+                          "Name": "ClosedReason__c",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "ClosedDate__c",
+                          "Details": {
+                            "Required": false
+                          }
+                        }
+                      ],
+                      "ApplicableRecordTypes": []
+                    },
+                    {
+                      "Title": "Grid Details",
+                      "Fields": [
+                        {
+                          "Name": "PrimaryGridNumber__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "SecondaryGridNumber__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "PrimaryCallDay__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "SecondaryCallDay__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        },
+                        {
+                          "Name": "Frequency__c",
+                          "Details": {
+                            "Required": false
+                          },
+                          "ApplicableRecordTypes": []
+                        }
+                      ]
                     }
-                ]
-            },
-            &quot;Tabs&quot;: [
+                  ],
+                  "InSideMenu": true,
+                  "FilterGroups": [
+                    {
+                        "Filters": [
+                            {
+                                "Key": "RunningUserIsAssignedFieldSalesRep__c",
+                                "Operator": "eq",
+                                "Value": "true"
+                            }
+                        ]
+                    }
+                  ],
+                  "CanEdit": true,
+                  "CanDelete": false,
+                  "CanCreate": true,
+                  "APIName": "Account",
+                  "Actions": [
+                    {
+                      "Type": "WEB",
+                      "Title": "Marketing Materials",
+                      "Target": "https://sites.google.com/agbarr.co.uk/barrdirect/home"
+                    }
+                  ]
+                },
                 {
-                    &quot;Layout&quot;: [
+                  "RecordLimit": 100,
+                  "LayoutListView": [
+                    {
+                      "Name": "Name",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "Title",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "FirstName",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "LastName",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "AccountId",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "DecisionMaker__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "DecisionMakerAuthorised__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Title": "Contact Details",
+                      "Fields": [
                         {
-                            &quot;Name&quot;: &quot;BuyerAvailability__c&quot;
+                          "Name": "MobilePhone",
+                          "Details": {
+                            "Required": false
+                          }
                         },
                         {
-                            &quot;Name&quot;: &quot;RubiconFamilyAllSkusCount__c&quot;
+                          "Name": "Phone",
+                          "Details": {
+                            "Required": false
+                          }
                         },
                         {
-                            &quot;Name&quot;: &quot;IrnBruFamilyAllSkusIncIbe__c&quot;
+                          "Name": "Email",
+                          "Details": {
+                            "Required": false
+                          }
                         },
                         {
-                            &quot;Name&quot;: &quot;KaFamilyAllSkus__c&quot;
+                          "Name": "Email2__c",
+                          "Details": {
+                            "Required": false
+                          }
                         },
                         {
-                            &quot;Name&quot;: &quot;SunExoticFamilyAllBrands__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;BarrFamilyAllSkus__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;OtherBarrProducts__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;FranchiseSnappleSanBenBundaberg__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;NoCasesOpenedMerchandised__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;NoNewPiecesOfPOSPlacedToday__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;InCallProductivity__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;AddCallToYourCoverageAndBaseline__c&quot;
+                          "Name": "Description",
+                          "Details": {
+                            "Required": false
+                          }
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Call Productivity Information&quot;,
-                    &quot;Type&quot;: &quot;FORM&quot;
+                      ]
+                    },
+                    {
+                      "Title": "GDPR",
+                      "Fields": [
+                        {
+                          "Name": "DoNotCall",
+                          "Details": {
+                            "Required": false
+                          }
+                        },
+                        {
+                          "Name": "HasOptedOutOfEmail",
+                          "Details": {
+                            "Required": false
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "InSideMenu": true,
+                  "CanEdit": true,
+                  "CanDelete": true,
+                  "CanCreate": true,
+                  "APIName": "Contact"
+                },
+                {
+                  "LayoutListView": [
+                    {
+                      "Name": "OrderNumber",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "AccountId",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "EffectiveDate",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "AccountId",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "ShipToContactId",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Inventory__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Original_Order__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "Type",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "Status",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "ActivatedDate",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "PoNumber",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "TotalAmount",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "RecordTypeId",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "InSideMenu": true,
+                  "CanEdit": true,
+                  "CanDelete": false,
+                  "CanCreate": true,
+                  "APIName": "Order"
+                },
+                {
+                  "LayoutListView": [
+                    {
+                      "Name": "aforza__Account__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Planned_Time__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Status__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Account__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Planned_Time__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "aforza__Status__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "InSideMenu": true,
+                  "CanEdit": true,
+                  "CanDelete": true,
+                  "CanCreate": true,
+                  "APIName": "aforza__Visit__c",
+                  "Actions": [
+                    {
+                      "Type": "WEB",
+                      "Title": "Marketing Materials",
+                      "Target": "https://sites.google.com/agbarr.co.uk/barrdirect/home"
+                    }
+                  ]
+                },
+                {
+                  "LayoutListView": [
+                    {
+                      "Name": "aforza__Account__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "Name",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Account__c",
+                      "Details": {
+                        "Required": false
+                      }
+                    },
+                    {
+                      "Name": "Name",
+                      "Details": {
+                        "Required": false
+                      }
+                    }
+                  ],
+                  "InSideMenu": true,
+                  "CanEdit": false,
+                  "CanDelete": false,
+                  "CanCreate": true,
+                  "APIName": "aforza__Invoice__c"
                 }
-            ],
-            &quot;Title&quot;: &quot;Call Productivity?&quot;,
-            &quot;Type&quot;: &quot;Call Productivity&quot;
-        },
-        {
-            &quot;Button&quot;: &quot;Marketing Audit Complete&quot;,
-            &quot;CanAddProducts&quot;: true,
-            &quot;CanCreateOrders&quot;: false,
-            &quot;CanTakePhotos&quot;: true,
-            &quot;FilterGroups&quot;: [
+              ],
+              "IsSupportEnabled": true,
+              "HomePage": [
                 {
-                    &quot;Filters&quot;: [
+                  "Type": "ACTION",
+                  "Name": "aforza-website",
+                  "Action": {
+                    "Type": "WEB",
+                    "Title": "Aforza",
+                    "Target": "https://www.aforza.com/"
+                  }
+                },
+                {
+                  "Type": "ACTION",
+                  "Name": "report",
+                  "Action": {
+                    "Type": "WEB",
+                    "Title": "Marketing Materials",
+                    "Target": "https://sites.google.com/agbarr.co.uk/barrdirect/home"
+                  }
+                }
+              ],
+              "AutoDownloadVisitResources": false,
+              "AuditTypes": [
+                {
+                  "Type": "Perfect Store Core &amp; Energy",
+                  "Title": "Core &amp; Energy Range Stocked?",
+                  "Tabs": [
+                    {
+                      "Type": "FORM",
+                      "Title": "PS Products",
+                      "Layout": [
                         {
-                            &quot;Key&quot;: &quot;aforza__Type__c&quot;,
-                            &quot;Operator&quot;: &quot;eq&quot;,
-                            &quot;Value&quot;: &quot;Visit-Marketing&quot;
+                          "Name": "PerfectStoreMet__c",
+                          "Details": {
+                            "Required": false
+                          }
                         }
+                      ]
+                    }
+                  ],
+                  "QuickAdd": {
+                    "Layout": [
+                      {
+                        "Name": "aforza__Status__c",
+                        "Details": {
+                          "Required": true
+                        }
+                      }
                     ]
-                }
-            ],
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Name&quot;: &quot;aforza__Submitted_Date__c&quot;
-                }
-            ],
-            &quot;OutletAssetToAuditAssetFieldMapping&quot;: [
-                {
-                    &quot;FromName&quot;: &quot;PresentedPriorityBrand1__c&quot;,
-                    &quot;ToName&quot;: &quot;PresentedPriorityBrand1__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;PresentedPriorityBrand2__c&quot;,
-                    &quot;ToName&quot;: &quot;PresentedPriorityBrand2__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;PresentedAnotherMissingBrand__c&quot;,
-                    &quot;ToName&quot;: &quot;PresentedAnotherMissingBrand__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;MerchandisedReplenishedTheFixture__c&quot;,
-                    &quot;ToName&quot;: &quot;MerchandisedReplenishedTheFixture__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;MerchandisedReplenishedTheChiller__c&quot;,
-                    &quot;ToName&quot;: &quot;MerchandisedReplenishedTheChiller__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;PutUpPos__c&quot;,
-                    &quot;ToName&quot;: &quot;PutUpPos__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;BuiltDisplay__c&quot;,
-                    &quot;ToName&quot;: &quot;BuiltDisplay__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;IsIrnBruPhenomenalPosInSitu__c&quot;,
-                    &quot;ToName&quot;: &quot;IsIrnBruPhenomenalPosInSitu__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;NumberOfAgBarrPosAreInSitu__c&quot;,
-                    &quot;ToName&quot;: &quot;NumberOfAgBarrPosAreInSitu__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;DidRetailerAgreeToBuyAnyNewSk__c&quot;,
-                    &quot;ToName&quot;: &quot;DidRetailerAgreeToBuyAnyNewSk__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;SoldStockFromCar__c&quot;,
-                    &quot;ToName&quot;: &quot;SoldStockFromCar__c&quot;
-                },
-                {
-                    &quot;ToName&quot;: &quot;Nothing__c&quot;,
-                    &quot;FromName&quot;: &quot;Nothing__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;DoesTheOutletStockCokeZero500MlP__c&quot;,
-                    &quot;ToName&quot;: &quot;DoesTheOutletStockCokeZero500MlP__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;DoesTheOutletStockRubiconMangoStil__c&quot;,
-                    &quot;ToName&quot;: &quot;DoesTheOutletStockRubiconMangoStil__c&quot;
-                },
-                {
-                    &quot;FromName&quot;: &quot;OtherFlavouredSparklingWaterStocked__c&quot;,
-                    &quot;ToName&quot;: &quot;OtherFlavouredSparklingWaterStocked__c&quot;
-                },
-                {
-                    &quot;ToName&quot;: &quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;,
-                    &quot;FromName&quot;: &quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;
-                }
-            ],
-            &quot;Tabs&quot;: [
-                {
-                    &quot;Layout&quot;: [
+                  },
+                  "OutletAssetToAuditAssetFieldMapping": [
+                    {
+                      "ToName": "aforza__Name__c",
+                      "FromName": "aforza__Name__c"
+                    },
+                    {
+                      "ToName": "PerfectStoreMet__c",
+                      "FromName": "PerfectStoreMet__c"
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Submitted_Date__c"
+                    }
+                  ],
+                  "FilterGroups": [
+                    {
+                      "Filters": [
                         {
-                            &quot;Name&quot;: &quot;PresentedPriorityBrand1__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;PresentedPriorityBrand2__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;PresentedAnotherMissingBrand__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;MerchandisedReplenishedTheFixture__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;MerchandisedReplenishedTheChiller__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;PutUpPos__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;BuiltDisplay__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;IsIrnBruPhenomenalPosInSitu__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;NumberOfAgBarrPosAreInSitu__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;DidRetailerAgreeToBuyAnyNewSk__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;SoldStockFromCar__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;:&quot;Nothing__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;DoesTheOutletStockCokeZero500MlP__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;DoesTheOutletStockRubiconMangoStil__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;: &quot;OtherFlavouredSparklingWaterStocked__c&quot;
-                        },
-                        {
-                            &quot;Name&quot;:&quot;NoOfCompetitorSoftDrinkPosInSitu__c&quot;
+                          "Value": "Perfect Store C&amp;E",
+                          "Operator": "eq",
+                          "Key": "aforza__Type__c"
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Marketing Info&quot;,
-                    &quot;Type&quot;: &quot;FORM&quot;
-                }
-            ],
-            &quot;Title&quot;: &quot;Marketing Data?&quot;,
-            &quot;Type&quot;: &quot;Marketing Audit&quot;
-        }
-    ],
-    &quot;AutoDownloadVisitResources&quot;: false,
-    &quot;HomePage&quot;: [
-        {
-            &quot;Action&quot;: {
-                &quot;Target&quot;: &quot;https://www.aforza.com/&quot;,
-                &quot;Title&quot;: &quot;Aforza&quot;,
-                &quot;Type&quot;: &quot;WEB&quot;
-            },
-            &quot;Name&quot;: &quot;aforza-website&quot;,
-            &quot;Type&quot;: &quot;ACTION&quot;
-        },
-        {
-            &quot;Action&quot;: {
-                &quot;Target&quot;: &quot;https://sites.google.com/agbarr.co.uk/barrdirect/home&quot;,
-                &quot;Title&quot;: &quot;Marketing Materials&quot;,
-                &quot;Type&quot;: &quot;WEB&quot;
-            },
-            &quot;Name&quot;: &quot;report&quot;,
-            &quot;Type&quot;: &quot;ACTION&quot;
-        }
-    ],
-    &quot;IsSupportEnabled&quot;: true,
-    &quot;ObjectsToSync&quot;: [
-        {
-            &quot;Actions&quot;: [
-                {
-                    &quot;Target&quot;: &quot;https://sites.google.com/agbarr.co.uk/barrdirect/home&quot;,
-                    &quot;Title&quot;: &quot;Marketing Materials&quot;,
-                    &quot;Type&quot;: &quot;WEB&quot;
-                }
-            ],
-            &quot;APIName&quot;: &quot;Account&quot;,
-            &quot;CanCreate&quot;: true,
-            &quot;CanDelete&quot;: false,
-            &quot;CanEdit&quot;: true,
-            &quot;FilterGroups&quot;: [],
-            &quot;InSideMenu&quot;: true,
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Name&quot;
+                      ]
+                    }
+                  ],
+                  "CanTakePhotos": true,
+                  "CanCreateOrders": false,
+                  "CanAddProducts": true,
+                  "Button": "Core &amp; Energy Complete"
                 },
                 {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;StoreName__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;PreferredCallTimeTelesales__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;PreferredVisitTime__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;LastOrderDate__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;NextDeliveryDate__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Depot__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;DeliveryPointReference__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;BarrDirectAppUser__c&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Fields&quot;: [
+                  "Type": "Perfect Store Visibility &amp; Display",
+                  "Title": "Visibility &amp; Display?",
+                  "Tabs": [
+                    {
+                      "Type": "FORM",
+                      "Title": "Visibility &amp; Display",
+                      "Layout": [
                         {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;aforza__Operating_Hours__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;DeliveryPointCriteriaMet__c&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PORequired__c&quot;
+                          "Name": "PerfectStoreMet__c",
+                          "Details": {
+                            "Required": false
+                          }
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Delivery Information&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Fields&quot;: [
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ShippingCountry&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ShippingCity&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ShippingState&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ShippingStreet&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ShippingPostalCode&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingSameAsShipping__c&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingCountry&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingCity&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingState&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingStreet&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;BillingPostalCode&quot;
+                      ]
+                    }
+                  ],
+                  "QuickAdd": {
+                    "Layout": [
+                      {
+                        "Name": "aforza__Status__c",
+                        "Details": {
+                          "Required": false
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Address Information&quot;
-                },
-                {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Fields&quot;: [
+                      }
+                    ]
+                  },
+                  "OutletAssetToAuditAssetFieldMapping": [
+                    {
+                      "ToName": "aforza__Name__c",
+                      "FromName": "aforza__Name__c"
+                    },
+                    {
+                      "ToName": "PerfectStoreMet__c",
+                      "FromName": "PerfectStoreMet__c"
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Submitted_Date__c"
+                    }
+                  ],
+                  "FilterGroups": [
+                    {
+                      "Filters": [
                         {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PrimaryPaymentMethod__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;FormalCreditCheckAgreed__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;aforza__Credit_Amount__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;CreditStatus__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;AvailableCredit__c&quot;
+                          "Value": "Perfect Store V&amp;D",
+                          "Operator": "eq",
+                          "Key": "aforza__Type__c"
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Finance Information&quot;
+                      ]
+                    }
+                  ],
+                  "CanTakePhotos": true,
+                  "CanCreateOrders": false,
+                  "CanAddProducts": true,
+                  "Button": "Visibility &amp; Display Complete"
                 },
                 {
-                    &quot;ApplicableRecordTypes&quot;: [],
-                    &quot;Fields&quot;: [
+                  "Type": "Call Productivity",
+                  "Title": "Call Productivity?",
+                  "Tabs": [
+                    {
+                      "Type": "FORM",
+                      "Title": "Call Productivity Information",
+                      "Layout": [
                         {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ClosedReason__c&quot;
+                          "Name": "BuyerAvailability__c"
                         },
                         {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;ClosedDate__c&quot;
+                          "Name": "RubiconFamilyAllSkusCount__c"
+                        },
+                        {
+                          "Name": "IrnBruFamilyAllSkusIncIbe__c"
+                        },
+                        {
+                          "Name": "KaFamilyAllSkus__c"
+                        },
+                        {
+                          "Name": "SunExoticFamilyAllBrands__c"
+                        },
+                        {
+                          "Name": "BarrFamilyAllSkus__c"
+                        },
+                        {
+                          "Name": "OtherBarrProducts__c"
+                        },
+                        {
+                          "Name": "FranchiseSnappleSanBenBundaberg__c"
+                        },
+                        {
+                          "Name": "NoCasesOpenedMerchandised__c"
+                        },
+                        {
+                          "Name": "NoNewPiecesOfPOSPlacedToday__c"
+                        },
+                        {
+                          "Name": "NoOfCompetitorSoftDrinkPosInSitu__c"
+                        },
+                        {
+                          "Name": "InCallProductivity__c"
+                        },
+                        {
+                          "Name": "AddCallToYourCoverageAndBaseline__c"
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Additional Information&quot;
-                },
-                {
-                    &quot;Fields&quot;: [
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PrimaryGridNumber__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;SecondaryGridNumber__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;PrimaryCallDay__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;SecondaryCallDay__c&quot;
-                        },
-                        {
-                            &quot;ApplicableRecordTypes&quot;: [],
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;Frequency__c&quot;
+                      ]
+                    }
+                  ],
+                  "QuickAdd": {
+                    "Layout": [
+                      {
+                        "Name": "aforza__Status__c",
+                        "Details": {
+                          "Required": false
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Grid Details&quot;
-                }
-            ],
-            &quot;LayoutListView&quot;: [
-                {
-                    &quot;Name&quot;: &quot;Name&quot;
-                }
-            ],
-            &quot;RecordLimit&quot;: 500
-        },
-        {
-            &quot;APIName&quot;: &quot;Contact&quot;,
-            &quot;CanCreate&quot;: true,
-            &quot;CanDelete&quot;: true,
-            &quot;CanEdit&quot;: true,
-            &quot;InSideMenu&quot;: true,
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                      }
+                    ]
+                  },
+                  "OutletAssetToAuditAssetFieldMapping": [
+                    {
+                      "ToName": "aforza__Name__c",
+                      "FromName": "aforza__Name__c"
                     },
-                    &quot;Name&quot;: &quot;Title&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                    {
+                      "ToName": "BuyerAvailability__c",
+                      "FromName": "BuyerAvailability__c"
                     },
-                    &quot;Name&quot;: &quot;FirstName&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                    {
+                      "ToName": "RubiconFamilyAllSkusCount__c",
+                      "FromName": "RubiconFamilyAllSkusCount__c"
                     },
-                    &quot;Name&quot;: &quot;LastName&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                    {
+                      "ToName": "IrnBruFamilyAllSkusIncIbe__c",
+                      "FromName": "IrnBruFamilyAllSkusIncIbe__c"
                     },
-                    &quot;Name&quot;: &quot;AccountId&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                    {
+                      "ToName": "KaFamilyAllSkus__c",
+                      "FromName": "KaFamilyAllSkus__c"
                     },
-                    &quot;Name&quot;: &quot;DecisionMaker__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
+                    {
+                      "ToName": "SunExoticFamilyAllBrands__c",
+                      "FromName": "SunExoticFamilyAllBrands__c"
                     },
-                    &quot;Name&quot;: &quot;DecisionMakerAuthorised__c&quot;
-                },
-                {
-                    &quot;Fields&quot;: [
+                    {
+                      "ToName": "BarrFamilyAllSkus__c",
+                      "FromName": "BarrFamilyAllSkus__c"
+                    },
+                    {
+                      "ToName": "OtherBarrProducts__c",
+                      "FromName": "OtherBarrProducts__c"
+                    },
+                    {
+                      "ToName": "FranchiseSnappleSanBenBundaberg__c",
+                      "FromName": "FranchiseSnappleSanBenBundaberg__c"
+                    },
+                    {
+                      "ToName": "NoCasesOpenedMerchandised__c",
+                      "FromName": "NoCasesOpenedMerchandised__c"
+                    },
+                    {
+                      "ToName": "NoNewPiecesOfPOSPlacedToday__c",
+                      "FromName": "NoNewPiecesOfPOSPlacedToday__c"
+                    },
+                    {
+                      "ToName": "NoOfCompetitorSoftDrinkPosInSitu__c",
+                      "FromName": "NoOfCompetitorSoftDrinkPosInSitu__c"
+                    },
+                    {
+                      "ToName": "InCallProductivity__c",
+                      "FromName": "InCallProductivity__c"
+                    },
+                    {
+                      "ToName": "AddCallToYourCoverageAndBaseline__c",
+                      "FromName": "AddCallToYourCoverageAndBaseline__c"
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Submitted_Date__c"
+                    }
+                  ],
+                  "FilterGroups": [
+                    {
+                      "Filters": [
                         {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;MobilePhone&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;Phone&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;Email&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;Email2__c&quot;
-                        },
-                        {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;Description&quot;
+                          "Value": "Visit-Productivity",
+                          "Operator": "eq",
+                          "Key": "aforza__Type__c"
                         }
-                    ],
-                    &quot;Title&quot;: &quot;Contact Details&quot;
+                      ]
+                    }
+                  ],
+                  "CanTakePhotos": true,
+                  "CanCreateOrders": false,
+                  "CanAddProducts": true,
+                  "Button": "Call Productivity Audit Complete"
                 },
                 {
-                    &quot;Fields&quot;: [
+                  "Type": "Marketing Audit",
+                  "Title": "Marketing Data?",
+                  "Tabs": [
+                    {
+                      "Type": "FORM",
+                      "Title": "Marketing Info",
+                      "Layout": [
                         {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;DoNotCall&quot;
+                          "Name": "PresentedPriorityBrand1__c"
                         },
                         {
-                            &quot;Details&quot;: {
-                                &quot;Required&quot;: false
-                            },
-                            &quot;Name&quot;: &quot;HasOptedOutOfEmail&quot;
+                          "Name": "PresentedPriorityBrand2__c"
+                        },
+                        {
+                          "Name": "PresentedAnotherMissingBrand__c"
+                        },
+                        {
+                          "Name": "MerchandisedReplenishedTheFixture__c"
+                        },
+                        {
+                          "Name": "MerchandisedReplenishedTheChiller__c"
+                        },
+                        {
+                          "Name": "PutUpPos__c"
+                        },
+                        {
+                          "Name": "BuiltDisplay__c"
+                        },
+                        {
+                          "Name": "IsIrnBruPhenomenalPosInSitu__c"
+                        },
+                        {
+                          "Name": "NumberOfAgBarrPosAreInSitu__c"
+                        },
+                        {
+                          "Name": "DidRetailerAgreeToBuyAnyNewSk__c"
+                        },
+                        {
+                          "Name": "SoldStockFromCar__c"
+                        },
+                        {
+                          "Name": "DoesTheOutletStockCokeZero500MlP__c"
+                        },
+                        {
+                          "Name": "DoesTheOutletStockRubiconMangoStil__c"
+                        },
+                        {
+                          "Name": "OtherFlavouredSparklingWaterStocked__c"
                         }
-                    ],
-                    &quot;Title&quot;: &quot;GDPR&quot;
+                      ]
+                    }
+                  ],
+                  "OutletAssetToAuditAssetFieldMapping": [
+                    {
+                      "ToName": "PresentedPriorityBrand1__c",
+                      "FromName": "PresentedPriorityBrand1__c"
+                    },
+                    {
+                      "ToName": "PresentedPriorityBrand2__c",
+                      "FromName": "PresentedPriorityBrand2__c"
+                    },
+                    {
+                      "ToName": "PresentedAnotherMissingBrand__c",
+                      "FromName": "PresentedAnotherMissingBrand__c"
+                    },
+                    {
+                      "ToName": "MerchandisedReplenishedTheFixture__c",
+                      "FromName": "MerchandisedReplenishedTheFixture__c"
+                    },
+                    {
+                      "ToName": "MerchandisedReplenishedTheChiller__c",
+                      "FromName": "MerchandisedReplenishedTheChiller__c"
+                    },
+                    {
+                      "ToName": "PutUpPos__c",
+                      "FromName": "PutUpPos__c"
+                    },
+                    {
+                      "ToName": "BuiltDisplay__c",
+                      "FromName": "BuiltDisplay__c"
+                    },
+                    {
+                      "ToName": "IsIrnBruPhenomenalPosInSitu__c",
+                      "FromName": "IsIrnBruPhenomenalPosInSitu__c"
+                    },
+                    {
+                      "ToName": "NumberOfAgBarrPosAreInSitu__c",
+                      "FromName": "NumberOfAgBarrPosAreInSitu__c"
+                    },
+                    {
+                      "ToName": "DidRetailerAgreeToBuyAnyNewSk__c",
+                      "FromName": "DidRetailerAgreeToBuyAnyNewSk__c"
+                    },
+                    {
+                      "ToName": "SoldStockFromCar__c",
+                      "FromName": "SoldStockFromCar__c"
+                    },
+                    {
+                      "ToName": "DoesTheOutletStockCokeZero500MlP__c",
+                      "FromName": "DoesTheOutletStockCokeZero500MlP__c"
+                    },
+                    {
+                      "ToName": "DoesTheOutletStockRubiconMangoStil__c",
+                      "FromName": "DoesTheOutletStockRubiconMangoStil__c"
+                    },
+                    {
+                      "ToName": "OtherFlavouredSparklingWaterStocked__c",
+                      "FromName": "OtherFlavouredSparklingWaterStocked__c"
+                    }
+                  ],
+                  "LayoutForm": [
+                    {
+                      "Name": "aforza__Submitted_Date__c"
+                    }
+                  ],
+                  "FilterGroups": [
+                    {
+                      "Filters": [
+                        {
+                          "Value": "Visit-Marketing",
+                          "Operator": "eq",
+                          "Key": "aforza__Type__c"
+                        }
+                      ]
+                    }
+                  ],
+                  "CanTakePhotos": true,
+                  "CanCreateOrders": false,
+                  "CanAddProducts": true,
+                  "Button": "Marketing Audit Complete"
                 }
-            ],
-            &quot;LayoutListView&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Name&quot;
-                }
-            ],
-            &quot;RecordLimit&quot;: 100
-        },
-        {
-            &quot;APIName&quot;: &quot;Order&quot;,
-            &quot;CanCreate&quot;: true,
-            &quot;CanDelete&quot;: false,
-            &quot;CanEdit&quot;: true,
-            &quot;InSideMenu&quot;: true,
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;EffectiveDate&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;AccountId&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;ShipToContactId&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Inventory__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Original_Order__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Type&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Status&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;ActivatedDate&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;PoNumber&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;TotalAmount&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;RecordTypeId&quot;
-                }
-            ],
-            &quot;LayoutListView&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;OrderNumber&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;AccountId&quot;
-                }
-            ]
-        },
-        {
-            &quot;Actions&quot;: [
-                {
-                    &quot;Target&quot;: &quot;https://sites.google.com/agbarr.co.uk/barrdirect/home&quot;,
-                    &quot;Title&quot;: &quot;Marketing Materials&quot;,
-                    &quot;Type&quot;: &quot;WEB&quot;
-                }
-            ],
-            &quot;APIName&quot;: &quot;aforza__Visit__c&quot;,
-            &quot;CanCreate&quot;: true,
-            &quot;CanDelete&quot;: true,
-            &quot;CanEdit&quot;: true,
-            &quot;InSideMenu&quot;: true,
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Account__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Planned_Time__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Status__c&quot;
-                }
-            ],
-            &quot;LayoutListView&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Account__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Planned_Time__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Status__c&quot;
-                }
-            ]
-        },
-        {
-            &quot;APIName&quot;: &quot;aforza__Invoice__c&quot;,
-            &quot;CanCreate&quot;: true,
-            &quot;CanDelete&quot;: false,
-            &quot;CanEdit&quot;: false,
-            &quot;InSideMenu&quot;: true,
-            &quot;LayoutForm&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Account__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Name&quot;
-                }
-            ],
-            &quot;LayoutListView&quot;: [
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;aforza__Account__c&quot;
-                },
-                {
-                    &quot;Details&quot;: {
-                        &quot;Required&quot;: false
-                    },
-                    &quot;Name&quot;: &quot;Name&quot;
-                }
-            ]
-        }
-    ],
-    &quot;OrderComplete&quot;: [
-        {
-            &quot;Action&quot;: {
-                &quot;Target&quot;: &quot;https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForFieldSales.js&quot;,
-                &quot;Title&quot;: &quot;Validate Order&quot;,
-                &quot;Type&quot;: &quot;ENGINE&quot;
-            },
-            &quot;Name&quot;: &quot;Offline-Action&quot;,
-            &quot;Type&quot;: &quot;ACTION&quot;
-        },
-        {
-            &quot;Action&quot;: {
-                &quot;Target&quot;: &quot;https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js&quot;,
-                &quot;Title&quot;: &quot;Check Account Credit Limit&quot;,
-                &quot;Type&quot;: &quot;ENGINE&quot;
-            },
-            &quot;Name&quot;: &quot;Offline-Action2&quot;,
-            &quot;Type&quot;: &quot;ACTION&quot;
-        },
-        {
-            &quot;Fields&quot;: [
-                {
-                    &quot;Name&quot;: &quot;PoNumber&quot;
-                }
-            ],
-            &quot;Title&quot;: &quot;Section&quot;,
-            &quot;Type&quot;: &quot;FORM&quot;
-        }
-    ],
-    &quot;SideMenu&quot;: [
-        {
-            &quot;Action&quot;: {
-                &quot;Target&quot;: &quot;https://sites.google.com/agbarr.co.uk/barrdirect/home&quot;,
-                &quot;Title&quot;: &quot;Marketing Materials&quot;,
-                &quot;Type&quot;: &quot;WEB&quot;
-            },
-            &quot;Name&quot;: &quot;Marketing-Materials&quot;,
-            &quot;Type&quot;: &quot;ACTION&quot;
-        }
-    ]
-}</value>
+              ]
+            }
+        </value>
     </values>
     <values>
         <field>aforza__Custom_Config_JSON__c</field>
@@ -1099,6 +1097,6 @@
     </values>
     <values>
         <field>aforza__Profiles_JSON__c</field>
-        <value xsi:type="xsd:string">[&quot;00e2z000000TtNVAA0&quot;]</value>
+        <value xsi:type="xsd:string">["00e2z000000TtNVAA0"]</value>
     </values>
 </CustomMetadata>

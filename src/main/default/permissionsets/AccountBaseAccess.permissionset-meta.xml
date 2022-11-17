@@ -218,6 +218,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.FieldSalesRepId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.FieldSalesTerritory__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -381,7 +386,12 @@
         <field>Account.Rating</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RunningUserIsAssignedFieldSalesRep__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.SalesRepresentativeCode__c</field>
         <readable>true</readable>

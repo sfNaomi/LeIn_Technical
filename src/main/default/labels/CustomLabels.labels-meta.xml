@@ -227,14 +227,6 @@
         <value>Call Base Management</value>
     </labels>
     <labels>
-        <fullName>DuplicateTamRoleError</fullName>
-        <categories>AccountTeamMemberTrigger</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Duplicate TAM Role Error</shortDescription>
-        <value>There can be only one TAM user assigned to each Account. Please change your data</value>
-    </labels>
-    <labels>
         <fullName>NoParentCustomAccountErrorMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1015,5 +1007,13 @@
         <protected>false</protected>
         <shortDescription>Reset Benchmark - Modal Content</shortDescription>
         <value>Are you sure you want to reset all outlet Benchmarks?</value>
+    </labels>
+    <labels>
+        <fullName>DuplicateTeamMemberRole</fullName>
+        <categories>Trigger Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Team Member Role</shortDescription>
+        <value>There is already a user with the {0} role on this account. Please remove the existing member or change the role of this member.</value>
     </labels>
 </CustomLabels>

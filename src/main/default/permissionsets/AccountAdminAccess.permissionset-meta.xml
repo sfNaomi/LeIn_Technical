@@ -168,6 +168,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.FieldSalesRepId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.FieldSalesTerritory__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -374,6 +379,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.RecordTypeName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RunningUserIsAssignedFieldSalesRep__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
