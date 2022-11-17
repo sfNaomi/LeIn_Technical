@@ -21,15 +21,13 @@ private with sharing class PickSheetPDFControllerTest {
         PickSheetPDFController ctrl = new PickSheetPDFController();
         Test.stopTest();
 
-        System.assertEquals(0, ctrl.loadPlans.size());
+        Assert.areEqual(0, ctrl.loadPlans.size());
     }
 
     @IsTest
     private static void testInitializePageWithCorrectParameters_SingleOrder() {
         // create product
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
@@ -78,13 +76,13 @@ private with sharing class PickSheetPDFControllerTest {
 
         // create Vehicle
         Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
+            new Vehicle__c(VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER)
         );
 
         // create Load
-        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-                DeliveryDate__c = DELIVERY_DATE, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
@@ -105,15 +103,13 @@ private with sharing class PickSheetPDFControllerTest {
         PickSheetPDFController ctrl = new PickSheetPDFController();
         Test.stopTest();
 
-        System.assertEquals(1, ctrl.loadPlans.size());
+        Assert.areEqual(1, ctrl.loadPlans.size());
     }
 
     @IsTest
     private static void testInitializePageWithCorrectParameters_MultipleOrders() {
         // create product
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
@@ -180,9 +176,9 @@ private with sharing class PickSheetPDFControllerTest {
         );
 
         // create Load
-        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-                DeliveryDate__c = DELIVERY_DATE, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
@@ -208,6 +204,6 @@ private with sharing class PickSheetPDFControllerTest {
         PickSheetPDFController ctrl = new PickSheetPDFController();
         Test.stopTest();
 
-        System.assertEquals(1, ctrl.loadPlans.size());
+        Assert.areEqual(1, ctrl.loadPlans.size());
     }
 }

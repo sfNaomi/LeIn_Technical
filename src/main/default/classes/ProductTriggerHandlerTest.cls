@@ -13,11 +13,8 @@ private with sharing class ProductTriggerHandlerTest {
         update newProduct;
         Test.stopTest();
 
-        List<aforza__Assortment_Product__c> assortProds = [
-                SELECT Id
-                FROM aforza__Assortment_Product__c
-        ];
-        System.assertEquals(0, assortProds.size(), 'Expecting to have the assort prods deleted.');
+        List<aforza__Assortment_Product__c> assortProds = [SELECT Id FROM aforza__Assortment_Product__c];
+        Assert.areEqual(0, assortProds.size(), 'Expecting to have the assort prods deleted.');
     }
 
     @IsTest
@@ -30,58 +27,52 @@ private with sharing class ProductTriggerHandlerTest {
         update newProduct;
         Test.stopTest();
 
-        List<aforza__Assortment_Product__c> assortProds = [
-                SELECT Id
-                FROM aforza__Assortment_Product__c
-        ];
-        System.assertEquals(1, assortProds.size(), 'Expecting to have assort prods.');
+        List<aforza__Assortment_Product__c> assortProds = [SELECT Id FROM aforza__Assortment_Product__c];
+        Assert.areEqual(1, assortProds.size(), 'Expecting to have assort prods.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductNoDRSCode() {
         Test.startTest();
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
-        System.assertEquals(0, relationshipRules.size(), 'Expecting no relationship rules to be created.');
+        Assert.areEqual(0, relationshipRules.size(), 'Expecting no relationship rules to be created.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_NewProductWithDRSCode() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(ProductCode = 'TDP', StockKeepingUnit = 'TDP')
+        );
 
         Test.startTest();
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-                ProductCode = 'TBP',
-                DRSSKUCode__c = drsProduct.ProductCode,
-                DRSGrossUnits__c = 12
-        ));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(DRSSKUCode__c = drsProduct.ProductCode, DRSGrossUnits__c = 12)
+        );
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
+            FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
 
-        System.assertEquals(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
-        System.assertEquals(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
-        System.assertEquals(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
-        System.assertEquals(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
+        Assert.areEqual(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
+        Assert.areEqual(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
+        Assert.areEqual(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
+        Assert.areEqual(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCode() {
-        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP1'));
-        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP2'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct1.ProductCode, DRSGrossUnits__c = 12)
-        );
+        Product2 drsProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP1', StockKeepingUnit = 'TDP1'));
+        Product2 drsProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP2', StockKeepingUnit = 'TDP2'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(DRSSKUCode__c = drsProduct1.ProductCode, DRSGrossUnits__c = 12));
 
         Test.startTest();
         baseProduct.DRSSKUCode__c = drsProduct2.ProductCode;
@@ -89,21 +80,21 @@ private with sharing class ProductTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
+            FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
 
-        System.assertEquals(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
-        System.assertEquals(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
-        System.assertEquals(drsProduct2.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
-        System.assertEquals(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
+        Assert.areEqual(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
+        Assert.areEqual(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
+        Assert.areEqual(drsProduct2.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
+        Assert.areEqual(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNullToNotNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TBP'));
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP', StockKeepingUnit = 'TDP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         Test.startTest();
         baseProduct.DRSSKUCode__c = drsProduct.ProductCode;
@@ -111,23 +102,21 @@ private with sharing class ProductTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
+            FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
 
-        System.assertEquals(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
-        System.assertEquals(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
-        System.assertEquals(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
-        System.assertEquals(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
+        Assert.areEqual(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
+        Assert.areEqual(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
+        Assert.areEqual(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
+        Assert.areEqual(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSCodeFromNotNullToNull() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12)
-        );
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP', StockKeepingUnit = 'TDP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(DRSSKUCode__c = drsProduct.Id, DRSGrossUnits__c = 12));
 
         Test.startTest();
         baseProduct.DRSSKUCode__c = null;
@@ -135,20 +124,18 @@ private with sharing class ProductTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
+            FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
 
-        System.assertEquals(0, relationshipRules.size(), 'Expecting no relationship rules to be created.');
+        Assert.areEqual(0, relationshipRules.size(), 'Expecting no relationship rules to be created.');
     }
 
     @IsTest
     private static void testManageRelatedDRSProducts_UpdateProductDRSUnits() {
-        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP'));
-        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(
-                new Product2(ProductCode = 'TBP', DRSSKUCode__c = drsProduct.ProductCode, DRSGrossUnits__c = 12)
-        );
+        Product2 drsProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(ProductCode = 'TDP', StockKeepingUnit = 'TDP'));
+        Product2 baseProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(DRSSKUCode__c = drsProduct.ProductCode, DRSGrossUnits__c = 12));
 
         Test.startTest();
         baseProduct.DRSGrossUnits__c = 10;
@@ -156,15 +143,15 @@ private with sharing class ProductTriggerHandlerTest {
         Test.stopTest();
 
         List<aforza__Relationship_Rule__c> relationshipRules = [
-                SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
-                FROM aforza__Relationship_Rule__c
-                WHERE aforza__Source_Product__c = :baseProduct.Id
+            SELECT Id, aforza__Source_Product__c, aforza__Target_Product__c, aforza__Quantity__c
+            FROM aforza__Relationship_Rule__c
+            WHERE aforza__Source_Product__c = :baseProduct.Id
         ];
 
-        System.assertEquals(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
-        System.assertEquals(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
-        System.assertEquals(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
-        System.assertEquals(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
+        Assert.areEqual(1, relationshipRules.size(), 'Expecting a relationship rule to be created.');
+        Assert.areEqual(baseProduct.Id, relationshipRules[0].aforza__Source_Product__c, 'Expecting a different value.');
+        Assert.areEqual(drsProduct.Id, relationshipRules[0].aforza__Target_Product__c, 'Expecting a different value.');
+        Assert.areEqual(baseProduct.DRSGrossUnits__c, relationshipRules[0].aforza__Quantity__c, 'Expecting a different value.');
     }
 
     @IsTest
@@ -177,12 +164,19 @@ private with sharing class ProductTriggerHandlerTest {
         Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(FocusFiveProduct__c = true, FocusFiveGroup__c = 'GROUP'));
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
-        System.debug(assets);
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id
+        ];
+        Assert.areEqual(1, assets.size());
 
-        List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c = :prod.StockKeepingUnit];
-        System.assertEquals(1, attributes.size());
+        List<aforza__Attribute__c> attributes = [
+            SELECT Id, aforza__Code__c
+            FROM aforza__Attribute__c
+            WHERE aforza__Code__c = :prod.StockKeepingUnit
+        ];
+        Assert.areEqual(1, attributes.size());
     }
 
     @IsTest
@@ -212,24 +206,37 @@ private with sharing class ProductTriggerHandlerTest {
         update prod;
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
-        System.debug(assets);
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id
+        ];
+        Assert.areEqual(1, assets.size());
 
-        List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c FROM aforza__Attribute__c WHERE aforza__Code__c = :prod.StockKeepingUnit];
-        System.assertEquals(1, attributes.size());
+        List<aforza__Attribute__c> attributes = [
+            SELECT Id, aforza__Code__c
+            FROM aforza__Attribute__c
+            WHERE aforza__Code__c = :prod.StockKeepingUnit
+        ];
+        Assert.areEqual(1, attributes.size());
     }
 
     @IsTest
     private static void testManagePerfectScoreProducts() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true)
+        );
 
         Test.startTest();
         Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductEngland__c = true));
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id
+        ];
+        Assert.areEqual(1, assets.size());
     }
 
     @IsTest
@@ -247,7 +254,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManagePerfectScoreProducts_Check() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true)
+        );
         Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         Test.startTest();
@@ -255,20 +264,30 @@ private with sharing class ProductTriggerHandlerTest {
         update prod;
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id
+        ];
+        Assert.areEqual(1, assets.size());
     }
 
     @IsTest
     private static void testManagePerfectScoreProducts_Scotland() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true)
+        );
 
         Test.startTest();
         Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(PsProductScotland__c = true));
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id
+        ];
+        Assert.areEqual(1, assets.size());
     }
 
     @IsTest
@@ -286,7 +305,9 @@ private with sharing class ProductTriggerHandlerTest {
 
     @IsTest
     private static void testManagePerfectScoreProducts_ScotlandCheck() {
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true));
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PerfectStoreScoreEligible__c = true)
+        );
         Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         Test.startTest();
@@ -294,7 +315,11 @@ private with sharing class ProductTriggerHandlerTest {
         update prod;
         Test.stopTest();
 
-        List<aforza__Outlet_Asset__c> assets = [SELECT Id, aforza__Product_Code__c FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id];
-        System.assertEquals(1, assets.size());
+        List<aforza__Outlet_Asset__c> assets = [
+            SELECT Id, aforza__Product_Code__c
+            FROM aforza__Outlet_Asset__c
+            WHERE aforza__Account__c = :acc.Id AND aforza__Product__c = :prod.Id
+        ];
+        Assert.areEqual(1, assets.size());
     }
 }

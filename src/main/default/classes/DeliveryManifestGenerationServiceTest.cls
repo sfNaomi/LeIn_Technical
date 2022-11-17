@@ -19,11 +19,9 @@ private with sharing class DeliveryManifestGenerationServiceTest {
     @IsTest
     private static void testLoadGeneration_SingleLoadSingleSequence() {
         // create products
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-            Name = 'Test Product',
-            ProductCode = 'SKU1',
-            aforza__Weight__c = 1.5
-        ));
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(Name = 'Test Product', aforza__Weight__c = 1.5)
+        );
 
         // add new products to standard PB
         TdfSObjectFactory.insertSObject(
@@ -37,14 +35,16 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
 
         // create account
-        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(
-            aforza__Default_Price_Book__c = newPricebook.Id,
-            RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-            PrimaryGridNumber__c = GRID1,
-            FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
-            PrimaryPaymentMethod__c = 'Cash',
-            OpeningTime__c = Time.newInstance(9, 0, 0, 0)
-        ));
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1,
+                FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
+                PrimaryPaymentMethod__c = 'Cash',
+                OpeningTime__c = Time.newInstance(9, 0, 0, 0)
+            )
+        );
 
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
@@ -52,51 +52,61 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
 
         // create orders and add products to it
-        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount.Id,
-            Grid__c = GRID1,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder1.Id,
-            Product2Id = newProduct.Id,
-            Quantity = 10,
-            PricebookEntryId = product1PricebookEntry.Id
-        ));
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+            )
+        );
 
-        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount.Id,
-            Grid__c = GRID1,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder2.Id,
-            Product2Id = newProduct.Id,
-            Quantity = 30,
-            PricebookEntryId = product1PricebookEntry.Id
-        ));
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+            )
+        );
 
         // create Vehicle
-        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(new Vehicle__c(
-            VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER,
-            LoadCapacityWeight__c = VEHICLE_CAPACITY_WEIGHT,
-            LoadLimitCases__c = VEHICLE_CAPACITY_CASES
-        ));
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+            new Vehicle__c(
+                VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER,
+                LoadCapacityWeight__c = VEHICLE_CAPACITY_WEIGHT,
+                LoadLimitCases__c = VEHICLE_CAPACITY_CASES
+            )
+        );
 
         // create Load
-        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-                DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
@@ -213,16 +223,12 @@ private with sharing class DeliveryManifestGenerationServiceTest {
     @IsTest
     private static void testLoadGeneration_MultipleLoadsMultipleSequences() {
         // create products
-        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-            Name = 'Test Product',
-            ProductCode = 'SKU1',
-            aforza__Weight__c = 1.5
-        ));
-        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(
-            Name = 'Test Product',
-            ProductCode = 'SKU2',
-            aforza__Weight__c = 1
-        ));
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(Name = 'Test Product', aforza__Weight__c = 1.5)
+        );
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(Name = 'Test Product', aforza__Weight__c = 1)
+        );
 
         // add new products to standard PB
         TdfSObjectFactory.insertSObject(
@@ -242,22 +248,26 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
 
         // create account
-        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(new Account(
-            aforza__Default_Price_Book__c = newPricebook.Id,
-            RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-            PrimaryGridNumber__c = GRID1,
-            FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
-            PrimaryPaymentMethod__c = 'Cash',
-            OpeningTime__c = Time.newInstance(9, 0, 0, 0)
-        ));
-        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(new Account(
-            aforza__Default_Price_Book__c = newPricebook.Id,
-            RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-            PrimaryGridNumber__c = GRID2,
-            FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
-            PrimaryPaymentMethod__c = 'Cash',
-            OpeningTime__c = Time.newInstance(9, 0, 0, 0)
-        ));
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID1,
+                FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
+                PrimaryPaymentMethod__c = 'Cash',
+                OpeningTime__c = Time.newInstance(9, 0, 0, 0)
+            )
+        );
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = GRID2,
+                FixedDeliveryInstructions__c = 'Fixed Delivery Instructions',
+                PrimaryPaymentMethod__c = 'Cash',
+                OpeningTime__c = Time.newInstance(9, 0, 0, 0)
+            )
+        );
 
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
@@ -265,88 +275,106 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
 
         // create orders and add products to it
-        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount1.Id,
-            Grid__c = GRID1,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder1.Id,
-            Product2Id = newProduct1.Id,
-            Quantity = 10,
-            PricebookEntryId = productPricebookEntry1.Id
-        ));
+        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry1.Id
+            )
+        );
 
-        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount2.Id,
-            Grid__c = GRID2,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder2.Id,
-            Product2Id = newProduct2.Id,
-            Quantity = 10,
-            PricebookEntryId = productPricebookEntry2.Id
-        ));
+        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount2.Id,
+                Grid__c = GRID2,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry2.Id
+            )
+        );
 
-        Order newOrder3 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount1.Id,
-            Grid__c = GRID1,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder3.Id,
-            Product2Id = newProduct1.Id,
-            Quantity = 10,
-            PricebookEntryId = productPricebookEntry1.Id
-        ));
+        Order newOrder3 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount1.Id,
+                Grid__c = GRID1,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder3.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry1.Id
+            )
+        );
 
-        Order newOrder4 = (Order) TdfSObjectFactory.insertSObject(new Order(
-            RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
-            AccountId = dpAccount2.Id,
-            Grid__c = GRID2,
-            Pricebook2Id = newPricebook.Id,
-            aforza__Inventory__c = newInventory.Id,
-            ShippingCity = 'Test City',
-            ShippingStreet = 'Test Street',
-            ShippingPostalCode = '054354'
-        ));
-        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder4.Id,
-            Product2Id = newProduct2.Id,
-            Quantity = 10,
-            PricebookEntryId = productPricebookEntry2.Id
-        ));
+        Order newOrder4 = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
+                AccountId = dpAccount2.Id,
+                Grid__c = GRID2,
+                Pricebook2Id = newPricebook.Id,
+                aforza__Inventory__c = newInventory.Id,
+                ShippingCity = 'Test City',
+                ShippingStreet = 'Test Street',
+                ShippingPostalCode = '054354'
+            )
+        );
+        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(
+                OrderId = newOrder4.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry2.Id
+            )
+        );
 
         // create Vehicle
-        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(new Vehicle__c(
-            VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER,
-            LoadCapacityWeight__c = VEHICLE_CAPACITY_WEIGHT,
-            LoadLimitCases__c = VEHICLE_CAPACITY_CASES
-        ));
+        Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+            new Vehicle__c(
+                VehicleRegistration__c = VEHICLE_REGISTRATION_NUMBER,
+                LoadCapacityWeight__c = VEHICLE_CAPACITY_WEIGHT,
+                LoadLimitCases__c = VEHICLE_CAPACITY_CASES
+            )
+        );
 
         // create Load
-        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-            DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
-        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-            DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();

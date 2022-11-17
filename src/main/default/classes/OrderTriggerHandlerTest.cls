@@ -11,23 +11,17 @@ private with sharing class OrderTriggerHandlerTest {
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                AccountStatus__c = 'Prospect', LastOrderDate__c = null
-            )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Prospect', LastOrderDate__c = null)
         );
 
         // create order
         Test.startTest();
         try {
-            TdfSObjectFactory.insertSObject(
-                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id)
-            );
-            System.assert(false);
+            TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id));
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (Exception ex) {
-            // check that validation is fired
             String expectedErrorMessage = Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus;
-            System.assertEquals(true, ex.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+            Assert.isTrue(ex.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
     }
@@ -39,21 +33,16 @@ private with sharing class OrderTriggerHandlerTest {
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                AccountStatus__c = 'Active Prospect', LastOrderDate__c = null
-            )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Active Prospect', LastOrderDate__c = null)
         );
 
         // create order & check that validation is not fired
         Test.startTest();
         try {
-            TdfSObjectFactory.insertSObject(
-                new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id)
-            );
-            System.assert(true);
+            TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id));
+            Assert.isTrue(true, 'Expecting error to don\'t be thrown.');
         } catch (Exception ex) {
-            System.assert(false);
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         }
         Test.stopTest();
     }
@@ -65,21 +54,16 @@ private with sharing class OrderTriggerHandlerTest {
 
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
-                AccountStatus__c = 'Active Prospect', LastOrderDate__c = null
-            )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Active Prospect', LastOrderDate__c = null)
         );
 
         // create order & check that validation is not fired
         Test.startTest();
         try {
-            TdfSObjectFactory.insertSObject(
-                new Order(RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID, AccountId = dpAccount.Id)
-            );
-            System.assert(true);
+            TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID, AccountId = dpAccount.Id));
+            Assert.isTrue(true, 'Expecting error to don\'t be thrown.');
         } catch (Exception ex) {
-            System.assert(false);
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         }
         Test.stopTest();
     }
@@ -99,9 +83,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         // create order
         Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Order(RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID, AccountId = dpAccount.Id)
-        );
+        TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID, AccountId = dpAccount.Id));
         Test.stopTest();
 
         // retrieve updated account
@@ -112,8 +94,8 @@ private with sharing class OrderTriggerHandlerTest {
         ];
 
         // check results
-        System.assertEquals('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
-        System.assertEquals(null, updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
+        Assert.areEqual('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
+        Assert.isNull(updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
     }
 
     @IsTest
@@ -122,9 +104,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -168,16 +148,14 @@ private with sharing class OrderTriggerHandlerTest {
         ];
 
         // check results
-        System.assertEquals('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
-        System.assertEquals(newOrder.EffectiveDate, updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
+        Assert.areEqual('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
+        Assert.areEqual(newOrder.EffectiveDate, updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
     }
 
     @IsTest
     private static void testUpdateLastOrderDateAndStatusOnParentAccount_AtRiskAccountDraftTelesalesOrderIsCompleted() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -221,16 +199,14 @@ private with sharing class OrderTriggerHandlerTest {
         ];
 
         // check results
-        System.assertEquals('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
-        System.assertEquals(newOrder.EffectiveDate, updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
+        Assert.areEqual('Traders', updatedDPAccount.AccountStatus__c, 'Expecting a different account status.');
+        Assert.areEqual(newOrder.EffectiveDate, updatedDPAccount.LastOrderDate__c, 'Expecting a different last order date.');
     }
 
     @IsTest
     private static void testCloneCompletedOrder() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -266,23 +242,21 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        System.assertEquals(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
-        System.assertEquals('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
+        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [
             SELECT Id, OrderId, Product2Id
             FROM OrderItem
             WHERE OrderId = :clonedOrder.Id
         ];
-        System.assertEquals(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
+        Assert.areEqual(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
     }
 
     @IsTest
     private static void testCloneCompletedOrder_NoCloneCreated() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -322,15 +296,13 @@ private with sharing class OrderTriggerHandlerTest {
             FROM Order
             WHERE Clone__c = TRUE
         ];
-        System.assertEquals(0, clonedOrder.size(), 'Expected no clone orders to be created');
+        Assert.areEqual(0, clonedOrder.size(), 'Expected no clone orders to be created');
     }
 
     @IsTest
     private static void testCreateInvoice_ValidOrderRecordType() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -375,12 +347,11 @@ private with sharing class OrderTriggerHandlerTest {
         List<aforza__Invoice_Line_Item__c> invoiceLineItems = [
             SELECT Id
             FROM aforza__Invoice_Line_Item__c
-            WHERE aforza__Invoice__c
-                IN :invoices
+            WHERE aforza__Invoice__c IN :invoices
         ];
 
-        System.assertEquals(1, invoices.size(), 'Expected invoice to be created');
-        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
+        Assert.areEqual(1, invoices.size(), 'Expected invoice to be created');
+        Assert.areEqual(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
     }
 
     @IsTest
@@ -389,9 +360,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -439,16 +408,14 @@ private with sharing class OrderTriggerHandlerTest {
             WHERE aforza__Invoice__c IN :invoices
         ];
 
-        System.assertEquals(0, invoices.size(), 'Expected no invoice to be created');
-        System.assertEquals(0, invoiceLineItems.size(), 'Expected no invoice line items to be created');
+        Assert.areEqual(0, invoices.size(), 'Expected no invoice to be created');
+        Assert.areEqual(0, invoiceLineItems.size(), 'Expected no invoice line items to be created');
     }
 
     @IsTest
     private static void testCreateInvoice_OrderWithPayment() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -501,8 +468,8 @@ private with sharing class OrderTriggerHandlerTest {
             WHERE aforza__Invoice__c IN :invoices
         ];
 
-        System.assertEquals(1, invoices.size(), 'Expected invoice to be created');
-        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
+        Assert.areEqual(1, invoices.size(), 'Expected invoice to be created');
+        Assert.areEqual(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
 
         // retrieve payment and validate result
         List<aforza__Payment_Transaction__c> transactions = [
@@ -510,15 +477,13 @@ private with sharing class OrderTriggerHandlerTest {
             FROM aforza__Payment_Transaction__c
             WHERE Id = :newPayment.Id
         ];
-        System.assertEquals(invoices[0].Id, transactions[0].aforza__Invoice__c, 'Expecting transaction to be linked to invoice');
+        Assert.areEqual(invoices[0].Id, transactions[0].aforza__Invoice__c, 'Expecting transaction to be linked to invoice');
     }
 
     @IsTest
     private static void testCreateInvoice_ExistingInvoice() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -571,16 +536,14 @@ private with sharing class OrderTriggerHandlerTest {
             WHERE aforza__Invoice__c IN :invoices
         ];
 
-        System.assertEquals(1, invoices.size(), 'Expected existing invoice to be updated');
-        System.assertEquals(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
+        Assert.areEqual(1, invoices.size(), 'Expected existing invoice to be updated');
+        Assert.areEqual(1, invoiceLineItems.size(), 'Expected invoice line items to be created');
     }
 
     @IsTest
     private static void testPreventOrderActivation_DPOnHoldAndRTTelesales() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -614,10 +577,10 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            System.assert(false);
+            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedDueToDPOnHold;
-            System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
 
@@ -626,9 +589,7 @@ private with sharing class OrderTriggerHandlerTest {
     @IsTest
     private static void testPreventOrderActivation_DPNegativeCreditAndRTEDI() {
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -674,10 +635,10 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            System.assert(false);
+            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedDueToDPNegativeCredit;
-            System.assertEquals(true, e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
     }
@@ -688,15 +649,13 @@ private with sharing class OrderTriggerHandlerTest {
         insert inventory;
 
         Test.startTest();
-        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'C')
-        );
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'C'));
         Test.stopTest();
 
         Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id = :newOrder.Id];
 
-        System.assertEquals('C', order.Depot__c);
-        System.assertEquals(inventory.Id, order.aforza__Inventory__c);
+        Assert.areEqual('C', order.Depot__c);
+        Assert.areEqual(inventory.Id, order.aforza__Inventory__c);
     }
 
     @IsTest
@@ -704,9 +663,7 @@ private with sharing class OrderTriggerHandlerTest {
         aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Moston', InventoryCode__c = 'M');
         insert inventory;
 
-        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'M')
-        );
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Depot__c = 'M'));
 
         Test.startTest();
         newOrder.Depot__c = null;
@@ -715,8 +672,8 @@ private with sharing class OrderTriggerHandlerTest {
 
         Order order = [SELECT Id, Depot__c, aforza__Inventory__c FROM Order WHERE Id = :newOrder.Id];
 
-        System.assertEquals(null, order.Depot__c);
-        System.assertEquals(null, order.aforza__Inventory__c);
+        Assert.isNull(order.Depot__c);
+        Assert.isNull(order.aforza__Inventory__c);
     }
 
     @IsTest
@@ -736,7 +693,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         Load__c loadUpdated = [SELECT Id, CreateRoute__c FROM Load__c WHERE Id = :load.Id LIMIT 1][0];
 
-        Assert.areEqual(true, loadUpdated.CreateRoute__c);
+        Assert.isTrue(loadUpdated.CreateRoute__c);
     }
 
     @IsTest
@@ -756,7 +713,7 @@ private with sharing class OrderTriggerHandlerTest {
 
         Load__c loadUpdated = [SELECT Id, CreateRoute__c FROM Load__c WHERE Id = :load.Id LIMIT 1][0];
 
-        Assert.areEqual(false, loadUpdated.CreateRoute__c);
+        Assert.isFalse(loadUpdated.CreateRoute__c);
     }
 
     @IsTest
@@ -876,6 +833,4 @@ private with sharing class OrderTriggerHandlerTest {
         List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
         Assert.areEqual(0, loadAcc.size(), 'There should not be load anymore, as all orders were removed');
     }
-
 }
-

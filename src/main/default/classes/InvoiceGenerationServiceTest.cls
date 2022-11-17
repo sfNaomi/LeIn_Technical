@@ -37,8 +37,8 @@ private class InvoiceGenerationServiceTest {
     @IsTest
     static void testGenerateData() {
         // create product
-        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
-        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(

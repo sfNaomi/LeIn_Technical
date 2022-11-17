@@ -3,13 +3,11 @@
  */
 
 @IsTest
-public with sharing class FileGenerationServiceTest {
+private with sharing class FileGenerationServiceTest {
     @IsTest
-    public static void testGenerateDocuments_ValidDocumentTypeInput() {
+    private static void testGenerateDocuments_ValidDocumentTypeInput() {
         // create product
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
@@ -70,16 +68,16 @@ public with sharing class FileGenerationServiceTest {
         Test.stopTest();
 
         List<ContentVersion> generatedFiles = [SELECT Id FROM ContentVersion WHERE DocumentType__c = 'Invoice'];
-        System.assertEquals(1, generatedFiles.size(), 'The invoice file was not generated');
+        Assert.areEqual(1, generatedFiles.size(), 'The invoice file was not generated');
 
         List<ContentDocumentLink> linkedFiles = [SELECT Id FROM ContentDocumentLink WHERE LinkedEntityId = :newInvoice.Id];
-        System.assertEquals(1, linkedFiles.size(), 'The file was not related to the invoice');
+        Assert.areEqual(1, linkedFiles.size(), 'The file was not related to the invoice');
     }
 
     @IsTest
-    public static void testGenerateDocuments_InvalidDocumentTypeInput() {
+    private static void testGenerateDocuments_InvalidDocumentTypeInput() {
         // create product
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2(Name = 'Test Product', ProductCode = 'SKU1'));
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
 
         // add new product to standard PB
         TdfSObjectFactory.insertSObject(
@@ -138,14 +136,15 @@ public with sharing class FileGenerationServiceTest {
             FileGenerationService.generateDocuments(null, new Set<Id>{
                 newInvoice.Id
             });
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (FileGenerationService.FileGenerationException ex) {
-            System.assertEquals('Invalid document type', ex.getMessage(), 'Incorrect error returned.');
+            Assert.areEqual('Invalid document type', ex.getMessage(), 'Incorrect error returned.');
         }
         Test.stopTest();
     }
 
     @IsTest
-    public static void testGenerateContentVersion_Invoice() {
+    private static void testGenerateContentVersion_Invoice() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
@@ -174,17 +173,17 @@ public with sharing class FileGenerationServiceTest {
         String expectedFileName = 'Invoice ' + insertedInvoice?.aforza__Order__r?.OrderNumber + ' ' + System.today().format() + '.pdf';
         String expectedDocumentType = 'Invoice';
 
-        System.assertEquals(expectedContentLocation, generatedFile.ContentLocation);
-        System.assertEquals(expectedOrigin, generatedFile.Origin);
-        System.assertEquals(expectedFileOwner, generatedFile.OwnerId);
-        System.assertEquals(expectedVersionData, generatedFile.VersionData);
-        System.assertEquals(expectedFileName, generatedFile.PathOnClient);
-        System.assertEquals(expectedFileName, generatedFile.Title);
-        System.assertEquals(expectedDocumentType, generatedFile.DocumentType__c);
+        Assert.areEqual(expectedContentLocation, generatedFile.ContentLocation);
+        Assert.areEqual(expectedOrigin, generatedFile.Origin);
+        Assert.areEqual(expectedFileOwner, generatedFile.OwnerId);
+        Assert.areEqual(expectedVersionData, generatedFile.VersionData);
+        Assert.areEqual(expectedFileName, generatedFile.PathOnClient);
+        Assert.areEqual(expectedFileName, generatedFile.Title);
+        Assert.areEqual(expectedDocumentType, generatedFile.DocumentType__c);
     }
 
     @IsTest
-    public static void testGenerateContentVersion_DeliveryNote() {
+    private static void testGenerateContentVersion_DeliveryNote() {
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID)
         );
@@ -204,12 +203,12 @@ public with sharing class FileGenerationServiceTest {
         String expectedFileName = 'Delivery Note ' + insertedOrder.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
         String expectedDocumentType = 'Delivery Note';
 
-        System.assertEquals(expectedContentLocation, generatedFile.ContentLocation);
-        System.assertEquals(expectedOrigin, generatedFile.Origin);
-        System.assertEquals(expectedFileOwner, generatedFile.OwnerId);
-        System.assertEquals(expectedVersionData, generatedFile.VersionData);
-        System.assertEquals(expectedFileName, generatedFile.PathOnClient);
-        System.assertEquals(expectedFileName, generatedFile.Title);
-        System.assertEquals(expectedDocumentType, generatedFile.DocumentType__c);
+        Assert.areEqual(expectedContentLocation, generatedFile.ContentLocation);
+        Assert.areEqual(expectedOrigin, generatedFile.Origin);
+        Assert.areEqual(expectedFileOwner, generatedFile.OwnerId);
+        Assert.areEqual(expectedVersionData, generatedFile.VersionData);
+        Assert.areEqual(expectedFileName, generatedFile.PathOnClient);
+        Assert.areEqual(expectedFileName, generatedFile.Title);
+        Assert.areEqual(expectedDocumentType, generatedFile.DocumentType__c);
     }
 }
