@@ -52,7 +52,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.AccountStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -67,6 +67,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.PrimaryGridNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.SecondaryCallDay__c</field>
         <readable>true</readable>
@@ -74,6 +79,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.SecondaryDeliveryDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.SecondaryGridNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
