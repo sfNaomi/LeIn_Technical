@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td class="invoice-table-rows">
-                        <apex:outputField value="{!mapIdOrder[key].OrderReferenceNumber}" />
+                        <apex:outputField value="{!mapIdOrder[key].OrderNumber}" />
                     </td>
                     <td class="invoice-table-rows">
                         <apex:outputField value="{!mapIdOrder[key].PoNumber}" />
@@ -48,6 +48,8 @@
                     </td>
                     <td class="invoice-table-rows">
                         <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].FixedDeliveryInstructions__c}" />
+                        <apex:outputField value="{!mapIdOrder[key].OrderInstructions__c}" />
+                        <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].Phone}" />
                     </td>
                 </tr>
             </table>

@@ -121,6 +121,10 @@
                 <behavior>Readonly</behavior>
                 <field>Route__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OrderInstructions__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
