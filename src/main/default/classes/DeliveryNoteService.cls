@@ -36,17 +36,19 @@ public without sharing class DeliveryNoteService {
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
 		for (Order ord : orderMap.values()) {
 			if (contentVersionByOrderId.containsKey(ord.Id)) {
-				ContentVersion cversion = contentVersionByOrderId.get(ord.Id);
-				Messaging.SingleEmailMessage message = EmailService.buildEmailMessage(
-					ORDER_EMAIL_TEMPLATE_ID,
-					false,
-					true,
-					ord.Id,
-					ord?.Account?.aforza__Primary_Contact__c,
-					new List<String>{ ord?.Account?.DeliveryNoteEmail__c },
-					new List<String>{ cversion?.Id }
-				);
-				emails.add(message);
+				if( ord?.Account?.aforza__Primary_Contact__c != null && ord?.Account?.DeliveryNoteEmail__c != null ) {
+					ContentVersion cversion = contentVersionByOrderId.get(ord.Id);
+					Messaging.SingleEmailMessage message = EmailService.buildEmailMessage(
+						ORDER_EMAIL_TEMPLATE_ID,
+						false,
+						true,
+						ord.Id,
+						ord?.Account?.aforza__Primary_Contact__c,
+						new List<String>{ ord?.Account?.DeliveryNoteEmail__c },
+						new List<String>{ cversion?.Id }
+					);
+					emails.add(message);
+				}
 			}
 		}
 		if (!emails.isEmpty()) {

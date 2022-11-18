@@ -70,3 +70,39 @@ h2 {
 #footer-link {
 	padding-left: 5px;
 }
+
+.signatureSection {
+	float: right;
+	width: 15%;
+	text-align: left;
+	padding: 0px;
+}
+
+.inline-block {
+    display: inline-block;
+    width: 100%;
+    margin: 0px 0 10px 0;
+}
+
+.float-right {
+    float: right;
+    padding-left: 20px;
+}
+
+.float-left {
+    float: left;
+    padding-right: 20px;
+}
+.width-60 {
+	width: 60%;
+}
+.width-30 {
+	width: 30%;
+}
+.delivery-inst {
+	position: relative;
+    left: 20px;
+}
+.phone {
+	text-align: right;
+}

@@ -54,7 +54,7 @@ public without sharing class DeliveryNotePDFController {
         for (OrderItem ordItem : [
             SELECT Id, Product2Id, Product2.StockKeepingUnit, Product2.Name, Quantity, OrderId
             FROM OrderItem
-            WHERE OrderId IN :mapIdOrder.keySet()
+            WHERE OrderId IN :mapIdOrder.keySet() AND aforza__Type__c NOT IN ('Tax', 'Discount', 'Promotion')
         ]) {
             strOrderIdsContainsOrdItem = strOrderIdsContainsOrdItem + ';' + ordItem.OrderId;
             if (mapOrderIdlstOrderItem.containsKey(ordItem.OrderId)) {
