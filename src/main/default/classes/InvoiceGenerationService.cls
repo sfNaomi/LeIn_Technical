@@ -76,7 +76,7 @@ public with sharing class InvoiceGenerationService {
                 (
                     SELECT Id, SkuCode__c, SkuName__c, Quantity__c, UnitPrice__c, VatRate__c, Vat__c, NetPrice__c
                     FROM aforza__Billing_Statement_Line_Items__r
-                    WHERE SkuName__c != 'Tax' AND SkuName__c != 'Discount'
+                    WHERE SkuName__c NOT IN ('Tax', 'Discount', 'Promotion')
                 )
             FROM aforza__Invoice__c
             WHERE Id IN :invoiceIds

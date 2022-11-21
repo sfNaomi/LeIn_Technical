@@ -84,13 +84,13 @@ public with sharing class PickSheetGenerationService {
     @TestVisible
     private void getOrderItems(List<String> orderIds) {
         orderItems = [
-                SELECT
-                        Id, Product2Id, Product2.Name, Product2.ProductCode, Quantity, OrderId, Order.AccountId,
-                        Order.Load__r.Name, Order.Load__r.DeliveryDate__c, Order.PalletSequence__c,
-                        Order.ShortDescription__c, Order.Grid__c, Order.Load__r.Driver__r.Name,
-                        Order.Load__r.Vehicle__r.VehicleRegistration__c, Order.aforza__Inventory__c
-                FROM OrderItem
-                WHERE OrderId IN :orderIds AND Order.Load__c != NULL AND aforza__Type__c NOT IN ('Tax', 'Discount') AND IsDRSProduct__c = false
+            SELECT
+                Id, Product2Id, Product2.Name, Product2.ProductCode, Quantity, OrderId, Order.AccountId,
+                Order.Load__r.Name, Order.Load__r.DeliveryDate__c, Order.PalletSequence__c,
+                Order.ShortDescription__c, Order.Grid__c, Order.Load__r.Driver__r.Name,
+                Order.Load__r.Vehicle__r.VehicleRegistration__c, Order.aforza__Inventory__c
+            FROM OrderItem
+            WHERE OrderId IN :orderIds AND Order.Load__c != NULL AND aforza__Type__c NOT IN ('Tax', 'Discount', 'Promotion') AND IsDRSProduct__c = false
         ];
     }
 
