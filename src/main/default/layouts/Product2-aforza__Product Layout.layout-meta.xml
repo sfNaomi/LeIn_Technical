@@ -86,7 +86,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>HeightDimension__c</field>
+                <field>LengthDimension__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
