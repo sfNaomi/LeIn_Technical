@@ -50,11 +50,11 @@ private class SixOrderSummaryControllerTest {
     }
 
     @IsTest
-    private static void testGetOrdersListInvalidOrder() {
+    private static void testGetOrdersList_InvalidOrder() {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', creditStatus__c = 'Good')
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', CreditStatus__c = 'Good')
         );
     
         TdfSObjectFactory.insertSObject(
@@ -93,23 +93,35 @@ private class SixOrderSummaryControllerTest {
         PricebookEntry product2PricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
         );
-    
-        // create account
-        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(aforza__Default_Price_Book__c = newPricebook.Id, RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
-        );
-    
+
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
-            new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
+            new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, InventoryCode__c = 'W')
         );
         TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, aforza__Stock_Quantity__c = 10)
+            new aforza__Inventory_Product__c(
+                aforza__Inventory__c = newInventory.Id,
+                aforza__Product__c = newProduct1.Id,
+                aforza__Stock_Quantity__c = 10
+            )
         );
         TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, aforza__Stock_Quantity__c = 20)
+            new aforza__Inventory_Product__c(
+                aforza__Inventory__c = newInventory.Id,
+                aforza__Product__c = newProduct2.Id,
+                aforza__Stock_Quantity__c = 20
+            )
         );
-    
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                aforza__Default_Price_Book__c = newPricebook.Id,
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+                PrimaryGridNumber__c = '3W7201MOW'
+            )
+        );
+
         // create orders and add products to it
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
@@ -132,7 +144,7 @@ private class SixOrderSummaryControllerTest {
         
         Test.startTest();
         Map<String, aforza__Inventory_Product__c> prodInventMap = SixOrderSummaryController.getInventoryMap(
-            new List<OrderItem>{newOrderItem1, newOrderItem2}, new Set<String>{newProduct1.Id, newProduct2.Id}
+            dpAccount.Id, new List<OrderItem>{newOrderItem1, newOrderItem2}
         );
         Test.stopTest();
         
@@ -215,7 +227,7 @@ private class SixOrderSummaryControllerTest {
     }
   
     @IsTest
-    static void getQuantityAndTotalOrders() {
+    static void testGetQuantityAndTotalOrders() {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
     
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -239,14 +251,13 @@ private class SixOrderSummaryControllerTest {
         Map<String, SixOrderSummaryController.SkuDto> skuDtoMap = new Map<String, SixOrderSummaryController.SkuDto>();
         Map<String, Integer> totalQuantityMap = new Map<String, Integer>();
     
-        Map<String, List<Decimal>> mapProductEntity = new Map<String, List<Decimal>> ();
+        Map<String, List<Decimal>> mapProductEntity = new Map<String, List<Decimal>>();
         mapProductEntity = SixOrderSummaryController.addInventoryQuantity(
             new List<OrderItem>{newOrderItem1, newOrderItem2, newOrderItem3, newOrderItem4}, mapProductEntity
         );
     
         Map<String, aforza__Inventory_Product__c> prodInventMap = SixOrderSummaryController.getInventoryMap(
-            new List<OrderItem>{newOrderItem1, newOrderItem2, newOrderItem3, newOrderItem4}, 
-            new Set<String>{item1.Product2Id, item2.Product2Id, item3.Product2Id, item4.Product2Id}
+            null, new List<OrderItem>{newOrderItem1, newOrderItem2, newOrderItem3, newOrderItem4}
         );
   
         List<SixOrderSummaryController.SkuDto> orderDtosToReturn = new List<SixOrderSummaryController.SkuDto>();
@@ -468,7 +479,7 @@ private class SixOrderSummaryControllerTest {
         );
         TdfSObjectFactory.insertSObject(new OrderItem(OrderId = newOrder.Id));
         
-        List <OrderItem> orderItems = [
+        List<OrderItem> orderItems = [
             SELECT Id, OrderId, Product2Id, UnitPrice, PricebookEntryId, Quantity
             FROM OrderItem
             WHERE OrderId =: newOrder.Id
@@ -485,7 +496,7 @@ private class SixOrderSummaryControllerTest {
         List<SixOrderSummaryController.SkuDto> skus = createTestSKu(orderItems[0], newProduct);
     
         Test.startTest();
-        SixOrderSummaryController.InsertOrder(skus, newOrder.Id);
+        SixOrderSummaryController.insertOrder(skus, newOrder.Id);
         Test.stopTest();
   
         List<OrderItem> items = [
@@ -512,5 +523,101 @@ private class SixOrderSummaryControllerTest {
         
         Order returnedOrder = [SELECT Id, Status FROM Order WHERE AccountId = :dpAccount.Id];
         Assert.areEqual('Draft', returnedOrder.Status, 'Expected one order withs status draft');
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OffSaleAtGlobalAndInventoryLevel() {
+        String productOffSale = 'Yes';
+        String inventoryProductOffSale= 'Yes';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isTrue(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OnSaleAtGlobalAndInventoryLevel() {
+        String productOffSale = 'No';
+        String inventoryProductOffSale= 'No';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isFalse(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OnSaleAtGlobalLevelOffSaleAtInventoryLevel() {
+        String productOffSale = 'No';
+        String inventoryProductOffSale= 'Yes';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isTrue(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OffSaleAtGlobalLevelOnSaleAtInventoryLevel() {
+        String productOffSale = 'Yes';
+        String inventoryProductOffSale= 'No';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isFalse(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_UnknownAtGlobalLevelOnSaleAtInventoryLevel() {
+        String productOffSale = null;
+        String inventoryProductOffSale= 'No';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isFalse(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_UnknownAtGlobalLevelOffSaleAtInventoryLevel() {
+        String productOffSale = null;
+        String inventoryProductOffSale= 'Yes';
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isTrue(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OnSaleAtGlobalLevelUnknownAtInventoryLevel() {
+        String productOffSale = 'No';
+        String inventoryProductOffSale= null;
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isFalse(isProductOffSale);
+    }
+
+    @IsTest
+    private static void testComputeOffSaleStatus_OffSaleAtGlobalLevelUnknownAtInventoryLevel() {
+        String productOffSale = 'Yes';
+        String inventoryProductOffSale= null;
+
+        Test.startTest();
+        Boolean isProductOffSale = SixOrderSummaryController.computeOffSaleStatus(productOffSale, inventoryProductOffSale);
+        Test.stopTest();
+
+        Assert.isTrue(isProductOffSale);
     }
 }

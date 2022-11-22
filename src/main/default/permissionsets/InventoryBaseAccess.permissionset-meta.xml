@@ -18,6 +18,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Inventory_Product__c.OffSale__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Inventory_Product__c.PickingLocation__c</field>
         <readable>true</readable>
     </fieldPermissions>
