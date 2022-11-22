@@ -202,6 +202,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.Overdue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Invoice__c.PaymentInstruction__c</field>
         <readable>true</readable>

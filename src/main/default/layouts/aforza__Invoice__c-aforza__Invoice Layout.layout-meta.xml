@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>PushedtoJde__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Overdue__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
