@@ -7,7 +7,7 @@
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ClassBaseAccess</permissionSets>
+    <permissionSets>ClassBasicAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
