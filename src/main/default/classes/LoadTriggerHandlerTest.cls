@@ -294,5 +294,154 @@ private class LoadTriggerHandlerTest {
         List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
         Assert.areEqual(1, visits.size());
     }
+    
+    @IsTest
+    private static void testSetCorrectLoadName_OnInsert() {
+        Test.startTest();
+        	Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+                    new Load__c(Name='test', 
+                                Depot__c = 'M', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '10')
+        	);
+        Test.stopTest();
 
+        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id =:newLoad.Id];
+       
+        Assert.areEqual('M-10-16/11/22-01', load.Name);
+    }
+    
+    @IsTest
+    private static void testSetCorrectLoadName_OnUpdate() {
+        Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                    new Vehicle__c()
+        );
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(
+                	new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'M', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '10')
+        );
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
+            		new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'S', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '10')
+        );
+
+        Test.startTest();
+        	newLoad2.Depot__c = 'M';
+        	update newLoad2;
+        Test.stopTest();
+
+        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id =:newLoad2.Id];
+       
+        Assert.areEqual('M-10-16/11/22-02', load.Name);
+    }
+    
+    @IsTest
+    private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfSameCharacteristics() {
+        Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                	new Vehicle__c()
+        	);
+        List<Load__c> loadList = new List<Load__c>();
+        for (Integer i = 0; i < 20; i++){
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
+                                            Depot__c = 'M', 
+                                            DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                            RouteIdentification__c = '10');
+            loadList.add(newLoad);
+        }
+
+        Test.startTest();
+            insert loadList; 
+        Test.stopTest();
+
+		List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c =: vehicle.Id];
+
+        Assert.areEqual('M-10-16/11/22-20', newLoadList[19].Name);
+    }
+
+	@IsTest
+    private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfDiffCharacteristicsWithExisting() {
+        Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                	new Vehicle__c()
+        );
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(
+                	new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'M', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '10')
+        );
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
+            		new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'S', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '11')
+        );
+        Load__c newLoad3 = (Load__c) TdfSObjectFactory.insertSObject(
+            		new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'W', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 17), 
+                                RouteIdentification__c = '12')
+        );
+        List<Load__c> loadList = new List<Load__c>();
+        for(Integer i = 0; i < 12; i++){
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
+                                        Depot__c = 'D', 
+                                        DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                        RouteIdentification__c = '15');
+            loadList.add(newLoad);
+        }
+		
+        Test.startTest();
+        	insert loadList; 
+        Test.stopTest();
+		
+        List<Load__c> newLoadListWithoutDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c =: vehicle.Id AND Depot__c != 'D'];
+        List<Load__c> newLoadListWithDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c =: vehicle.Id AND Depot__c = 'D'];
+        
+        Assert.areEqual('M-10-16/11/22-01', newLoadListWithoutDagenham[0].Name);
+        Assert.areEqual('S-11-16/11/22-01', newLoadListWithoutDagenham[1].Name);
+        Assert.areEqual('W-12-17/11/22-01', newLoadListWithoutDagenham[2].Name);
+        
+        for (Integer i = 0; i < newLoadListWithDagenham.size(); i++){
+            if (i < 9){
+                Assert.areEqual('D-15-16/11/22-0' + String.valueOf(i+1), newLoadListWithDagenham[i].Name);
+            } else {
+                Assert.areEqual('D-15-16/11/22-' + String.valueOf(i+1), newLoadListWithDagenham[i].Name);
+            }
+        }
+    }
+    
+    @IsTest
+    private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfSameCharacteristicsAsExisting() {
+        Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
+                	new Vehicle__c()
+        );
+        TdfSObjectFactory.insertSObject(
+                	new Load__c(Vehicle__c = vehicle.Id, 
+                                Depot__c = 'M', 
+                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                RouteIdentification__c = '10')
+        );
+        List<Load__c> loadList = new List<Load__c>();
+        for(Integer i = 0; i < 2; i++){
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
+                                        Depot__c = 'M', 
+                                        DeliveryDate__c = Date.newInstance(2022, 11, 16), 
+                                        RouteIdentification__c = '10');
+            loadList.add(newLoad);
+        }
+		
+        Test.startTest();
+        	insert loadList; 
+        Test.stopTest();
+		
+        List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c =: vehicle.Id];
+        
+        Assert.areEqual('M-10-16/11/22-01', newLoadList[0].Name);
+        Assert.areEqual('M-10-16/11/22-02', newLoadList[1].Name);
+        Assert.areEqual('M-10-16/11/22-03', newLoadList[2].Name);
+    }
 }

@@ -8,7 +8,7 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
@@ -38,6 +38,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CreateRoute__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RouteIdentification__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

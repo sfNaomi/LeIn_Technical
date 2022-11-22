@@ -19,7 +19,6 @@ public with sharing class LoadTriggerHandler {
             createRoutesAndLocations(loadsWithOrderIds, routeTerritoryCodeToIds);
             createVisitsAndTasks(loadsWithOrderIds);
         }
-
     }
 
     public static void updateDriverAndDeliveryDate(Map<Id, Load__c> loadsMap, Map<Id, Load__c> oldLoadsMap) {
@@ -32,7 +31,6 @@ public with sharing class LoadTriggerHandler {
         }
         updateRoutesWithNewDrive(loadIdsToTriggerChangeFor, loadsMap);
         updateTaskAndVisitWithNewDriverAndDate(loadIdsToTriggerChangeFor, loadsMap);
-
     }
 
     private static void updateTaskAndVisitWithNewDriverAndDate(Set<Id> loadIdsToTriggerChangeFor, Map<Id, Load__c> loadsMap) {
@@ -283,8 +281,86 @@ public with sharing class LoadTriggerHandler {
                 (oldLoad == null && newLoad.Depot__c != null) ||
                 (oldLoad != null && newLoad.Depot__c != oldLoad.Depot__c)
             ){
-            		newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
+            	newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
             }
         }   
-    }  
+    }
+    
+    public static void setCorrectLoadName(List<Load__c> newLoads, Map<Id, Load__c> oldLoads){
+        Map<Date, List<Load__c>> newLoadsMap = new Map<Date, List<Load__c>>();
+        Set<String> newLoadsDepotList = new Set<String>();
+        Set<String> newLoadsRouteIdentificationList = new Set<String>();
+        for (Load__c newLoad : newLoads) {
+            Load__c oldLoad = oldLoads?.get(newLoad.Id);
+            if (
+                (
+                    (oldLoad == null) ||
+                    (oldLoad != null && 
+                        (
+                            (newLoad.Depot__c != oldLoad.Depot__c) ||
+                            (newLoad.DeliveryDate__c != oldLoad.DeliveryDate__c) ||
+                            (newLoad.RouteIdentification__c != oldLoad.RouteIdentification__c)
+                        )
+                    )
+                ) && (newLoad.Depot__c != null && newLoad.DeliveryDate__c != null && newLoad.RouteIdentification__c != null)
+            ){	
+                if (newLoadsMap.containsKey(newLoad.DeliveryDate__c)){
+            	    newLoadsMap.get(newLoad.DeliveryDate__c).add(newLoad);
+                } else {
+                    newLoadsMap.put(newLoad.DeliveryDate__c, new List<Load__c>{
+                        newLoad 
+                    });
+                }
+                newLoadsDepotList.add(newLoad.Depot__c);
+                newLoadsRouteIdentificationList.add(newLoad.RouteIdentification__c);
+            }
+        }
+	    setCorrectLastTwoDigitsOnLoadName(newLoadsMap, getExistingLoadsLastTwoDigits(newLoadsMap, newLoadsDepotList, newLoadsRouteIdentificationList));
+    }
+    
+    private static Map<String, Integer> getExistingLoadsLastTwoDigits(Map<Date, List<Load__c>> newLoadsMap, Set<String> newLoadsDepotList, Set<String> newLoadsRouteIdentificationList){
+        List<AggregateResult> existingLoadsForSameDateDepotAndRoute = [SELECT Count(Id) similarLoadsCount, Depot__c, RouteIdentification__c, DeliveryDate__c 
+                                          			  		            FROM Load__c
+                                                                        WHERE Depot__c IN :newLoadsDepotList 
+                                                                            AND RouteIdentification__c IN :newLoadsRouteIdentificationList 
+                                                                            AND DeliveryDate__c IN :newLoadsMap.keySet()
+                                          			  		            GROUP BY Depot__c, RouteIdentification__c, DeliveryDate__c];
+
+        Map<String, Integer> loadsLastTwoDigits = new Map<String, Integer>();
+        
+        for (AggregateResult existingLoad : existingLoadsForSameDateDepotAndRoute) {
+            String loadCombinationKey = getLoadCombinationKey(existingLoad);
+            Integer similarExistingLoadsCount = (Integer) existingLoad.get('similarLoadsCount');
+            loadsLastTwoDigits.put(loadCombinationKey, similarExistingLoadsCount);
+        }
+        return loadsLastTwoDigits;
+    }
+    
+    private static void setCorrectLastTwoDigitsOnLoadName(Map<Date, List<Load__c>> newLoadsMap, Map<String, Integer> loadsLastTwoDigits){
+        for (List<Load__c> loadsList : newLoadsMap.values()){
+        	for (Load__c newLoad: loadsList) {
+                String newLoadCombinationKey = getLoadCombinationKey(newLoad);
+            	if(!loadsLastTwoDigits.containsKey(newLoadCombinationKey)){
+                    loadsLastTwoDigits.put(newLoadCombinationKey, 1);
+            		newLoad.Name = newLoadCombinationKey + '-' + '01';
+            	} else {
+                	Integer higherExistingLoadNumber = loadsLastTwoDigits.get(newLoadCombinationKey);
+                    higherExistingLoadNumber++;
+                    loadsLastTwoDigits.put(newLoadCombinationKey, higherExistingLoadNumber);
+                	if (higherExistingLoadNumber < 10){
+                	    newLoad.Name = newLoadCombinationKey + '-' + '0' + (higherExistingLoadNumber);
+            		} else {
+                		newLoad.Name = newLoadCombinationKey + '-' + (higherExistingLoadNumber);
+            		}
+            	}
+        	}
+        }  
+    }
+    
+    private static String getLoadCombinationKey(SObject loadOrAggregateResult){
+        DateTime deliveryDate = (DateTime) loadOrAggregateResult.get('DeliveryDate__c');
+        String loadCombinationKey = loadOrAggregateResult.get('Depot__c') + '-' + loadOrAggregateResult.get('RouteIdentification__c') + '-' + deliveryDate.format('dd/MM/yy');
+        
+        return loadCombinationKey;
+    }
 }

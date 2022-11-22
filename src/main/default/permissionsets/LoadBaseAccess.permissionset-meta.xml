@@ -43,6 +43,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Load__c.RouteIdentification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Load__c.SiteNo__c</field>
         <readable>true</readable>
     </fieldPermissions>
