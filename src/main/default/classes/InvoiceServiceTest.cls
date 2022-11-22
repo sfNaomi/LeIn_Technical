@@ -91,7 +91,8 @@ private with sharing class InvoiceServiceTest {
 				AccountStatus__c = 'Traders',
 				InvoiceType__c = 'Email',
 				aforza__Invoice_Email_Address__c = 'test@test.com',
-				aforza__Default_Price_Book__c = newPricebook.Id
+				aforza__Default_Price_Book__c = newPricebook.Id,
+				PrimaryPaymentMethod__c = 'Direct Debit'
 			)
 		);
 
@@ -110,7 +111,7 @@ private with sharing class InvoiceServiceTest {
 				Pricebook2Id = newPricebook.Id
 			)
 		);
-		OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new OrderItem(
 				OrderId = newOrder.Id,
 				Product2Id = newProduct.Id,
@@ -150,7 +151,7 @@ private with sharing class InvoiceServiceTest {
 			new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Draft')
 		);
 
-		aforza__Payment_Transaction__c newPayment = (aforza__Payment_Transaction__c) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new aforza__Payment_Transaction__c(aforza__Account__c = dpAccount.Id, OrderNumber__c = newOrder.Id)
 		);
 
@@ -193,7 +194,7 @@ private with sharing class InvoiceServiceTest {
 				Pricebook2Id = newPricebook.Id
 			)
 		);
-		OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new OrderItem(
 				OrderId = newOrder.Id,
 				Product2Id = newProduct.Id,
@@ -240,7 +241,7 @@ private with sharing class InvoiceServiceTest {
 		);
 
 		// create Invoice
-		aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id)
 		);
 

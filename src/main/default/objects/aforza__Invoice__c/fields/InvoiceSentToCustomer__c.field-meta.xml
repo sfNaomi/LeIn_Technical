@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceSentToCustomer__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field populated by logic in code or flows when email was sent to customer.</description>
+    <externalId>false</externalId>
+    <label>Invoice Sent To Customer</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

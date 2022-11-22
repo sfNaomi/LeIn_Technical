@@ -46,6 +46,7 @@ public class TdfAforzaInvoiceTemplate extends TdfSObjectTemplate {
         template.aforza__Account__c = accountId;
         template.InvoiceType__c = 'Invoice';
         template.aforza__Reference__c = 'Test';
+        template.Gross__c = 10000;
         return template;
     }
 }

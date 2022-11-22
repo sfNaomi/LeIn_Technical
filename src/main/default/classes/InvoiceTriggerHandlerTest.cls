@@ -1,0 +1,73 @@
+/**
+ * Created by svatopluk.sejkora on 16.11.2022.
+ */
+
+
+@IsTest
+private with sharing class InvoiceTriggerHandlerTest {
+
+    @IsTest
+    private static void testCreateTransactionRecord() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));
+        acc.aforza__Primary_Contact__c = contact.Id;
+        update acc;
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID,
+            aforza__Account__c = acc.Id));
+
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
+
+        TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id));
+
+        aforza__Invoice__c invoiceWithData = [
+            SELECT Id, aforza__Order__r.PrimaryPaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
+                aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
+                aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber
+            FROM aforza__Invoice__c LIMIT 1
+        ];
+
+        Test.startTest();
+        bt_stripe__Transaction__c btTransaction = InvoiceTriggerHandler.createTransactionRecord(invoiceWithData);
+        Test.stopTest();
+
+        Assert.areEqual(RecordTypes.BT_TRANSACTION_CHARGE_ID, btTransaction.RecordTypeId);
+        Assert.areEqual(invoiceWithData.Gross__c, btTransaction.bt_stripe__Amount__c);
+        Assert.isTrue(btTransaction.bt_stripe__Description__c.contains('Payment Request for'));
+        Assert.areEqual('Normal', btTransaction.bt_stripe__Transaction_Type__c);
+        Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
+        Assert.areEqual(invoiceWithData.aforza__Account__r.aforza__Primary_Contact__c, btTransaction.bt_stripe__Related_Contact__c);
+        Assert.areEqual(invoiceWithData.aforza__Account__c, btTransaction.bt_stripe__Related_Account__c);
+        Assert.areEqual(invoiceWithData.aforza__Order__c, btTransaction.Order__c);
+        Assert.areEqual(invoiceWithData.Id, btTransaction.Invoice__c);
+    }
+
+    @IsTest
+    private static void testCreateTransactions() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'Card Payment'));
+        Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));
+        acc.aforza__Primary_Contact__c = contact.Id;
+        update acc;
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID,
+            aforza__Account__c = acc.Id));
+
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
+
+        InvoiceSettings__c settings = new InvoiceSettings__c(CreatePaymentWhenInvoiceIsCreated__c = true);
+        insert settings;
+
+        Test.startTest();
+        InvoiceService.createInvoicesFromOrders(new Set<Id>{order.Id});
+        Test.stopTest();
+
+        // get invoice created
+        aforza__Invoice__c invoice = [SELECT Id FROM aforza__Invoice__c];
+        Assert.isTrue(invoice != null);
+
+        // get transaction created
+        bt_stripe__Transaction__c btTransaction = [SELECT Id, bt_paylink__PayLink__c, Invoice__c FROM bt_stripe__Transaction__c LIMIT 1];
+
+        Assert.isTrue(btTransaction != null);
+        Assert.isTrue(String.isNotEmpty(btTransaction.bt_paylink__PayLink__c));
+        Assert.areEqual(invoice.Id, btTransaction.Invoice__c);
+    }
+}
