@@ -288,7 +288,7 @@ public inherited sharing class RecordTypes {
         }
         private set;
     }
-
+    
     public static RecordTypeInfo BT_PAYMENT_METHOD_CARD {
         get {
             return BT_PAYMENT_METHOD_CARD = BT_PAYMENT_METHOD_CARD != null

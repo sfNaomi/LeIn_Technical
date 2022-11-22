@@ -3,7 +3,22 @@
     <description>Base access for Account object - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.BottomlineRefNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.DdActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CustomerMandateForm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.DirectDebitMandateRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
