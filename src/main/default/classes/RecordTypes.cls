@@ -229,6 +229,66 @@ public inherited sharing class RecordTypes {
         private set;
     }
 
+    public static RecordTypeInfo PAYMENT_METHOD_CASH {
+        get {
+            return PAYMENT_METHOD_CASH = PAYMENT_METHOD_CASH != null
+                    ? PAYMENT_METHOD_CASH : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('Cash');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_CASH_ID {
+        get { 
+            return PAYMENT_METHOD_CASH.getRecordTypeId(); 
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo PAYMENT_METHOD_DIRECT_CARD {
+        get {
+            return PAYMENT_METHOD_DIRECT_CARD = PAYMENT_METHOD_DIRECT_CARD != null
+                    ? PAYMENT_METHOD_DIRECT_CARD : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('DirectDebit');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_DIRECT_CARD_ID {
+        get { 
+            return PAYMENT_METHOD_DIRECT_CARD.getRecordTypeId(); 
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo PAYMENT_METHOD_BANK_ACCOUNT {
+        get {
+            return PAYMENT_METHOD_BANK_ACCOUNT = PAYMENT_METHOD_BANK_ACCOUNT != null
+                    ? PAYMENT_METHOD_BANK_ACCOUNT : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('Bank_Account');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_BANK_ACCOUNT_ID {
+        get { 
+            return PAYMENT_METHOD_BANK_ACCOUNT.getRecordTypeId(); 
+        }
+        private set;
+    }
+
+    public static RecordTypeInfo PAYMENT_METHOD_CHEQUE {
+        get {
+            return PAYMENT_METHOD_CHEQUE = PAYMENT_METHOD_CHEQUE != null
+                    ? PAYMENT_METHOD_CHEQUE : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('Cheque');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_CHEQUE_ID {
+        get { 
+            return PAYMENT_METHOD_CHEQUE.getRecordTypeId(); 
+        }
+        private set;
+    }
+
     public static RecordTypeInfo BT_PAYMENT_METHOD_CARD {
         get {
             return BT_PAYMENT_METHOD_CARD = BT_PAYMENT_METHOD_CARD != null

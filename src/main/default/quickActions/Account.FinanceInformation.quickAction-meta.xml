@@ -54,6 +54,11 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>aforza__Outstanding_Invoice_Amount__c</field>
+                <uiBehavior>Readonly</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>AvailableCredit__c</field>
                 <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
@@ -61,11 +66,6 @@
                 <emptySpace>false</emptySpace>
                 <field>aforza__Credit_Length__c</field>
                 <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>aforza__Outstanding_Invoice_Amount__c</field>
-                <uiBehavior>Readonly</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>

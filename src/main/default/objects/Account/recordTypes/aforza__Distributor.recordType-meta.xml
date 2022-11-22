@@ -640,7 +640,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit</fullName>
+            <fullName>Card Payment</fullName>
             <default>false</default>
         </values>
         <values>

@@ -197,11 +197,11 @@
     </picklistValues>
     <picklistValues>
         <picklist>EpoStatus__c</picklist>
-            <values>
+        <values>
                 <fullName>1 - KEY Store Allowing Access to their Data</fullName>
-                <default>false</default>
-            </values>
-            <values>
+            <default>false</default>
+        </values>
+        <values>
                 <fullName>2 - KEY Store not Allowing Access to their Data</fullName>
                 <default>false</default>
             </values>
@@ -215,31 +215,31 @@
             </values>
             <values>
                 <fullName>5 - No EPOS Data Captured</fullName>
-                <default>false</default>
-            </values>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>OutletType__c</picklist>
-            <values>
+        <values>
                 <fullName>1 - Symbol Store (Active)</fullName>
-                <default>false</default>
-            </values>
-            <values>
+            <default>false</default>
+        </values>
+        <values>
                 <fullName>2 - Large Convenience Store - Double Front Store</fullName>
-                <default>false</default>
-            </values>
-            <values>
+            <default>false</default>
+        </values>
+        <values>
                 <fullName>3 - Small Convenience Store - Single Front Store</fullName>
-                <default>false</default>
-            </values>
-            <values>
+            <default>false</default>
+        </values>
+        <values>
                 <fullName>4 - CTN (No Alcohol or Frozen Food)</fullName>
-                <default>false</default>
-            </values>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>WhatAreTheOutletRtm__c</picklist>
-            <values>
+        <values>
                 <fullName>Barr Direct</fullName>
                 <default>false</default>
             </values>
@@ -706,11 +706,19 @@
     <picklistValues>
         <picklist>PrimaryPaymentMethod__c</picklist>
         <values>
+            <fullName>Bacs</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cash</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit</fullName>
+            <fullName>Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Card Payment</fullName>
             <default>false</default>
         </values>
         <values>

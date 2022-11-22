@@ -7,24 +7,23 @@
  * @see TdfSObjectFactory
  * @see TdfSObjectTemplate
  * @see TdfSObjectTemplateFactory
- * @author  Magdalena Stanciu
- * @date    2022-10-03
+ * @author  Eddy Ferreira
+ * @date    2022-11-14
  *
  */
 @IsTest
 public class TdfAforzaPaymentMethodTemplate extends TdfSObjectTemplate {
     private Id accountId;
-
     /**
      * Instance is created dynamically. This method compensates a constructor.
      *
-     * @author  Svata Sejkora
+     * @author  Eddy Ferreira
      * @date    2022-11-14
      *
      */
     public override void init() {
-        aforza__Payment_Method__c userDefinedPaymentMethod = (aforza__Payment_Method__c) userDefinedSObject;
-        if (userDefinedPaymentMethod.aforza__Account__c == null) {
+        aforza__Payment_Method__c userDefinedMethod = (aforza__Payment_Method__c) userDefinedSObject;
+        if (userDefinedMethod.aforza__Account__c == null) {
             accountId = TdfSObjectFactory.insertSObject(new Account(
                     RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID
             )).Id;
@@ -36,10 +35,10 @@ public class TdfAforzaPaymentMethodTemplate extends TdfSObjectTemplate {
      *
      * Because this method can be called multiple times, all operations as DML or SOQL has to be done in init().
      *
-     * @return Payment Transaction template with default values
+     * @return Payment Method template with default values
      *
-     * @author  Magdalena Stanciu
-     * @date    2022-10-03
+     * @author  Eddy Ferreira
+     * @date    2022-11-14
      *
      */
     protected override SObject createTemplateSObject() {

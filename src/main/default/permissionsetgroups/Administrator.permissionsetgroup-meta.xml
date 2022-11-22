@@ -23,7 +23,7 @@
     <permissionSets>OrderAdminAccess</permissionSets>
     <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>OutletAssetAdminAccess</permissionSets>
-    <permissionSets>PaymentTransactionAdminAccess</permissionSets>
+    <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>

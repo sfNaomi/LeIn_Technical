@@ -14,8 +14,8 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
-    <permissionSets>PaymentTransactionEditAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>

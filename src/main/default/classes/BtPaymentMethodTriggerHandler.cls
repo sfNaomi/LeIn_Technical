@@ -34,6 +34,7 @@ public with sharing class BtPaymentMethodTriggerHandler {
             newAforzaPaymentMethod.aforza__Account__c = btPaymentMethod.bt_stripe__Account__c;
             newAforzaPaymentMethod.BtPaymentMethod__c = btPaymentMethod.Id;
             newAforzaPaymentMethod.aforza__Active__c = true;
+            newAforzaPaymentMethod.aforza__Primary__c = true;
             newAforzaPaymentMethod.aforza__Payment_Card_Type__c = btPaymentMethod.bt_stripe__Brand__c;
             newAforzaPaymentMethod.aforza__Payment_Card_Holder_Name__c = btPaymentMethod.bt_stripe__Card_Holder_Name__c;
             newAforzaPaymentMethod.aforza__Payment_Card_Expiration_Month__c = btPaymentMethod.bt_stripe__Card_Expiration_Month__c;

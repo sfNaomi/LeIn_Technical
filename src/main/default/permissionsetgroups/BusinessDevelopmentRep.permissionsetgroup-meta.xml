@@ -16,7 +16,8 @@
     <permissionSets>OrderFieldSalesAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
-    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductFieldSalesAccess</permissionSets>
