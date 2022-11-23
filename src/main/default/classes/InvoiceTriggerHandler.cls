@@ -5,9 +5,13 @@
 public with sharing class InvoiceTriggerHandler {
 
     private static final Boolean CREATE_PAYMENT = InvoiceSettings__c.getOrgDefaults().CreatePaymentWhenInvoiceIsCreated__c;
-    private static final Set<String> ORDER_RECORD_TYPES_TO_NOT_ALLOW_PAYMENT = new Set<String>{
-        'ReturnOrder', 'ECommerceOrder', 'StraightToJDEOrder'
+    private static final Boolean CREATE_PAYMENT_COMMERCE = InvoiceSettings__c.getOrgDefaults().PaymentCommerceOnInvoice__c;
+    private static final Set<String> ORDER_RECORD_TYPES_TO_ALLOW_PAYMENT = new Set<String>{
+        'EDIOrder', 'FieldDirectOrder', 'TelesalesOrder', 'VanSalesOrder'
     };
+    private static final String ORDER_RECORD_TYPE_COMMERCE = 'ECommerceOrder';
+
+    //'ReturnOrder','StraightToJDEOrder' - yet unused order record types
 
     /**
      * @description creates BT transaction whenever an invoice without pre auth is created. It needs to be also enabled in custom settings
@@ -26,11 +30,11 @@ public with sharing class InvoiceTriggerHandler {
         List<bt_stripe__Transaction__c> transactionsToCreate = new List<bt_stripe__Transaction__c>();
         Set<Id> invoiceIds = new Set<Id>();
         for (aforza__Invoice__c invoice : invoicesWithRelatedData) {
-            if (invoice.aforza__Order__r.PrimaryPaymentMethod__c == 'Card Payment' && invoice.aforza__Order__r.PreAuthCaptured__c == false &&
-                CREATE_PAYMENT == true && !ORDER_RECORD_TYPES_TO_NOT_ALLOW_PAYMENT.contains(invoice.aforza__Order__r.RecordType.DeveloperName)
-            ) {
-                transactionsToCreate.add(createTransactionRecord(invoice));
-                invoiceIds.add(invoice.Id);
+            if (invoice.aforza__Order__r.PrimaryPaymentMethod__c == 'Card Payment' && invoice.aforza__Order__r.PreAuthCaptured__c == false
+                && (CREATE_PAYMENT == true && ORDER_RECORD_TYPES_TO_ALLOW_PAYMENT.contains(invoice.aforza__Order__r.RecordType.DeveloperName)
+                || CREATE_PAYMENT_COMMERCE == true && invoice.aforza__Order__r.RecordType.DeveloperName == ORDER_RECORD_TYPE_COMMERCE)) {
+                    transactionsToCreate.add(createTransactionRecord(invoice));
+                    invoiceIds.add(invoice.Id);
             }
         }
 
