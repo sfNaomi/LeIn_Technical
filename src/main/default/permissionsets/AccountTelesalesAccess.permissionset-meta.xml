@@ -3,6 +3,26 @@
     <description>Telesales access for Account object and fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.BottomlineRefNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.DdActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CustomerMandateForm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.DirectDebitMandateRef__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.ProofOfDeliveryRequired__c</field>
         <readable>true</readable>
     </fieldPermissions>
