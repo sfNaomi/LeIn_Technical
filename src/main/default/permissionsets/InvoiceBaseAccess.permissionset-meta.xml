@@ -236,8 +236,8 @@
         <field>aforza__Invoice__c.PrintName__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
-        <editable>false</editable>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.PushedtoJde__c</field>
         <readable>true</readable>
     </fieldPermissions>
