@@ -3,6 +3,6 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <description>An object holding in information about settings for Invoices and logic connected to them.</description>
     <enableFeeds>false</enableFeeds>
-    <label>Invoice Setrings</label>
+    <label>Invoice Settings</label>
     <visibility>Public</visibility>
 </CustomObject>
