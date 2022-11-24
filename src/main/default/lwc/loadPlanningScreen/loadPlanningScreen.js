@@ -7,6 +7,7 @@ import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenController.fetchNeededPicklistValues';
 import fetchOrdersForLoad from '@salesforce/apex/LoadPlanningScreenController.fetchOrdersForLoad';
 import fetchLoadData from '@salesforce/apex/LoadPlanningScreenController.fetchLoadData';
+import fetchVehicle from '@salesforce/apex/LoadPlanningScreenController.fetchVehicle';
 import {processError} from 'c/errorHandlingService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
 import {FlattenDataService} from 'c/flattenDataService'
@@ -111,6 +112,7 @@ export default class LoadPlanningScreen extends LightningElement {
     @track loadDeliveryDate;
     @track loadDriver;
     @track loadVehicle;
+    @track route;
 
 
     @track initialScreen = true;
@@ -130,7 +132,7 @@ export default class LoadPlanningScreen extends LightningElement {
 
     queryFields = 'Id,DeliveryDate__c,Load__r.Name,Grid__c,Status,TotalQuantity__c,Description,PalletSequence__c,ShortDescription__c,' +
         'ShippingPostalCode,Account.DeliveryPointReference__c,AccountName__c,ShippingStreet,TotalOrderWeight__c,Account.OpeningTime__c,' +
-        'Account.FixedDeliveryInstructions__c,OrderNumber,CreatedBy.Name,AccountId,Depot__c';
+        'Account.FixedDeliveryInstructions__c,OrderNumber,CreatedBy.Name,AccountId,Depot__c,Account.DriverName__c,Route__c';
 
     connectedCallback() {
         Promise.all([this.fetchPicklistValues()]).then(() => {
@@ -261,7 +263,6 @@ export default class LoadPlanningScreen extends LightningElement {
             // add clickable URL to the Order Number
             if (event.detail.returnedData.length > 0) {
                 this.originalTableData = this.processOrderData(event.detail.returnedData);
-                //this.prepareLoadIdsForOrderFiltering();
                 this.tableData = this.originalTableData;
                 // load selected load orders if load is selected
                 this.processLoadIdChange(this.loadId);
@@ -280,6 +281,13 @@ export default class LoadPlanningScreen extends LightningElement {
         }
     }
 
+    /** Method to add clickable link to the order number
+     *
+     * @param ordersFromApex event from filter component with data
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     processOrderData(ordersFromApex) {
         let processedOrders = [];
         let orderUrl;
@@ -290,6 +298,13 @@ export default class LoadPlanningScreen extends LightningElement {
         return processedOrders;
     }
 
+    /** Method to handle selection of the scenario
+     *
+     * @param event event from markup with selected scenario
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     handleSelection(event) {
         try {
             const pickedScenario = event.target.value;
@@ -316,6 +331,18 @@ export default class LoadPlanningScreen extends LightningElement {
         }
     }
 
+    /** Method to prepare settings for scenarios, this is to populate values in class attributes
+     *
+     * @param initialScreen - if to show initial screen with selection
+     * @param summary - if to show summaries of orders both filtered and selected are together
+     * @param assignment - if to show assignment component (creating and updating load parameters)
+     * @param showLoadLoader - if to show a component to load a load
+     * @param targetStatus - status of order to be set when added to load
+     * @param scenario - name of the scenario so the system knows where we are
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     prepareSettingsForScenario(initialScreen, summary, assignment, showLoadLoader, targetStatus, scenario) {
         this.initialScreen = initialScreen;
         this.showSummary = summary;
@@ -325,6 +352,15 @@ export default class LoadPlanningScreen extends LightningElement {
         this.showLoadLoader = showLoadLoader;
     }
 
+    /** Method to set attributes for the filters
+     *
+     * @param newValue - predefined value for the filter
+     * @param filterName - name of the filter
+     * @param setValue - boolean if the value should be assigned
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     disableAndSetValue(newValue, filterName, setValue) {
         const foundDefinition = this.filterFields.find((fieldDefinition) => {
             return fieldDefinition.name === filterName;
@@ -337,23 +373,47 @@ export default class LoadPlanningScreen extends LightningElement {
         }
     }
 
+    /** Method to handle event when summary for selected orders is recalculated = passing the values to other components
+     *
+     * @param event custom vent with values from child component
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     handleValuesCalculatedEvent(event) {
         this.selectedOrdersWeight = event.detail.totalWeight;
         this.selectedOrdersQuantity = event.detail.totalQuantity;
         this.selectedOrdersDeliveryPoints = event.detail.deliveryPoints;
     }
 
+    /** When filter button is hit in filter component, this empties all data in this component
+     *
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     async handleFilterResetEvent() {
         this.clearAllAttributes();
         const dynamicFilter = this.template.querySelector('c-dynamic-filter');
         await dynamicFilter.handleFilterClick();
     }
 
+    /** Method to let user go back to selection screen
+     *
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     handleBackButton() {
         this.clearAllAttributes();
         this.prepareSettingsForScenario(true, false, false, '', '');
     }
 
+    /** Method that clears all attributes, so that user can start over
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
     clearAllAttributes() {
         this.loadOrderIds = [];
         // empty date field input field
@@ -367,12 +427,24 @@ export default class LoadPlanningScreen extends LightningElement {
         this.originalTableData = [];
         this.selectedRows = [];
         this.loadOrdersTableData = [];
-        this.loadOrderIds = [];
         this.loadOrdersTableDataDeselected = [];
         this.selectedOrdersWeight = 0;
-        this.loadDeliveryDate = null;
+        this.clearPreselectedAttributes();
+    }
+
+    /** Method to clear only attributes related to load. As there is many logic around loads, we might want to
+     * clear its values but not the others.
+     *
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
+    clearPreselectedAttributes() {
+        this.loadDeliveryDate = '';
         this.loadDriver = null;
         this.loadVehicle = null;
+        this.depot = null;
+        this.route = null;
     }
 
     /** Method to handle selection of rows. Currently, all current selection is removed and new fields are added
@@ -390,13 +462,139 @@ export default class LoadPlanningScreen extends LightningElement {
             this.selectedRows = [];
             this.selectedRows = [...selectedRows];
             if (this.selectedRows.length > 0) {
-                this.depot = this.selectedRows[0].Depot__c;
+                this.preCalculateValues();
+            } else {
+                this.clearPreselectedAttributes();
             }
         } catch (error) {
             processError(this, error);
             console.error(error);
         } finally {
             this.isLoading = false;
+        }
+    }
+
+    /** Method to precalculate values based on predominant value from selected lines - active only when creating load
+     *  this is the place where a values to evaluate are defined. If adding new fields, you need to add them to the
+     *  query as well and then add what should happen with the outcome. Logic itself will work for any number of attributes
+     *
+     * @author Svata Sejkora
+     * @date 2022-09-20
+     */
+    preCalculateValues() {
+        let calculationStorage = {
+            DeliveryDate__c: {},
+            AccountDriverName__c: {},
+            Route__c: {},
+            Depot__c: {}
+        };
+        if (this.selectedScenario === 'createLoad') {
+            this.loadDataFromOrders(calculationStorage);
+            this.determineIfValuesCanBeUsedForPreselection(calculationStorage);
+            this.preSelectValues(calculationStorage)
+        }
+    }
+
+    /** Method to iterate selected orders and count each evaluated attribute values
+     *
+     * @param calculationStorage object where the evaluated attribute's values are stored
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
+    loadDataFromOrders(calculationStorage) {
+        this.selectedRows.forEach((row) => {
+            for (const property in row) {
+                if (calculationStorage.hasOwnProperty(property)) {
+                    let specificField = calculationStorage[property];
+                    if (specificField.hasOwnProperty(row[property])) {
+                        specificField[row[property]] += 1;
+                    } else {
+                        specificField[row[property]] = 1;
+                    }
+                }
+            }
+        });
+    }
+
+    /** Method to check distribution of evaluated values. allows to be preselected only for predominant values.
+     *
+     * @param calculationStorage object where the evaluated attribute's values are stored
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
+    determineIfValuesCanBeUsedForPreselection(calculationStorage) {
+        for (const property in calculationStorage) {
+            let sortable = [];
+
+            for (let key of Object.keys(calculationStorage[property])) {
+                sortable.push([key, calculationStorage[property][key]]);
+            }
+
+            sortable.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+            if (sortable.length > 1 && sortable[0][1] > sortable[1][1]) {
+                this.populateAllowToUse(calculationStorage[property], sortable[0][0], true);
+            } else if (sortable.length === 1) {
+                this.populateAllowToUse(calculationStorage[property], sortable[0][0], true);
+            } else {
+                this.populateAllowToUse(calculationStorage[property], null, false)
+            }
+        }
+    }
+
+    /** Method to set attributes of tracking object
+     *
+     * @param propertyToUpdate property object to add attribute to
+     * @param value - predominant value, or null
+     * @param allowed - if the usage of pre-fill is allowed
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
+    populateAllowToUse(propertyToUpdate, value, allowed) {
+        propertyToUpdate['canBeUsed'] = allowed;
+        propertyToUpdate['valueToUse'] = value;
+    }
+
+    /** Method that takes evaluation object and based on the data in it, it will set values for properties that are considered
+     * for prefill. If prefill is not allowed any values will be removed to assure data validity
+     *
+     * @param calculationStorage object where the evaluated attribute's values are stored
+     *
+     * @author Svata Sejkora
+     * @date 2022-11-23
+     */
+    async preSelectValues(calculationStorage) {
+        for (const property in calculationStorage) {
+            switch (property) {
+                case 'DeliveryDate__c' :
+                    calculationStorage[property].hasOwnProperty('canBeUsed') && calculationStorage[property]['canBeUsed'] === true ?
+                        this.loadDeliveryDate = calculationStorage[property]['valueToUse'] : this.loadDeliveryDate = '';
+                    break;
+                case 'AccountDriverName__c':
+                    if (calculationStorage[property].hasOwnProperty('canBeUsed') && calculationStorage[property]['canBeUsed'] === true) {
+                        const vehicle = await fetchVehicle({driverName: calculationStorage[property]['valueToUse']});
+                        if (vehicle) {
+                            this.loadDriver = vehicle.Driver__c;
+                            this.loadVehicle = vehicle.Id;
+                        }
+                    } else {
+                        this.loadDriver = null;
+                        this.loadVehicle = null;
+                    }
+                    break;
+                case 'Route__c':
+                    calculationStorage[property].hasOwnProperty('canBeUsed') && calculationStorage[property]['canBeUsed'] === true ?
+                        this.route = calculationStorage[property]['valueToUse'] : this.route = null;
+                    break;
+                case 'Depot__c':
+                    calculationStorage[property].hasOwnProperty('canBeUsed') && calculationStorage[property]['canBeUsed'] === true ?
+                        this.depot = calculationStorage[property]['valueToUse'] : this.depot = null;
+                    break;
+            }
         }
     }
 
@@ -530,6 +728,7 @@ export default class LoadPlanningScreen extends LightningElement {
         this.loadDriver = loadData.Driver__c;
         this.loadDeliveryDate = loadData.DeliveryDate__c;
         this.loadVehicle = loadData.Vehicle__c;
+        this.route = loadData.RouteIdentification__c;
     }
 
     removeOrdersFromList(listToRemoveOrdersFrom, ordersToRemove) {

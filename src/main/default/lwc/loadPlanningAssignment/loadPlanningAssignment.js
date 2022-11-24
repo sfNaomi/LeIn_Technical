@@ -26,6 +26,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     _plannedDeliveryDate;
     _driverId;
     _vehicleId;
+    _route;
 
     @api get plannedDeliveryDate() {
         return this._plannedDeliveryDate;
@@ -48,7 +49,16 @@ export default class LoadPlanningAssignment extends LightningElement {
     }
 
     set vehicleId(value) {
+        this.vehicleLoadWeight = 0;
         this._vehicleId = value;
+    }
+
+    @api get route() {
+        return this._route;
+    }
+
+    set route(value) {
+        this._route = value;
     }
 
 
@@ -87,9 +97,17 @@ export default class LoadPlanningAssignment extends LightningElement {
         }
     }
 
-    handleInputChange(event) {
+    handleDeliveryDateChange(event) {
         try {
             this.plannedDeliveryDate = event.target.value;
+        } catch (error) {
+            processError(this, error);
+        }
+    }
+
+    handleRouteChange(event) {
+        try {
+            this.route = event.target.value;
         } catch (error) {
             processError(this, error);
         }
@@ -122,7 +140,8 @@ export default class LoadPlanningAssignment extends LightningElement {
             'Depot__c': this.depot,
             'TotalWeight__c': this.selectedOrdersWeight,
             'NumberOfDeliveryPoints__c': this.selectedOrdersDeliveryPoints,
-            'TotalQuantity__c': this.selectedOrdersQuantity
+            'TotalQuantity__c': this.selectedOrdersQuantity,
+            'RouteIdentification__c': this.route
         };
         const load = await upsertLoad({load: loadJson});
         const toastLoadCreated = new ShowToastEvent({
@@ -216,7 +235,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     }
 
     get createLoadButtonDisabled() {
-        return Boolean(!this.plannedDeliveryDate || !this.driverId || !this.vehicleId
+        return Boolean(!this.plannedDeliveryDate || !this.driverId || !this.vehicleId || !this.route
             || this.remainingLoadWeight < 0
             || (this.selectedOrdersIds.length === 0 && this.operation === 'createLoad'));
     }

@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Application Support</label>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>AccountEditAccess</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
