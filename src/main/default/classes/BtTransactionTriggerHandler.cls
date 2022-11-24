@@ -64,7 +64,7 @@ public with sharing class BtTransactionTriggerHandler {
                 && oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
                 && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c) {
                 transactionIds.add(btTransaction.Id);
-                invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full'));
+                invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full', CreditCardPaymentTaken__c = true));
             }
         }
 
@@ -148,6 +148,7 @@ public with sharing class BtTransactionTriggerHandler {
         List<aforza__Payment_Transaction__c> paymentTransactions = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c WHERE BtTransaction__c IN :transactionIds];
         for (aforza__Payment_Transaction__c paymentTransaction : paymentTransactions) {
             paymentTransaction.aforza__Status__c = 'Applied';
+            paymentTransaction.aforza__Method__c = 'Credit Card';
         }
         return paymentTransactions;
     }

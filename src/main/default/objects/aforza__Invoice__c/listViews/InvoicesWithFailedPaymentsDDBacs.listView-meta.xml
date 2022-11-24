@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoicesWithFailedPaymentsDDBacs</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>aforza__Status__c</field>
+        <operation>equals</operation>
+        <value>Payment Attempt Unsuccessful</value>
+    </filters>
+    <filters>
+        <field>PaymentMethod__c</field>
+        <operation>equals</operation>
+        <value>Direct Debit,Bacs</value>
+    </filters>
+    <label>Invoices with Failed Payments (DD/Bacs)</label>
+    <sharedTo>
+        <roleAndSubordinates>CreditManager</roleAndSubordinates>
+        <roleAndSubordinates>OperationalSupportController</roleAndSubordinates>
+        <roleAndSubordinates>SalesController</roleAndSubordinates>
+    </sharedTo>
+</ListView>

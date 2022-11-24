@@ -112,13 +112,15 @@ private class BtTransactionTriggerHandlerTest {
         update blackthornTransaction;
         Test.stopTest();
 
-        List<aforza__Invoice__c> updatedInvoices = [SELECT Id, aforza__Status__c FROM aforza__Invoice__c];
+        List<aforza__Invoice__c> updatedInvoices = [SELECT Id, aforza__Status__c, CreditCardPaymentTaken__c FROM aforza__Invoice__c];
         Assert.isTrue(updatedInvoices.size() == 1);
         Assert.areEqual('Paid in Full', updatedInvoices[0].aforza__Status__c);
+        Assert.isTrue(updatedInvoices[0].CreditCardPaymentTaken__c);
 
-        List<aforza__Payment_Transaction__c> updatedPaymentTransactions = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c];
+        List<aforza__Payment_Transaction__c> updatedPaymentTransactions = [SELECT Id, aforza__Status__c, aforza__Method__c FROM aforza__Payment_Transaction__c];
         Assert.isTrue(updatedPaymentTransactions.size() == 1);
         Assert.areEqual('Applied', updatedPaymentTransactions[0].aforza__Status__c);
+        Assert.areEqual('Credit Card', updatedPaymentTransactions[0].aforza__Method__c);
     }
 
     @IsTest
