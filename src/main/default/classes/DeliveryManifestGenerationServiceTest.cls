@@ -483,10 +483,10 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Assert.areEqual(2, loads[0].numberOfPallets);
         Assert.areEqual(2, loads[1].numberOfPallets);
 
-        String grid1 = insertedOrder1.GridDelivery__c + '+' + insertedOrder2.GridDelivery__c;
-        String grid2 = insertedOrder3.GridDelivery__c + '+' + insertedOrder4.GridDelivery__c;
-        Assert.areEqual(grid1, loads[0].grid);
-        Assert.areEqual(grid2, loads[1].grid);
+        Assert.isTrue(loads[0].grid.contains(insertedOrder1.GridDelivery__c));
+        Assert.isTrue(loads[0].grid.contains(insertedOrder2.GridDelivery__c));
+        Assert.isTrue(loads[1].grid.contains(insertedOrder3.GridDelivery__c));
+        Assert.isTrue(loads[1].grid.contains(insertedOrder4.GridDelivery__c));
 
         // check load items
         Assert.areEqual(2, loads[0].loadItems.size());
