@@ -15,6 +15,11 @@
         <default>false</default>
         <label>P3</label>
     </customValue>
+    <customValue>
+        <fullName>Custom</fullName>
+        <default>false</default>
+        <label>Custom</label>
+    </customValue>
     <description>A call priority selection.</description>
     <masterLabel>Call Priority</masterLabel>
     <sorted>false</sorted>

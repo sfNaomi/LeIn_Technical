@@ -192,7 +192,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
         for (Account account : [
             SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c, SecondaryStartDate__c,
                     CallPriority__c, PrimaryCallDay__c, SecondaryCallDay__c, PrimaryGridNumber__c, SecondaryGridNumber__c,
-                    CreateCalls__c, AccountStatus__c, RecordTypeId
+                    CreateCalls__c, AccountStatus__c, RecordTypeId, PreferredCallTimeTelesales__c
             FROM Account
             WHERE Id IN :accountIds
         ]) {

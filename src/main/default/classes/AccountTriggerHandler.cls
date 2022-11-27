@@ -71,7 +71,8 @@ public with sharing class AccountTriggerHandler {
                     (account.PrimaryStartDate__c <> oldAccount.PrimaryStartDate__c ||
                             account.PrimaryGridNumber__c <> oldAccount.PrimaryGridNumber__c ||
                             account.AccountStatus__c <> oldAccount.AccountStatus__c ||
-                            account.CallPriority__c <> oldAccount.CallPriority__c)
+                            account.CallPriority__c <> oldAccount.CallPriority__c ||
+                            account.PreferredCallTimeTelesales__c <> oldAccount.PreferredCallTimeTelesales__c)
             ) {
                 operationToAccountListMap.get(Operation.UPDATION).put(account.Id, account);
                 continue;
