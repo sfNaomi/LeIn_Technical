@@ -60,7 +60,7 @@ public with sharing class BtTransactionTriggerHandler {
         Set<Id> transactionIds = new Set<Id>();
         for (bt_stripe__Transaction__c btTransaction : transactions) {
             bt_stripe__Transaction__c oldTransaction = oldMap.get(btTransaction.Id);
-            if (btTransaction.bt_stripe__Payment_Status__c == 'Paid' && btTransaction.bt_stripe__Transaction_Status__c == 'Completed'
+            if (btTransaction.bt_stripe__Payment_Status__c == 'Captured' && btTransaction.bt_stripe__Transaction_Status__c == 'Completed'
                 && oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
                 && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c) {
                 transactionIds.add(btTransaction.Id);

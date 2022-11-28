@@ -106,7 +106,7 @@ private class BtTransactionTriggerHandlerTest {
 
 
         Test.startTest();
-        blackthornTransaction.bt_stripe__Payment_Status__c = 'Paid';
+        blackthornTransaction.bt_stripe__Payment_Status__c = 'Captured';
         blackthornTransaction.bt_stripe__Transaction_Status__c = 'Completed';
         blackthornTransaction.Invoice__c = invoice.Id;
         update blackthornTransaction;
