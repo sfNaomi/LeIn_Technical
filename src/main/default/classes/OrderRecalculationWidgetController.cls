@@ -31,6 +31,8 @@ public with sharing class OrderRecalculationWidgetController {
                 }
             }
 
+            updateOrderRecalculationDate(orderItems.values());
+
             update orderItems.values();
         } catch (Exception e) {
             throw new PopulateAuraHandledException(e.getMessage());
@@ -141,5 +143,22 @@ public with sharing class OrderRecalculationWidgetController {
             return initialValue * (-1);
         }
         return initialValue;
+    }
+
+    /**
+    * @description update order recalculation date on order item (to indicate that update was made from LWc and bypass
+    *              validation which prevent update of the unit price on order item level
+    *
+    * @param orderItems list of order items to update date for
+    *
+    * @return N/A
+    *
+    * @author Magdalena Stanciu
+    * @date 2022-11-28
+    */
+    private static void updateOrderRecalculationDate(List<OrderItem> orderItems) {
+        for (OrderItem item : orderItems) {
+            item.OrderRecalculationDate__c = System.now();
+        }
     }
 }

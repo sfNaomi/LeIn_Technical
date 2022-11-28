@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventUpdateOfUnitPrice</fullName>
+    <active>true</active>
+    <description>Prevent users without &quot;Edit of Unit Price on Order Items&quot; permission to edit unit price.</description>
+    <errorConditionFormula>ISCHANGED(UnitPrice) &amp;&amp; NOT(ISCHANGED(OrderRecalculationDate__c)) &amp;&amp; NOT( $Permission.EditUnitPriceOnOrderItems)</errorConditionFormula>
+    <errorMessage>You don&apos;t have the permission to update the unit price on order products.</errorMessage>
+</ValidationRule>

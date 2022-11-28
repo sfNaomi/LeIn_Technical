@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>EditUnitPriceOnOrderItems</name>
+    </customPermissions>
+    <description>Permission set which grants the &quot;Edit Unit Price on Order Items&quot; custom permission (used to bypass validation which prevents updates on the UnitPrice field on OrderItem records.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Edit Unit Price on Order Items</label>
+</PermissionSet>

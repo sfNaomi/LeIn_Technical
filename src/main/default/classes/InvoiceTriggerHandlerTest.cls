@@ -20,7 +20,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id));
 
         aforza__Invoice__c invoiceWithData = [
-            SELECT Id, aforza__Order__r.PrimaryPaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
+            SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber
             FROM aforza__Invoice__c LIMIT 1
@@ -126,5 +126,4 @@ private with sharing class InvoiceTriggerHandlerTest {
 
         Assert.isTrue(btTransaction.size() == 0);
     }
-
 }
