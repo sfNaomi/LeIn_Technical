@@ -69,8 +69,9 @@ public with sharing class InvoiceGenerationService {
     private void getInvoices(List<Id> invoiceIds) {
         retrievedInvoices = [
             SELECT
-                Id, Name, CreatedDate, PaymentTerms__c, aforza__Due_Date__c, PoNumber__c, PaymentInstruction__c, PrintName__c,
-                aforza__Order__c, CustomerShopNumber__c, NetTotal__c, Vat__c, Gross__c, DiscountTotal__c,
+                Id, Name, CreatedDate, InvoiceType__c, PaymentTerms__c, aforza__Due_Date__c, PoNumber__c,
+                PaymentInstruction__c, PrintName__c, aforza__Order__c, aforza__Order__r.OrderNumber,
+                CustomerShopNumber__c, NetTotal__c, Vat__c, Gross__c, DiscountTotal__c,
                 DpReference__c, DpName__c, DpAddress__c, DpArea__c, DpTown__c, DpCountry__c, DpPostCode__c,
                 BillToReference__c, BillToName__c, BillToAddress__c, BillToArea__c, BillToTown__c, BillToCountry__c, BillToPostCode__c,
                 (
@@ -135,6 +136,7 @@ public with sharing class InvoiceGenerationService {
         public String shipToPostalCode {get; set;}
 
         public String invoiceNumber {get; set;}
+        public String type { get; set;}
         public Datetime createdDate {get; set;}
         public Date dueDate {get; set;}
         public String poNumber {get; set;}
@@ -170,7 +172,8 @@ public with sharing class InvoiceGenerationService {
             this.shipToCity = newInvoice.DpTown__c;
             this.shipToPostalCode = newInvoice.DpPostcode__c;
 
-            this.invoiceNumber = newInvoice.Name;
+            this.invoiceNumber = newInvoice?.aforza__Order__r?.OrderNumber == null ? newInvoice.Name : newInvoice?.aforza__Order__r?.OrderNumber;
+            this.type = newInvoice.InvoiceType__c;
             this.createdDate = newInvoice.CreatedDate;
             this.dueDate = newInvoice.aforza__Due_Date__c;
             this.poNumber = newInvoice.PoNumber__c;

@@ -30,7 +30,7 @@ public with sharing class InvoiceTriggerHandler {
         List<bt_stripe__Transaction__c> transactionsToCreate = new List<bt_stripe__Transaction__c>();
         Set<Id> invoiceIds = new Set<Id>();
         for (aforza__Invoice__c invoice : invoicesWithRelatedData) {
-            if (invoice.aforza__Order__r.PrimaryPaymentMethod__c == 'Card Payment' && invoice.aforza__Order__r.PreAuthCaptured__c == false
+            if (invoice.aforza__Order__r.PaymentMethod__c == 'Card Payment' && invoice.aforza__Order__r.PreAuthCaptured__c == false
                 && (CREATE_PAYMENT == true && ORDER_RECORD_TYPES_TO_ALLOW_PAYMENT.contains(invoice.aforza__Order__r.RecordType.DeveloperName)
                 || CREATE_PAYMENT_COMMERCE == true && invoice.aforza__Order__r.RecordType.DeveloperName == ORDER_RECORD_TYPE_COMMERCE)) {
                     transactionsToCreate.add(createTransactionRecord(invoice));
@@ -103,7 +103,7 @@ public with sharing class InvoiceTriggerHandler {
 
     private static List<aforza__Invoice__c> getInvoicesWithNeededData(Set<Id> invoicesIds) {
         return [
-            SELECT Id, aforza__Order__r.PrimaryPaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
+            SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, PaymentLink__c
             FROM aforza__Invoice__c

@@ -846,7 +846,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invoice - Due Date</shortDescription>
-        <value>Invoice Due Date</value>
+        <value>Due Date</value>
     </labels>
     <labels>
         <fullName>InvoiceFooterNote</fullName>
@@ -886,7 +886,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Invoice - No.</shortDescription>
-        <value>Invoice No.</value>
+        <value>No.</value>
     </labels>
     <labels>
         <fullName>InvoicePaymentMethod</fullName>
@@ -1015,5 +1015,77 @@
         <protected>false</protected>
         <shortDescription>Duplicate Team Member Role</shortDescription>
         <value>There is already a user with the {0} role on this account. Please remove the existing member or change the role of this member.</value>
+    </labels>
+    <labels>
+        <fullName>ChooseOrderRecalculationOption</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Choose Order Recalculation Option</shortDescription>
+        <value>Select the relevant option for Order Return Calculation</value>
+    </labels>
+    <labels>
+        <fullName>InvalidOptionSelected</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Option Selected</shortDescription>
+        <value>Invalid Option Selected</value>
+    </labels>
+    <labels>
+        <fullName>OrderRecalculation</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Recalculation</shortDescription>
+        <value>Order Recalculation</value>
+    </labels>
+    <labels>
+        <fullName>ProductReturnAndRefund</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Return &amp; Refund</shortDescription>
+        <value>Product Return &amp; Refund</value>
+    </labels>
+    <labels>
+        <fullName>Recalculate</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recalculate</shortDescription>
+        <value>Recalculate</value>
+    </labels>
+    <labels>
+        <fullName>RecalculationCompleted</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recalculation Completed</shortDescription>
+        <value>Recalculation was completed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>ZeroOutAmountAndVAT</fullName>
+        <categories>Order Recalculation Widget</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zero Out Amount &amp; VAT</shortDescription>
+        <value>Zero Out Amount &amp; VAT</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceCreditedTo</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Credited To</shortDescription>
+        <value>CREDITED TO:</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceInvoicedTo</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice - Invoiced To</shortDescription>
+        <value>INVOICED TO:</value>
     </labels>
 </CustomLabels>

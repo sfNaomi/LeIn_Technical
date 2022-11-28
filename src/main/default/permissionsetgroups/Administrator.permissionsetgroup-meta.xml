@@ -5,6 +5,7 @@
     <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
+    <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>

@@ -99,7 +99,7 @@ private class InvoiceGenerationServiceTest {
         aforza__Invoice__c existingInvoice = [
             SELECT
                 Id, Name, CreatedDate, PaymentTerms__c, aforza__Due_Date__c, PoNumber__c, PaymentInstruction__c, PrintName__c,
-                aforza__Order__c, CustomerShopNumber__c, NetTotal__c, Vat__c, Gross__c, DiscountTotal__c,
+                aforza__Order__c, aforza__Order__r.OrderNumber, CustomerShopNumber__c, NetTotal__c, Vat__c, Gross__c, DiscountTotal__c,
                 DpReference__c, DpName__c, DpAddress__c, DpArea__c, DpTown__c, DpCountry__c, DpPostCode__c,
                 BillToReference__c, BillToName__c, BillToAddress__c, BillToArea__c, BillToTown__c, BillToCountry__c, BillToPostCode__c,
                 (
@@ -130,7 +130,7 @@ private class InvoiceGenerationServiceTest {
         Assert.areEqual(existingInvoice.DpTown__c, generatedInvoices[0].shipToCity);
         Assert.areEqual(existingInvoice.DpPostcode__c, generatedInvoices[0].shipToPostalCode);
 
-        Assert.areEqual(existingInvoice.Name, generatedInvoices[0].invoiceNumber);
+        Assert.areEqual(existingInvoice.aforza__Order__r.OrderNumber, generatedInvoices[0].invoiceNumber);
         Assert.areEqual(existingInvoice.CreatedDate, generatedInvoices[0].createdDate);
         Assert.areEqual(existingInvoice.aforza__Due_Date__c, generatedInvoices[0].dueDate);
         Assert.areEqual(existingInvoice.PoNumber__c, generatedInvoices[0].poNumber);

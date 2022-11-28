@@ -75,12 +75,20 @@ public with sharing class FileGenerationService {
         switch on docType {
             when INVOICE {
                 pageRef = Page.AGBarrInvoice;
-                documentName = 'Invoice ' + record?.getSObject('aforza__Order__r')?.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
-                documentType = 'Invoice';
+
+                String orderNumber = (String) record?.getSObject('aforza__Order__r')?.get('OrderNumber');
+                String invoiceNumber = (String) record?.get('Name');
+                String invoiceType = (String) record?.get('InvoiceType__c');
+
+                documentName = (invoiceType == null ? 'Invoice' : invoiceType) + ' ' + (orderNumber == null ? invoiceNumber : orderNumber) + ' ' + System.today().format() + '.pdf';
+                documentType = invoiceType == null ? 'Invoice' : invoiceType;
             }
             when DELIVERY_NOTE {
                 pageRef = Page.DeliveryNotePDF;
-                documentName = 'Delivery Note ' + record.get('OrderNumber') + ' ' + System.today().format() + '.pdf';
+
+                String orderNumber = (String) record?.get('OrderNumber');
+
+                documentName = 'Delivery Note ' + orderNumber + ' ' + System.today().format() + '.pdf';
                 documentType = 'Delivery Note';
             }
             when else {
@@ -138,7 +146,7 @@ public with sharing class FileGenerationService {
 
         switch on objectName {
             when 'aforza__Invoice__c' {
-                fieldsToQuery += ',aforza__Order__r.OrderNumber';
+                fieldsToQuery += ',aforza__Order__r.OrderNumber,InvoiceType__c,Name';
             }
             when 'Order' {
                 fieldsToQuery += ',OrderNumber';

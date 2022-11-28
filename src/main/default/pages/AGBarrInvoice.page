@@ -11,7 +11,7 @@
 			<div class="inline-block">
 				<div class="float-left align-left">
 					<div class="m-bottom-small">
-						<b>{!$Label.InvoiceInvoiceTo}</b>
+						<b>{!IF(invoice.type == 'Credit Note', $Label.InvoiceCreditedTo, $Label.InvoiceInvoicedTo)}</b>
 					</div>
 					<div class="m-bottom-small">{!invoice.billToName}</div>
 					<div>{!invoice.billToStreet}</div>
@@ -35,7 +35,7 @@
 			<br/>
 			<table class="document-table document-table-fixed">
 				<tr>
-					<th>{!$Label.InvoiceNo}</th>
+					<th>{!invoice.type} {!$Label.InvoiceNo}</th>
 					<th>{!$Label.InvoiceDate}</th>
 					<th>{!$Label.InvoicePoRef}</th>
 					<th>{!$Label.InvoiceCustomerShopNumber}</th>

@@ -16,6 +16,11 @@
                 <label>Invoice</label>
             </value>
             <value>
+                <fullName>Credit Note</fullName>
+                <default>false</default>
+                <label>Credit Note</label>
+            </value>
+            <value>
                 <fullName>Delivery Note</fullName>
                 <default>false</default>
                 <label>Delivery Note</label>

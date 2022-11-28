@@ -151,13 +151,18 @@ private with sharing class FileGenerationServiceTest {
         Contact newContact = (Contact) TdfSObjectFactory.insertSObject(
             new Contact(AccountId = dpAccount.Id, Email = 'test@test.com')
         );
+
         dpAccount.aforza__Primary_Contact__c = newContact.Id;
         update dpAccount;
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id)
+        );
         
         aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
-            new aforza__Invoice__c(aforza__Account__c = dpAccount.Id)
+            new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id)
         );
-        aforza__Invoice__c insertedInvoice = [SELECT Id, aforza__Order__r.OrderNumber FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
+        aforza__Invoice__c insertedInvoice = [SELECT Id, Name, InvoiceType__c, aforza__Order__r.OrderNumber FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
 
         Test.startTest();
         ContentVersion generatedFile = FileGenerationService.generateContentVersion(
@@ -172,6 +177,50 @@ private with sharing class FileGenerationServiceTest {
         Blob expectedVersionData = FileGenerationService.getContentAsBlob(newInvoice.Id, Page.AGBarrInvoice);
         String expectedFileName = 'Invoice ' + insertedInvoice?.aforza__Order__r?.OrderNumber + ' ' + System.today().format() + '.pdf';
         String expectedDocumentType = 'Invoice';
+
+        Assert.areEqual(expectedContentLocation, generatedFile.ContentLocation);
+        Assert.areEqual(expectedOrigin, generatedFile.Origin);
+        Assert.areEqual(expectedFileOwner, generatedFile.OwnerId);
+        Assert.areEqual(expectedVersionData, generatedFile.VersionData);
+        Assert.areEqual(expectedFileName, generatedFile.PathOnClient);
+        Assert.areEqual(expectedFileName, generatedFile.Title);
+        Assert.areEqual(expectedDocumentType, generatedFile.DocumentType__c);
+    }
+
+    @IsTest
+    private static void testGenerateContentVersion_CreditNote() {
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+        Contact newContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = dpAccount.Id, Email = 'test@test.com')
+        );
+
+        dpAccount.aforza__Primary_Contact__c = newContact.Id;
+        update dpAccount;
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id)
+        );
+
+        aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
+            new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id, InvoiceType__c = 'Credit Note')
+        );
+        aforza__Invoice__c insertedInvoice = [SELECT Id, Name, InvoiceType__c, aforza__Order__r.OrderNumber FROM aforza__Invoice__c WHERE Id = :newInvoice.Id];
+
+        Test.startTest();
+        ContentVersion generatedFile = FileGenerationService.generateContentVersion(
+            FileGenerationService.documentType.INVOICE,
+            insertedInvoice
+        );
+        Test.stopTest();
+
+        String expectedContentLocation = 'S';
+        String expectedOrigin = 'C';
+        String expectedFileOwner = UserInfo.getUserId();
+        Blob expectedVersionData = FileGenerationService.getContentAsBlob(newInvoice.Id, Page.AGBarrInvoice);
+        String expectedFileName = 'Credit Note ' + insertedInvoice?.aforza__Order__r?.OrderNumber + ' ' + System.today().format() + '.pdf';
+        String expectedDocumentType = 'Credit Note';
 
         Assert.areEqual(expectedContentLocation, generatedFile.ContentLocation);
         Assert.areEqual(expectedOrigin, generatedFile.Origin);

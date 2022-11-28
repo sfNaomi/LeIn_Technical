@@ -108,7 +108,8 @@ private with sharing class InvoiceServiceTest {
 				RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
 				AccountId = dpAccount.Id,
 				Status = 'Draft',
-				Pricebook2Id = newPricebook.Id
+				Pricebook2Id = newPricebook.Id,
+				PaymentMethod__c = 'Direct Debit'
 			)
 		);
 		TdfSObjectFactory.insertSObject(

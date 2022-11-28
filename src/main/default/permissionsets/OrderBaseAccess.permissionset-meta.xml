@@ -182,6 +182,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.PaymentMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.PickingCompleted__c</field>
         <readable>true</readable>
@@ -208,11 +213,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Order.PrimaryPaymentMethod__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Order.PrintName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -224,6 +224,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Replanned__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ReturnReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -61,7 +61,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Cash'
             )
         );
         OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -82,7 +83,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Cash'
             )
         );
         OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -192,8 +194,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].Phone);
         Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].Phone);
 
-        Assert.areEqual(dpAccount.PrimaryPaymentMethod__c, loads[0].loadItems[0].paymentMethod);
-        Assert.areEqual(dpAccount.PrimaryPaymentMethod__c, loads[0].loadItems[1].paymentMethod);
+        Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[0].paymentMethod);
+        Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[1].paymentMethod);
 
         String openingTime = dpAccount.OpeningTime__c.hour() + ':' + dpAccount.OpeningTime__c.minute();
         Assert.areEqual(openingTime, loads[0].loadItems[0].openingTime);
@@ -284,7 +286,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Card Payment'
             )
         );
         OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -305,7 +308,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Direct Debit'
             )
         );
         OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -326,7 +330,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Cash'
             )
         );
         OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -347,7 +352,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 aforza__Inventory__c = newInventory.Id,
                 ShippingCity = 'Test City',
                 ShippingStreet = 'Test Street',
-                ShippingPostalCode = '054354'
+                ShippingPostalCode = '054354',
+                PaymentMethod__c = 'Cheque'
             )
         );
         OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(
@@ -522,10 +528,10 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Assert.areEqual(dpAccount1.Phone, loads[1].loadItems[0].Phone);
         Assert.areEqual(dpAccount2.Phone, loads[1].loadItems[1].Phone);
 
-        Assert.areEqual(dpAccount1.PrimaryPaymentMethod__c, loads[0].loadItems[0].paymentMethod);
-        Assert.areEqual(dpAccount2.PrimaryPaymentMethod__c, loads[0].loadItems[1].paymentMethod);
-        Assert.areEqual(dpAccount1.PrimaryPaymentMethod__c, loads[1].loadItems[0].paymentMethod);
-        Assert.areEqual(dpAccount2.PrimaryPaymentMethod__c, loads[1].loadItems[1].paymentMethod);
+        Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[0].paymentMethod);
+        Assert.areEqual(newOrder2.PaymentMethod__c, loads[0].loadItems[1].paymentMethod);
+        Assert.areEqual(newOrder3.PaymentMethod__c, loads[1].loadItems[0].paymentMethod);
+        Assert.areEqual(newOrder4.PaymentMethod__c, loads[1].loadItems[1].paymentMethod);
 
         String openingTime1 = dpAccount1.OpeningTime__c.hour() + ':' + dpAccount1.OpeningTime__c.minute();
         String openingTime2 = dpAccount2.OpeningTime__c.hour() + ':' + dpAccount2.OpeningTime__c.minute();

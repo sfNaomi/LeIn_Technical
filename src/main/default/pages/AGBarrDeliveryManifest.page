@@ -86,7 +86,7 @@
             </tr>
         </table>
         <br/>
-        <table class="document-table">
+        <table class="document-table document-table-fixed">
             <tr>
                 <th>
                     {!$Label.DeliveryManifestPalletSequence}

@@ -10,13 +10,14 @@
  */
 
 public without sharing class InvoiceEmailService {
-    private static final Set<String> NO_INVOICE_PAYMENT_METHODS = new Set<String>{
-        'Cash', 'Cheque'
-    };
-    private static final Set<String> TO_INVOICE_PAYMENT_METHODS = new Set<String>{
-        'Direct Debit', 'Bacs'
-    };
+    private static final Set<String> NO_INVOICE_PAYMENT_METHODS = new Set<String>{'Cash', 'Cheque'};
+    private static final Set<String> TO_INVOICE_PAYMENT_METHODS = new Set<String>{'Direct Debit', 'Bacs'};
     private static final String CARD_PAYMENT_METHOD = 'Card Payment';
+
+    private static final String TYPE_CREDIT_NOTE = 'Credit Note';
+    private static final String TYPE_INVOICE = 'Invoice';
+
+    @TestVisible private static final String CREDIT_NOTE_EMAIL_NAME = 'AGBarrCreditNoteEmailTemplate';
     @TestVisible private static final String INVOICE_EMAIL_NO_PAYMENT_NAME = 'AGBarrInvoiceEmailTemplate';
     @TestVisible private static final String INVOICE_EMAIL_WITH_PAYMENT_NAME = 'AGBarrInvoiceEmailTemplateWithPaymentLink';
 
@@ -72,17 +73,32 @@ public without sharing class InvoiceEmailService {
     private static Map<Id, String> evaluateInvoiceIfToSendInvoice(List<aforza__Invoice__c> invoicesWithData) {
         Map<Id, String> invoiceIdsToEmailTemplate = new Map<Id, String>();
         for (aforza__Invoice__c invoice : invoicesWithData) {
-            // payment types to create invoice and send it only if invoice type on account is populated and there is an email address and primary contact.
+            // check that pre-requisites for sending out the email
+            // (there is an email address to send the invoice to and there is a primary contact on
+            //  the account to be used as target object id for the template based email)
+            if (invoice.aforza__Account__r.aforza__Invoice_Email_Address__c == null ||
+                invoice.aforza__Account__r.aforza__Primary_Contact__c == null) {
+                continue;
+            }
+
+            // check if the invoice record is an actual invoice or credit note
+            // credit notes are sent if there is an email address on account
+            // invoices are send depending on the payment method -> multiple use cases
+            if (invoice.InvoiceType__c == TYPE_CREDIT_NOTE) {
+                invoiceIdsToEmailTemplate.put(invoice.Id, CREDIT_NOTE_EMAIL_NAME);
+                continue;
+            }
+
+            // DD & Bacs payment types -> send invoice if invoice type on account is set to email
             // second condition is to check for Card Payment, and there are two options in it
             // we expect only one of the scenarios to be active
-            if (TO_INVOICE_PAYMENT_METHODS.contains(invoice.aforza__Order__r.PrimaryPaymentMethod__c)
-                && invoice.aforza__Account__r.InvoiceType__c == 'Email'
-                && invoice.aforza__Account__r.aforza__Invoice_Email_Address__c != null
-                && invoice.aforza__Account__r.aforza__Primary_Contact__c != null) {
+            if (TO_INVOICE_PAYMENT_METHODS.contains(invoice.aforza__Order__r.PaymentMethod__c) &&
+                invoice.aforza__Account__r.InvoiceType__c == 'Email') {
                 invoiceIdsToEmailTemplate.put(invoice.Id, INVOICE_EMAIL_NO_PAYMENT_NAME);
-            } else if (invoice.aforza__Order__r.PrimaryPaymentMethod__c == CARD_PAYMENT_METHOD &&
-                invoice.aforza__Account__r.aforza__Invoice_Email_Address__c != null
-                && invoice.aforza__Account__r.aforza__Primary_Contact__c != null) {
+                continue;
+            }
+
+            if (invoice.aforza__Order__r.PaymentMethod__c == CARD_PAYMENT_METHOD) {
                 // check if it is pre auth from order or not
                 if (invoice.aforza__Order__r.PreAuthCaptured__c == false && String.isNotEmpty(invoice.PaymentLink__c)) {
                     invoiceIdsToEmailTemplate.put(invoice.Id, INVOICE_EMAIL_WITH_PAYMENT_NAME);
@@ -109,10 +125,10 @@ public without sharing class InvoiceEmailService {
     @TestVisible
     private static List<aforza__Invoice__c> getInvoicesWithRequiredParameters(Set<Id> invoiceIds) {
         return [
-            SELECT Id, aforza__Order__r.PreAuthCaptured__c,
+            SELECT Id, aforza__Order__r.PreAuthCaptured__c, InvoiceType__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, aforza__Account__r.InvoiceType__c,
-                aforza__Account__r.aforza__Invoice_Email_Address__c, aforza__Order__r.PrimaryPaymentMethod__c,
+                aforza__Account__r.aforza__Invoice_Email_Address__c, aforza__Order__r.PaymentMethod__c,
                 InvoiceSentToCustomer__c, PaymentLink__c
             FROM aforza__Invoice__c
             WHERE Id IN :invoiceIds
@@ -120,7 +136,7 @@ public without sharing class InvoiceEmailService {
     }
 
     /**
-     * @description Obtain latest invoices linked to invoice document
+     * @description Obtain latest invoices/credit notes linked to invoice document
      *
      * @param invoiceIds list of invoices for which we should get the invoice documents
      * @return Map if the invoiceId to its latest invoice
@@ -130,6 +146,8 @@ public without sharing class InvoiceEmailService {
      */
     private static Map<Id, ContentVersion> fetchInvoiceDocumentsToSend(Set<Id> invoiceIds) {
         Map<Id, Set<Id>> entityToContentDocuments = fetchContentDocumentLinks(invoiceIds);
+        Set<String> docTypesToQuery = new Set<String>{TYPE_INVOICE, TYPE_CREDIT_NOTE};
+
         Map<Id, ContentVersion> invoicesToTheirFiles = new Map<Id, ContentVersion>();
         // get contentVersion for files
         for (ContentVersion version : [
@@ -137,13 +155,14 @@ public without sharing class InvoiceEmailService {
             FROM ContentVersion
             WHERE ContentDocumentId IN :entityToContentDocuments.keySet()
             AND ContentVersion.IsLatest = TRUE
-            AND DocumentType__c = 'Invoice'
+            AND DocumentType__c IN :docTypesToQuery
             ORDER BY CreatedDate ASC
         ]) {
             for (Id linkedEntity : entityToContentDocuments.get(version.ContentDocumentId)) {
                 invoicesToTheirFiles.put(linkedEntity, version);
             }
         }
+
         return invoicesToTheirFiles;
     }
 
@@ -159,14 +178,16 @@ public without sharing class InvoiceEmailService {
     private static Map<Id, Set<Id>> fetchContentDocumentLinks(Set<Id> invoiceIds) {
         // get all documents attached to relevant Ids
         Map<Id, Set<Id>> entityToContentDocuments = new Map<Id, Set<Id>>();
-        List<ContentDocumentLink> contentDocumentLinks = [SELECT Id, ContentDocumentId, LinkedEntityId FROM ContentDocumentLink WHERE LinkedEntityId IN :invoiceIds];
+        List<ContentDocumentLink> contentDocumentLinks = [
+            SELECT Id, ContentDocumentId, LinkedEntityId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId IN :invoiceIds
+        ];
         for (ContentDocumentLink link : contentDocumentLinks) {
             if (entityToContentDocuments.containsKey(link.ContentDocumentId)) {
                 entityToContentDocuments.get(link.ContentDocumentId).add(link.LinkedEntityId);
             } else {
-                entityToContentDocuments.put(link.ContentDocumentId, new Set<Id>{
-                    link.LinkedEntityId
-                });
+                entityToContentDocuments.put(link.ContentDocumentId, new Set<Id>{link.LinkedEntityId});
             }
         }
         return entityToContentDocuments;
@@ -220,6 +241,7 @@ public without sharing class InvoiceEmailService {
             FROM EmailTemplate
             WHERE DeveloperName = :INVOICE_EMAIL_NO_PAYMENT_NAME
             OR DeveloperName = :INVOICE_EMAIL_WITH_PAYMENT_NAME
+            OR DeveloperName = :CREDIT_NOTE_EMAIL_NAME
         ]) {
             emailTemplateNameToId.put(emailTemplate.DeveloperName, emailTemplate.Id);
         }

@@ -21,8 +21,8 @@
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Clone__c</field>
+                <behavior>Edit</behavior>
+                <field>aforza__Original_Order__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -30,7 +30,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PrimaryPaymentMethod__c</field>
+                <field>Clone__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -44,19 +44,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ReturnReason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>PoNumber</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>aforza__Template__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>aforza__Original_Order__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ActivatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>aforza__Template__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -174,6 +174,10 @@
         <label>Financial Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PaymentMethod__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DiscountTotal__c</field>
             </layoutItems>
@@ -181,12 +185,12 @@
                 <behavior>Readonly</behavior>
                 <field>NetTotal__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PreAuthCaptured__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TaxTotal__c</field>
@@ -411,15 +415,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>aforza__Account__c</fields>
-        <fields>aforza__Amount__c</fields>
-        <fields>aforza__Date__c</fields>
-        <fields>aforza__Status__c</fields>
-        <fields>aforza__Type__c</fields>
-        <relatedList>aforza__Payment_Transaction__c.OrderNumber__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>bt_stripe__Amount__c</fields>
         <fields>bt_stripe__Transaction_Status__c</fields>
         <fields>bt_stripe__Payment_Status__c</fields>
@@ -433,7 +428,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003pokF</masterLabel>
+        <masterLabel>00h7a0000026vZ7</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

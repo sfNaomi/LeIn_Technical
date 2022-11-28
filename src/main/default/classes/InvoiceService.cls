@@ -3,6 +3,8 @@
  **/
 
 public with sharing class InvoiceService {
+    private static final String TYPE_INVOICE = 'Invoice';
+    private static final String TYPE_CREDIT_NOTE = 'Credit Note';
     private static final String DD_PAYMENT_METHOD = 'Direct Debit';
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
@@ -110,13 +112,12 @@ public with sharing class InvoiceService {
         // generate invoice documents and mark them as ready for email evaluation
         Set<Id> invoicesWithProperPaymentMethod = new Set<Id>();
         // create documents only for certain invoices, get Payment methods for the invoice customers
-        for (aforza__Invoice__c invoice : [SELECT Id, aforza__Order__r.PrimaryPaymentMethod__c FROM aforza__Invoice__c WHERE Id IN :invoiceIdsToGenerateFiles]) {
-            if (ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES.contains(invoice.aforza__Order__r.PrimaryPaymentMethod__c)) {
+        for (aforza__Invoice__c invoice : [SELECT Id, aforza__Order__r.PaymentMethod__c FROM aforza__Invoice__c WHERE Id IN :invoiceIdsToGenerateFiles]) {
+            if (ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES.contains(invoice.aforza__Order__r.PaymentMethod__c)) {
                 invoicesWithProperPaymentMethod.add(invoice.Id);
             }
         }
-        generateInvoiceDocuments(invoicesWithProperPaymentMethod);
-        updateInvoicesWithReadyForEvaluation(invoicesWithProperPaymentMethod);
+        generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
     }
 
     private static void updateInvoicesWithReadyForEvaluation(Set<Id> invoiceIds) {
@@ -127,7 +128,6 @@ public with sharing class InvoiceService {
 
         update invoicesToUpdate;
     }
-
 
     /**
      * @description get existing payment transactions related to orders
@@ -183,10 +183,13 @@ public with sharing class InvoiceService {
         // set fixed fields
         newInvoice.aforza__Issued_Date__c = computeInvoiceIssuedDate(newInvoice.aforza__Issued_Date__c);
         newInvoice.aforza__Due_Date__c = calculateInvoiceDueDate(existingOrder.Account.PaymentTerms__c, newInvoice.aforza__Issued_Date__c);
-        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.Account.PrimaryPaymentMethod__c, newInvoice.aforza__Status__c);
+        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c);
 
         // populate fields on the new invoice based on mapping
         CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
+
+        // set extra fields based on invoice fields
+        newInvoice.InvoiceType__c = computeInvoiceType(newInvoice.Gross__c);
     }
 
     /**
@@ -202,6 +205,20 @@ public with sharing class InvoiceService {
     @TestVisible
     private static Date computeInvoiceIssuedDate(Date currentIssuedDate) {
         return currentIssuedDate != null ? currentIssuedDate : System.today();
+    }
+
+    /**
+     * @description determines the invoice type based on invoice amount
+     *
+     * @param invoiceAmount invoice amount to determine invoice type based on it
+     *
+     * @return invoice type (invoice/credit note)
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-11-25
+     */
+    private static String computeInvoiceType(Decimal invoiceAmount) {
+        return invoiceAmount != null ? (invoiceAmount <= 0 ? TYPE_CREDIT_NOTE : TYPE_INVOICE) : TYPE_INVOICE;
     }
 
     /**
@@ -318,8 +335,8 @@ public with sharing class InvoiceService {
 
         String queryString =
             'SELECT ' + String.join(orderFields, ',') + ', ' +
-                '(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
-                'FROM Order WHERE Id IN :orderIds';
+            '(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
+            'FROM Order WHERE Id IN :orderIds';
         List<Order> orders = Database.query(queryString);
 
         return orders;
@@ -356,10 +373,24 @@ public with sharing class InvoiceService {
     }
 
     /**
-     * @description generates invoice documents, saves them as files related to invoices and sends them via email
-     * method respects allowed Payment types to generate documents
+     * @description async method to generate invoice documents
      *
-     * @param invoiceIds ids of invoices to generate files for and send them via email
+     * @param invoiceIds ids of invoices to generate files for
+     *
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-25
+     */
+    @future(callout=true)
+    public static void generateInvoiceDocumentsAsync(Set<Id> invoiceIds) {
+        generateInvoiceDocuments(invoiceIds);
+        updateInvoicesWithReadyForEvaluation(invoiceIds);
+    }
+
+    /**
+     * @description generates invoice documents, saves them as files related to invoices
+     *
+     * @param invoiceIds ids of invoices to generate files for
      *
      *
      * @author Magdalena Stanciu
