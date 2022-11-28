@@ -58,6 +58,7 @@ public class TdfAccountTemplate extends TdfSObjectTemplate {
         template.aforza__Last_Visit__c = System.now();
         template.aforza__Invoice_Email_Address__c = 'test@test.com';
         template.InvoiceType__c = 'Email';
+        template.aforza__Credit_Amount__c = 10;
 
         if (accountRecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
             template.AccountStatus__c = 'Traders';

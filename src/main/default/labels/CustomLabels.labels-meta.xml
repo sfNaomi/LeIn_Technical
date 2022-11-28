@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>OrderActivationPreventedDueToDPOnHold</fullName>
+        <fullName>OrderActivationPreventedDueToAccountOnHold</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>OrderActivationPreventedDueToDPOnHold</shortDescription>
+        <shortDescription>OrderActivationPreventedDueToAccountOnHold</shortDescription>
         <value>Order activation not allowed due to related DP account being "On Hold". Record needs to be submitted for approval.</value>
     </labels>
     <labels>
-        <fullName>OrderActivationPreventedDueToDPNegativeCredit</fullName>
+        <fullName>OrderActivationPreventedAccNotEnoughCredit</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>OrderActivationPreventedDueToDPNegativeCredit</shortDescription>
+        <shortDescription>OrderActivationPreventedAccNotEnoughCredit</shortDescription>
         <value>Order activation not allowed due to related DP account negative available credit. Record needs to be submitted for approval.</value>
     </labels>
     <labels>

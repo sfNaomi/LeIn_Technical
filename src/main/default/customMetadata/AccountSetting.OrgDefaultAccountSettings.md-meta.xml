@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>StatusesWhereOrderCreationAllowed__c</field>
-        <value xsi:type="xsd:string">Active Prospect,Traders,At Risk,Win Back,Lapsed</value>
+        <value xsi:type="xsd:string">Open,Active Prospect,Traders,At Risk,Win Back,Lapsed</value>
     </values>
 </CustomMetadata>

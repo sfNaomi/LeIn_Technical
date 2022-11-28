@@ -31,7 +31,7 @@ private class SixOrderSummaryControllerTest {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', creditStatus__c = 'Good')
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', creditStatus__c = 'Good', aforza__Credit_Amount__c = 40)
         );
 
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
@@ -359,7 +359,7 @@ private class SixOrderSummaryControllerTest {
     private static void testGetOrderDates() {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', CreditStatus__c = 'Good')
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', CreditStatus__c = 'Good', aforza__Credit_Amount__c = 40)
         );
 
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
@@ -382,7 +382,7 @@ private class SixOrderSummaryControllerTest {
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', creditStatus__c = 'Good')
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', creditStatus__c = 'Good', aforza__Credit_Amount__c = 40)
         );
   
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(

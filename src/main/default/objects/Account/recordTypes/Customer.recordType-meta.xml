@@ -137,10 +137,6 @@
             <fullName>On Hold</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>On Stop</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CustomerTier__c</picklist>

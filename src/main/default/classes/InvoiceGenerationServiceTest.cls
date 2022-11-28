@@ -62,7 +62,8 @@ private class InvoiceGenerationServiceTest {
             aforza__Default_Price_Book__c = newPricebook.Id,
             RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
             PrimaryGridNumber__c = '3C7201MOW',
-            PaymentTerms__c = 'STD'
+            PaymentTerms__c = 'STD',
+            aforza__Credit_Amount__c = 200
         ));
 
         // create orders and add products to it

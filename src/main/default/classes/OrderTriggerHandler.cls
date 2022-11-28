@@ -83,16 +83,16 @@ public with sharing class OrderTriggerHandler {
 
             if (oldOrder != null && newOrder.Status != oldOrder.Status &&
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && (
-                relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED || relatedAccount.AvailableCredit__c < 0) && (
+                relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED || relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (
                 newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID || newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
                     newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
                     newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
-                    && newOrder.RecordTypeId != RecordTypes.ORDER_FIELD_DIRECT_ID && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
-                    newOrder.addError(Label.OrderActivationPreventedDueToDPOnHold);
+                    && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
+                    newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
                 }
-                if (relatedAccount.AvailableCredit__c < 0 && newOrder.IsApproved__c == false) {
-                    newOrder.addError(Label.OrderActivationPreventedDueToDPNegativeCredit);
+                if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && newOrder.IsApproved__c == false) {
+                    newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
             }
