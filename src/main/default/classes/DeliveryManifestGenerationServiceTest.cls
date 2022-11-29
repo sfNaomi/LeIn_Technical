@@ -126,15 +126,17 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         update ordersToUpdate;
 
         // add notes to the orders
-        ContentNote note = (ContentNote) TdfSObjectFactory.insertSObject(
-            new ContentNote(Content = Blob.valueOf(FILE_CONTENT))
+        ContentVersion note = (ContentVersion) TdfSObjectFactory.insertSObject(
+            new ContentVersion(VersionData = Blob.valueOf(FILE_CONTENT), PathOnClient = 'Note.sNote')
         );
 
+        ContentVersion insertedNote = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :note.Id];
+
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder1.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder1.Id)
         );
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder2.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder2.Id)
         );
 
         Test.startTest();
@@ -408,21 +410,23 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         update ordersToUpdate;
 
         // add notes to the orders
-        ContentNote note = (ContentNote) TdfSObjectFactory.insertSObject(
-            new ContentNote(Content = Blob.valueOf(FILE_CONTENT))
+        ContentVersion note = (ContentVersion) TdfSObjectFactory.insertSObject(
+            new ContentVersion(VersionData = Blob.valueOf(FILE_CONTENT), PathOnClient = 'Note.sNote')
         );
 
+        ContentVersion insertedNote = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :note.Id];
+
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder1.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder1.Id)
         );
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder2.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder2.Id)
         );
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder3.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder3.Id)
         );
         TdfSObjectFactory.insertSObject(
-            new ContentDocumentLink(ContentDocumentId = note.Id, LinkedEntityId = newOrder4.Id)
+            new ContentDocumentLink(ContentDocumentId = insertedNote.ContentDocumentId, LinkedEntityId = newOrder4.Id)
         );
 
         Test.startTest();

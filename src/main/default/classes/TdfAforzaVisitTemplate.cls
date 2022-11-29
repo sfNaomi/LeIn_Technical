@@ -30,12 +30,6 @@ public with sharing class TdfAforzaVisitTemplate extends TdfSObjectTemplate {
         if (userDefinedVisitRecord.aforza__Account__c == null) {
             accountRecordId = TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)).Id;
         }
-
-        if (userDefinedVisitRecord.aforza__Recurring_Record__c == null) {
-            recurringRecordId = TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = accountRecordId)).Id;
-        }
-
-
     }
 
     /**
