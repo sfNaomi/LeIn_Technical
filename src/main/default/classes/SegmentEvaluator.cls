@@ -1,19 +1,18 @@
 public with sharing class SegmentEvaluator {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(Cacheable=true)
     public static List<Account> displayAccounts(Id recordId, String searchTerm){
         List<SegmentationRule> segmentRules = getSegmentRules(recordId);
         Set<Id> accountIds = getAccountsForSegment(segmentRules);
         return getAccounts(accountIds, searchTerm);
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled(Cacheable=true)
     public static List<SegmentationRule> getSegmentRules(Id recordId){
-        String objectType = recordId.getSObjectType().getDescribe().getName();
+        String objectType = recordId.getSobjectType().getDescribe().getName();
         Set<String> supportedObjects = new Set<String>{'aforza__Visit__c','aforza__Promotion__c','aforza__Assortment__c'};
 
         List<SegmentationRule> rules = new List<SegmentationRule>();
-        List<SegmentationRule> relatedRules = new List<SegmentationRule>();
 
         String segmentQuery = 'SELECT aforza__Segmentation_Rules__c FROM aforza__Segment__c WHERE Id =';
         String relatedSegmentQuery = 'SELECT aforza__Segmentation_Rules__c, aforza__Target_Segment__r.aforza__Segmentation_Rules__c FROM ';
@@ -82,13 +81,17 @@ public with sharing class SegmentEvaluator {
                 selectFields.add('ToLabel(' + f.getFieldPath() + ')');
             }
             else if(f.getType() == Schema.DisplayType.REFERENCE) {
-                selectFields.add(f.getFieldPath().removeEnd('Id') + '.Name');
+                if (f.getFieldPath().endsWith('__c')) {
+                    selectFields.add(f.getFieldPath().replace('__c', '__r') + '.Name');
+                } else {
+                    selectFields.add(f.getFieldPath().removeEnd('Id') + '.Name');
+                }
             }
             else{
                 selectFields.add(f.getFieldPath());
             }
         }
-        
+
         String query = 'SELECT ' + String.join(selectFields, ', ') +
          ' FROM Account WHERE Id IN' + '(' + '\'' + String.join(vals, '\', \'') +  '\')';
         if ( searchTerm != null && searchTerm != '' ) {
@@ -99,6 +102,6 @@ public with sharing class SegmentEvaluator {
     }
 
     public static List<Schema.FieldSetMember> getFields() {
-        return SObjectType.Account.FieldSets.SegmentViewerDynamic.getFields();
+        return SObjectType.Account.fieldSets.SegmentViewerDynamic.getFields();
     }
  }
