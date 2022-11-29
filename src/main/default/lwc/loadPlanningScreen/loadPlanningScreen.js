@@ -461,10 +461,12 @@ export default class LoadPlanningScreen extends LightningElement {
             this.processSelectionChanges(selectedRows);
             this.selectedRows = [];
             this.selectedRows = [...selectedRows];
-            if (this.selectedRows.length > 0) {
-                this.preCalculateValues();
-            } else {
-                this.clearPreselectedAttributes();
+            if (this.selectedScenario === 'createLoad') {
+                if (this.selectedRows.length > 0) {
+                    this.preCalculateValues();
+                } else {
+                    this.clearPreselectedAttributes();
+                }
             }
         } catch (error) {
             processError(this, error);
@@ -488,11 +490,9 @@ export default class LoadPlanningScreen extends LightningElement {
             Route__c: {},
             Depot__c: {}
         };
-        if (this.selectedScenario === 'createLoad') {
-            this.loadDataFromOrders(calculationStorage);
-            this.determineIfValuesCanBeUsedForPreselection(calculationStorage);
-            this.preSelectValues(calculationStorage)
-        }
+        this.loadDataFromOrders(calculationStorage);
+        this.determineIfValuesCanBeUsedForPreselection(calculationStorage);
+        this.preSelectValues(calculationStorage)
     }
 
     /** Method to iterate selected orders and count each evaluated attribute values
