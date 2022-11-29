@@ -57,7 +57,7 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
    
-        Assert.areEqual('Activated', updatedOrder.Status, 'Expecting a different order status.');
+        Assert.areEqual('Unplanned', updatedOrder.Status, 'Expecting a different order status.');
         Assert.areEqual('Good', updatedDpAccount.CreditStatus__c, 'Expecting a different account credit status.');
     }
 
@@ -119,7 +119,7 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
 
-        Assert.areEqual('Activated', updatedParentOrder.Status, 'Expecting a different order status.');
+        Assert.areEqual('Unplanned', updatedParentOrder.Status, 'Expecting a different order status.');
         Assert.areEqual('Good', updatedParentAccount.CreditStatus__c, 'Expecting a different account credit status.');
     }
 }

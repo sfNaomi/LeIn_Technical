@@ -4,6 +4,8 @@
 
 public with sharing class OrderTriggerHandler {
 
+    @TestVisible private static final String ORDER_STATUS_AFTER_CLONING = 'Unplanned';
+
     private static final Map<String, String> STATUS_TO_FIELD_MAPPING {
         get {
             if (STATUS_TO_FIELD_MAPPING == null) {
@@ -38,6 +40,7 @@ public with sharing class OrderTriggerHandler {
             }
         }
         InsecureOrderCloningService.deepCloneOrders(toBeClonedOrders);
+        OrderService.updateOrderStatus(toBeClonedOrders, ORDER_STATUS_AFTER_CLONING);
     }
 
     public static void updateLastOrderDateAndStatusOnParentAccount(List<Order> newOrders, Map<Id, Order> oldOrders) {

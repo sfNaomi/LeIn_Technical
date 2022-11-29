@@ -408,7 +408,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCloneCompletedOrder() {
+    private static void testCloneCompletedOrder_ValidRecordTypeCompletedOrder() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -449,16 +449,15 @@ private with sharing class OrderTriggerHandlerTest {
         Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
-        List<OrderItem> clonedOrderItems = [
-            SELECT Id, OrderId, Product2Id
-            FROM OrderItem
-            WHERE OrderId = :clonedOrder.Id
-        ];
+        List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
         Assert.areEqual(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
+
+        Order updatedOriginalOrder = [SELECT Id, Status FROM Order WHERE Id = :newOrder.Id];
+        Assert.areEqual(OrderTriggerHandler.ORDER_STATUS_AFTER_CLONING, updatedOriginalOrder.Status, 'Expecting status of the original order to be updated)');
     }
 
     @IsTest
-    private static void testCloneCompletedOrder_NoCloneCreated() {
+    private static void testCloneCompletedOrder_ValidRecordTypeIncompleteOrder() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -482,7 +481,7 @@ private with sharing class OrderTriggerHandlerTest {
         // create order and add items to the order
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
-                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
                 Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
@@ -495,12 +494,92 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        List<Order> clonedOrder = [
-            SELECT Id, Clone__c, aforza__Original_Order__c, Status
-            FROM Order
-            WHERE Clone__c = TRUE
-        ];
+        List<Order> clonedOrder = [SELECT Id, Clone__c, Status FROM Order WHERE Clone__c = TRUE];
         Assert.areEqual(0, clonedOrder.size(), 'Expected no clone orders to be created');
+    }
+
+    @IsTest
+    private static void testCloneCompletedOrder_InvalidRecordTypeCompletedOrder() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        newOrder.Status = new List<String>(OrderService.COMPLETED_ORDER_STATUSES).get(0);
+        update newOrder;
+        Test.stopTest();
+
+        List<Order> clonedOrders = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(0, clonedOrders.size(), 'Expected no clone orders to be created');
+    }
+
+    @IsTest
+    private static void testCloneCompletedOrder_InvalidRecordTypeIncompleteOrder() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_RETURN_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        newOrder.Status = 'Awaiting Approval';
+        update newOrder;
+        Test.stopTest();
+
+        List<Order> clonedOrders = [SELECT Id, Clone__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(0, clonedOrders.size(), 'Expected no clone orders to be created');
     }
 
     @IsTest

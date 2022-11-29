@@ -81,6 +81,14 @@ public with sharing class OrderService {
         for (Order newOrder : newOrders) {
             relatedAccountIds.add(newOrder.AccountId);
         }
-       AccountService.updateLastOrderDateAndAccountStatus(relatedAccountIds);
+        AccountService.updateLastOrderDateAndAccountStatus(relatedAccountIds);
+    }
+
+    public static void updateOrderStatus(List<Order> newOrders, String newStatus) {
+        List<Order> ordersToUpdate = new List<Order>();
+        for (Order newOrder : newOrders) {
+            ordersToUpdate.add(new Order(Id = newOrder.Id, Status = newStatus));
+        }
+        update ordersToUpdate;
     }
 }
