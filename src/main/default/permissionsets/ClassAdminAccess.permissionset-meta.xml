@@ -4,6 +4,10 @@
         <apexClass>SixOrderSummaryController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>SegmentEvaluator</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>ClassAdminAccess</label>
 </PermissionSet>
