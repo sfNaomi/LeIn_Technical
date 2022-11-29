@@ -15,17 +15,28 @@ public with sharing class BtTransactionTriggerHandler {
      */
     public static void createAforzaTransaction(List<bt_stripe__Transaction__c> transactions) {
         Set<Id> accountIds = new Set<Id>();
-        Map<String, List<bt_stripe__Transaction__c>> transactionsToProcess = new Map<String, List<bt_stripe__Transaction__c>>{'PRE_AUTH' => new List<bt_stripe__Transaction__c>(), 'INVOICE' => new List<bt_stripe__Transaction__c>()};
+        Map<String, List<bt_stripe__Transaction__c>> transactionsToProcess = new Map<String, List<bt_stripe__Transaction__c>>{
+            'PRE_AUTH' => new List<bt_stripe__Transaction__c>(),
+            'INVOICE' => new List<bt_stripe__Transaction__c>(),
+            'REFUND' => new List<bt_stripe__Transaction__c>()
+        };
         for (bt_stripe__Transaction__c blackthornTransaction : transactions) {
             // to create aforza payment for pre authorised transaction
             if (blackthornTransaction.Order__c != null && blackthornTransaction.bt_stripe__Payment_Status__c == 'Authorized' && blackthornTransaction.Invoice__c == null) {
                 accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
                 transactionsToProcess.get('PRE_AUTH').add(blackthornTransaction);
+                continue;
             }
             // to create aforza payment for invoice based payment creation
             if (blackthornTransaction.Invoice__c != null && blackthornTransaction.Order__c != null) {
                 accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
                 transactionsToProcess.get('INVOICE').add(blackthornTransaction);
+                continue;
+            }
+            // to create aforza payment for refund
+            if (blackthornTransaction.bt_stripe__Transaction_Type__c == 'Refund') {
+                accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
+                transactionsToProcess.get('REFUND').add(blackthornTransaction);
             }
         }
 
@@ -39,6 +50,9 @@ public with sharing class BtTransactionTriggerHandler {
             }
             for (bt_stripe__Transaction__c blackthornTransaction : transactionsToProcess.get('INVOICE')) {
                 aforzaTransactionsToInsert.add(mapBlackthornTransactionToAforzaTransaction(blackthornTransaction, accountIdToPaymentMethodId, 'INVOICE'));
+            }
+            for (bt_stripe__Transaction__c blackthornTransaction : transactionsToProcess.get('REFUND')) {
+                aforzaTransactionsToInsert.add(mapBlackthornTransactionToAforzaTransaction(blackthornTransaction, accountIdToPaymentMethodId, 'REFUND'));
             }
 
             insert aforzaTransactionsToInsert;
@@ -101,6 +115,9 @@ public with sharing class BtTransactionTriggerHandler {
             aforzaTransaction.aforza__Status__c = 'Pre-Authorization';
         } else if (context == 'INVOICE') {
             aforzaTransaction.aforza__Status__c = 'Pending';
+            aforzaTransaction.aforza__Invoice__c = blackthornTransaction.Invoice__c;
+        } else if (context == 'REFUND') {
+            aforzaTransaction.aforza__Status__c = 'Applied';
             aforzaTransaction.aforza__Invoice__c = blackthornTransaction.Invoice__c;
         }
 

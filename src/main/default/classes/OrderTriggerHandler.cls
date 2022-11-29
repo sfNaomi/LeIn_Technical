@@ -249,7 +249,7 @@ public with sharing class OrderTriggerHandler {
             }
         }
 
-        if (orderIdsToLoadIdsToRemoveFromRoute.size() > 1) {
+        if (orderIdsToLoadIdsToRemoveFromRoute.size() > 0) {
             removeOrdersFromRoute(orderIdsToLoadIdsToRemoveFromRoute, accountIdToLoadIdMap);
         }
     }

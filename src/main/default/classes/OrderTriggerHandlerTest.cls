@@ -934,4 +934,54 @@ private with sharing class OrderTriggerHandlerTest {
         List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
         Assert.areEqual(0, loadAcc.size(), 'There should not be load anymore, as all orders were removed');
     }
+
+    @IsTest
+    private static void testRemoveOrdersFromLoad_SingleOrdersRemoved() {
+        // prepare orders and assign them to load
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
+        Account acc1 = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        List<Order> orders = (List<Order>) TdfSObjectFactory.insertSObjects(new Order(AccountId = acc1.Id, RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Ready To Load'), 2);
+
+        for (Integer i = 0; i < orders.size(); i++) {
+            orders[i].Status = 'Pending Delivery';
+        }
+
+        update orders;
+
+        // check that all data are created as expected
+        List<aforza__Route_Location__c> routeLocations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.areEqual(1, routeLocations.size());
+
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.areEqual(1, visits.size());
+
+        List<Task> tasks = [SELECT Id FROM Task];
+        Assert.areEqual(2, tasks.size());
+
+        List<aforza__Route__c> route = [SELECT Id FROM aforza__Route__c WHERE LoadId__c = :load.Id];
+        Assert.areEqual(1, route.size());
+
+        Test.startTest();
+        orders[0].Status = 'Unplanned';
+        orders[0].Replanned__c = true;
+        orders[0].Load__c = null;
+        update orders;
+        Test.stopTest();
+
+        List<aforza__Route_Location__c> routeLocationAcc = [SELECT Id FROM aforza__Route_Location__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(1, routeLocationAcc.size(), 'There should be route location left as only one order was removed.');
+
+        List<aforza__Visit__c> visitAcc = [SELECT Id FROM aforza__Visit__c WHERE aforza__Account__c = :acc1.Id];
+        Assert.areEqual(1, visitAcc.size(), 'There should be Visit left as only one order was removed.');
+
+        List<Task> tasksAcc = [SELECT Id FROM Task WHERE aforza__Order__r.AccountId = :acc1.Id];
+        Assert.areEqual(1, tasksAcc.size(), 'There should be Task left as only one order was removed.');
+
+        List<aforza__Route__c> routeAcc = [SELECT Id FROM aforza__Route__c WHERE LoadId__c = :load.Id];
+        Assert.areEqual(1, routeAcc.size(), 'There should be route left as only one order was removed.');
+
+        List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
+        Assert.areEqual(1, loadAcc.size(), 'There should be load left as only one order was removed.');
+    }
 }
