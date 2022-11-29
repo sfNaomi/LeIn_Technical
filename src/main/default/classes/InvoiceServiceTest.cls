@@ -283,7 +283,7 @@ private with sharing class InvoiceServiceTest {
 		String expectedInvoiceStatus = 'Paid in Full';
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
@@ -297,7 +297,7 @@ private with sharing class InvoiceServiceTest {
 		String expectedInvoiceStatus = 'Paid in Full';
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
@@ -449,7 +449,22 @@ private with sharing class InvoiceServiceTest {
 		String expectedInvoiceStatus = 'Pending Payment';
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
+		Test.stopTest();
+
+		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
+	}
+
+	@IsTest
+	private static void testComputeInvoiceStatus_JdeOrder() {
+		String paymentMethod = 'Credit Card';
+
+		String initialInvoiceStatus = null;
+		String expectedInvoiceStatus = 'Paid in Full';
+		Id orderRecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID;
+
+		Test.startTest();
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, orderRecordTypeId);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);

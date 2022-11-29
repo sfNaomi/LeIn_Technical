@@ -18,13 +18,20 @@ public with sharing class BtTransactionTriggerHandler {
         Map<String, List<bt_stripe__Transaction__c>> transactionsToProcess = new Map<String, List<bt_stripe__Transaction__c>>{
             'PRE_AUTH' => new List<bt_stripe__Transaction__c>(),
             'INVOICE' => new List<bt_stripe__Transaction__c>(),
-            'REFUND' => new List<bt_stripe__Transaction__c>()
+            'REFUND' => new List<bt_stripe__Transaction__c>(),
+            'JDE' => new List<bt_stripe__Transaction__c>()
         };
         for (bt_stripe__Transaction__c blackthornTransaction : transactions) {
             // to create aforza payment for pre authorised transaction
             if (blackthornTransaction.Order__c != null && blackthornTransaction.bt_stripe__Payment_Status__c == 'Authorized' && blackthornTransaction.Invoice__c == null) {
                 accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
                 transactionsToProcess.get('PRE_AUTH').add(blackthornTransaction);
+                continue;
+            }
+            // to create aforza payment for Straight to JDE orders
+            if (blackthornTransaction.Order__c != null && blackthornTransaction.bt_stripe__Payment_Status__c == 'Captured' && blackthornTransaction.Invoice__c == null) {
+                accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
+                transactionsToProcess.get('JDE').add(blackthornTransaction);
                 continue;
             }
             // to create aforza payment for invoice based payment creation
@@ -47,6 +54,9 @@ public with sharing class BtTransactionTriggerHandler {
             for (bt_stripe__Transaction__c blackthornTransaction : transactionsToProcess.get('PRE_AUTH')) {
                 aforzaTransactionsToInsert.add(mapBlackthornTransactionToAforzaTransaction(blackthornTransaction, accountIdToPaymentMethodId, 'PRE_AUTH'));
                 ordersToUpdate.add(new Order(Id = blackthornTransaction.Order__c, PreAuthCaptured__c = true));
+            }
+            for (bt_stripe__Transaction__c blackthornTransaction : transactionsToProcess.get('JDE')) {
+                aforzaTransactionsToInsert.add(mapBlackthornTransactionToAforzaTransaction(blackthornTransaction, accountIdToPaymentMethodId, 'JDE'));
             }
             for (bt_stripe__Transaction__c blackthornTransaction : transactionsToProcess.get('INVOICE')) {
                 aforzaTransactionsToInsert.add(mapBlackthornTransactionToAforzaTransaction(blackthornTransaction, accountIdToPaymentMethodId, 'INVOICE'));
@@ -119,6 +129,8 @@ public with sharing class BtTransactionTriggerHandler {
         } else if (context == 'REFUND') {
             aforzaTransaction.aforza__Status__c = 'Applied';
             aforzaTransaction.aforza__Invoice__c = blackthornTransaction.Invoice__c;
+        } else if (context == 'JDE') {
+            aforzaTransaction.aforza__Status__c = 'Applied';
         }
 
         return aforzaTransaction;

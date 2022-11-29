@@ -21,6 +21,8 @@ public without sharing class InvoiceEmailService {
     @TestVisible private static final String INVOICE_EMAIL_NO_PAYMENT_NAME = 'AGBarrInvoiceEmailTemplate';
     @TestVisible private static final String INVOICE_EMAIL_WITH_PAYMENT_NAME = 'AGBarrInvoiceEmailTemplateWithPaymentLink';
 
+    private static final String ORDER_RECORD_TYPE_JDE = 'StraightToJDEOrder';
+
     private static final Map<String, Id> INVOICE_EMAIL_TEMPLATES {
         get {
             if (INVOICE_EMAIL_TEMPLATES == null) {
@@ -104,6 +106,9 @@ public without sharing class InvoiceEmailService {
                     invoiceIdsToEmailTemplate.put(invoice.Id, INVOICE_EMAIL_WITH_PAYMENT_NAME);
                     // if pre auth from Order, it needs to be set to Invoice Type Email for us to send it
                 } else if (invoice.aforza__Order__r.PreAuthCaptured__c == true && invoice.aforza__Account__r.InvoiceType__c == 'Email') {
+                    invoiceIdsToEmailTemplate.put(invoice.Id, INVOICE_EMAIL_NO_PAYMENT_NAME);
+                    // send email for StraightToJDEOrder
+                } else if (invoice.aforza__Order__r.RecordType.DeveloperName == ORDER_RECORD_TYPE_JDE) {
                     invoiceIdsToEmailTemplate.put(invoice.Id, INVOICE_EMAIL_NO_PAYMENT_NAME);
                 }
             }

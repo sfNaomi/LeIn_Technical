@@ -183,7 +183,7 @@ public with sharing class InvoiceService {
         // set fixed fields
         newInvoice.aforza__Issued_Date__c = computeInvoiceIssuedDate(newInvoice.aforza__Issued_Date__c);
         newInvoice.aforza__Due_Date__c = calculateInvoiceDueDate(existingOrder.Account.PaymentTerms__c, newInvoice.aforza__Issued_Date__c);
-        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c);
+        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c, existingOrder.RecordTypeId);
 
         // populate fields on the new invoice based on mapping
         CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
@@ -226,6 +226,7 @@ public with sharing class InvoiceService {
      *
      * @param paymentMethod payment method of related account
      * @param currentStatus current invoice status
+     * @param orderRecordTypeId current order recordType Id
      *
      * @return invoice status
      *
@@ -233,8 +234,17 @@ public with sharing class InvoiceService {
      * @date 2022-11-10
      */
     @TestVisible
-    private static String computeInvoiceStatus(String paymentMethod, String currentStatus) {
-        return paymentMethod == DD_PAYMENT_METHOD ? PAID_INVOICE_STATUS : paymentMethod == CREDIT_CARD_PAYMENT_METHOD ? PENDING_PAYMENT_INVOICE_STATUS : currentStatus;
+    private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId) {
+        String invoiceStatus = '';
+
+        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID) {
+            invoiceStatus = PAID_INVOICE_STATUS;
+        } else if (paymentMethod == CREDIT_CARD_PAYMENT_METHOD) {
+            invoiceStatus = PENDING_PAYMENT_INVOICE_STATUS;
+        } else {
+            invoiceStatus = currentStatus;
+        }
+        return invoiceStatus;
     }
 
     /**
@@ -334,7 +344,7 @@ public with sharing class InvoiceService {
         );
 
         String queryString =
-            'SELECT ' + String.join(orderFields, ',') + ', ' +
+            'SELECT ' + String.join(orderFields, ',') + ', RecordTypeId, ' +
             '(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
             'FROM Order WHERE Id IN :orderIds';
         List<Order> orders = Database.query(queryString);
@@ -381,7 +391,7 @@ public with sharing class InvoiceService {
      * @author Magdalena Stanciu
      * @date 2022-10-25
      */
-    @future(callout=true)
+    @Future(Callout=true)
     public static void generateInvoiceDocumentsAsync(Set<Id> invoiceIds) {
         generateInvoiceDocuments(invoiceIds);
         updateInvoicesWithReadyForEvaluation(invoiceIds);
