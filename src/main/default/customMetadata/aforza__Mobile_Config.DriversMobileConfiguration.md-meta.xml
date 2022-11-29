@@ -40,30 +40,48 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Footer__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
+Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Header__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+AG Barr LTD&lt;br /&gt;
+2 Westfield Place&lt;br /&gt;
+Cumbernauld&lt;br /&gt;
+G68 9YH&lt;br /&gt;
+Tel: 0330 390 3584&lt;br /&gt;
+Co.Reg.No. SC005653&lt;br /&gt;
+Vat:Reg.No. 259 9895 02&lt;br /&gt;
+AWRS URN: XAAW 000 0112386</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://agbarr--qa.sandbox.file.force.com/servlet/servlet.ImageServer?id=0152z0000012o2c&amp;oid=00D2z0000008oYa&amp;lastMod=1669152863000</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Footer__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
+Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Header__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+AG Barr LTD&lt;br /&gt;
+2 Westfield Place&lt;br /&gt;
+Cumbernauld&lt;br /&gt;
+G68 9YH&lt;br /&gt;
+Tel: 0330 390 3584&lt;br /&gt;
+Co.Reg.No. SC005653&lt;br /&gt;
+Vat:Reg.No. 259 9895 02&lt;br /&gt;
+AWRS URN: XAAW 000 0112386</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://agbarr--qa.sandbox.file.force.com/servlet/servlet.ImageServer?id=0152z0000012o2c&amp;oid=00D2z0000008oYa&amp;lastMod=1669152863000</value>
     </values>
     <values>
         <field>aforza__Profiles_JSON__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">[&quot;00e2z000000SynBAAS&quot;]</value>
     </values>
 </CustomMetadata>
