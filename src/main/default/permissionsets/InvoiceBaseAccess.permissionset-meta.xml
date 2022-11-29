@@ -248,6 +248,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>aforza__Invoice__c.PushedToBI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Invoice__c.PushedToEdi__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.PushedtoJde__c</field>
         <readable>true</readable>
     </fieldPermissions>
