@@ -1,8 +1,8 @@
 public with sharing class DatatableService {
 
-    @AuraEnabled(cacheable=true)
-    public static List<Column> callGetColumns(){
-        Schema.FieldSet fieldSet = SObjectType.Account.FieldSets.SegmentViewerDynamic;
+    @AuraEnabled(Cacheable=true)
+    public static List<Column> callGetColumns() {
+        Schema.FieldSet fieldSet = SObjectType.Account.fieldSets.SegmentViewerDynamic;
 
         return getColumnsForFieldSet(fieldSet);
     }
@@ -10,29 +10,34 @@ public with sharing class DatatableService {
     public static List<Column> getColumnsForFieldSet(FieldSet fs) {
         List<Column> columns = new List<Column>();
 
-        for(FieldSetMember fm : fs.getFields()) {
-                Column c = new Column();
-                    c.label = fm.getLabel();
-                    c.fieldName = fm.getFieldPath();
-                    c.sortable = true;
+        for (FieldSetMember fm : fs.getFields()) {
+            Column c = new Column();
+            c.label = fm.getLabel();
+            c.fieldName = fm.getFieldPath();
+            c.sortable = true;
 
-                    switch on fm.getType() {
-                        when STRING {
-                            c.type = 'text';
-                        }
-                        when DATE {
-                            c.type = 'date';
-                            c.typeAttributes = new TypeAttributes();
-                            c.typeAttributes.year = 'numeric';
-                            c.typeAttributes.month = '2-digit';
-                            c.typeAttributes.day = '2-digit';
-                        }
-                        when CURRENCY {
-                            c.type = 'currency';
-                        }
+            switch on fm.getType() {
+                when STRING {
+                    c.type = 'text';
+                }
+                when DATE {
+                    c.type = 'date';
+                    c.typeAttributes = new TypeAttributes();
+                    c.typeAttributes.year = 'numeric';
+                    c.typeAttributes.month = '2-digit';
+                    c.typeAttributes.day = '2-digit';
+                }
+                when CURRENCY {
+                    c.type = 'currency';
+                }
+                when REFERENCE {
+                    if (fm.getFieldPath().endsWith('__c')) {
+                        c.fieldName = fm.getFieldPath().replace('__c', '__r') + '.Name';
                     }
-                    columns.add(c);
+                }
             }
+            columns.add(c);
+        }
 
         return columns;
     }
