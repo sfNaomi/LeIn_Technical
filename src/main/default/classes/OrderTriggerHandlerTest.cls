@@ -273,6 +273,52 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void validateOrderCreationOrCompletion_CheckIfOrderItemGotFullDiscount() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                LastOrderDate__c = null, CreditStatus__c = 'Good', aforza__Default_Price_Book__c = newPricebook.Id,
+                aforza__Credit_Amount__c = 10
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id, aforza__Discount_Percent__c = 100)
+        );
+
+        Test.startTest();
+        try {
+            newOrder.Status = 'Activated';
+            update newOrder;
+            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+        } catch (Exception e) {
+            String expectedErrorMessage = Label.OrderActivationPreventedItemFullDiscount;
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
     private static void testUpdateLastOrderDateAndStatusOnParentAccount_TradersAccountNewDraftFDOrderIsCreated() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));

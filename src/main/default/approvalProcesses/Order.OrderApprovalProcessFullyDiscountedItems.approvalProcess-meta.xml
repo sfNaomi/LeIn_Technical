@@ -13,24 +13,27 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>FinanceTeamQueue</name>
+                <name>SalesSupportTeamQueue</name>
+                <type>queue</type>
+            </approver>
+            <approver>
+                <name>TeamLeadersQueue</name>
                 <type>queue</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>Step 1</label>
-        <name>Step_1</name>
+        <name>Step1</name>
     </approvalStep>
+    <description>Approval process on Order for cases where 100% discounts were applied on items.</description>
     <emailTemplate>unfiled$public/OrderRequiringApproval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <formula>OR(
-				AND(
-				(ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;) ||  Account.AvailableCredit__c &lt;  TotalAmount ),
-    (RecordType.DeveloperName = &quot;ECommerceOrder&quot;	|| RecordType.DeveloperName = &quot;EDIOrder&quot;
-    || RecordType.DeveloperName = &quot;FieldDirectOrder&quot;)),
-				AND(Account.AvailableCredit__c &lt; TotalAmount , RecordType.DeveloperName = &quot;TelesalesOrder&quot;)
-			)</formula>
+        <criteriaItems>
+            <field>Order.TotalNumberOfFullyDiscountedItems__c</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
         <action>
@@ -38,19 +41,15 @@
             <type>FieldUpdate</type>
         </action>
         <action>
-            <name>UpdateOrderStatusToActivated</name>
+            <name>UpdateOrderStatusToCompleted</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
-    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
-            <name>LeaveAsAwaitingApproval</name>
+            <name>UpdateOrderStatusBackToDraft</name>
             <type>FieldUpdate</type>
-        </action>
-        <action>
-            <name>RejectedOrder</name>
-            <type>Alert</type>
         </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
@@ -60,8 +59,8 @@
             <type>FieldUpdate</type>
         </action>
     </initialSubmissionActions>
-    <label>Order Approval Process Finance Team</label>
-    <processOrder>3</processOrder>
+    <label>OrderApprovalProcessFullyDiscountedItems</label>
+    <processOrder>1</processOrder>
     <recordEditability>AdminOnly</recordEditability>
-    <showApprovalHistory>true</showApprovalHistory>
+    <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

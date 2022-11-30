@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>OrderActivationPreventedItemFullDiscount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OrderActivationPreventedItemFullDiscount</shortDescription>
+        <value>Order activation not allowed due 100% discount applied to item. Record needs to be submitted for approval.</value>
+    </labels>
+    <labels>
         <fullName>OrderActivationPreventedDueToAccountOnHold</fullName>
         <language>en_US</language>
         <protected>false</protected>

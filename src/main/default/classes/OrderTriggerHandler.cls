@@ -61,8 +61,10 @@ public with sharing class OrderTriggerHandler {
 
     public static void validateOrderCreationOrCompletion(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> relatedAccountIds = new Set<Id>();
+        Set<Id> newOrderIds = new Set<Id>();
         for (Order newOrder : newOrders) {
             relatedAccountIds.add(newOrder.AccountId);
+            newOrderIds.add(newOrder.Id);
         }
 
         Map<Id, Account> relatedAccounts = new Map<Id, Account>([
@@ -74,6 +76,8 @@ public with sharing class OrderTriggerHandler {
             FROM Account
             WHERE Id IN :relatedAccountIds
         ]);
+        
+        Map<Id,List<OrderItem>> orderIdToOrderItemsMap = getOrderIdToOrderItemsMap(newOrderIds);
 
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
@@ -81,10 +85,8 @@ public with sharing class OrderTriggerHandler {
             if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 ((oldOrder == null) || (oldOrder != null && newOrder.Status != oldOrder.Status &&
                     !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status)))) {
-                newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
-            }
-
-            if (oldOrder != null && newOrder.Status != oldOrder.Status &&
+                    newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
+            } else if (oldOrder != null && newOrder.Status != oldOrder.Status &&
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && (
                 relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED || relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (
                 newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID || newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
@@ -93,11 +95,38 @@ public with sharing class OrderTriggerHandler {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
                     && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                }
-                if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && newOrder.IsApproved__c == false) {
+                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && newOrder.IsApproved__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
+            } else if (oldOrder != null && newOrder.Status != oldOrder.Status &&
+                !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && newOrder.IsApproved__c == false) {
+                if (orderIdToOrderItemsMap.keySet().contains(newOrder.Id)) {
+                    checkIfFullDiscountAppliedOnOrderItem(newOrder, orderIdToOrderItemsMap.get(newOrder.Id));
+                }    
+            }       
+        }
+    }
+
+    private static Map<Id,List<OrderItem>> getOrderIdToOrderItemsMap(Set<Id> newOrderIds){
+        List<OrderItem> relatedOrderItems = [SELECT Id, OrderId, aforza__Discount_Percent__c FROM OrderItem WHERE OrderId IN :newOrderIds];
+        Map<Id,List<OrderItem>> orderIdToOrderItemsMap = new Map<Id,List<OrderItem>>();
+        for (OrderItem orderItem : relatedOrderItems) {
+            if (orderIdToOrderItemsMap.containsKey(orderItem.OrderId)){
+            	orderIdToOrderItemsMap.get(orderItem.OrderId).add(orderItem); 
+            } else {
+                orderIdToOrderItemsMap.put(orderItem.OrderId, new List<OrderItem>{
+                    orderItem
+                        });
+            }
+        }
+        return orderIdToOrderItemsMap;          
+    }
+
+    private static void checkIfFullDiscountAppliedOnOrderItem(Order newOrder, List<OrderItem> relatedOrderItems){
+        for (OrderItem relatedOrderItem : relatedOrderItems) {
+            if (relatedOrderItem.aforza__Discount_Percent__c == 100) {
+                newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
             }
         }
     }
