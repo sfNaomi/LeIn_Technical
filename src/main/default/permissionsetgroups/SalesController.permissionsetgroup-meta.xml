@@ -23,6 +23,7 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
