@@ -86,7 +86,7 @@ public with sharing class InvoiceService {
         }
         update transactions;
 
-        // link bt payments
+        // link bt payments (only for pre auth orders)
         List<bt_stripe__Transaction__c> btTransactions = getBtTransactions(orderIdsToCreateInvoices);
         for (bt_stripe__Transaction__c newTransaction : btTransactions) {
             Id invoiceId = invoicesByOriginalOrderId?.get(newTransaction.Order__c)?.Id;
@@ -165,6 +165,7 @@ public with sharing class InvoiceService {
             SELECT Id, Order__c, Invoice__c, bt_stripe__Payment_Status__c, bt_stripe__Transaction_Status__c
             FROM bt_stripe__Transaction__c
             WHERE Order__c IN :orderIds
+            AND Order__r.PreAuthCaptured__c = TRUE
         ];
     }
 
