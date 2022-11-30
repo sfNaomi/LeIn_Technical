@@ -37,6 +37,10 @@
     text-align: left;
 }
 
+.align-right {
+    text-align: right;
+}
+
 .page-break {
     page-break-before: always;
 }
@@ -49,10 +53,24 @@
     break-inside: avoid;
 }
 
+.page-break-after {
+    page-break-after: always;
+}
+
 .m-bottom-small {
     margin-bottom: 10px;
 }
 
 .m-top-small {
     margin-top: 10px;
+}
+
+.float-right {
+    float: right;
+    padding-left: 20px;
+}
+
+.float-left {
+    float: left;
+    padding-right: 20px;
 }

@@ -275,7 +275,7 @@
     </labels>
     <labels>
         <fullName>DeliveryDate</fullName>
-        <categories>LogisticUpdateScreen</categories>
+        <categories>LogisticUpdateScreen, Delivery Note</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>DeliveryDate</shortDescription>
@@ -530,7 +530,7 @@
     </labels>
     <labels>
         <fullName>Quantity</fullName>
-        <categories>LoadPlanningScreen</categories>
+        <categories>LoadPlanningScreen, Delivery Note</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quantity</shortDescription>
@@ -1087,5 +1087,93 @@
         <protected>false</protected>
         <shortDescription>Invoice - Invoiced To</shortDescription>
         <value>INVOICED TO:</value>
+    </labels>
+    <labels>
+        <fullName>CustomerContact</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Contact</shortDescription>
+        <value>Customer Contact</value>
+    </labels>
+    <labels>
+        <fullName>CustomerShopNo</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Shop No</shortDescription>
+        <value>Customer Shop No</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryAddress</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Address</shortDescription>
+        <value>Delivery Address</value>
+    </labels>
+    <labels>
+        <fullName>DeliveryInstructions</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Delivery Instructions</shortDescription>
+        <value>Delivery Instructions</value>
+    </labels>
+    <labels>
+        <fullName>DpRef</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DP Ref</shortDescription>
+        <value>DP Ref#</value>
+    </labels>
+    <labels>
+        <fullName>Name</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>OrderNumber</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Number</shortDescription>
+        <value>Order Number</value>
+    </labels>
+    <labels>
+        <fullName>PoReference</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PO Reference</shortDescription>
+        <value>PO Ref#</value>
+    </labels>
+    <labels>
+        <fullName>ProofOfDelivery</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Proof of Delivery</shortDescription>
+        <value>Proof of Delivery</value>
+    </labels>
+    <labels>
+        <fullName>Signature</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Signature</shortDescription>
+        <value>Signature</value>
+    </labels>
+    <labels>
+        <fullName>SkuCode</fullName>
+        <categories>Delivery Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SKU Code</shortDescription>
+        <value>SKU Code</value>
     </labels>
 </CustomLabels>
