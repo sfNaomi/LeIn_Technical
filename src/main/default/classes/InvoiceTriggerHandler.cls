@@ -83,12 +83,12 @@ public with sharing class InvoiceTriggerHandler {
         bt_stripe__Transaction__c btTransaction = new bt_stripe__Transaction__c();
         btTransaction.RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID;
         btTransaction.bt_stripe__Amount__c = invoice.Gross__c;
-        btTransaction.bt_stripe__Transaction_Status__c = 'Open';
+        //btTransaction.bt_stripe__Transaction_Status__c = 'Open';
         btTransaction.bt_stripe__Processed_Date__c = System.now();
         btTransaction.Invoice__c = invoice.Id;
 
         if (originalTransaction != null) {
-            btTransaction.bt_stripe__Transaction_Type__c = 'Refund';
+            //btTransaction.bt_stripe__Transaction_Type__c = 'Refund';
             btTransaction.Order__c = invoice.aforza__Order__r.aforza__Original_Order__c;
             btTransaction.bt_stripe__Parent_Transaction__c = originalTransaction.Id;
             btTransaction.bt_stripe__Parent_Transaction_Id__c = originalTransaction.Id;
@@ -100,7 +100,7 @@ public with sharing class InvoiceTriggerHandler {
             btTransaction.bt_stripe__Capture__c = true;
         } else {
             btTransaction.bt_stripe__Description__c = 'Payment Request for ' + invoice.aforza__Order__r.OrderNumber;
-            btTransaction.bt_stripe__Transaction_Type__c = 'Normal';
+            //btTransaction.bt_stripe__Transaction_Type__c = 'Normal';
             btTransaction.Order__c = invoice.aforza__Order__c;
             btTransaction.bt_stripe__Related_Contact__c = invoice.aforza__Account__r.aforza__Primary_Contact__c;
             btTransaction.bt_stripe__Related_Account__c = invoice.aforza__Account__c;
