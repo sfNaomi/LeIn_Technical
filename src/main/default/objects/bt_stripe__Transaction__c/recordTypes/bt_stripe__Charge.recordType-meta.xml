@@ -230,7 +230,7 @@
         </values>
         <values>
             <fullName>GBP</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>GEL</fullName>
@@ -630,7 +630,7 @@
         </values>
         <values>
             <fullName>USD</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>UYU</fullName>
