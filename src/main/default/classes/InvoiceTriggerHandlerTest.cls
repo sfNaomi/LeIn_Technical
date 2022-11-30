@@ -33,8 +33,8 @@ private with sharing class InvoiceTriggerHandlerTest {
         Assert.areEqual(RecordTypes.BT_TRANSACTION_CHARGE_ID, btTransaction.RecordTypeId);
         Assert.areEqual(invoiceWithData.Gross__c, btTransaction.bt_stripe__Amount__c);
         Assert.isTrue(btTransaction.bt_stripe__Description__c.contains('Payment Request for'));
-        //Assert.areEqual('Normal', btTransaction.bt_stripe__Transaction_Type__c);
-        //Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
+        Assert.areEqual('Normal', btTransaction.bt_stripe__Transaction_Type__c);
+        Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
         Assert.areEqual(invoiceWithData.aforza__Account__r.aforza__Primary_Contact__c, btTransaction.bt_stripe__Related_Contact__c);
         Assert.areEqual(invoiceWithData.aforza__Account__c, btTransaction.bt_stripe__Related_Account__c);
         Assert.areEqual(invoiceWithData.aforza__Order__c, btTransaction.Order__c);
@@ -164,8 +164,8 @@ private with sharing class InvoiceTriggerHandlerTest {
 
         Assert.areEqual(RecordTypes.BT_TRANSACTION_CHARGE_ID, btTransaction.RecordTypeId);
         Assert.areEqual(invoiceWithData.Gross__c, btTransaction.bt_stripe__Amount__c);
-        //Assert.areEqual('Refund', btTransaction.bt_stripe__Transaction_Type__c);
-        //Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
+        Assert.areEqual('Refund', btTransaction.bt_stripe__Transaction_Type__c);
+        Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
         Assert.areEqual(invoiceWithData.Id, btTransaction.Invoice__c);
         Assert.areEqual(invoiceWithData.aforza__Order__r.aforza__Original_Order__c, btTransaction.Order__c);
         Assert.areEqual(originalTransaction.Id, btTransaction.bt_stripe__Parent_Transaction__c);
