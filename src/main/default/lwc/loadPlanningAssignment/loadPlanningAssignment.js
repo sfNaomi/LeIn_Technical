@@ -15,6 +15,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     @api selectedOrdersIds = [];
     @api newOrderStatus;
     @api ordersDeselectedFromLoad = [];
+    @api ordersAssignedToLoad = [];
     @api loadId;
     @api operation;
     @api operationLabel;
@@ -117,7 +118,9 @@ export default class LoadPlanningAssignment extends LightningElement {
         try {
             this.fireSpinnerChangeEvent(true);
             const load = await this.upsertLoad();
-            if (this.selectedOrdersIds.length > 0) {
+            // compare selected orders to original load orders and process only newly selected
+            const newlySelectedOrdersIds = this.filterOnlyNewlyAddedOrdersToLoad();
+            if (newlySelectedOrdersIds.length > 0) {
                 await this.assignNewOrdersToLoad(load);
             }
             if (this.ordersDeselectedFromLoad.length > 0) {
@@ -129,6 +132,14 @@ export default class LoadPlanningAssignment extends LightningElement {
         } finally {
             this.fireSpinnerChangeEvent(false);
         }
+    }
+
+    filterOnlyNewlyAddedOrdersToLoad() {
+        const orderIdsToRemoveSet = new Set(this.ordersAssignedToLoad.map(order => order.Id));
+
+        return this.selectedOrdersIds.filter((id) => {
+            return !orderIdsToRemoveSet.has((id));
+        });
     }
 
     async upsertLoad() {
