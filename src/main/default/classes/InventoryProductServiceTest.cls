@@ -1,7 +1,7 @@
 @IsTest
 private with sharing class InventoryProductServiceTest {
   @IsTest
-  private static void updateInventoryStockNoUnfufilledOrdersWithoutStockQuantityUpdate() {
+  private static void testUpdateInventoryStockNoUnfufilledOrdersWithoutStockQuantityUpdate() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
@@ -51,7 +51,7 @@ private with sharing class InventoryProductServiceTest {
   }
 
   @IsTest
-  private static void updateInventoryStockNoUnfufilledOrdersWithStockQuantityUpdate() {
+  private static void testUpdateInventoryStockNoUnfufilledOrdersWithStockQuantityUpdate() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
@@ -121,7 +121,7 @@ private with sharing class InventoryProductServiceTest {
   }
 
   @IsTest
-  private static void updateInventoryStockOneFulfilledOrderOneUnfulfilledOrder() {
+  private static void testUpdateInventoryStockOneFulfilledOrderOneUnfulfilledOrder() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
@@ -230,7 +230,7 @@ private with sharing class InventoryProductServiceTest {
   }
 
   @IsTest
-  private static void updateInventoryStockTwoUnfufilledOrders() {
+  private static void testUpdateInventoryStockTwoUnfufilledOrders() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
@@ -328,7 +328,7 @@ private with sharing class InventoryProductServiceTest {
       Assert.areEqual(-10, newList[1].aforza__Stock_Quantity__c);
   }
  @IsTest
-  private static void updateInventoryStockReciptedAndWithhIvoiceNotPushed() {
+  private static void testUpdateInventoryStockReciptedAndWithhIvoiceNotPushed() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
