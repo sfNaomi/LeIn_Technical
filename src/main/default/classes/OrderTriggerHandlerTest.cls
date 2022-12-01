@@ -1061,6 +1061,88 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testOrdersCancellation() {
+        // create product
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+
+        // add new product to standard PB
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add products to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Default_Price_Book__c = newPricebook.Id)
+        );
+
+        Contact newContact = (Contact) TdfSObjectFactory.insertSObject(
+            new Contact(AccountId = dpAccount.Id, Email = 'test@test.com')
+        );
+        dpAccount.aforza__Primary_Contact__c = newContact.Id;
+        update dpAccount;
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
+                AccountId = dpAccount.Id,
+                Status = 'Draft',
+                Pricebook2Id = newPricebook.Id
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = dpAccount.Id));
+
+        aforza__Payment_Transaction__c newPayment = (aforza__Payment_Transaction__c) TdfSObjectFactory.insertSObject(
+			new aforza__Payment_Transaction__c(aforza__Account__c = dpAccount.Id, OrderNumber__c = newOrder.Id)
+		);
+
+        //insert BT payment
+		bt_stripe__Transaction__c btNewPayment = (bt_stripe__Transaction__c) TdfSObjectFactory.insertSObject(
+			new bt_stripe__Transaction__c(
+				bt_stripe__Related_Account__c = dpAccount.Id,
+				RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
+				Order__c = newOrder.Id,
+                Invoice__c = invoice.Id
+			)
+		);
+
+        Test.startTest();
+        newOrder.Status = 'Cancelled';
+        newOrder.PreAuthCaptured__c = true;
+        update newOrder;
+        Test.stopTest();
+
+        // retrieve payment and validate result
+        Map<Id, aforza__Payment_Transaction__c> transactionsMap = new Map<Id, aforza__Payment_Transaction__c>([
+            SELECT Id, aforza__Status__c
+            FROM aforza__Payment_Transaction__c
+            WHERE OrderNumber__c = :newOrder.Id
+        ]);
+        Assert.areEqual('Cancelled', transactionsMap.get(newPayment.Id).aforza__Status__c, 'Expecting transaction status to be Cancelled');
+        
+        //TODO
+        // As we're excluding testing for this
+        /*
+        // retrieve payment and validate result
+        Map<Id, bt_stripe__Transaction__c> btTransactionsMap = new Map<Id, bt_stripe__Transaction__c>([
+            SELECT Id, bt_stripe__Refund__c
+            FROM bt_stripe__Transaction__c
+            WHERE Order__c = :newOrder.Id
+        ]);
+        Assert.isFalse(btTransactionsMap.get(btNewPayment.Id).bt_stripe__Refund__c, 'Expecting bt-transaction disable for refund');
+        */
+    }
+
     private static void testRemoveOrdersFromLoad_SingleOrdersRemoved() {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());

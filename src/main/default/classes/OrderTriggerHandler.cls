@@ -26,6 +26,8 @@ public with sharing class OrderTriggerHandler {
         set;
     }
 
+    private static final String CANCELLED_STATUS = 'Cancelled';
+
     public static void cloneCompletedOrder(List<Order> newOrders, Map<Id, Order> oldOrders) {
         List<Order> toBeClonedOrders = new List<Order>();
         for (Order order : newOrders) {
@@ -283,6 +285,43 @@ public with sharing class OrderTriggerHandler {
 
         if (orderIdsToLoadIdsToRemoveFromRoute.size() > 0) {
             removeOrdersFromRoute(orderIdsToLoadIdsToRemoveFromRoute, accountIdToLoadIdMap);
+        }
+    }
+
+    public static void handleOrdersCancellation(List<Order> newOrders, Map<Id, Order> oldOrders) {
+        List<String> orderIds = new List<String>();
+        for (Order newOrder : newOrders) {
+            Order oldOrder = oldOrders.get(newOrder.Id);
+            Boolean isStatusChanged = oldOrder != null && newOrder.Status != oldOrder.Status;
+            if (isStatusChanged && newOrder.Status == CANCELLED_STATUS && newOrder.PreAuthCaptured__c == True) {
+                orderIds.add(newOrder.Id);
+            }
+        }
+        if (!orderIds.isEmpty()) {
+            // Update AGB Transaction Records
+            setOrderTransactionsToCancelledStatus(orderIds);
+            // Update BT Transaction Records
+            setOrderBTTransactionsForRefund(orderIds);
+        }
+    }
+
+    private static void setOrderTransactionsToCancelledStatus(List<String> orderIds) {
+        List<aforza__Payment_Transaction__c> agbTransactionsToUpdate = new List<aforza__Payment_Transaction__c>();
+        for(aforza__Payment_Transaction__c trans: [SELECT Id FROM aforza__Payment_Transaction__c WHERE OrderNumber__c IN :orderIds]) {
+            trans.aforza__Status__c = CANCELLED_STATUS;
+            agbTransactionsToUpdate.add(trans);
+        }
+        Update agbTransactionsToUpdate;
+    }
+
+    private static void setOrderBTTransactionsForRefund(List<String> orderIds) {
+        List<bt_stripe__Transaction__c> btTransactionsToUpdate = new List<bt_stripe__Transaction__c>();
+        for(bt_stripe__Transaction__c trans: [SELECT Id FROM bt_stripe__Transaction__c WHERE Order__c IN :orderIds]) {
+            trans.bt_stripe__Refund__c = true;
+            btTransactionsToUpdate.add(trans);
+        }
+        if(!Test.isRunningTest()) {
+            Update btTransactionsToUpdate;
         }
     }
 
