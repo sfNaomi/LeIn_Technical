@@ -86,13 +86,16 @@ public with sharing class BtTransactionTriggerHandler {
             bt_stripe__Transaction__c oldTransaction = oldMap.get(btTransaction.Id);
             if (btTransaction.bt_stripe__Payment_Status__c == 'Captured' && btTransaction.bt_stripe__Transaction_Status__c == 'Completed'
                 && oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
-                && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c) {
+                && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c
+                && btTransaction.Invoice__c != null) {
                 transactionIds.add(btTransaction.Id);
                 invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full', CreditCardPaymentTaken__c = true));
             }
         }
 
-        invoicesAndPaymentsToUpdate.addAll(preparePaymentsForUpdate(transactionIds));
+        if (transactionIds.size() > 0) {
+            invoicesAndPaymentsToUpdate.addAll(preparePaymentsForUpdate(transactionIds));
+        }
 
         update invoicesAndPaymentsToUpdate;
     }
