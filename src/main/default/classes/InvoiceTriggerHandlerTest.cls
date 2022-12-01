@@ -42,6 +42,40 @@ private with sharing class InvoiceTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testUpdatePaymentTransactionsForFailedInvoices() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Approve for Payment'));
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id,  aforza__Status__c = 'Applied'));
+        
+        Test.startTest();
+        invoice.aforza__Status__c = 'Payment Attempt Unsuccessful';
+        update invoice;
+        Test.stopTest();
+
+        aforza__Payment_Transaction__c pTransaction = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c 
+            WHERE aforza__Invoice__c =: invoice.id LIMIT 1 ];
+        Assert.areEqual('Rejected', pTransaction.aforza__Status__c);               
+    }
+
+    @IsTest
+    private static void testUpdatePaymentTransactionsForSuccessInvoices() { 
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Cash in Transit'));
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id,  aforza__Status__c = 'Pending'));
+        
+        Test.startTest();
+        invoice.aforza__Status__c = 'Paid in Full';
+        update invoice;
+        Test.stopTest();
+
+        aforza__Payment_Transaction__c pTransaction = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c 
+            WHERE aforza__Invoice__c =: invoice.id LIMIT 1 ];
+        Assert.areEqual('Applied', pTransaction.aforza__Status__c); 
+    }
+
+    @IsTest
     private static void testCreateTransactions() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));

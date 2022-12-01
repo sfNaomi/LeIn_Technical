@@ -14,6 +14,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Payment Attempt Unsuccessful</fullName>
+                <default>false</default>
+                <label>Payment Attempt Unsuccessful</label>
+            </value>
+            <value>
                 <fullName>Approve for Payment</fullName>
                 <default>true</default>
                 <label>Approve for Payment</label>
@@ -50,11 +55,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Pending</label>
-            </value>
-            <value>
-                <fullName>Payment Attempt Unsuccessful</fullName>
-                <default>false</default>
-                <label>Payment Attempt Unsuccessful</label>
             </value>
             <value>
                 <fullName>Rejected</fullName>

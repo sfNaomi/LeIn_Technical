@@ -177,6 +177,25 @@ public with sharing class OrderTriggerHandler {
         }
     }
 
+    public static void createPaymentTransaction(List<Order> newOrders, Map<Id, Order> oldOrders) {
+        Set<Id> orderIdsToCreatePaymentTransactionFrom = new Set<Id>();
+        Set<String> allowedPrimaryPaymentMethods = new Set<String>{'Direct Debit', 'Bacs'};
+        for (Order newOrder : newOrders) {
+            Order oldOrder = oldOrders?.get(newOrder.Id);
+            Boolean isStatusChanged = oldOrder != null && newOrder.Status != oldOrder.Status;
+            if (newOrder.RecordTypeId <> RecordTypes.ORDER_ECOMMERCE_ID &&
+                allowedPrimaryPaymentMethods.contains(newOrder.PaymentMethod__c) &&
+                isStatusChanged &&
+                newOrder.Status.equals('Activated')
+            ) {
+                orderIdsToCreatePaymentTransactionFrom.add(newOrder.Id);
+            }
+        }
+        if (!orderIdsToCreatePaymentTransactionFrom.isEmpty()) {
+            PaymentTransactionService.createPaymentTransactionFromOrders(orderIdsToCreatePaymentTransactionFrom);
+        }
+    }
+
     public static void populateDefaultInventory(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
         for (Order newOrder : newOrders) {

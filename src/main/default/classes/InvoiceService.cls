@@ -6,9 +6,12 @@ public with sharing class InvoiceService {
     private static final String TYPE_INVOICE = 'Invoice';
     private static final String TYPE_CREDIT_NOTE = 'Credit Note';
     private static final String DD_PAYMENT_METHOD = 'Direct Debit';
+    private static final String BACS_PAYMENT_METHOD = 'Bacs';
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
+    private static final String APPROVE_INVOICE_STATUS = 'Approve for Payment';
+    private static final String APPROVED_TRANSACTION_STATUS = 'Approved';
     private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs'};
 
     private static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
@@ -83,6 +86,9 @@ public with sharing class InvoiceService {
             Decimal amount = invoicesByOriginalOrderId?.get(newTransaction.OrderNumber__c)?.Gross__c;
             newTransaction.aforza__Invoice__c = invoiceId;
             newTransaction.aforza__Amount__c = amount;
+            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD) {
+                newTransaction.aforza__Status__c = APPROVED_TRANSACTION_STATUS;
+            }
         }
         update transactions;
 
@@ -142,7 +148,7 @@ public with sharing class InvoiceService {
     @TestVisible
     private static List<aforza__Payment_Transaction__c> getPaymentTransactions(Set<Id> orderIds) {
         List<aforza__Payment_Transaction__c> transactions = [
-            SELECT Id, OrderNumber__c, aforza__Invoice__c
+            SELECT Id, OrderNumber__c, aforza__Invoice__c, OrderNumber__r.PaymentMethod__c
             FROM aforza__Payment_Transaction__c
             WHERE OrderNumber__c IN :orderIds
         ];
@@ -240,6 +246,8 @@ public with sharing class InvoiceService {
 
         if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID) {
             invoiceStatus = PAID_INVOICE_STATUS;
+        } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD) {
+            invoiceStatus = APPROVE_INVOICE_STATUS;
         } else if (paymentMethod == CREDIT_CARD_PAYMENT_METHOD) {
             invoiceStatus = PENDING_PAYMENT_INVOICE_STATUS;
         } else {
