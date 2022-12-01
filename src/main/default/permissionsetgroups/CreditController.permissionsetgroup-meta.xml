@@ -19,5 +19,8 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
+    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
+    <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

@@ -44,6 +44,13 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
                 <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Status}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Cancelled</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
