@@ -2,6 +2,26 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Field Sales access for Account object and fields</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.BottomlineRefNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.DdActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CustomerMandateForm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.DirectDebitMandateRef__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.ProofOfDeliveryRequired__c</field>
         <readable>true</readable>
@@ -44,6 +64,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.RTM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.RunningUserIsAssignedFieldSalesRep__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -293,6 +318,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.PaymentTerms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.PerfectStoreScoreEligible__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -333,6 +363,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.DeliveryNoteEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.SeasonalAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -369,6 +404,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.SupplierRef__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalAGBarrTurnover__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalSoftDrinkTurnover__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

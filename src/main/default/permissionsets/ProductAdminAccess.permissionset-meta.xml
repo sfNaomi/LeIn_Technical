@@ -53,7 +53,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.HeightDimension__c</field>
+        <field>Product2.LengthDimension__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -119,11 +119,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.ProductCode</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.ProductStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

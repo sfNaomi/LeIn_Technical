@@ -308,6 +308,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.PaymentTerms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.SeasonalAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -344,6 +349,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.SupplierRef__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalAGBarrTurnover__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalSoftDrinkTurnover__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

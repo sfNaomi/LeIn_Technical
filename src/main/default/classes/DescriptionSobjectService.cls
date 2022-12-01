@@ -38,4 +38,8 @@ public with sharing class DescriptionSobjectService {
                 .getPicklistValues();
         return picklistEntries;
     }
+
+    public static String getSObjectName(Id recordId) {
+        return recordId.getSObjectType().getDescribe().getName();
+    }
 }

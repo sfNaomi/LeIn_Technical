@@ -184,6 +184,21 @@ private class VisitCallServiceTest {
     }
 
     @IsTest
+    private static void testAddStartEndTime_Custom() {
+        aforza__Visit__c visit = new aforza__Visit__c();
+        aforza__Recurring_Record__c recurringRecord = (aforza__Recurring_Record__c) TdfSObjectFactory.createSObject(new aforza__Recurring_Record__c(Priority__c = 'Custom',
+                                                                                       										StartTime__c = Time.newInstance(10, 00, 00, 00)));
+        Date scheduledDate = Date.parse('14/09/2022');
+
+        Test.startTest();
+        VisitCallService.addStartEndTime(visit, recurringRecord, scheduledDate);
+        Test.stopTest();
+
+        Assert.areEqual('14/09/2022, 10:00', visit.aforza__Planned_Time__c.format());
+        Assert.areEqual('14/09/2022, 10:06', visit.aforza__Planned_End_Time__c.format());
+    }
+
+    @IsTest
     private static void testAddStartEndTime_NoPriority() {
         aforza__Visit__c visit = new aforza__Visit__c();
         aforza__Recurring_Record__c recurringRecord = (aforza__Recurring_Record__c) TdfSObjectFactory.createSObject(new aforza__Recurring_Record__c(Priority__c = ''));

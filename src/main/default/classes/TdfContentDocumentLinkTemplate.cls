@@ -26,8 +26,8 @@ public with sharing class TdfContentDocumentLinkTemplate extends TdfSObjectTempl
     public override void init() {
         ContentDocumentLink docLink = (ContentDocumentLink) userDefinedSObject;
 
-        if (docLink.ContentDocument == null) {
-            contentDocumentId = TdfSObjectFactory.insertSObject(new ContentNote()).Id;
+        if (docLink.ContentDocumentId == null) {
+            contentDocumentId = TdfSObjectFactory.insertSObject(new ContentVersion()).Id;
         }
     }
 

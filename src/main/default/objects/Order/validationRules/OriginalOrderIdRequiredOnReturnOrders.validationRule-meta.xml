@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OriginalOrderIdRequiredOnReturnOrders</fullName>
+    <active>true</active>
+    <description>Validation which ensures that Original Order is filled on return type orders.</description>
+    <errorConditionFormula>AND(
+    RecordType.DeveloperName == &quot;ReturnOrder&quot;,
+    ISNULL(aforza__Original_Order__c)
+)</errorConditionFormula>
+    <errorDisplayField>aforza__Original_Order__c</errorDisplayField>
+    <errorMessage>Please select the order for which you are creating a return order.</errorMessage>
+</ValidationRule>

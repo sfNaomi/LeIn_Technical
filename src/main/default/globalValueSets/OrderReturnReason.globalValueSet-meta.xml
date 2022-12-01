@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Stock Damaged</fullName>
+        <default>false</default>
+        <label>Stock Damaged</label>
+    </customValue>
+    <customValue>
+        <fullName>Order Input Error</fullName>
+        <default>false</default>
+        <label>Order Input Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Order Pick Error</fullName>
+        <default>false</default>
+        <label>Order Pick Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery Error</fullName>
+        <default>false</default>
+        <label>Delivery Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Order Error</fullName>
+        <default>false</default>
+        <label>Customer Order Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Relationship Request</fullName>
+        <default>false</default>
+        <label>Customer Relationship Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Product Issue</fullName>
+        <default>false</default>
+        <label>Product Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Product Withdrawn</fullName>
+        <default>false</default>
+        <label>Product Withdrawn</label>
+    </customValue>
+    <masterLabel>Order Return Reason</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

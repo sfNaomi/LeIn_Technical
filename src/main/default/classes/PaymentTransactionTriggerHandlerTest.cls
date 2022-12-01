@@ -6,9 +6,7 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
     @isTest
     private static void testUpdateParentOrderAndAccountCreditStatuses_onCreation(){
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -34,7 +32,7 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
                 Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
-        OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
@@ -59,16 +57,14 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
    
-        System.assertEquals('Activated', updatedOrder.Status, 'Expecting a different order status.');
-        System.assertEquals('Good', updatedDpAccount.CreditStatus__c, 'Expecting a different account credit status.');
+        Assert.areEqual('Unplanned', updatedOrder.Status, 'Expecting a different order status.');
+        Assert.areEqual('Good', updatedDpAccount.CreditStatus__c, 'Expecting a different account credit status.');
     }
 
 	@isTest
     private static void testUpdateParentOrderAndAccountCreditStatuses_onUpdate(){
         // create product & add it to standard PB
-        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
-            new Product2(Name = 'Test Product', ProductCode = 'SKU1')
-        );
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
         );
@@ -123,7 +119,7 @@ private with sharing class PaymentTransactionTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
 
-        System.assertEquals('Activated', updatedParentOrder.Status, 'Expecting a different order status.');
-        System.assertEquals('Good', updatedParentAccount.CreditStatus__c, 'Expecting a different account credit status.');
+        Assert.areEqual('Unplanned', updatedParentOrder.Status, 'Expecting a different order status.');
+        Assert.areEqual('Good', updatedParentAccount.CreditStatus__c, 'Expecting a different account credit status.');
     }
 }

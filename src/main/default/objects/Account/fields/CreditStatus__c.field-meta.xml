@@ -23,6 +23,7 @@
             <value>
                 <fullName>On Stop</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>On Stop</label>
             </value>
         </valueSetDefinition>

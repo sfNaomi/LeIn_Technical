@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReturnReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Return Reason</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>OrderReturnReason</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Stock Damaged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Order Input Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Order Pick Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Delivery Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Customer Order Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Customer Relationship Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Product Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Return Order</controllingFieldValue>
+            <valueName>Product Withdrawn</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

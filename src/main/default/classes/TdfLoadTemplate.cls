@@ -42,10 +42,10 @@ public with sharing class TdfLoadTemplate extends TdfSObjectTemplate {
      */
     protected override SObject createTemplateSObject() {
         Load__c template = new Load__c(
-                DeliveryDate__c = System.today(),
-                Driver__c = UserInfo.getUserId(),
-                Vehicle__c = vehicleId,
-                Depot__c = 'M'
+            DeliveryDate__c = System.today(),
+            Driver__c = UserInfo.getUserId(),
+            Vehicle__c = vehicleId,
+            Depot__c = 'M'
         );
 
         return template;

@@ -37,4 +37,7 @@ public with sharing class Exceptions {
    */
     public with sharing class TdfSObjectFactoryException extends Exception {
     }
+
+    public with sharing class EmailException extends Exception {
+    }
 }

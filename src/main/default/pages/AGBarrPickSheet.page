@@ -1,10 +1,12 @@
 <apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="PickSheetPDFController">
+
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'picksheet.css')}"/>
 
     <apex:repeat value="{!loadPlans}" var="loadPlan">
         <apex:repeat value="{!loadPlan.palletSequences}" var="palletSequence">
             <div class="page-break"/>
-            <table class="document-table">
+            <table class="document-table document-table-fixed">
                 <tr>
                     <td class="document-table-header">
                         {!$Label.PickSheetLoadId}
@@ -27,7 +29,7 @@
                 </tr>
             </table>
             <br/>
-            <table class="document-table">
+            <table class="document-table document-table-fixed">
                 <tr>
                     <td class="document-table-header">
                         {!$Label.PickSheetGrid}
@@ -52,7 +54,7 @@
                 </tr>
             </table>
             <br/>
-            <table class="document-table">
+            <table class="document-table document-table-fixed">
                 <tr>
                     <td class="document-table-header">
                         {!$Label.PickSheetPalletSequence}
@@ -71,7 +73,7 @@
                 </tr>
             </table>
             <br/>
-            <table class="document-table">
+            <table class="document-table document-table-fixed">
                 <tr>
                     <th>
                         {!$Label.PickSheetPickLocation}

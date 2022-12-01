@@ -7,6 +7,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.PaymentMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.CreditCardPaymentTaken__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Invoice_Line_Item__c.OrderProduct__c</field>
         <readable>true</readable>
@@ -113,6 +123,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.DiscountTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Invoice__c.DpAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -168,6 +183,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.InvoiceReadyForEvaluation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.InvoiceSentToCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Invoice__c.LoadNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -178,7 +203,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.Overdue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Invoice__c.PaymentInstruction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.PaymentLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>aforza__Invoice__c.PaymentTerms__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -193,11 +233,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.PreAuthCaptured__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Invoice__c.PrimaryContactName__c</field>
         <readable>true</readable>
     </fieldPermissions>
-        <fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.PrintName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Invoice__c.PushedToBI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Invoice__c.PushedToEdi__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>aforza__Invoice__c.PushedtoJde__c</field>
         <readable>true</readable>
     </fieldPermissions>

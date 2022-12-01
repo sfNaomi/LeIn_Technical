@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>SourceField__c</field>
-        <value xsi:type="xsd:string">Account.PrimaryPaymentMethod__c</value>
+        <value xsi:type="xsd:string">PaymentMethod__c</value>
     </values>
     <values>
         <field>StaticValue__c</field>

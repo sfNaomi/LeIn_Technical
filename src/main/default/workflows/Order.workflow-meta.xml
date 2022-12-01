@@ -92,6 +92,16 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>UpdateOrderStatusBackToDraft</fullName>
+        <field>Status</field>
+        <literalValue>Draft</literalValue>
+        <name>UpdateOrderStatusBackToDraft</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>UpdateOrderStatusToActivated</fullName>
         <field>Status</field>
         <literalValue>Activated</literalValue>

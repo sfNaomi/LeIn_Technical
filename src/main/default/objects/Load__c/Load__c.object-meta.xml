@@ -155,9 +155,8 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Load</label>
     <nameField>
-        <displayFormat>L-{YYMMDD}-{000000}</displayFormat>
         <label>Load ID</label>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Loads</pluralLabel>
     <searchLayouts>

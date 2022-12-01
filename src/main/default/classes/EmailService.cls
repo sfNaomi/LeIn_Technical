@@ -29,7 +29,7 @@ public with sharing class EmailService {
                 Messaging.SendEmailResult[] results = Messaging.sendEmail(emails);
             }
         } catch (Exception e) {
-            throw new EmailException(e.getMessage());
+            throw new Exceptions.EmailException(e.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public with sharing class EmailService {
             List<String> attachmentsIds
     ) {
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.setTemplateID(templateId);
+        message.setTemplateId(templateId);
         message.setWhatId(whatId);
         message.setTargetObjectId(targetObjectId);
         message.setTreatTargetObjectAsRecipient(treatTargetObjectAsRecipient);
@@ -52,9 +52,5 @@ public with sharing class EmailService {
         message.setSaveAsActivity(saveActivity);
         message.setEntityAttachments(attachmentsIds);
         return message;
-    }
-
-    public class EmailException extends Exception {
-
     }
 }

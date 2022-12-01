@@ -56,11 +56,15 @@ public with sharing class RecurringRecordService {
         recurring.aforza__Frequency__c = acc.Frequency__c;
         recurring.Name = acc.DeliveryPointReference__c + '_' + acc.Id + '_' + priority;
         recurring.StartDate__c = priority == 'Primary' ? acc.PrimaryStartDate__c : acc.SecondaryStartDate__c;
-        recurring.Priority__c = acc.CallPriority__c;
         recurring.CallDayOfWeek__c = priority == 'Primary' ? acc.PrimaryCallDay__c : acc.SecondaryCallDay__c;
         recurring.aforza__Last_Recurrence_Date__c = null; // setting to null to trigger recreation of visits for any update
         recurring.aforza__Number_Of_Recurrences__c = acc.Frequency__c == 'W' ? 12 : acc.Frequency__c == 'M' ? 3 : acc.Frequency__c == 'F' ? 6 : 12;
-
+        if (acc.PreferredCallTimeTelesales__c != null){
+            recurring.Priority__c = 'Custom';
+            recurring.StartTime__c = acc.PreferredCallTimeTelesales__c; 
+        } else {
+            recurring.Priority__c = acc.CallPriority__c;
+        }
         return recurring;
     }
 

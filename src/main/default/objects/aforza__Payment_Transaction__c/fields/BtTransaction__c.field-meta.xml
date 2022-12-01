@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BtTransaction__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>BT Transaction</label>
+    <referenceTo>bt_stripe__Transaction__c</referenceTo>
+    <relationshipLabel>Payment Transactions</relationshipLabel>
+    <relationshipName>PaymentTransactions</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

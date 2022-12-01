@@ -71,7 +71,8 @@ public with sharing class AccountTriggerHandler {
                     (account.PrimaryStartDate__c <> oldAccount.PrimaryStartDate__c ||
                             account.PrimaryGridNumber__c <> oldAccount.PrimaryGridNumber__c ||
                             account.AccountStatus__c <> oldAccount.AccountStatus__c ||
-                            account.CallPriority__c <> oldAccount.CallPriority__c)
+                            account.CallPriority__c <> oldAccount.CallPriority__c ||
+                            account.PreferredCallTimeTelesales__c <> oldAccount.PreferredCallTimeTelesales__c)
             ) {
                 operationToAccountListMap.get(Operation.UPDATION).put(account.Id, account);
                 continue;
@@ -209,4 +210,41 @@ public with sharing class AccountTriggerHandler {
             Database.executeBatch(new CreateOutletAssetsAccountBatch(accountsForPerfectScore, OutletAssetType.PERFECT_SCORE));
         }
     }
+    
+    public static void createAforzaPaymentMethodForBottomLineDdMandate(List<Account> newAccounts, Map<Id,Account> oldAccounts){
+        Set<Id> newAccountIds = new Set<Id>();
+        List<aforza__Payment_Method__c> aforzaPaymentMethodsToCreate = new List<aforza__Payment_Method__c>();
+        for (Account newAccount : newAccounts){
+            Account oldAccount = oldAccounts?.get(newAccount.Id);
+            if (((oldAccount == null && newAccount != null) || 
+                (oldAccount != null && 
+                 (
+                    (oldAccount.BottomlineRefNumber__c != newAccount.BottomlineRefNumber__c) || 
+                 	(oldAccount.DirectDebitMandateRef__c != newAccount.DirectDebitMandateRef__c) ||
+                 	(oldAccount.DdActive__c != newAccount.DdActive__c)
+                 )
+                )) &&
+                 (newAccount.BottomlineRefNumber__c != null && newAccount.DirectDebitMandateRef__c != null &&
+                 newAccount.DdActive__c == true)) 
+                {
+                    newAccountIds.add(newAccount.Id);
+            }
+        }
+        if(newAccountIds.size() > 0){
+        	for(Id accountId : newAccountIds){
+            	aforzaPaymentMethodsToCreate.add(createNewAforzaPaymentMethodAndPopulateNecessaryFields(accountId));
+        	}
+        }                                            
+        insert aforzaPaymentMethodsToCreate;
+    }
+
+    private static aforza__Payment_Method__c createNewAforzaPaymentMethodAndPopulateNecessaryFields(Id parentAccountId){
+        	aforza__Payment_Method__c newAforzaPaymentMethod = new aforza__Payment_Method__c();
+            newAforzaPaymentMethod.RecordTypeId=RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID;
+            newAforzaPaymentMethod.aforza__Account__c = parentAccountId;
+            newAforzaPaymentMethod.aforza__Active__c = true;
+            newAforzaPaymentMethod.aforza__Primary__c = true;
+        	
+            return newAforzaPaymentMethod;    
+	}
 }

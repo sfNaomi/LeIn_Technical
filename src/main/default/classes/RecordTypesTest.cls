@@ -37,4 +37,22 @@
         notNull(RecordTypes.INVENTORY_VEHICLE);
         notNull(RecordTypes.INVENTORY_VEHICLE_ID);
     }
+
+    @IsTest private static void testPaymentMethodRecordTypes() {
+        notNull(RecordTypes.PAYMENT_METHOD_CREDIT_CARD);
+        notNull(RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID);
+        notNull(RecordTypes.PAYMENT_METHOD_CASH);
+        notNull(RecordTypes.PAYMENT_METHOD_CASH_ID);
+        notNull(RecordTypes.PAYMENT_METHOD_DIRECT_CARD);
+        notNull(RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID);
+        notNull(RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT);
+        notNull(RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT_ID);
+        notNull(RecordTypes.PAYMENT_METHOD_CHEQUE);
+        notNull(RecordTypes.PAYMENT_METHOD_CHEQUE_ID);
+    }
+
+    @IsTest private static void testBtPaymentMethodRecordTypes() {
+        notNull(RecordTypes.BT_PAYMENT_METHOD_CARD);
+        notNull(RecordTypes.BT_PAYMENT_METHOD_CARD_ID);
+    }
 }

@@ -5,6 +5,7 @@
     <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
+    <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>
@@ -12,6 +13,7 @@
     <permissionSets>ContactAdminAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DepotUser</permissionSets>
+    <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
@@ -23,7 +25,7 @@
     <permissionSets>OrderAdminAccess</permissionSets>
     <permissionSets>OrderModifyAllAccess</permissionSets>
     <permissionSets>OutletAssetAdminAccess</permissionSets>
-    <permissionSets>PaymentTransactionAdminAccess</permissionSets>
+    <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
@@ -35,5 +37,7 @@
     <permissionSets>VehicleAdminAccess</permissionSets>
     <permissionSets>VisitAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
+    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
+    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

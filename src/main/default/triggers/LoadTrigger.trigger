@@ -6,13 +6,15 @@ trigger LoadTrigger on Load__c (before insert, before update, after update) {
     switch on Trigger.operationType {
         when BEFORE_INSERT {
             LoadTriggerHandler.populateDefaultInventory(Trigger.new, null);
+            LoadTriggerHandler.setCorrectLoadName(Trigger.new, null);
         }
         when BEFORE_UPDATE {
             LoadTriggerHandler.populateDefaultInventory(Trigger.new, Trigger.oldMap);
+            LoadTriggerHandler.setCorrectLoadName(Trigger.new, Trigger.oldMap);
         }
         when AFTER_UPDATE {
             LoadTriggerHandler.createRouteAndVisitsAndTasks(Trigger.new, Trigger.oldMap);
-            LoadTriggerHandler.updateDriver(Trigger.newMap, Trigger.oldMap);
+            LoadTriggerHandler.updateDriverAndDeliveryDate(Trigger.newMap, Trigger.oldMap);
         }
     }
 }

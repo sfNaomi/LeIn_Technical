@@ -20,14 +20,17 @@ public with sharing class OutletAssetTriggerHandler {
         delete assignmentsToDelete;
     }
 
-    public static void populateBenchmarkFields(List<aforza__Outlet_Asset__c> outletAssets) {
+    public static void populateBenchmarkFields(List<aforza__Outlet_Asset__c> outletAssets, Map<Id, aforza__Outlet_Asset__c> oldMap) {
         List<aforza__Outlet_Asset__c> assetsToUpdate = new List<aforza__Outlet_Asset__c>();
         Set<Id> outletAssetsToExclude = new Set<Id>();
         Map<Id, Datetime> accountWithAuditDateMap = new Map<Id, Datetime>();
         Set<Id> accountIds = new Set<Id>();
         for (aforza__Outlet_Asset__c outletAsset : outletAssets) {
             aforza__Outlet_Asset__c assetToUpdate = new aforza__Outlet_Asset__c();
-            if (outletAsset.PerfectStoreMet__c == true && outletAsset.aforza__Audit_Date__c != null && outletAsset.BenchmarkDate__c == null && outletAsset.BenchmarkScore__c == 0) {
+            aforza__Outlet_Asset__c oldAsset = oldMap.get(outletAsset.Id);
+            if (outletAsset.PerfectStoreMet__c == true && oldAsset.PerfectStoreMet__c == false
+                && outletAsset.aforza__Audit_Date__c != null && outletAsset.BenchmarkDate__c == null
+                && outletAsset.BenchmarkScore__c == 0) {
                 assetToUpdate.Id = outletAsset.Id;
                 assetToUpdate.BenchmarkDate__c = outletAsset.aforza__Audit_Date__c.date();
                 assetToUpdate.BenchmarkScore__c = outletAsset.Score__c;
@@ -38,7 +41,9 @@ public with sharing class OutletAssetTriggerHandler {
             }
         }
         update assetsToUpdate;
-        populateEmptyBenchmarkForNotAuditedAssets(accountIds, outletAssetsToExclude, accountWithAuditDateMap);
+        if (outletAssetsToExclude.size() > 0) {
+            populateEmptyBenchmarkForNotAuditedAssets(accountIds, outletAssetsToExclude, accountWithAuditDateMap);
+        }
     }
 
     private static void populateEmptyBenchmarkForNotAuditedAssets(Set<Id> accountIds, Set<Id> outletAssetsToExclude, Map<Id, Datetime> accountWithAuditDateMap) {

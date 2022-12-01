@@ -4,7 +4,10 @@
 
 
 <apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="DeliveryManifestPDFController">
+
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'deliveryManifest.css')}"/>
+
     <apex:repeat value="{!loads}" var="load">
         <div class="page-break"/>
         <table class="document-table document-table-fixed">
@@ -83,7 +86,7 @@
             </tr>
         </table>
         <br/>
-        <table class="document-table">
+        <table class="document-table document-table-fixed">
             <tr>
                 <th>
                     {!$Label.DeliveryManifestPalletSequence}

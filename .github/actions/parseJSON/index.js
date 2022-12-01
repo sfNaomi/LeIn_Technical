@@ -19,9 +19,6 @@ try {
         case 'main':
             certificatePath = '${HOME}/prod.key';
             break;
-        case 'interfaces':
-            certificatePath = '${HOME}/interfaces.key';
-            break;
         case 'sit':
             certificatePath = '${HOME}/sit.key';
             break;

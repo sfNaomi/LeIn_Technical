@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaymentLink__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>This field is read only as it will be populated when an appropriate payment is created.</inlineHelpText>
+    <label>Payment Link</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Url</type>
+</CustomField>

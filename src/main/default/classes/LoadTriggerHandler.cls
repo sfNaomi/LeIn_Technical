@@ -11,7 +11,6 @@ public with sharing class LoadTriggerHandler {
                 loadsToCreateVisitsFor.add(load.Id);
             }
         }
-        System.debug(loadsToCreateVisitsFor);
         if (loadsToCreateVisitsFor.size() > 0) {
             // get orders for loads in a map, and start preparing of records
             Map<Id, List<Order>> loadsWithOrderIds = prepareLoadToOrdersMap(loadsToCreateVisitsFor);
@@ -20,17 +19,41 @@ public with sharing class LoadTriggerHandler {
             createRoutesAndLocations(loadsWithOrderIds, routeTerritoryCodeToIds);
             createVisitsAndTasks(loadsWithOrderIds);
         }
-
     }
 
-    public static void updateDriver(Map<Id, Load__c> loadsMap, Map<Id, Load__c> oldLoadsMap) {
+    public static void updateDriverAndDeliveryDate(Map<Id, Load__c> loadsMap, Map<Id, Load__c> oldLoadsMap) {
         Set<Id> loadIdsToTriggerChangeFor = new Set<Id>();
         for (Load__c load : loadsMap.values()) {
             Load__c oldLoad = oldLoadsMap.get(load.Id);
-            if (load.CreateRoute__c && load.Driver__c <> oldLoad.Driver__c) {
+            if (load.CreateRoute__c && (load.Driver__c <> oldLoad.Driver__c || load.DeliveryDate__c <> oldLoad.DeliveryDate__c)) {
                 loadIdsToTriggerChangeFor.add(load.Id);
             }
         }
+        updateRoutesWithNewDrive(loadIdsToTriggerChangeFor, loadsMap);
+        updateTaskAndVisitWithNewDriverAndDate(loadIdsToTriggerChangeFor, loadsMap);
+    }
+
+    private static void updateTaskAndVisitWithNewDriverAndDate(Set<Id> loadIdsToTriggerChangeFor, Map<Id, Load__c> loadsMap) {
+        List<SObject> taskAndVisitToUpdate = new List<SObject>();
+        Set<SObject> uniqueVisitsToUpdate = new Set<SObject>();
+        for(Task task : getTasksAndVisitsForOrdersFromLoad(loadIdsToTriggerChangeFor)) {
+            Load__c load = loadsMap.get(task.aforza__Order__r.Load__c);
+            // set task owner to new driver and new date
+            task.OwnerId = load.Driver__c;
+            taskAndVisitToUpdate.add(task);
+            // set owner of the visit to new driver too and also populate new dates
+            aforza__Visit__c visitToUpdate = new aforza__Visit__c();
+            visitToUpdate.Id = task.aforza__Visit__c;
+            visitToUpdate.aforza__Owner__c = load.Driver__c;
+            visitToUpdate.aforza__Planned_Time__c = combineDateAndDatetime(load.DeliveryDate__c, buildStartEndDateTime(08, 00));
+            visitToUpdate.aforza__Planned_End_Time__c = combineDateAndDatetime(load.DeliveryDate__c, buildStartEndDateTime(08, 15));
+            uniqueVisitsToUpdate.add(visitToUpdate);
+        }
+        taskAndVisitToUpdate.addAll(uniqueVisitsToUpdate);
+        update taskAndVisitToUpdate;
+    }
+
+    private static void updateRoutesWithNewDrive(Set<Id> loadIdsToTriggerChangeFor, Map<Id, Load__c> loadsMap) {
         List<aforza__Route__c> routesToUpdate = getRoutesForLoad(loadIdsToTriggerChangeFor);
         for (aforza__Route__c route : routesToUpdate) {
             Load__c load = loadsMap.get(route.LoadId__c);
@@ -47,19 +70,27 @@ public with sharing class LoadTriggerHandler {
         return [SELECT Id, Name, LoadId__c FROM aforza__Route__c WHERE LoadId__c IN :loadIds];
     }
 
+    private static List<Task> getTasksAndVisitsForOrdersFromLoad (Set<Id> loadIdsToTriggerChangeFor) {
+        return [SELECT Id, aforza__Visit__c, OwnerId, aforza__Order__r.Load__c FROM Task WHERE aforza__Order__r.Load__c IN :loadIdsToTriggerChangeFor];
+    }
+
     private static void createVisitsAndTasks(Map<Id, List<Order>> loadsWithOrderIds) {
-        Map<Id, aforza__Visit__c> visitsToInsertLinkedToLoad = new Map<Id, aforza__Visit__c>();
+        Map<String, aforza__Visit__c> visitsToInsertLinkedToLoad = new Map<String, aforza__Visit__c>();
         List<Task> tasksToInsert = new List<Task>();
-        Map<Id, Id> orderToLoadMap = new Map<Id, Id>();
+        Map<Id, Id> ordersToOrderWithVisit = new Map<Id, Id>();
 
         for (List<Order> orderList : loadsWithOrderIds.values()) {
-            // make sure we create visit only once per account, not for all orders and as per load
+            // make sure we create visit only once per account, not for all orders
             Set<Id> orderAccounts = new Set<Id>();
+            Id orderWithVisit;
             for (Order order : orderList) {
-                orderToLoadMap.put(order.Id, order.Load__c);
                 if (!orderAccounts.contains(order.AccountId)) {
                     orderAccounts.add(order.AccountId);
-                    visitsToInsertLinkedToLoad.put(order.Load__c, mapDataToVisit(order));
+                    visitsToInsertLinkedToLoad.put(order.Id, mapDataToVisit(order));
+                    orderWithVisit = order.Id;
+                    ordersToOrderWithVisit.put(order.Id, orderWithVisit);
+                } else {
+                    ordersToOrderWithVisit.put(order.Id, orderWithVisit);
                 }
                 // create task for each order
                 tasksToInsert.add(mapDataToTask(order));
@@ -68,9 +99,10 @@ public with sharing class LoadTriggerHandler {
         Database.insert(visitsToInsertLinkedToLoad.values());
 
         for (Task task : tasksToInsert) {
-            task.aforza__Visit__c = visitsToInsertLinkedToLoad.get(orderToLoadMap.get(task.aforza__Order__c)).Id;
+            // get order with visit Id for this task
+            Id orderWithVisit = ordersToOrderWithVisit.get(task.aforza__Order__c);
+            task.aforza__Visit__c = visitsToInsertLinkedToLoad.get(orderWithVisit).Id;
         }
-
         insert tasksToInsert;
     }
 
@@ -249,8 +281,86 @@ public with sharing class LoadTriggerHandler {
                 (oldLoad == null && newLoad.Depot__c != null) ||
                 (oldLoad != null && newLoad.Depot__c != oldLoad.Depot__c)
             ){
-            		newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
+            	newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
             }
         }   
-    }  
+    }
+    
+    public static void setCorrectLoadName(List<Load__c> newLoads, Map<Id, Load__c> oldLoads){
+        Map<Date, List<Load__c>> newLoadsMap = new Map<Date, List<Load__c>>();
+        Set<String> newLoadsDepotList = new Set<String>();
+        Set<String> newLoadsRouteIdentificationList = new Set<String>();
+        for (Load__c newLoad : newLoads) {
+            Load__c oldLoad = oldLoads?.get(newLoad.Id);
+            if (
+                (
+                    (oldLoad == null) ||
+                    (oldLoad != null && 
+                        (
+                            (newLoad.Depot__c != oldLoad.Depot__c) ||
+                            (newLoad.DeliveryDate__c != oldLoad.DeliveryDate__c) ||
+                            (newLoad.RouteIdentification__c != oldLoad.RouteIdentification__c)
+                        )
+                    )
+                ) && (newLoad.Depot__c != null && newLoad.DeliveryDate__c != null && newLoad.RouteIdentification__c != null)
+            ){	
+                if (newLoadsMap.containsKey(newLoad.DeliveryDate__c)){
+            	    newLoadsMap.get(newLoad.DeliveryDate__c).add(newLoad);
+                } else {
+                    newLoadsMap.put(newLoad.DeliveryDate__c, new List<Load__c>{
+                        newLoad 
+                    });
+                }
+                newLoadsDepotList.add(newLoad.Depot__c);
+                newLoadsRouteIdentificationList.add(newLoad.RouteIdentification__c);
+            }
+        }
+	    setCorrectLastTwoDigitsOnLoadName(newLoadsMap, getExistingLoadsLastTwoDigits(newLoadsMap, newLoadsDepotList, newLoadsRouteIdentificationList));
+    }
+    
+    private static Map<String, Integer> getExistingLoadsLastTwoDigits(Map<Date, List<Load__c>> newLoadsMap, Set<String> newLoadsDepotList, Set<String> newLoadsRouteIdentificationList){
+        List<AggregateResult> existingLoadsForSameDateDepotAndRoute = [SELECT Count(Id) similarLoadsCount, Depot__c, RouteIdentification__c, DeliveryDate__c 
+                                          			  		            FROM Load__c
+                                                                        WHERE Depot__c IN :newLoadsDepotList 
+                                                                            AND RouteIdentification__c IN :newLoadsRouteIdentificationList 
+                                                                            AND DeliveryDate__c IN :newLoadsMap.keySet()
+                                          			  		            GROUP BY Depot__c, RouteIdentification__c, DeliveryDate__c];
+
+        Map<String, Integer> loadsLastTwoDigits = new Map<String, Integer>();
+        
+        for (AggregateResult existingLoad : existingLoadsForSameDateDepotAndRoute) {
+            String loadCombinationKey = getLoadCombinationKey(existingLoad);
+            Integer similarExistingLoadsCount = (Integer) existingLoad.get('similarLoadsCount');
+            loadsLastTwoDigits.put(loadCombinationKey, similarExistingLoadsCount);
+        }
+        return loadsLastTwoDigits;
+    }
+    
+    private static void setCorrectLastTwoDigitsOnLoadName(Map<Date, List<Load__c>> newLoadsMap, Map<String, Integer> loadsLastTwoDigits){
+        for (List<Load__c> loadsList : newLoadsMap.values()){
+        	for (Load__c newLoad: loadsList) {
+                String newLoadCombinationKey = getLoadCombinationKey(newLoad);
+            	if(!loadsLastTwoDigits.containsKey(newLoadCombinationKey)){
+                    loadsLastTwoDigits.put(newLoadCombinationKey, 1);
+            		newLoad.Name = newLoadCombinationKey + '-' + '01';
+            	} else {
+                	Integer higherExistingLoadNumber = loadsLastTwoDigits.get(newLoadCombinationKey);
+                    higherExistingLoadNumber++;
+                    loadsLastTwoDigits.put(newLoadCombinationKey, higherExistingLoadNumber);
+                	if (higherExistingLoadNumber < 10){
+                	    newLoad.Name = newLoadCombinationKey + '-' + '0' + (higherExistingLoadNumber);
+            		} else {
+                		newLoad.Name = newLoadCombinationKey + '-' + (higherExistingLoadNumber);
+            		}
+            	}
+        	}
+        }  
+    }
+    
+    private static String getLoadCombinationKey(SObject loadOrAggregateResult){
+        DateTime deliveryDate = (DateTime) loadOrAggregateResult.get('DeliveryDate__c');
+        String loadCombinationKey = loadOrAggregateResult.get('Depot__c') + '-' + loadOrAggregateResult.get('RouteIdentification__c') + '-' + deliveryDate.format('dd/MM/yy');
+        
+        return loadCombinationKey;
+    }
 }

@@ -53,9 +53,10 @@ public with sharing class TdfPricebookEntryTemplate extends TdfSObjectTemplate {
      */
     protected override SObject createTemplateSObject() {
         PricebookEntry template = new PricebookEntry(
-                Pricebook2Id = pricebook2Id,
-                Product2Id = product2Id,
-                UnitPrice = 10
+            Pricebook2Id = pricebook2Id,
+            Product2Id = product2Id,
+            UnitPrice = 10,
+            aforza__Tax_Percent__c = 10
         );
         return template;
     }

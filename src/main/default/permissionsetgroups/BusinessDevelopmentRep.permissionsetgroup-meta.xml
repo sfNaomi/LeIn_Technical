@@ -14,9 +14,9 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
-    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
+    <permissionSets>OutletAssetEditAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductFieldSalesAccess</permissionSets>
@@ -25,5 +25,8 @@
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <permissionSets>bt_paylink__PayLink_User</permissionSets>
+    <permissionSets>bt_stripe__payment360_Userv2</permissionSets>
+    <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

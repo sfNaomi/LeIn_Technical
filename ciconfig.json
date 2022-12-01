@@ -16,7 +16,11 @@
         {
             "name": "Blackthorn | PayLink",
             "id": "04t1I000003VrWiQAK"
-        }
+        },
+        {
+            "name": "NICE inContact CXone Agent for Salesforce",
+            "id": "04t5d000000YIA4AAO"
+        }           
     ],
     "apexPrePush": [
         "scripts/anonymous-apex/enableMarketingUser.apex"

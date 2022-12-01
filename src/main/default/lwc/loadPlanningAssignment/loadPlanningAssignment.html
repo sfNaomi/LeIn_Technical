@@ -7,44 +7,47 @@
     <lightning-layout class="slds-m-right_large">
         <lightning-layout-item size="2">
             <lightning-input
-                    class="slds-float_left"
-                    type="date"
-                    name="Planned Delivery Date"
-                    label="Planned Delivery Date"
-                    value={plannedDeliveryDate}
-                    onchange={handleInputChange}
+                class="slds-float_left"
+                type="date"
+                name="Planned Delivery Date"
+                label="Planned Delivery Date"
+                value={plannedDeliveryDate}
+                onchange={handleDeliveryDateChange}
             ></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="2">
             <c-custom-lookup-input
-                    data-id="driver"
-                    class="slds-float_left"
-                    object-name="User"
-                    icon-name="standard:user"
-                    label="Driver"
-                    select-record-id={driverId}
-                    placeholder="Select a Driver"
-                    filter={driverLookupFilter}
-                    onselected={handleLookupSelection}
+                data-id="driver"
+                class="slds-float_left"
+                object-name="User"
+                icon-name="standard:user"
+                label="Driver"
+                select-record-id={driverId}
+                placeholder="Select a Driver"
+                filter={driverLookupFilter}
+                onselected={handleLookupSelection}
             ></c-custom-lookup-input>
         </lightning-layout-item>
         <lightning-layout-item size="2">
             <c-custom-lookup-input
-                    data-id="vehicle"
-                    class="slds-float_left"
-                    object-name="Vehicle__c"
-                    icon-name="utility:truck"
-                    label="Vehicle"
-                    select-record-id={vehicleId}
-                    placeholder="Select a Vehicle"
-                    return-fields={vehicleReturnFields}
-                    query-fields={vehicleQueryFields}
-                    main-field="VehicleRegistration__c"
-                    onselected={handleLookupSelection}
+                data-id="vehicle"
+                class="slds-float_left"
+                object-name="Vehicle__c"
+                icon-name="utility:truck"
+                label="Vehicle"
+                select-record-id={vehicleId}
+                placeholder="Select a Vehicle"
+                return-fields={vehicleReturnFields}
+                query-fields={vehicleQueryFields}
+                main-field="VehicleRegistration__c"
+                onselected={handleLookupSelection}
             ></c-custom-lookup-input>
         </lightning-layout-item>
-        <lightning-layout-item size="2">
-            <div class="slds-m-right_medium slds-float_left slds-m-top_large slds-m-left_large">
+        <lightning-layout-item size="1">
+            <lightning-input type="text" value={route} label="Route" max-length="2" onchange={handleRouteChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="1">
+            <div class="slds-m-right_medium slds-float_left slds-m-left_large">
                 <label class="slds-form-element__label" for="vehicleLoadWeight">Load Weight</label>
                 <lightning-formatted-number id="vehicleLoadWeight"
                                             value={vehicleLoadWeight}></lightning-formatted-number>
@@ -60,11 +63,11 @@
         </lightning-layout-item>
         <lightning-layout-item size="2" class="slds-m-top_large">
             <lightning-button
-                    variant="brand"
-                    label={operationLabel}
-                    data-id={operation}
-                    onclick={handleCreateLoad}
-                    disabled={createLoadButtonDisabled}
+                variant="brand"
+                label={operationLabel}
+                data-id={operation}
+                onclick={handleCreateLoad}
+                disabled={createLoadButtonDisabled}
             ></lightning-button>
         </lightning-layout-item>
     </lightning-layout>

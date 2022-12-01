@@ -140,6 +140,10 @@ public without sharing class VisitCallService {
                 visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 00));
                 visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(11, 06));
             }
+            when 'Custom' {
+                visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(recurringRecord.StartTime__c.hour(), recurringRecord.StartTime__c.minute()));
+                visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(recurringRecord.StartTime__c.hour(), recurringRecord.StartTime__c.minute() + 06));
+            }
             when else {
                 visit.aforza__Planned_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 00));
                 visit.aforza__Planned_End_Time__c = combineDateAndDatetime(scheduledDate, buildStartEndDateTime(12, 06));

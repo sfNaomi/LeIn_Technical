@@ -7,9 +7,9 @@
  **/
 
 @IsTest
-public with sharing class InvoicePDFControllerTest {
+private with sharing class InvoicePDFControllerTest {
 	@IsTest
-	static void testInvoicePDFController() {
+	private static void testInvoicePDFController() {
 		Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
 			new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
 		);
@@ -19,38 +19,26 @@ public with sharing class InvoicePDFControllerTest {
 		aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
 			new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id, aforza__Reference__c = '10')
 		);
-		aforza__Invoice_Line_Item__c newInvoiceLineItem = (aforza__Invoice_Line_Item__c) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new aforza__Invoice_Line_Item__c(aforza__Invoice__c = newInvoice.Id)
 		);
+		ContentVersion signature = (ContentVersion) TdfSObjectFactory.insertSObject(
+			new ContentVersion(Title = 'Signature Test', PathOnClient = 'Test', VersionData = EncodingUtil.base64Decode('Body'))
+		);
+		String signatureDocId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id = :signature.Id].ContentDocumentId;
+		TdfSObjectFactory.insertSObject(
+			new ContentDocumentLink(ContentDocumentId = signatureDocId, LinkedEntityId = newOrder.Id, ShareType = 'V')
+		);
 
-		insertContentVersion();
-		insertContentDocumentLink(newOrder.Id);
+		PageReference pageRef = Page.AGBarrInvoice;
+		Test.setCurrentPage(pageRef);
+
+		ApexPages.currentPage().getParameters().put('p', newInvoice.Id);
 
 		Test.startTest();
-		PageReference testPage = Page.AGBarrInvoice;
-		Test.setCurrentPage(testPage);
-		testPage.getParameters().put('id', newInvoice.Id);
-		InvoicePDFController.attachPDF(newInvoice.Id);
-		InvoicePDFController testPdfController = new InvoicePDFController();
+		InvoicePDFController ctrl = new InvoicePDFController();
 		Test.stopTest();
-	}
 
-	public static void insertContentVersion() {
-		ContentVersion contentVersion = new Contentversion();
-		contentVersion.Title = 'Signature Test';
-		contentVersion.PathOnClient = 'Test';
-		Blob b = Blob.valueOf('Unit Test Attachment Body');
-		contentVersion.versiondata = EncodingUtil.base64Decode('Unit Test Attachment Body');
-		insert contentVersion;
-	}
-
-	public static void insertContentDocumentLink(Id linkedRecordId) {
-		Id insertedContentVersion = [SELECT ContentDocumentId FROM ContentVersion].ContentDocumentId;
-		ContentDocumentLink contentDocLink = new ContentDocumentLink(
-			LinkedEntityId = linkedRecordId,
-			ContentDocumentId = insertedContentVersion,
-			ShareType = 'V'
-		);
-		insert contentDocLink;
+		Assert.areEqual(1, ctrl.invoices.size());
 	}
 }

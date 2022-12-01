@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to bypass the validation rule which prevents update of the unit price on order items.</description>
+    <isLicensed>false</isLicensed>
+    <label>Edit Unit Price on Order Items</label>
+</CustomPermission>
