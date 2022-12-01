@@ -1,193 +1,151 @@
-<!--
-  @description       : 
-  @author            : Ciuca Bianca BearingPoint GmbH
-  @group             : 
-  @last modified on  : 10-06-2022
-  @last modified by  : Ciuca Bianca, BearingPoint GmbH
--->
 <apex:page showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="InvoicePDFController">
+
+	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}"/>
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}"/>
 
-	<div class="invoice-header-container">
-		<div class="logo-container">
-			<apex:image url="{!$Resource.AGBarrLogo}" width="175" height="100" />
-		</div>
-		<div class="invoice-header-right-section">
-			<h2>INVOICE</h2>
+	<apex:repeat value="{!invoices}" var="invoice">
+		<div class="page-break">
+			<div class="m-bottom-small">
+				<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%"/>
+			</div>
+			<div class="inline-block">
+				<div class="float-left align-left">
+					<div class="m-bottom-small">
+						<b>{!IF(invoice.type == 'Credit Note', $Label.InvoiceCreditedTo, $Label.InvoiceInvoicedTo)}</b>
+					</div>
+					<div class="m-bottom-small">{!invoice.billToName}</div>
+					<div>{!invoice.billToStreet}</div>
+					<div>{!invoice.billToState}</div>
+					<div>{!invoice.billToPostalCode}, {!invoice.billToCity}</div>
+					<div>{!invoice.billToCountry}</div>
+					<div class="m-top-small">{!$Label.InvoiceBillToRef} {!invoice.billToReference}</div>
+				</div>
+				<div class="float-right align-left">
+					<div class="m-bottom-small">
+						<b>{!$Label.InvoiceDeliveredTo}</b>
+					</div>
+					<div class="m-bottom-small">{!invoice.shipToName}</div>
+					<div>{!invoice.shipToStreet}</div>
+					<div>{!invoice.shipToState}</div>
+					<div>{!invoice.shipToPostalCode}, {!invoice.shipToCity}</div>
+					<div>{!invoice.shipToCountry}</div>
+					<div class="m-top-small">{!$Label.InvoiceDpRef} {!invoice.shipToReference}</div>
+				</div>
+			</div>
+			<br/>
+			<table class="document-table document-table-fixed">
+				<tr>
+					<th>{!invoice.type} {!$Label.InvoiceNo}</th>
+					<th>{!$Label.InvoiceDate}</th>
+					<th>{!$Label.InvoicePoRef}</th>
+					<th>{!$Label.InvoiceCustomerShopNumber}</th>
+					<th>{!$Label.InvoicePaymentMethod}</th>
+					<th>{!$Label.InvoiceDueDate}</th>
+					<th>{!$Label.InvoicePaymentTerms}</th>
+				</tr>
+				<tr>
+					<td>{!invoice.invoiceNumber}</td>
+					<td>
+						<apex:outputText value="{0,date,dd/MM/yyyy}">
+							<apex:param value="{!invoice.createdDate}"/>
+						</apex:outputText>
+					</td>
+					<td>{!invoice.poNumber}</td>
+					<td>{!invoice.customerShopNumber}</td>
+					<td>{!invoice.paymentMethod}</td>
+					<td>
+						<apex:outputText value="{0,date,dd/MM/yyyy}">
+							<apex:param value="{!invoice.dueDate}"/>
+						</apex:outputText>
+					</td>
+					<td>{!invoice.paymentTerms}</td>
+				</tr>
+			</table>
+			<br/>
+			<table class="document-table document-table-fixed">
+				<tr>
+					<th>{!$Label.InvoiceSkuCode}</th>
+					<th>{!$Label.InvoiceDescription}</th>
+					<th>{!$Label.InvoiceQuantity}</th>
+					<th>{!$Label.InvoiceUnitPrice}</th>
+					<th>{!$Label.InvoiceVatRate}</th>
+					<th>{!$Label.InvoiceVatValue}</th>
+					<th>{!$Label.InvoiceGoodsValue}</th>
+				</tr>
+				<apex:repeat value="{!invoice.invoiceItems}" var="invoiceItem">
+					<tr>
+						<td>{!invoiceItem.code}</td>
+						<td>{!invoiceItem.description}</td>
+						<td>{!invoiceItem.quantity}</td>
+						<td>£{!invoiceItem.unitPrice}</td>
+						<td>{!invoiceItem.vatRate}%</td>
+						<td>£{!invoiceItem.vatValue}</td>
+						<td>£{!invoiceItem.netPrice}</td>
+					</tr>
+				</apex:repeat>
+			</table>
+			<br/>
+			<div class="align-left">
+				{!$Label.InvoiceDiscountApplied} £{!invoice.discountTotal}
+			</div>
+			<br/>
+			<div class="inline-block">
+				<div class="float-left">
+					<apex:outputpanel rendered="{!invoice.vatDistribution.vatItems.size > 0}">
+						<div>
+							<table class="document-table document-table-fixed">
+								<tr>
+									<th colspan="3" class="align-center">VAT Analysis</th>
+								</tr>
+								<tr>
+									<th>{!$Label.InvoiceTotalGoodsValue}</th>
+									<th>{!$Label.InvoiceVatRate}</th>
+									<th>{!$Label.InvoiceVatValue}</th>
+								</tr>
+								<apex:repeat value="{!invoice.vatDistribution.vatItems}" var="vatItem">
+									<tr>
+										<td>£{!vatItem.netValue}</td>
+										<td>{!vatItem.vatRate}%</td>
+										<td>£{!vatItem.vatValue}</td>
+									</tr>
+								</apex:repeat>
+							</table>
+						</div>
+					</apex:outputpanel>
+				</div>
+				<div class="float-right">
+					<table class="document-table document-table-fixed">
+						<tr>
+							<th colspan="3" class="align-center">Order Summary</th>
+						</tr>
+						<tr>
+							<th>{!$Label.InvoiceGoodsValue}</th>
+							<th>{!$Label.InvoiceVatValue}</th>
+							<th>{!$Label.InvoiceTotalPayable}</th>
+						</tr>
+						<tr>
+							<td>£{!invoice.netValue}</td>
+							<td>£{!invoice.vatValue}</td>
+							<td>£{!invoice.total}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br/>
 			<div>
-				<p>{!$Label.InvoiceAddressLine1}</p>
-				<p>{!$Label.InvoiceAddressLine2}</p>
-				<p>{!$Label.InvoiceAddressLine3}</p>
-				<p>{!$Label.InvoicePhoneNumber}</p>
-				<p>{!$Label.VAT}</p>
-				<p>{!$Label.Reg}</p>
-				<p>{!$Label.AWRS}</p>
+				<apex:outputpanel rendered="{!invoice.signature != null}">
+					{!$Label.InvoiceSignature} <apex:image url="/sfc/servlet.shepherd/version/download/{!invoice.signature}" width="100px" height="170px"/>
+				</apex:outputpanel>
+				<apex:outputpanel rendered="{!invoice.printName != null}">
+					{!$Label.InvoicePrintName} {!invoice.printName}
+				</apex:outputpanel>
+			</div>
+			<div class="footer-container">
+				{!$Label.InvoiceFooterNote}
+				<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" id="footer-link">
+					{!$Label.InvoiceFooterNoteLink}
+				</apex:outputLink>
 			</div>
 		</div>
-	</div>
-	<br />
-	<table style="font-family: sans-serif; padding: 0; margin: 0">
-		<tr style="color: black">
-			<th style="padding-left: 5px; padding-right: 170px; width: 200px; padding: 0; margin: 0">INVOICE TO:</th>
-			<th style="background-color: #fff; color: #fff; padding: 0; margin: 0">Blank Column Inserted</th>
-			<th style="padding-left: 5px; padding-right: 170px; width: 200px; padding: 0; margin: 0">DELIVERED TO:</th>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedAccount.Name}" /></td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedAccount.Name}" /></td>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.BillingStreet}" /></td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.ShippingStreet}" /></td>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.BillingState}" /></td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.ShippingState}" /></td>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px">
-				<apex:outputField value="{!associatedOrder.BillingPostalCode}" />,
-				<span><apex:outputField value="{!associatedOrder.BillingCity}" /></span>
-			</td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px">
-				<apex:outputField value="{!associatedOrder.ShippingPostalCode}" />,
-				<span><apex:outputField value="{!associatedOrder.ShippingCity}" /></span>
-			</td>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.BillingCountry}" /></td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px"><apex:outputField value="{!associatedOrder.ShippingCountry}" /></td>
-		</tr>
-		<tr>
-			<td style="padding-left: 5px; font-size: 12px">
-				Bill To Ref# <apex:outputField value="{!associatedAccount.BillToReference__c}" />
-			</td>
-			<td></td>
-			<td style="padding-left: 5px; font-size: 12px">
-				DP Ref# <apex:outputField value="{!associatedAccount.DeliveryPointReference__c}" />
-			</td>
-		</tr>
-	</table>
-	<br />
-
-	<table class="invoice-table">
-		<tr style="color: black">
-			<th class="invoice-table-header">Invoice No.</th>
-			<th class="invoice-table-header">Invoice Date</th>
-			<th class="invoice-table-header">PO Ref#</th>
-			<th class="invoice-table-header">Customer Shop Number</th>
-			<th class="invoice-table-header">Payment Method</th>
-			<th class="invoice-table-header">Invoice Due Date</th>
-			<th class="invoice-table-header">Payment Terms</th>
-		</tr>
-		<tr>
-			<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.Name}" /></td>
-			<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.CreatedDate}" /></td>
-			<td class="invoice-table-rows"><apex:outputField value="{!associatedOrder.PoNumber}" /></td>
-			<td class="invoice-table-rows"><apex:outputField value="{!associatedAccount.CustomerShopNumber__c}" /></td>
-			<td class="invoice-table-rows"><apex:outputField value="{!associatedAccount.PrimaryPaymentMethod__c}" /></td>
-			<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.aforza__Due_Date__c}" /></td>
-			<td class="invoice-table-rows">28 days</td>
-		</tr>
-	</table>
-	<br />
-	<br />
-
-	<table class="invoice-table" id="invoice-line-items">
-		<tr style="color: black">
-			<th class="invoice-table-header">SKU Code</th>
-			<th class="invoice-table-header">Description</th>
-			<th class="invoice-table-header">Quantity</th>
-			<th class="invoice-table-header">Unit Price</th>
-			<th class="invoice-table-header">VAT Rate %</th>
-			<th class="invoice-table-header">VAT Value</th>
-			<th class="invoice-table-header">Goods Value</th>
-		</tr>
-		<apex:repeat value="{!invoiceLineItems}" var="invoiceLineItem">
-			<tr>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.SkuCode__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.SkuName__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.Quantity__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.UnitPrice__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.VatRate__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.Vat__c}" /></td>
-				<td class="invoice-table-rows"><apex:outputField value="{!invoiceLineItem.NetPrice__c}" /></td>
-			</tr>
-		</apex:repeat>
-	</table>
-	<br />
-	<br />
-	<br />
-	<apex:variable var="conditionalRender" value="conditionalRender" rendered="{!associatedOrder.DiscountTotal__c != null}">
-		<div class="discount-container">
-			Discount already applied to Total Payable: <apex:outputField value="{!associatedOrder.DiscountTotal__c}" />
-		</div>
-	</apex:variable>
-	<br />
-	<div class="invoice-header-container">
-		<div id="vat-analysis-section">
-			<table class="invoice-table">
-				<tr>
-					<td colspan="3" class="invoice-table-header">VAT Analysis</td>
-				</tr>
-				<tr>
-					<td class="invoice-table-header">Total Goods Value</td>
-					<td class="invoice-table-header">VAT Rate</td>
-					<td class="invoice-table-header">VAT Value</td>
-				</tr>
-				<tr>
-					<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.NetTotal__c}" /></td>
-					<td class="invoice-table-rows">{!vatRate}%</td>
-					<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.Vat__c}" /></td>
-				</tr>
-			</table>
-		</div>
-		<div id="order-summary-section">
-			<table class="invoice-table">
-				<tr>
-					<td colspan="3" class="invoice-table-header">Order Summary</td>
-				</tr>
-				<tr>
-					<td class="invoice-table-header">Goods Value</td>
-					<td class="invoice-table-header">VAT Value</td>
-					<td class="invoice-table-header">Total Payable</td>
-				</tr>
-				<tr>
-					<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.NetTotal__c}" /></td>
-					<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.Vat__c}" /></td>
-					<td class="invoice-table-rows"><apex:outputField value="{!currentInvoice.Gross__c}" /></td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<apex:variable
-		var="conditionalRender"
-		value="conditionalRender"
-		rendered="{!signature.ContentDocument.LatestPublishedVersionId != null}"
-	>
-		<br />
-		Signature:
-		<br />
-		<br />
-		<apex:image
-			url="/sfc/servlet.shepherd/version/download/{!signature.ContentDocument.LatestPublishedVersionId}"
-			alt="{!signature.ContentDocument.Title}"
-			width="100px"
-			height="170px"
-		/>
-		<br />
-		Print Name: <apex:outputField value="{!associatedOrder.PrintName__c}" />
-	</apex:variable>
-
-	<div class="invoice-footer-container">
-		All sales are subject to A.G.Barr plc's terms and conditions of sales. Copies of which are available on request or from
-		<apex:outputLink value="http://www.agbarr.co.uk/termsofbusiness" id="footer-link">
-			http://www.agbarr.co.uk/termsofbusiness
-		</apex:outputLink>
-	</div>
+	</apex:repeat>
 </apex:page>

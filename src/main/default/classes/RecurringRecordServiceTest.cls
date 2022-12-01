@@ -11,7 +11,7 @@ private class RecurringRecordServiceTest {
         Account acc = [
                 SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c,
                         SecondaryStartDate__c, PrimaryGridNumber__c, CallPriority__c, PrimaryCallDay__c,
-                        SecondaryCallDay__c
+                        SecondaryCallDay__c, PreferredCallTimeTelesales__c
                 FROM Account
         ];
 
@@ -42,6 +42,43 @@ private class RecurringRecordServiceTest {
     }
 
     @IsTest
+    private static void testCreateRecurringRecord_WithStartTimeFromAccount() {
+        TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PreferredCallTimeTelesales__c = Time.newInstance(10, 0, 0, 0)));
+        Account acc = [
+                SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c,
+                        SecondaryStartDate__c, PrimaryGridNumber__c, CallPriority__c, PrimaryCallDay__c,
+                        SecondaryCallDay__c, PreferredCallTimeTelesales__c
+                FROM Account
+        ];
+
+        Test.startTest();
+                aforza__Recurring_Record__c recurringRecord = RecurringRecordService.createRecurringRecord(acc, 'Primary');
+            insert recurringRecord;
+        Test.stopTest();
+
+        aforza__Recurring_Record__c record = [
+                SELECT Id, aforza__Type__c, Account__c, OwnerId, Status__c,
+                        aforza__Frequency__c, Name, StartDate__c, StartTime__c, PlanAnotherVisit__c, DaysBetweenRecurrence__c,
+                        aforza__Last_Recurrence_Date__c, CallDayOfWeek__c, Priority__c, aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+        ][0];
+
+        Assert.areEqual(acc.OwnerId, record.OwnerId);
+        Assert.areEqual(RecurringRecordService.CALL_SETTINGS.CallType__c, record.aforza__Type__c);
+        Assert.areEqual(acc.Id, record.Account__c);
+        Assert.areEqual(RecurringRecordService.CALL_SETTINGS.CallStatus__c, record.Status__c);
+        Assert.areEqual(acc.Frequency__c, record.aforza__Frequency__c);
+        Assert.areEqual(true, record.Name.contains('Primary'));
+        Assert.areEqual(acc.PrimaryStartDate__c, record.StartDate__c);
+        Assert.areEqual('Custom', record.Priority__c);
+        Assert.areEqual(acc.PrimaryCallDay__c, record.CallDayOfWeek__c);
+        Assert.areEqual(null, record.aforza__Last_Recurrence_Date__c);
+        Assert.areEqual(12, record.aforza__Number_Of_Recurrences__c, 'We expect 12 for W Frequency (part of Primary Grid)');
+        Assert.areEqual(acc.PreferredCallTimeTelesales__c, record.StartTime__c);
+    }
+
+    @IsTest
     private static void testUpsertRecurringRecords_SecondaryGrid() {
         TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, SecondaryGridNumber__c = '3C7201WEW',
                 SecondaryStartDate__c = Date.parse('07/09/2022')));
@@ -49,7 +86,7 @@ private class RecurringRecordServiceTest {
         Account acc = [
                 SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c,
                         SecondaryStartDate__c, PrimaryGridNumber__c, SecondaryGridNumber__c, CallPriority__c, PrimaryCallDay__c,
-                        SecondaryCallDay__c
+                        SecondaryCallDay__c, PreferredCallTimeTelesales__c
                 FROM Account
         ];
 
@@ -76,7 +113,7 @@ private class RecurringRecordServiceTest {
         Account acc = [
                 SELECT Id, OwnerId, Frequency__c, DeliveryPointReference__c, PrimaryStartDate__c,
                         SecondaryStartDate__c, PrimaryGridNumber__c, SecondaryGridNumber__c, CallPriority__c, PrimaryCallDay__c,
-                        SecondaryCallDay__c
+                        SecondaryCallDay__c, PreferredCallTimeTelesales__c
                 FROM Account
         ];
 

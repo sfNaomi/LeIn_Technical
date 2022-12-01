@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>AGBarr</letterhead>
+    <name>AGBarr Order Email Template</name>
+    <style>freeForm</style>
+    <subject>AGBarr Order {!Order.OrderNumber}</subject>
+    <textOnly>{!Order.AccountName__c}
+{!Order.ShippingStreet}
+{!Order.ShippingCity}
+{!Order.ShippingPostalCode}
+DP Ref: {!Order.DeliveryPointReference__c}
+
+This e-mail contains a delivery note from Barr Soft Drinks relating to your recent delivery.
+Should you wish to query this invoice, please contact 0800 434 6260 quoting reference {!Order.OrderNumber}/{! Order.DeliveryPointReference__c}.
+
+Yours sincerely
+
+Barr Soft Drinks</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

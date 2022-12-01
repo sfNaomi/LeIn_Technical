@@ -37,4 +37,24 @@ private class LoadPlanningScreenControllerTest {
         System.assertEquals(System.today().addDays(2), fetchedLoad.DeliveryDate__c);
         System.assertEquals(UserInfo.getUserId(), fetchedLoad.Driver__c);
     }
+
+    @IsTest
+    private static void testFetchVehicle() {
+        Profile platformUserProfile = [SELECT Id FROM Profile WHERE Name = 'AG Barr Platform User Driver'];
+        UserRole role = [SELECT Id FROM UserRole WHERE DeveloperName = 'Driver'];
+        User user = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = platformUserProfile.Id, UserRoleId = role.Id));
+        User adminUser = [SELECT Id FROM User WHERE Id =:System.UserInfo.getUserId()];
+        User userWithName = [SELECT Id, Name FROM User WHERE Id = :user.Id];
+
+        System.runAs(adminUser) {
+            Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(new Vehicle__c(Driver__c = user.Id));
+            Test.startTest();
+            Vehicle__c fetchedVehicle = LoadPlanningScreenController.fetchVehicle(userWithName.Name);
+            Test.stopTest();
+
+            Assert.isTrue(fetchedVehicle != null);
+            Assert.areEqual(vehicle.Id, fetchedVehicle.Id);
+            Assert.areEqual(vehicle.Driver__c, fetchedVehicle.Driver__c);
+        }
+    }
 }

@@ -13,7 +13,7 @@ private class DescriptionSobjectServiceTest {
         Schema.DescribeFieldResult result = DescriptionSobjectService.getSobjectDescribe(fieldName, sObjectName);
         Test.stopTest();
 
-        System.assertEquals('DATE', String.valueOf(result.getSoapType()));
+        Assert.areEqual('DATE', String.valueOf(result.getSoapType()));
     }
 
     @IsTest
@@ -25,7 +25,7 @@ private class DescriptionSobjectServiceTest {
         String result = DescriptionSobjectService.getFieldDataType(fieldName, sObjectName);
         Test.stopTest();
 
-        System.assertEquals('DATE', result);
+        Assert.areEqual('DATE', result);
     }
 
     @IsTest
@@ -37,6 +37,19 @@ private class DescriptionSobjectServiceTest {
         List<PicklistEntry> result = DescriptionSobjectService.getPicklistEntries(fieldName, sObjectName);
         Test.stopTest();
 
-        System.assertEquals(false, result.isEmpty());
+        Assert.isFalse(result.isEmpty());
+    }
+
+    @IsTest
+    static void testGetSObjectName() {
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        Test.startTest();
+        String result = DescriptionSobjectService.getSObjectName(dpAccount.Id);
+        Test.stopTest();
+
+        Assert.areEqual('Account', result);
     }
 }

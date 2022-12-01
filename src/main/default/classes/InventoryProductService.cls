@@ -12,11 +12,12 @@ public class InventoryProductService {
 	  	inventoryProductsId.add(inventoryProduct.aforza__Product__c);
 	}
 	  
-	   AggregateResult[] quantityInOrders = [SELECT Order.aforza__Inventory__c Inventory, Product2Id product, sum(quantity) summ FROM OrderItem WHERE 
-	   Order.RecordType.DeveloperName IN: OrderService.RECORD_TYPES_FOR_STOCK_UPDATE AND Product2Id IN:inventoryProductsId AND ((Order.Status NOT IN: OrderService.UNFULFILLED_ORDER_STATUS) OR
-	   (Order.Status = 'Receipted' AND Order.Invoice__r.PushedtoJde__c = FALSE))
+	   AggregateResult[] quantityInOrders = [SELECT Order.aforza__Inventory__c Inventory,  Product2Id product, sum(quantity) summ FROM OrderItem WHERE 
+           Order.Type = 'Product Order' AND Order.RecordType.DeveloperName IN: OrderService.RECORD_TYPES_FOR_STOCK_UPDATE AND Product2Id IN:inventoryProductsId 
+           AND ((Order.Status NOT IN: OrderService.UNFULFILLED_ORDER_STATUS)
+           OR (Order.Type = 'Product Order' AND Order.Status = 'Receipted' AND Order.Invoice__r.PushedtoJde__c = FALSE))
            GROUP BY Order.aforza__Inventory__c, Product2Id
-	  ];
+	   ];
   
   
 	  for (AggregateResult aggResult: quantityInOrders) {

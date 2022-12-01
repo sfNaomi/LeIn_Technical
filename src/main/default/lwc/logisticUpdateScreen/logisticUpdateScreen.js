@@ -5,7 +5,7 @@
 import {LightningElement, track} from 'lwc';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenController.fetchNeededPicklistValues'
-import updateOrderFields from '@salesforce/apex/LogisticUpdateScreenController.updateOrderFields'
+import updateRecords from '@salesforce/apex/LogisticUpdateScreenController.updateRecords'
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
@@ -105,7 +105,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         printUpdate
     }
     queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,OrderNumber,AccountName__c,Status,PickingSheetPrinted__c,PickingCompleted__c,' +
-        'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__r.InvoicePrinted__c';
+        'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
         Promise.all([this.fetchPicklistValues()]).then(() => {
@@ -274,35 +274,35 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             this.isLoading = true;
             switch (this.selectedAction) {
                 case 'Print Pick Sheets':
-                    this.updateOrders(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), {'Status': 'Picking in Progress', 'PickingSheetPrinted__c': true});
-                    this.navigateToPage('AGBarrPickSheet', {'ids': this.getSelectedOrdersIds().join(',')});
+                    this.updateRecordFields(this.getSelectedOrderIdsWithSpecifiedStatus('Ready to Pick'), {'Status': 'Picking in Progress', 'PickingSheetPrinted__c': true});
+                    this.navigateToPage('AGBarrPickSheet', {'p': this.getFieldFromSelectedOrders('Id').join(',')});
                     break;
                 case 'Picked':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Ready to Load', 'PickingCompleted__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Ready to Load', 'PickingCompleted__c': true});
                     break;
                 case 'Print Manifest':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryManifestPrinted__c': true});
-                    this.navigateToPage('AGBarrDeliveryManifest', {'ids': this.getSelectedOrdersIds().join(',')});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'DeliveryManifestPrinted__c': true});
+                    this.navigateToPage('AGBarrDeliveryManifest', {'p': this.getFieldFromSelectedOrders('Id').join(',')});
                     break;
                 case 'Print Delivery Note':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'DeliveryNotePrinted__c' : true});
-                    this.navigateToPage('DeliveryNotePDF', {'id': this.getSelectedOrdersIds().join(',')});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'DeliveryNotePrinted__c' : true});
+                    this.navigateToPage('DeliveryNotePDF', {'p': this.getFieldFromSelectedOrders('Id').join(',')});
                     break;
                 case 'Loaded':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Pending Delivery', 'IsLoaded__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Pending Delivery', 'IsLoaded__c': true});
                     break;
                 case 'Receipted':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Receipted', 'Receipt__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Receipted', 'Receipt__c': true});
                     break;
                 case 'Print Invoices':
-                    //TODO add proper action once this is finished
-                    this.showActionNotYetImplemented(this.selectedAction);
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Invoice__c'), {'InvoicePrinted__c' : true});
+                    this.navigateToPage('AgBarrInvoice', {'p': this.getFieldFromSelectedOrders('Invoice__c').join(',')});
                     break;
                 case 'Cancel Order':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Cancelled', 'DeliveryFailed__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Cancelled', 'DeliveryFailed__c': true});
                     break;
                 case 'Replan':
-                    this.updateOrders(this.getSelectedOrdersIds(), {'Status': 'Unplanned', 'Replanned__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Unplanned', 'Replanned__c': true});
                     break;
                 default:
             }
@@ -373,17 +373,17 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         this.dispatchEvent(toastSuccess);
     }
 
-    /** Method to obtain Ids of orders from the list of order objects
+    /** Method to obtain the values of a specific field from the list of order objects
      *
      * @author Svata Sejkora
      * @date 2022-10-07
      */
-    getSelectedOrdersIds() {
-        let selectedIds = [];
+    getFieldFromSelectedOrders(fieldName) {
+        let selectedValues = [];
         this.selectedRows.forEach((order) => {
-            selectedIds.push(order.Id);
+            selectedValues.push(order[fieldName]);
         });
-        return selectedIds;
+        return selectedValues;
     }
 
     /** Method to obtain ids of selected rows which have the status specified as input
@@ -406,14 +406,14 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @author Svata Sejkora
      * @date 2022-10-07
      */
-    async updateOrders(orderIds, fieldValues) {
-        if (orderIds.length > 0) {
-            await updateOrderFields({orderIds: orderIds, fieldValues: fieldValues});
+    async updateRecordFields(recordIds, fieldValues) {
+        if (recordIds.length > 0) {
+            await updateRecords({recordIds: recordIds, fieldValues: fieldValues});
             const dynamicFilter = this.template.querySelector('c-dynamic-filter');
             await dynamicFilter.handleFilterClick();
             const toastSuccess = new ShowToastEvent({
                 title: 'Success',
-                message: 'Orders have been updated.',
+                message: 'Records have been updated.',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccess);

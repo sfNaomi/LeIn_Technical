@@ -6,22 +6,22 @@ trigger AccountTeamMemberTrigger on AccountTeamMember (before insert, before upd
     try {
         switch on Trigger.operationType {
             when BEFORE_INSERT {
-                AccountTeamMemberTriggerHandler.allowOnlyOneTamUserPerAccount(Trigger.new);
+                AccountTeamMemberTriggerHandler.allowOnlyOneUserWithSpecifiedRolePerAccount(Trigger.new);
             }
             when BEFORE_UPDATE {
-                AccountTeamMemberTriggerHandler.allowOnlyOneTamUserPerAccount(Trigger.new);
+                AccountTeamMemberTriggerHandler.allowOnlyOneUserWithSpecifiedRolePerAccount(Trigger.new);
             }
             when AFTER_INSERT {
                 AccountTeamMemberTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
-                AccountTeamMemberTriggerHandler.updateDriverNameOnAccountFromDriverAccountTeamMember(Trigger.new, Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.copyInformationFromAccountTeamMemberToAccount(Trigger.new);
             }
             when AFTER_UPDATE {
                 AccountTeamMemberTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
-                AccountTeamMemberTriggerHandler.updateDriverNameOnAccountFromDriverAccountTeamMember(Trigger.new, Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.copyInformationFromAccountTeamMemberToAccount(Trigger.new);
             }
             when AFTER_DELETE {
                 AccountTeamMemberTriggerHandler.deleteReoccurrenceRecord(Trigger.oldMap);
-                AccountTeamMemberTriggerHandler.deleteDriversNameFromAccount(Trigger.oldMap);
+                AccountTeamMemberTriggerHandler.copyInformationFromAccountTeamMemberToAccount(Trigger.old);
             }
         }
     } catch (Exception e) {

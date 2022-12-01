@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Support Manager</label>
+    <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
@@ -11,10 +12,12 @@
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
+    <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>InvoiceEditAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
@@ -24,14 +27,15 @@
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
-    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
-    <permissionSets>PaymentTransactionEditAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductSupportAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
@@ -39,5 +43,8 @@
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <permissionSets>bt_paylink__PayLink_User</permissionSets>
+    <permissionSets>bt_stripe__payment360_Userv2</permissionSets>
+    <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

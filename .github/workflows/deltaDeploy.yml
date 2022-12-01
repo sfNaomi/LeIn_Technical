@@ -6,9 +6,9 @@ on:
     push:
         branches:
             - develop
-            - interfaces
             - staging
             - sit
+            - main
 
 # Jobs to be executed.
 jobs:
@@ -108,7 +108,6 @@ jobs:
                     JWT_QA: ${{ secrets.QA_CERTIFICATE }}
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
                     JWT_PROD: ${{ secrets.DEV_HUB_CERTIFICATE }}
-                    JWT_INTERFACES: ${{ secrets.INTERFACES_CERTIFICATE }}
                     JWT_SIT: ${{ secrets.SIT_CERTIFICATE }}
                 shell: bash
                 if: env.LINES != 3
@@ -116,7 +115,6 @@ jobs:
                     echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
                     echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
                     echo "$JWT_PROD" | base64 --decode > ${HOME}/prod.key
-                    echo "$JWT_INTERFACES" | base64 --decode > ${HOME}/interfaces.key
                     echo "$JWT_SIT" | base64 --decode > ${HOME}/sit.key
                     echo "running on branch ${GITHUB_REF_NAME}"
                     

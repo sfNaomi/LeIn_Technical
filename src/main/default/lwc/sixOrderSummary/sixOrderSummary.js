@@ -1,15 +1,13 @@
 import { LightningElement, track, api, wire } from "lwc";
 import getLastOrderDates from "@salesforce/apex/sixOrderSummaryController.getOrdersDates";
 import getOrdersList from "@salesforce/apex/SixOrderSummaryController.getOrdersList";
-import CreateOrder from "@salesforce/apex/SixOrderSummaryController.CreateOrder";
+import createOrder from "@salesforce/apex/SixOrderSummaryController.createOrder";
 import { NavigationMixin } from "lightning/navigation";
 import { processError } from "c/errorHandlingService";
 import { openRecordInSubTab } from "c/workspaceApiService";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
-export default class LastSixOrdersSummary extends NavigationMixin(
-  LightningElement
-) {
+export default class LastSixOrdersSummary extends NavigationMixin(LightningElement) {
   @api recordId;
 
   @track columns = [
@@ -36,6 +34,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
       },
     },
   ];
+
   @track isLoading = true;
   @track columnsP;
   @track skuList;
@@ -52,13 +51,14 @@ export default class LastSixOrdersSummary extends NavigationMixin(
   async handleClick() {
     try {
       this.sumOrderData = this.sumOrderData.filter(function (item) {
-        return item.Stock > 0 && item.isActive == true;
+        return item.Stock > 0 && item.isActive == true && item.offSale == false;
       });
-      console.log("after filter", JSON.stringify(this.sumOrderData));
-      let createdOrderId = await CreateOrder({
+
+      let createdOrderId = await createOrder({
         orderJSON: this.sumOrderData,
         accountId: this.recordId,
       });
+
       if (createdOrderId) {
         const toastSuccess = new ShowToastEvent({
           title: "Success",
@@ -123,6 +123,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
       processError(this, error);
     }
   }
+
   async loadData() {
     try {
       this.showOrderItems = await getOrdersList({
@@ -142,6 +143,7 @@ export default class LastSixOrdersSummary extends NavigationMixin(
       processError(this, error);
     }
   }
+
   MapData() {
     this.orderItemList = JSON.parse(JSON.stringify(this.showOrderItems));
 
@@ -158,15 +160,16 @@ export default class LastSixOrdersSummary extends NavigationMixin(
         pricebookentryid: dataRec?.pricebookentryid,
         unitPrice: dataRec?.unitPrice,
         Stock: dataRec?.stockRemaining,
+        offSale: dataRec?.offSale
       };
     });
-   const prodData = JSON.parse(JSON.stringify(this.skuList));
+    const prodData = JSON.parse(JSON.stringify(this.skuList));
 
     return prodData;
   }
 
   splitPerProdId(prodData) {
-    const ProdSplitresult = prodData.reduce(
+    const prodSplitResult = prodData.reduce(
       (p, v) => (
         (p[v.productId] = {
           ...(p[v.productId] || {}),
@@ -177,17 +180,17 @@ export default class LastSixOrdersSummary extends NavigationMixin(
       {}
     );
 
-    return ProdSplitresult;
+    return prodSplitResult;
   }
 
-  convertToObjAndColourCode(colourCoderesult) {
-    const res = Object.entries(colourCoderesult).map(([name, obj]) => ({
+  convertToObjAndColourCode(colourCodeResult) {
+    const res = Object.entries(colourCodeResult).map(([name, obj]) => ({
       name,
       ...obj,
     }));
     res.forEach((ele) => {
       ele.format =
-        ele.Stock < 0 ? "slds-text-color_error" : "slds-text-color_default";
+        ele.Stock <= 0 || ele.offSale ? "slds-text-color_error" : "slds-text-color_default";
     });
     this.sumOrderData = res;
     this.dataF = JSON.parse(JSON.stringify(res));

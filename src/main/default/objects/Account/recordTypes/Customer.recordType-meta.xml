@@ -137,10 +137,6 @@
             <fullName>On Hold</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>On Stop</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CustomerTier__c</picklist>
@@ -563,6 +559,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PaymentTerms__c</picklist>
+        <values>
+            <fullName>21D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TWA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PricedUnpricedInvoice__c</picklist>
         <values>
             <fullName>Priced</fullName>
@@ -634,7 +653,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit</fullName>
+            <fullName>Card Payment</fullName>
             <default>false</default>
         </values>
         <values>

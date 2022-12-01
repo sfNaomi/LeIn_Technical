@@ -26,10 +26,10 @@
     <entryCriteria>
         <formula>OR(
 				AND(
-				(ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;) ||  Account.AvailableCredit__c &lt; 0),
+				(ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;) ||  Account.AvailableCredit__c &lt;  TotalAmount ),
     (RecordType.DeveloperName = &quot;ECommerceOrder&quot;	|| RecordType.DeveloperName = &quot;EDIOrder&quot;
     || RecordType.DeveloperName = &quot;FieldDirectOrder&quot;)),
-				AND(Account.AvailableCredit__c &lt; 0, RecordType.DeveloperName = &quot;TelesalesOrder&quot;)
+				AND(Account.AvailableCredit__c &lt; TotalAmount , RecordType.DeveloperName = &quot;TelesalesOrder&quot;)
 			)</formula>
     </entryCriteria>
     <finalApprovalActions>
@@ -61,7 +61,7 @@
         </action>
     </initialSubmissionActions>
     <label>Order Approval Process Finance Team</label>
-    <processOrder>2</processOrder>
+    <processOrder>3</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

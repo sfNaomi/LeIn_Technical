@@ -106,7 +106,7 @@ public with sharing class DeliveryManifestGenerationService {
     private void getOrders(List<String> orderIds) {
         orders = [
             SELECT
-                Id, AccountId, Account.Name, Account.Phone, Account.PrimaryPaymentMethod__c,
+                Id, AccountId, Account.Name, Account.Phone, PaymentMethod__c,
                 ShippingStreet, ShippingCity,ShippingPostalCode, CreatedBy.Name,
                 Account.OpeningTime__c, Account.FixedDeliveryInstructions__c, GridDelivery__c,
                 ShortDescription__c, PalletSequence__c, TotalQuantity__c, TotalOrderWeight__c,
@@ -319,7 +319,7 @@ public with sharing class DeliveryManifestGenerationService {
             this.deliveryInstructions = newOrder?.Account?.FixedDeliveryInstructions__c;
             this.phone = newOrder?.Account?.Phone;
             this.tam = newOrder?.CreatedBy?.Name;
-            this.paymentMethod = newOrder?.Account?.PrimaryPaymentMethod__c;
+            this.paymentMethod = newOrder?.PaymentMethod__c;
             this.weight = newOrder?.TotalOrderWeight__c;
             this.notes = orderNotes.get(newOrder.Id);
 

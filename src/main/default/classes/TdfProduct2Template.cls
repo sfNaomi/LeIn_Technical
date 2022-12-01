@@ -24,7 +24,7 @@ public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
      *
      */
     public override void init() {
-        Product2 userDefinedPricebook = (Product2) userDefinedSObject;
+        Product2 userDefinedProduct = (Product2) userDefinedSObject;
     }
 
     /**
@@ -39,12 +39,13 @@ public with sharing class TdfProduct2Template extends TdfSObjectTemplate {
      *
      */
     protected override SObject createTemplateSObject() {
+        String productCode = 'uniqueSKU' + ++counter;
         Product2 template = new Product2(
-                Name = 'Test Product',
-                IsActive = true,
-                StockKeepingUnit = 'uniqueSKU' + ++counter,
-                ProductCode = 'uniqueCode' + ++counter,
-                Family = 'Product'
+            Name = 'Test Product',
+            IsActive = true,
+            StockKeepingUnit = productCode,
+            ProductCode = productCode,
+            Family = 'Product'
         );
 
         return template;

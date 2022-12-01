@@ -2,12 +2,14 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Leader</label>
+    <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountTelesalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
@@ -17,7 +19,8 @@
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderTelesalesAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
@@ -28,5 +31,8 @@
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <permissionSets>bt_paylink__PayLink_User</permissionSets>
+    <permissionSets>bt_stripe__payment360_Userv2</permissionSets>
+    <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

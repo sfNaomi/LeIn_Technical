@@ -6,9 +6,14 @@
         <label>Cash</label>
     </customValue>
     <customValue>
-        <fullName>Credit</fullName>
+        <fullName>Cheque</fullName>
         <default>false</default>
-        <label>Credit</label>
+        <label>Cheque</label>
+    </customValue>
+    <customValue>
+        <fullName>Bacs</fullName>
+        <default>false</default>
+        <label>Bacs</label>
     </customValue>
     <customValue>
         <fullName>Direct Debit</fullName>
@@ -18,8 +23,13 @@
     <customValue>
         <fullName>Card Payment</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Card Payment</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Credit</label>
     </customValue>
     <customValue>
         <fullName>Buying Group Central Billing</fullName>

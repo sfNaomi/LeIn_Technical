@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductSkuAndProductCodeInSync</fullName>
+    <active>true</active>
+    <description>Validation rule ensuring that Product code and Product SKU fields are in sync</description>
+    <errorConditionFormula>ProductCode !=  StockKeepingUnit</errorConditionFormula>
+    <errorDisplayField>StockKeepingUnit</errorDisplayField>
+    <errorMessage>Product SKU and Product Code fields must be in sync. Please ensure that both fields contain the same value.</errorMessage>
+</ValidationRule>

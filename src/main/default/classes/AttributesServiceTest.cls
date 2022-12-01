@@ -13,7 +13,7 @@ private class AttributesServiceTest {
         Map<String, aforza__Attribute__c> mapOfAttributes =  AttributesService.getExistingAttributes(new List<Product2>{prod});
         Test.stopTest();
 
-        System.assertEquals(1, mapOfAttributes.size());
+        Assert.areEqual(1, mapOfAttributes.size());
     }
 
     @IsTest
@@ -25,7 +25,7 @@ private class AttributesServiceTest {
         Map<String, Id> attributeMap =  AttributesService.getAttributesForSkus(new Set<String>{attribute.aforza__Code__c});
         Test.stopTest();
 
-        System.assert(attributeMap.containsKey(code));
+        Assert.isTrue(attributeMap.containsKey(code));
     }
 
     @IsTest
@@ -33,10 +33,10 @@ private class AttributesServiceTest {
         Test.startTest();
         try {
             AttributesService.getAttributeGroupId();
-            System.assert(false, 'We expect an exception to be thrown before');
+            Assert.isTrue(false, 'We expect an exception to be thrown before');
         } catch (Exception e) {
-            System.assert(e.getMessage().contains('The required Attribute Category with code NonStockis is not present in the system.'));
-            System.assert(e.getTypeName().contains('IllegalArgumentException'));
+            Assert.isTrue(e.getMessage().contains('The required Attribute Category with code NonStockis is not present in the system.'));
+            Assert.isTrue(e.getTypeName().contains('IllegalArgumentException'));
         }
         Test.stopTest();
     }
@@ -49,7 +49,7 @@ private class AttributesServiceTest {
         Id groupId = AttributesService.getAttributeGroupId();
         Test.stopTest();
 
-        System.assert(String.isNotEmpty(groupId));
+        Assert.isTrue(String.isNotEmpty(groupId));
     }
 
     @IsTest
@@ -67,28 +67,30 @@ private class AttributesServiceTest {
         Map<Id, Map<String, Id>> attributesForAccount = AttributesService.getAccountToAssignments(new Set<Id>{acc.Id}, new Set<String>{code, code2});
         Test.stopTest();
 
-        System.assert(attributesForAccount.size() == 1);
-        System.assert(attributesForAccount.containsKey(acc.Id));
-        System.assertEquals(2, attributesForAccount.get(acc.Id).size());
-        System.assert(attributesForAccount.get(acc.Id).containsKey(code));
-        System.assert(attributesForAccount.get(acc.Id).containsKey(code2));
-        System.assertEquals(assignment.Id, attributesForAccount.get(acc.Id).get(code));
-        System.assertEquals(assignment2.Id, attributesForAccount.get(acc.Id).get(code2));
+        Assert.isTrue(attributesForAccount.size() == 1);
+        Assert.isTrue(attributesForAccount.containsKey(acc.Id));
+        Assert.areEqual(2, attributesForAccount.get(acc.Id).size());
+        Assert.isTrue(attributesForAccount.get(acc.Id).containsKey(code));
+        Assert.isTrue(attributesForAccount.get(acc.Id).containsKey(code2));
+        Assert.areEqual(assignment.Id, attributesForAccount.get(acc.Id).get(code));
+        assert.areEqual(assignment2.Id, attributesForAccount.get(acc.Id).get(code2));
     }
 
     @IsTest
     private static void testUpdateFocusAttributes() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
+
         String code = 'newCode';
 
         Test.startTest();
-        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = code, FocusFiveProduct__c = true, FocusFiveGroup__c = 'Group'));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(
+            new Product2(StockKeepingUnit = code, ProductCode = code, FocusFiveProduct__c = true, FocusFiveGroup__c = 'Group')
+        );
+
         // should be lapsed
         TdfSObjectFactory.insertSObject(new aforza__Outlet_Asset__c(aforza__Account__c = acc.Id, aforza__Product__c = prod.Id, aforza__Name__c = prod.Name));
         aforza__Outlet_Asset__c assetReselected = [SELECT Id, aforza__Product_Code__c, FocusFiveStatus__c, aforza__Account__c, aforza__Outlet_Asset__c.aforza__Product_SKU__c FROM aforza__Outlet_Asset__c WHERE FocusFiveProduct__c = TRUE][0];
-
-        System.debug(assetReselected.FocusFiveStatus__c);
         Test.stopTest();
 
         AttributesService.updateFocusAttributes(new List<aforza__Outlet_Asset__c>{assetReselected});
@@ -96,8 +98,8 @@ private class AttributesServiceTest {
         // get attribute assignment
         List<aforza__Attribute_Assignment__c> attributeAssignments = [SELECT Id, aforza__Attribute__c, aforza__Account__c FROM aforza__Attribute_Assignment__c];
 
-        System.assertEquals(1, attributeAssignments.size());
-        System.assertEquals(acc.Id, attributeAssignments[0].aforza__Account__c);
+        Assert.areEqual(1, attributeAssignments.size());
+        Assert.areEqual(acc.Id, attributeAssignments[0].aforza__Account__c);
     }
 
     @IsTest
@@ -114,29 +116,29 @@ private class AttributesServiceTest {
 
         List<aforza__Attribute__c> leftAttributes = [SELECT Id FROM aforza__Attribute__c WHERE aforza__Active__c = TRUE];
 
-        System.assertEquals(1, leftAttributes.size());
+        Assert.areEqual(1, leftAttributes.size());
     }
 
     @IsTest
     private static void testCreateAttributes() {
         TdfSObjectFactory.insertSObject(new aforza__Attribute_Category__c());
         String code = 'newCode';
-        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = code, FocusFiveProduct__c = false, FocusFiveGroup__c = 'Group'));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = code, ProductCode = code, FocusFiveProduct__c = false, FocusFiveGroup__c = 'Group'));
 
         Test.startTest();
         AttributesService.createAttributes(new List<Product2>{prod});
         Test.stopTest();
 
         List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c, aforza__Active__c FROM aforza__Attribute__c];
-        System.assertEquals(1, attributes.size());
-        System.assertEquals(code, attributes[0].aforza__Code__c);
-        System.assertEquals(true, attributes[0].aforza__Active__c);
+        Assert.areEqual(1, attributes.size());
+        Assert.areEqual(code, attributes[0].aforza__Code__c);
+        Assert.isTrue(attributes[0].aforza__Active__c);
     }
 
     @IsTest
     private static void testCreateAttributes_Update() {
         String code = 'newCode';
-        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = code, FocusFiveProduct__c = false));
+        Product2 prod = (Product2) TdfSObjectFactory.insertSObject(new Product2(StockKeepingUnit = code, ProductCode = code, FocusFiveProduct__c = false));
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = code, aforza__Active__c = false));
 
         Test.startTest();
@@ -144,9 +146,8 @@ private class AttributesServiceTest {
         Test.stopTest();
 
         List<aforza__Attribute__c> attributes = [SELECT Id, aforza__Code__c, aforza__Active__c FROM aforza__Attribute__c];
-        System.assertEquals(1, attributes.size());
-        System.assertEquals(code, attributes[0].aforza__Code__c);
-        System.assertEquals(true, attributes[0].aforza__Active__c);
+        Assert.areEqual(1, attributes.size());
+        Assert.areEqual(code, attributes[0].aforza__Code__c);
+        Assert.isTrue(attributes[0].aforza__Active__c);
     }
-
 }

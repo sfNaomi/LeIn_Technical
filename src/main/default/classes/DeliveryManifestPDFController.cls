@@ -13,7 +13,7 @@ public with sharing class DeliveryManifestPDFController {
     * @date 2022-10-18
     */
     public DeliveryManifestPDFController () {
-        String urlParam = ApexPages.currentPage().getParameters().get('ids');
+        String urlParam = ApexPages.currentPage().getParameters().get('p');
 
         List<String> orderIds = new List<String>();
         if (!String.isEmpty(urlParam)) {

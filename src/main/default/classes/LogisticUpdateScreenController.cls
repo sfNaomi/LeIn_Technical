@@ -24,26 +24,31 @@ public with sharing class LogisticUpdateScreenController {
     }
 
     @AuraEnabled
-    public static void updateOrderFields(List<String> orderIds, Map<String, Object> fieldValues) {
+    public static void updateRecords(List<Id> recordIds, Map<String, Object> fieldValues) {
         try {
-            if (orderIds.isEmpty()) {
-                throw new Exceptions.BadDataException('Order Id provided is empty. Please make sure there is a value');
+            if (recordIds.isEmpty()) {
+                throw new Exceptions.BadDataException('List of ids provided is empty. Please make sure there is a value');
             }
             if (fieldValues.isEmpty()) {
                 throw new Exceptions.BadDataException('Field values not provided. Please make sure valid field values are provided');
             }
 
-            List<Order> ordersToUpdate = new List<Order>();
-            for (String orderId : orderIds) {
-                Order orderToUpdate = new Order();
-                orderToUpdate.Id = orderId;
-                for (String field : fieldValues.keyset()) {
-                    orderToUpdate.put(field, fieldValues.get(field));
-                }
-                ordersToUpdate.add(orderToUpdate);
-            }
-            update ordersToUpdate;
+            List<SObject> recordsToUpdate = new List<SObject>();
+            for (Id recordId : recordIds) {
+                String sObjName = DescriptionSobjectService.getSObjectName(recordId);
 
+                Type objectType = Type.forName(sObjName);
+                SObject recordToUpdate = (SObject) objectType.newInstance();
+
+                recordToUpdate.put('Id', recordId);
+                for (String field : fieldValues.keyset()) {
+                    recordToUpdate.put(field, fieldValues.get(field));
+                }
+
+                recordsToUpdate.add(recordToUpdate);
+            }
+
+            update recordsToUpdate;
         } catch (Exception e) {
             throw new PopulateAuraHandledException(e.getMessage());
         }

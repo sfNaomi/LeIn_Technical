@@ -67,7 +67,7 @@ public with sharing class FileGenerationService {
     * @date 2022-10-10
     */
     @TestVisible
-    private static ContentVersion generateContentVersion(documentType docType, SObject record) {
+    private static ContentVersion generateContentVersion(documentType docType, sObject record) {
         PageReference pageRef = null;
         String documentName = null;
         String documentType = null;
@@ -75,12 +75,20 @@ public with sharing class FileGenerationService {
         switch on docType {
             when INVOICE {
                 pageRef = Page.AGBarrInvoice;
-                documentName = 'Invoice ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
-                documentType = 'Invoice';
+
+                String orderNumber = (String) record?.getSObject('aforza__Order__r')?.get('OrderNumber');
+                String invoiceNumber = (String) record?.get('Name');
+                String invoiceType = (String) record?.get('InvoiceType__c');
+
+                documentName = (invoiceType == null ? 'Invoice' : invoiceType) + ' ' + (orderNumber == null ? invoiceNumber : orderNumber) + ' ' + System.today().format() + '.pdf';
+                documentType = invoiceType == null ? 'Invoice' : invoiceType;
             }
             when DELIVERY_NOTE {
                 pageRef = Page.DeliveryNotePDF;
-                documentName = 'Delivery Note ' + record.get('Name') + ' ' + System.today().format() + '.pdf';
+
+                String orderNumber = (String) record?.get('OrderNumber');
+
+                documentName = 'Delivery Note ' + orderNumber + ' ' + System.today().format() + '.pdf';
                 documentType = 'Delivery Note';
             }
             when else {
@@ -134,9 +142,19 @@ public with sharing class FileGenerationService {
     @TestVisible
     private static List<SObject> getRecords(Set<Id> recordIds) {
         String objectName = getSObjectType((new List<Id>(recordIds)).get(0));
-        String query = 'SELECT Id, Name FROM ' + objectName + ' WHERE Id IN :recordIds';
-        List<SObject> records = new List<SObject>(Database.query(query));
-        return records;
+        String fieldsToQuery = 'Id';
+
+        switch on objectName {
+            when 'aforza__Invoice__c' {
+                fieldsToQuery += ',aforza__Order__r.OrderNumber,InvoiceType__c,Name';
+            }
+            when 'Order' {
+                fieldsToQuery += ',OrderNumber';
+            }
+        }
+
+        String query = 'SELECT ' + fieldsToQuery + ' FROM ' + objectName + ' WHERE Id IN :recordIds';
+        return Database.query(query);
     }
 
     /**
@@ -151,7 +169,7 @@ public with sharing class FileGenerationService {
     */
     @TestVisible
     private static String getSObjectType(Id recordId) {
-        return recordId.getSobjectType().getDescribe().getName();
+        return recordId.getSObjectType().getDescribe().getName();
     }
 
     /**
@@ -167,7 +185,7 @@ public with sharing class FileGenerationService {
     */
     @TestVisible
     private static Blob getContentAsBlob(Id recordId, PageReference pageRef) {
-        pageRef.getParameters().put('id', recordId);
+        pageRef.getParameters().put('p', recordId);
         Blob pdfBlob = Test.isRunningTest() ? Blob.valueOf('Test Page') : pageRef.getContent();
         return pdfBlob;
     }

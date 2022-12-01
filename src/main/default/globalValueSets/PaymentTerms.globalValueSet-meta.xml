@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>STD</fullName>
+        <default>false</default>
+        <label>STD</label>
+    </customValue>
+    <customValue>
+        <fullName>TMA</fullName>
+        <default>false</default>
+        <label>TMA</label>
+    </customValue>
+    <customValue>
+        <fullName>TWA</fullName>
+        <default>false</default>
+        <label>TWA</label>
+    </customValue>
+    <customValue>
+        <fullName>50D</fullName>
+        <default>false</default>
+        <label>50D</label>
+    </customValue>
+    <customValue>
+        <fullName>21D</fullName>
+        <default>false</default>
+        <label>21D</label>
+    </customValue>
+    <masterLabel>Payment Terms</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

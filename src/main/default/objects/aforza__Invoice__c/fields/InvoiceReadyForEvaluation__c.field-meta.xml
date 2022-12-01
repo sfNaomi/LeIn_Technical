@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceReadyForEvaluation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Field used when generating invoice mailing. Marking invoices as ready for evaluation. Ready means that all documents, payments are done and we have all info to evaluate if email should be sent.</description>
+    <externalId>false</externalId>
+    <label>Invoice Ready For Evaluation</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

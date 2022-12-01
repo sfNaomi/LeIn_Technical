@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>AGBarr</letterhead>
+    <name>AGBarr Invoice Email Template</name>
+    <style>freeForm</style>
+    <subject>AGBarr Invoice {!aforza__Invoice__c.aforza__Order__c}</subject>
+    <textOnly>{!aforza__Invoice__c.DpName__c}
+{!aforza__Invoice__c.DpAddress__c}
+{!aforza__Invoice__c.DpTown__c}
+{!aforza__Invoice__c.DpPostcode__c}
+DP Ref: {!aforza__Invoice__c.DpReference__c}
+
+This e-mail contains an invoice from Barr Soft Drinks relating to your recent delivery.
+
+Invoice {!aforza__Invoice__c.aforza__Order__c} totalling {!aforza__Invoice__c.Gross__c} (including VAT) refers
+
+Should you wish to query this invoice, please contact 0800 434 6260 quoting reference {!aforza__Invoice__c.aforza__Order__c}/{!aforza__Invoice__c.DpReference__c}.
+
+Yours sincerely
+
+Barr Soft Drinks</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

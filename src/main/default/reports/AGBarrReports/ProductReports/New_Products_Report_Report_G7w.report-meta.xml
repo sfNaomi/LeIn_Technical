@@ -10,7 +10,11 @@
         <field>Product2$Description</field>
     </columns>
     <columns>
-        <field>Product2$ProductStatus__c</field>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Product2$IsActive</field>
+    </columns>
+    <columns>
+        <field>Product2$OffSale__c</field>
     </columns>
     <filter>
         <criteriaItems>
@@ -21,11 +25,11 @@
             <value>TODAY</value>
         </criteriaItems>
         <criteriaItems>
-            <column>Product2$ProductStatus__c</column>
+            <column>Product2$IsActive</column>
             <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value></value>
+            <value>0</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

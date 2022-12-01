@@ -17,20 +17,33 @@ public with sharing class LoadPlanningScreenController {
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            throw new AuraHandledException(e.getMessage());
+            throw new PopulateAuraHandledException(e.getMessage());
         }
     }
 
     @AuraEnabled
     public static Load__c fetchLoadData(String loadId) {
         try {
-            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c FROM Load__c WHERE Id = :loadId];
+            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c, RouteIdentification__c FROM Load__c WHERE Id = :loadId];
 
             return load.isEmpty() ? null : load[0];
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
-            throw new AuraHandledException(e.getMessage());
+            throw new PopulateAuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static Vehicle__c fetchVehicle(String driverName) {
+        try {
+            List<Vehicle__c> vehicle = [SELECT Id, Driver__c  FROM Vehicle__c WHERE Driver__r.Name LIKE :driverName];
+
+            return vehicle.isEmpty() ? null : vehicle[0];
+        } catch (Exception e) {
+            System.debug(LoggingLevel.ERROR, e.getMessage());
+            System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            throw new PopulateAuraHandledException(e.getMessage());
         }
     }
 }
