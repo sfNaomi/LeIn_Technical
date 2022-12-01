@@ -86,10 +86,12 @@ public with sharing class BtTransactionTriggerHandler {
             bt_stripe__Transaction__c oldTransaction = oldMap.get(btTransaction.Id);
             if (btTransaction.bt_stripe__Payment_Status__c == 'Captured' && btTransaction.bt_stripe__Transaction_Status__c == 'Completed'
                 && oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
-                && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c
-                && btTransaction.Invoice__c != null) {
+                && oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c) {
+                // update invoices only when there is an invoice, try to get aforza transactions every time
+                if (btTransaction.Invoice__c != null) {
+                    invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full', CreditCardPaymentTaken__c = true));
+                }
                 transactionIds.add(btTransaction.Id);
-                invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full', CreditCardPaymentTaken__c = true));
             }
         }
 
@@ -115,7 +117,7 @@ public with sharing class BtTransactionTriggerHandler {
     @TestVisible
     private static aforza__Payment_Transaction__c mapBlackthornTransactionToAforzaTransaction(bt_stripe__Transaction__c blackthornTransaction, Map<Id, Id> accountIdToPaymentMethodId, String context) {
         aforza__Payment_Transaction__c aforzaTransaction = new aforza__Payment_Transaction__c();
-        aforzaTransaction.aforza__Payment_Method__c = accountIdToPaymentMethodId?.get(blackthornTransaction.bt_stripe__Related_Account__c);
+        aforzaTransaction.aforza__Payment_Method__c = accountIdToPaymentMethodId?. get (blackthornTransaction.bt_stripe__Related_Account__c);
         aforzaTransaction.aforza__Amount__c = blackthornTransaction.bt_stripe__Amount__c;
         aforzaTransaction.OrderNumber__c = blackthornTransaction.Order__c;
         aforzaTransaction.aforza__Account__c = blackthornTransaction.bt_stripe__Related_Account__c;
@@ -150,7 +152,7 @@ public with sharing class BtTransactionTriggerHandler {
      * @date 2022-11-14
      */
     @TestVisible
-    private static Map<Id, Id> fetchPaymentMethodsForAccounts(Set<Id> accountIds) {
+    private static Map<Id, Id> fetchPaymentMethodsForAccounts(Set <Id> accountIds) {
         Map<Id, Id> accountIdToPaymentMethodId = new Map<Id, Id>();
         for (aforza__Payment_Method__c paymentMethod : [
             SELECT Id, aforza__Account__c
@@ -176,7 +178,7 @@ public with sharing class BtTransactionTriggerHandler {
      * @date 2022-11-14
      */
     @TestVisible
-    private static List<aforza__Payment_Transaction__c> preparePaymentsForUpdate(Set<Id> transactionIds) {
+    private static List<aforza__Payment_Transaction__c> preparePaymentsForUpdate(Set <Id> transactionIds) {
         List<aforza__Payment_Transaction__c> paymentTransactions = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c WHERE BtTransaction__c IN :transactionIds];
         for (aforza__Payment_Transaction__c paymentTransaction : paymentTransactions) {
             paymentTransaction.aforza__Status__c = 'Applied';

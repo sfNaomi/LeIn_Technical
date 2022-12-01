@@ -23,7 +23,8 @@ private with sharing class InvoiceTriggerHandlerTest {
             SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber
-            FROM aforza__Invoice__c LIMIT 1
+            FROM aforza__Invoice__c
+            LIMIT 1
         ];
 
         Test.startTest();
@@ -46,33 +47,41 @@ private with sharing class InvoiceTriggerHandlerTest {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
         aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Approve for Payment'));
-        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id,  aforza__Status__c = 'Applied'));
-        
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id, aforza__Status__c = 'Applied'));
+
         Test.startTest();
         invoice.aforza__Status__c = 'Payment Attempt Unsuccessful';
         update invoice;
         Test.stopTest();
 
-        aforza__Payment_Transaction__c pTransaction = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c 
-            WHERE aforza__Invoice__c =: invoice.id LIMIT 1 ];
-        Assert.areEqual('Rejected', pTransaction.aforza__Status__c);               
+        aforza__Payment_Transaction__c pTransaction = [
+            SELECT Id, aforza__Status__c
+            FROM aforza__Payment_Transaction__c
+            WHERE aforza__Invoice__c = :invoice.Id
+            LIMIT 1
+        ];
+        Assert.areEqual('Rejected', pTransaction.aforza__Status__c);
     }
 
     @IsTest
-    private static void testUpdatePaymentTransactionsForSuccessInvoices() { 
+    private static void testUpdatePaymentTransactionsForSuccessInvoices() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
         aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Cash in Transit'));
-        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id,  aforza__Status__c = 'Pending'));
-        
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id, aforza__Status__c = 'Pending'));
+
         Test.startTest();
         invoice.aforza__Status__c = 'Paid in Full';
         update invoice;
         Test.stopTest();
 
-        aforza__Payment_Transaction__c pTransaction = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c 
-            WHERE aforza__Invoice__c =: invoice.id LIMIT 1 ];
-        Assert.areEqual('Applied', pTransaction.aforza__Status__c); 
+        aforza__Payment_Transaction__c pTransaction = [
+            SELECT Id, aforza__Status__c
+            FROM aforza__Payment_Transaction__c
+            WHERE aforza__Invoice__c = :invoice.Id
+            LIMIT 1
+        ];
+        Assert.areEqual('Applied', pTransaction.aforza__Status__c);
     }
 
     @IsTest
@@ -90,7 +99,9 @@ private with sharing class InvoiceTriggerHandlerTest {
         insert settings;
 
         Test.startTest();
-        InvoiceService.createInvoicesFromOrders(new Set<Id>{order.Id});
+        InvoiceService.createInvoicesFromOrders(new Set<Id>{
+            order.Id
+        });
         Test.stopTest();
 
         // get invoice created
@@ -119,7 +130,9 @@ private with sharing class InvoiceTriggerHandlerTest {
         insert settings;
 
         Test.startTest();
-        InvoiceService.createInvoicesFromOrders(new Set<Id>{order.Id});
+        InvoiceService.createInvoicesFromOrders(new Set<Id>{
+            order.Id
+        });
         Test.stopTest();
 
         // get invoice created
@@ -148,7 +161,9 @@ private with sharing class InvoiceTriggerHandlerTest {
         //do not create custom settings
 
         Test.startTest();
-        InvoiceService.createInvoicesFromOrders(new Set<Id>{order.Id});
+        InvoiceService.createInvoicesFromOrders(new Set<Id>{
+            order.Id
+        });
         Test.stopTest();
 
         // get invoice created
@@ -189,7 +204,8 @@ private with sharing class InvoiceTriggerHandlerTest {
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, PaymentLink__c,
                 aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c, aforza__Order__r.aforza__Original_Order__c
-            FROM aforza__Invoice__c LIMIT 1
+            FROM aforza__Invoice__c
+            LIMIT 1
         ];
 
         Test.startTest();
@@ -260,7 +276,9 @@ private with sharing class InvoiceTriggerHandlerTest {
         InvoiceSettings__c settings = new InvoiceSettings__c(CreatePaymentWhenInvoiceIsCreated__c = true);
         insert settings;
 
-        InvoiceService.createInvoicesFromOrders(new Set<Id>{order.Id});
+        InvoiceService.createInvoicesFromOrders(new Set<Id>{
+            order.Id
+        });
 
         Test.startTest();
         //InvoiceService.createInvoicesFromOrders(new Set<Id>{refundOrder.Id});

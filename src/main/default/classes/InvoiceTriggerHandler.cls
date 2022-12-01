@@ -144,10 +144,9 @@ public with sharing class InvoiceTriggerHandler {
     }
 
     public static void updateFailedInvoices(List<aforza__Invoice__c> newInvoices, Map<Id, aforza__Invoice__c> oldInvoices) {
-        List<aforza__Invoice__c> failedInvoicesToUpdate = new List<aforza__Invoice__c>();
-        for(aforza__Invoice__c newInvoice: newInvoices){
+        for (aforza__Invoice__c newInvoice : newInvoices) {
             aforza__Invoice__c oldInvoice = oldInvoices?.get(newInvoice.Id);
-            if(oldInvoice != null  && oldInvoice.aforza__Status__c == PAID_INVOICE_STATUS && newInvoice.aforza__Status__c  == APPROVE_INVOICE_STATUS) {
+            if (oldInvoice != null && oldInvoice.aforza__Status__c == PAID_INVOICE_STATUS && newInvoice.aforza__Status__c == APPROVE_INVOICE_STATUS) {
                 newInvoice.aforza__Status__c = UNSUCCESSFUL_INVOICE_STATUS;
             }
         }
@@ -155,18 +154,18 @@ public with sharing class InvoiceTriggerHandler {
 
     public static void updatePaymentTransactionsForInvoices(List<aforza__Invoice__c> newInvoices, Map<Id, aforza__Invoice__c> oldInvoices) {
         Set<Id> invoiceIds = new Set<Id>();
-        for(aforza__Invoice__c newInvoice: newInvoices){
+        for (aforza__Invoice__c newInvoice : newInvoices) {
             aforza__Invoice__c oldInvoice = oldInvoices?.get(newInvoice.Id);
             Boolean isStatusChanged = oldInvoice != null && newInvoice.aforza__Status__c != oldInvoice.aforza__Status__c;
-            if( isStatusChanged && (newInvoice.aforza__Status__c == PAID_INVOICE_STATUS || newInvoice.aforza__Status__c  == UNSUCCESSFUL_INVOICE_STATUS)) {
+            if (isStatusChanged && (newInvoice.aforza__Status__c == PAID_INVOICE_STATUS || newInvoice.aforza__Status__c == UNSUCCESSFUL_INVOICE_STATUS)) {
                 invoiceIds.add(newInvoice.Id);
             }
         }
-        if(!invoiceIds.isEmpty()) {
+        if (!invoiceIds.isEmpty()) {
             PaymentTransactionService.updatePaymentTransactionStatusForInvoices(invoiceIds);
         }
     }
-    
+
     private static List<bt_stripe__Transaction__c> handleRefundInvoices(Set<Id> ordersToGetTransactionsFor, List<aforza__Invoice__c> refundInvoices) {
         // get transactions to order Map, we expect only one transaction per order, so we disregard any other
         Map<Id, bt_stripe__Transaction__c> orderToTransactionMap = fetchOrdersWithTransactions(ordersToGetTransactionsFor);
