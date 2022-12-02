@@ -4,7 +4,7 @@
     <label>Credit Controller</label>
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>ContactFinanceUsers</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>

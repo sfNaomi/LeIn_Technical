@@ -5,8 +5,7 @@
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
-    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ContactHelpDeskBusinessSupport</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>

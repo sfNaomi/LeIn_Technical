@@ -4,9 +4,7 @@
     <label>Campaign Activation Manager</label>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
-    <permissionSets>ContactConsentFieldsAccess</permissionSets>
-    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>

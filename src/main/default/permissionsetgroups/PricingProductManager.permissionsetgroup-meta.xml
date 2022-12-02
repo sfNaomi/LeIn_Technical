@@ -5,9 +5,7 @@
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
-    <permissionSets>ContactConsentFieldsAccess</permissionSets>
-    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactPricingProductManager</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
