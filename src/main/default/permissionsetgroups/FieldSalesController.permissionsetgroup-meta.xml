@@ -20,6 +20,7 @@
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
+    <permissionSets>PaymentTransactionBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
@@ -30,5 +31,7 @@
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
-    <status>Updated</status>
+    <permissionSets>bt_paylink__PayLink_User</permissionSets>
+    <permissionSets>bt_stripe__payment360_Userv2</permissionSets>
+    <status>Updating</status>
 </PermissionSetGroup>
