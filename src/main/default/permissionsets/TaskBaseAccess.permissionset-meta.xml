@@ -207,7 +207,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Task Admin Access</label>
+    <label>Task Base Access</label>
     <license>Salesforce</license>
     <tabSettings>
         <tab>standard-Task</tab>

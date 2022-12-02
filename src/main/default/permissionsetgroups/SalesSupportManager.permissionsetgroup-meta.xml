@@ -36,7 +36,7 @@
     <permissionSets>ProductSupportAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>TaskAdminAccess</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
