@@ -1,7 +1,7 @@
-@isTest
+@IsTest
 public class ResetFeatureValuesBatchTest {
     
-    @isTest
+    @IsTest
     public static void testBenchmarkResetOnOutletAsset() {
         // Create Data
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(
@@ -16,16 +16,16 @@ public class ResetFeatureValuesBatchTest {
 		);
         
         Test.startTest();
-        ResetBenchmarkScheduler.scheduleBenchmmarkReset();
+        ResetBenchmarkScheduler.scheduleBenchmarkReset();
         ResetFeatureValuesBatch rfv = new ResetFeatureValuesBatch(
             'SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Product__r.PsProductEngland__c = true OR aforza__Product__r.PsProductScotland__c = true', 
             ResetFeatureValuesBatch.FEATURES.BENCHMARK
         );
         Database.executeBatch(rfv);
-        test.stopTest();
+        Test.stopTest();
         
         aforza__Outlet_Asset__c oAsset = [SELECT BenchmarkDate__c, BenchmarkScore__c FROM aforza__Outlet_Asset__c WHERE Id = :newAsset.Id];
-        System.assert(oAsset.BenchmarkDate__c == NULL, 'After Batch execution Benchmark Date values should be reset');
+        System.assert(oAsset.BenchmarkDate__c == null, 'After Batch execution Benchmark Date values should be reset');
         System.assert(oAsset.BenchmarkScore__c == 0, 'After Batch execution Benchmark score values should be reset');
     }
 }
