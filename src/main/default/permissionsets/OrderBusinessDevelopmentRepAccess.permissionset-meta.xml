@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Support and Sales Support access for Order and Order Line Item objects and fields</description>
+    <description>Business Development Rep access for Order and Order Line Item objects and fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.AccountName__c</field>
@@ -92,7 +92,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.IsLoaded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -147,12 +147,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.PickingCompleted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.PickingSheetPrinted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -172,7 +172,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.Receipt__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -402,9 +402,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Order Support Access</label>
+    <label>Order Business Development Rep Access</label>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
@@ -414,18 +414,6 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Order.FieldDirectOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.ReturnOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.StraightToJDEOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.TelesalesOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

@@ -23,8 +23,7 @@
     <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
-    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderAppSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>

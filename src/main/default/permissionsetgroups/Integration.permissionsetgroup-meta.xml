@@ -19,8 +19,7 @@
     <permissionSets>InvoiceEditAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
-    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderIntegrationAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Support and Sales Support access for Order and Order Line Item objects and fields</description>
+    <description>Integration access for Order and Order Line Item objects and fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.AccountName__c</field>
@@ -82,7 +82,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.Invoice__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -167,7 +167,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.PrintName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -177,7 +177,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.Replanned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -192,12 +192,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.SalesRepresentative__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Order.SalesRepresentativeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -402,10 +402,10 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Order Support Access</label>
+    <label>Order Integration Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -413,19 +413,11 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Order.FieldDirectOrder</recordType>
+        <recordType>Order.ECommerceOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Order.ReturnOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.StraightToJDEOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.TelesalesOrder</recordType>
+        <recordType>Order.EDIOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
