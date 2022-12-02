@@ -3,7 +3,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Support Exec</label>    
     <permissionSets>AccessDirectDebitWidget</permissionSets>
-    <label>Sales Support Exec</label>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
