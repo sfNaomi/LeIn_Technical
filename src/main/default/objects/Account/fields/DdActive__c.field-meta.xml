@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DdActive__c</fullName>
     <defaultValue>false</defaultValue>
+    <description>Checked when DD Mandate has been completed</description>
     <externalId>false</externalId>
     <label>DD Active?</label>
     <trackFeedHistory>false</trackFeedHistory>

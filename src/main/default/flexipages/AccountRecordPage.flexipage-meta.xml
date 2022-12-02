@@ -663,6 +663,30 @@
                     </criteria>
                 </visibilityRule>
             </componentInstance>
+        </itemInstances> 
+        <itemInstances>
+            <componentInstance>
+                <componentName>ddMandateLink</componentName>
+                <identifier>c_ddMandateLink2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.AccountStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Traders</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DdActive__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.AccessDirectDebitWidget}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>

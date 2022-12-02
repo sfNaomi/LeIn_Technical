@@ -9,6 +9,7 @@
     <permissionSets>ContactEditAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>FieldSalesUser</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>

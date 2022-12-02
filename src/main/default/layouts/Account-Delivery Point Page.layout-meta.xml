@@ -49,11 +49,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TotalSoftDrinkTurnover__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DdActive__c</field>
-            </layoutItems>   
+            </layoutItems> 
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -355,6 +351,28 @@
                 <field>TAMCode__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+       <label>Direct Debit Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BottomlineRefNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DdActive__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DirectDebitMandateRef__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
