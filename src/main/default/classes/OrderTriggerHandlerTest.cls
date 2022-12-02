@@ -92,11 +92,20 @@ private with sharing class OrderTriggerHandlerTest {
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
         );
 
+        // create parent account
+        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                AvailableCustomerCredit__c = 5
+            )
+        );
+
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
-                LastOrderDate__c = null, aforza__Credit_Amount__c = 100, aforza__Default_Price_Book__c = newPricebook.Id
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 100, aforza__Default_Price_Book__c = newPricebook.Id,
+                ParentId = parentAccount.Id
             )
         );
 
@@ -194,11 +203,20 @@ private with sharing class OrderTriggerHandlerTest {
             new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
         );
 
+        // create parent account
+        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                AvailableCustomerCredit__c = 5
+            )
+        );
+
         // create account
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
-                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
-                LastOrderDate__c = null, aforza__Credit_Amount__c = 100, aforza__Default_Price_Book__c = newPricebook.Id
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 100, aforza__Default_Price_Book__c = newPricebook.Id,
+                ParentId = parentAccount.Id
             )
         );
 

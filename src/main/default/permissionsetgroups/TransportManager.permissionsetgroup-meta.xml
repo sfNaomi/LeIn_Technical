@@ -5,7 +5,7 @@
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
+    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
@@ -14,13 +14,13 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderLogisticsAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>

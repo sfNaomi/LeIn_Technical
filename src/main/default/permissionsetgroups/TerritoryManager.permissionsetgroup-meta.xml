@@ -3,11 +3,11 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Territory Manager</label>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
-    <permissionSets>AccountTelesalesAccess</permissionSets>
+    <permissionSets>AccountTerritoryManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
-    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
@@ -16,15 +16,14 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderTelesalesAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
-    <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>

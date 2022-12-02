@@ -63,4 +63,62 @@ public with sharing class CommonUtilityTest {
         Set<String> fields = CommonUtility.getFieldsToQueryFromMapping(null, CommonUtility.QueryFieldType.TARGET);
         System.assertEquals(1, fields.size(), 'Expecting only the id field to be returned');
     }
+
+    @IsTest
+    public static void testGetUrlMapping() {
+        System.assertNotEquals(null, CommonUtility.getUrlMapping('AGENT_MANDATE_FORM'));
+        System.assertNotEquals(null, CommonUtility.getUrlMapping('CUSTOMER_MANDATE_FORM'));
+        System.assertEquals(null, CommonUtility.getUrlMapping('TEST'));
+        System.assertEquals(null, CommonUtility.getUrlMapping(null));
+    }
+    
+    @IsTest
+    public static void testUrlMapFieldsToParameterValues() {
+        UrlMapping__mdt mapping = CommonUtility.getUrlMapping('AGENT_MANDATE_FORM');
+
+        // create dp account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+            Map <String, String> mapFieldApiToFieldValue = new Map <String, String> ();
+
+        Test.startTest();
+        mapFieldApiToFieldValue = CommonUtility.urlMapFieldsToParameterValues(dpAccount, mapping);
+        Test.stopTest();
+
+        System.assertNotEquals(null, mapFieldApiToFieldValue, 'Expecting Mapped field returned');
+        System.assertEquals('56789', mapFieldApiToFieldValue.get('currentpostcode'));
+    }
+    
+     @IsTest
+    public static void testUrlGetFieldsToQuery() {
+        System.assertEquals(
+                true,
+                CommonUtility.urlGetFieldsToQuery(CommonUtility.getUrlMapping('AGENT_MANDATE_FORM')).size() > 1,
+                'Expecting fields to be returned'
+        );
+        System.assertEquals(
+                true,
+                CommonUtility.urlGetFieldsToQuery(CommonUtility.getUrlMapping('CUSTOMER_MANDATE_FORM')).size() > 1,
+                'Expecting fields to be returned'
+        );
+    }
+	
+    @IsTest
+    public static void testCreateUrlMethod() {
+        UrlMapping__mdt mapping = CommonUtility.getUrlMapping('AGENT_MANDATE_FORM');
+
+        String returnedUrl ='';
+        // create dp account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        Test.startTest();
+        returnedUrl = CommonUtility.createUrlMethod(dpAccount, mapping);
+        Test.stopTest();
+        system.debug(returnedUrl.right(0));
+        System.assertEquals(FALSE, String.isBlank(returnedUrl));
+        System.assertEquals(FALSE, returnedUrl.right(0) == '&');
+    }
 }

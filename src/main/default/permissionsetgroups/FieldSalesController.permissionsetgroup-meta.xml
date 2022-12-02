@@ -2,20 +2,21 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Field Sales Controller</label>
+    <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ClassBasicAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
-    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
+    <permissionSets>FieldSalesUser</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
@@ -24,9 +25,12 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductFieldSalesAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
+    <permissionSets>VehicleSalesAccess</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>
+    <permissionSets>bt_paylink__PayLink_User</permissionSets>
+    <permissionSets>bt_stripe__payment360_Userv2</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

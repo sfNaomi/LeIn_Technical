@@ -17,14 +17,14 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OrderTelesalesAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
+    <permissionSets>VehicleSalesAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
