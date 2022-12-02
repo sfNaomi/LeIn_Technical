@@ -2,7 +2,6 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Credit Controller</label>
-    <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>

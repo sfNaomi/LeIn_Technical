@@ -16,6 +16,10 @@
         <apexClass>LoadPlanningScreenController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>LogisticUpdateScreenController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Access to tab and classes needed for Load Planning Screen</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Access Load Planning Screen</label>

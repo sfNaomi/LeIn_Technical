@@ -3,7 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Team Leader</label>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
-    <permissionSets>AccountTelesalesAccess</permissionSets>
+    <permissionSets>AccountTeamLeaderAndTamAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
