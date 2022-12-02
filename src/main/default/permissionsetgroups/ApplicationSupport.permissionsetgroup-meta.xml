@@ -20,8 +20,7 @@
     <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>InvoiceEditAccess</permissionSets>
-    <permissionSets>LoadBaseAccess</permissionSets>
-    <permissionSets>LoadEditAccess</permissionSets>
+    <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
@@ -34,8 +33,7 @@
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleBaseAccess</permissionSets>
-    <permissionSets>VehicleEditAccess</permissionSets>
+    <permissionSets>VehicleAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
