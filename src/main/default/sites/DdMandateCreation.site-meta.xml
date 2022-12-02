@@ -22,8 +22,8 @@
     <masterLabel>DD Mandate Creation</masterLabel>
     <redirectToCustomDomain>true</redirectToCustomDomain>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
-    <siteAdmin>ag-barr-1668000171470@ci.org</siteAdmin>
-    <siteGuestRecordDefaultOwner>ag-barr-1668000171470@ci.org</siteGuestRecordDefaultOwner>
+    <siteAdmin>admin@agbarr.aforza.org</siteAdmin>
+    <siteGuestRecordDefaultOwner>admin@agbarr.aforza.org</siteGuestRecordDefaultOwner>
     <siteTemplate>SiteTemplate</siteTemplate>
     <siteType>Visualforce</siteType>
     <urlPathPrefix>DdMandateCreation</urlPathPrefix>
