@@ -70,7 +70,7 @@ public with sharing class OrderTriggerHandler {
         }
 
         Map<Id, Account> relatedAccounts = new Map<Id, Account>([
-            SELECT Id, AccountStatus__c, CreditStatus__c, AvailableCredit__c, (
+            SELECT Id, AccountStatus__c, CreditStatus__c, AvailableCredit__c, Parent.AvailableCustomerCredit__c, (
                 SELECT Id, AccountId, TeamMemberRole, UserId
                 FROM AccountTeamMembers
                 WHERE TeamMemberRole = 'TAM'
@@ -97,7 +97,11 @@ public with sharing class OrderTriggerHandler {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
                     && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && newOrder.IsApproved__c == false) {
+                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && 
+                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount && 
+                    newOrder.IsApproved__c == false) 
+                {
+                    System.debug('Second IF -> Second');
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);

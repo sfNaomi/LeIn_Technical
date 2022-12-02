@@ -28,6 +28,7 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
             AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterUpdate(Trigger.New, Trigger.Old);
             AccountTriggerHandler.createAforzaPaymentMethodForBottomLineDdMandate(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.calculateAvailableCustomerCredit(Trigger.new, Trigger.oldMap);
         }
         when BEFORE_DELETE {
             AforzaLabsSegmentToolAccountHandler.beforeDelete(Trigger.oldMap);

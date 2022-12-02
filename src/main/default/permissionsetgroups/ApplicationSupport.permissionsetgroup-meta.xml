@@ -4,15 +4,14 @@
     <label>Application Support</label>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
-    <permissionSets>AccountBaseAccess</permissionSets>
-    <permissionSets>AccountEditAccess</permissionSets>
+    <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetEditAccess</permissionSets>
-    <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
-    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactIntegrationApplicationSupport</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
@@ -21,12 +20,10 @@
     <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>InvoiceEditAccess</permissionSets>
-    <permissionSets>LoadBaseAccess</permissionSets>
-    <permissionSets>LoadEditAccess</permissionSets>
+    <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderBaseAccess</permissionSets>
-    <permissionSets>OrderEditAccess</permissionSets>
+    <permissionSets>OrderAppSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
@@ -35,8 +32,8 @@
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
-    <permissionSets>VehicleBaseAccess</permissionSets>
-    <permissionSets>VehicleEditAccess</permissionSets>
+    <permissionSets>TaskAdminAccess</permissionSets>
+    <permissionSets>VehicleAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

@@ -831,4 +831,204 @@ private with sharing class AccountTriggerHandlerTest {
         Assert.areEqual(acc.Id, newPayment.aforza__Account__c);
         Assert.areEqual(RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID, newPayment.RecordTypeId);
     }
+
+    @IsTest
+    private static void testCalculateAvailableCustomerCreditByAddRemoveNewDPAccounts() {
+
+        Account customerAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                DefaultInvoiceBillingAddress__c = true,
+                AvailableCustomerCredit__c = 0
+            )
+        );
+        
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100 )
+        );
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 200)
+        );
+        Account dpAccount3 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
+        );
+
+        Map<Id, Account> accountMap = new Map<Id, Account>();
+        List<Account> accountsToUpdate = new List<Account>();
+
+        dpAccount1.ParentId = customerAccount1.Id;
+        accountsToUpdate.add(dpAccount1);
+        update accountsToUpdate;
+        Account cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(100, cAccount.AvailableCustomerCredit__c);
+
+        Test.startTest();
+        accountsToUpdate = new List<Account>();
+        // Remove
+        dpAccount1.ParentId = null;
+        // Add
+        dpAccount2.ParentId = customerAccount1.Id;
+        dpAccount3.ParentId = customerAccount1.Id;
+        accountsToUpdate.add(dpAccount1);
+        accountsToUpdate.add(dpAccount2);
+        accountsToUpdate.add(dpAccount3);
+        update accountsToUpdate;
+        Test.stopTest();
+
+        cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(500, cAccount.AvailableCustomerCredit__c);
+    }
+
+    @IsTest
+    private static void testCalculateAvailableCustomerCreditByChangeDPAccounts() {
+
+        Account customerAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                DefaultInvoiceBillingAddress__c = true,
+                AvailableCustomerCredit__c = 0
+            )
+        );
+        Account customerAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                DefaultInvoiceBillingAddress__c = true,
+                AvailableCustomerCredit__c = 0
+            )
+        );
+        
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100 )
+        );
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 200)
+        );
+        Account dpAccount3 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
+        );
+
+        Map<Id, Account> accountMap = new Map<Id, Account>();
+        List<Account> accountsToUpdate = new List<Account>();
+
+        dpAccount1.ParentId = customerAccount1.Id;
+        dpAccount2.ParentId = customerAccount1.Id;
+        dpAccount3.ParentId = customerAccount2.Id;
+        accountsToUpdate.add(dpAccount1);
+        accountsToUpdate.add(dpAccount2);
+        accountsToUpdate.add(dpAccount3);
+        update accountsToUpdate;
+        accountMap = new Map<Id, Account>([
+            SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID
+        ]);
+        Assert.areEqual(300, accountMap.get(customerAccount1.Id).AvailableCustomerCredit__c);
+        Assert.areEqual(300, accountMap.get(customerAccount2.Id).AvailableCustomerCredit__c);
+
+        Test.startTest();
+        accountsToUpdate = new List<Account>();
+        // Update/Change Parent (DP Account)
+        dpAccount2.ParentId = customerAccount2.Id;
+        accountsToUpdate.add(dpAccount2);
+        update accountsToUpdate;
+        Test.stopTest();
+
+        accountMap = new Map<Id, Account>([
+            SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID
+        ]);
+        Assert.areEqual(100, accountMap.get(customerAccount1.Id).AvailableCustomerCredit__c);
+        Assert.areEqual(500, accountMap.get(customerAccount2.Id).AvailableCustomerCredit__c);
+    }
+
+    @IsTest
+    private static void testCalculateAvailableCustomerCreditByUpdatingInvoiceAmount() {
+
+        Account customerAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                DefaultInvoiceBillingAddress__c = true,
+                AvailableCustomerCredit__c = 0
+            )
+        );
+        
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100 )
+        );
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 200)
+        );
+        Account dpAccount3 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
+        );
+
+        Map<Id, Account> accountMap = new Map<Id, Account>();
+        List<Account> accountsToUpdate = new List<Account>();
+
+        dpAccount1.ParentId = customerAccount1.Id;
+        dpAccount2.ParentId = customerAccount1.Id;
+        dpAccount3.ParentId = customerAccount1.Id;
+        accountsToUpdate.add(dpAccount1);
+        accountsToUpdate.add(dpAccount2);
+        accountsToUpdate.add(dpAccount3);
+        update accountsToUpdate;
+        Account cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(600, cAccount.AvailableCustomerCredit__c);
+
+        Test.startTest();
+        // Update Parent
+        accountsToUpdate = new List<Account>();
+        dpAccount2.aforza__Credit_Amount__c = 0;
+        dpAccount3.aforza__Credit_Amount__c = -100;
+        accountsToUpdate.add(dpAccount2);
+        accountsToUpdate.add(dpAccount3);
+        update accountsToUpdate;
+        Test.stopTest();
+
+        cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(0, cAccount.AvailableCustomerCredit__c);
+    }
+
+    @IsTest
+    private static void testCalculateAvailableCustomerCreditByClosingDPAccount() {
+
+        Account customerAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID,
+                DefaultInvoiceBillingAddress__c = true,
+                AvailableCustomerCredit__c = 0
+            )
+        );
+        
+        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100 )
+        );
+        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 200)
+        );
+        Account dpAccount3 = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
+        );
+
+        Map<Id, Account> accountMap = new Map<Id, Account>();
+        List<Account> accountsToUpdate = new List<Account>();
+
+        dpAccount1.ParentId = customerAccount1.Id;
+        dpAccount2.ParentId = customerAccount1.Id;
+        dpAccount3.ParentId = customerAccount1.Id;
+        accountsToUpdate.add(dpAccount1);
+        accountsToUpdate.add(dpAccount2);
+        accountsToUpdate.add(dpAccount3);
+        update accountsToUpdate;
+        Account cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(600, cAccount.AvailableCustomerCredit__c);
+
+        Test.startTest();
+        // Update Parent
+        accountsToUpdate = new List<Account>();
+        dpAccount2.AccountStatus__c = 'Closed';
+        accountsToUpdate.add(dpAccount2);
+        update accountsToUpdate;
+        Test.stopTest();
+
+        cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
+        Assert.areEqual(400, cAccount.AvailableCustomerCredit__c);
+    }
 }
