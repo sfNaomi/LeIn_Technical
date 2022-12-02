@@ -11,7 +11,7 @@
     <permissionSets>AuditAssetEditAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
     <permissionSets>ContactIntegrationApplicationSupport</permissionSets>
-    <permissionSets>ContactCRUObjectAccess</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
