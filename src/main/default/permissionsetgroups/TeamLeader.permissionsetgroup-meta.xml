@@ -7,7 +7,7 @@
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
-    <permissionSets>ContactCRUObjectAccess</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>

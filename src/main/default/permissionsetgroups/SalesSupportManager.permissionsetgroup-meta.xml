@@ -9,7 +9,7 @@
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetEditAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
-    <permissionSets>ContactCRUObjectAccess</permissionSets>    <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>    
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>

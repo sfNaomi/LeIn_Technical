@@ -8,7 +8,7 @@
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ClassBasicAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
-    <permissionSets>ContactCRUObjectAccess</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FieldSalesUser</permissionSets>
