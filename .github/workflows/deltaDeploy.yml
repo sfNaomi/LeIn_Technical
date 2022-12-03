@@ -53,7 +53,6 @@ jobs:
                 run: | 
                     npm install sfdx-cli --global
                     sfdx config:set apiVersion=56.0 --global
-                    export SFDX_DISABLE_DNS_CHECK=true
 
             # Install sfdx plugin
             -   name: 'Install plugin'
@@ -112,6 +111,7 @@ jobs:
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
                     JWT_PROD: ${{ secrets.DEV_HUB_CERTIFICATE }}
                     JWT_SIT: ${{ secrets.SIT_CERTIFICATE }}
+                    SFDX_DISABLE_DNS_CHECK: true
                 shell: bash
                 if: env.LINES != 3
                 run: |
@@ -127,7 +127,7 @@ jobs:
                     echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
-                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ steps.credentials-preparation.outputs.userName }}
+                    sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ steps.credentials-preparation.outputs.userName }} -w 10000 --verbose --loglevel fatal
                                   
             # check destructive changes
             -   name: Check Destructive Changes
