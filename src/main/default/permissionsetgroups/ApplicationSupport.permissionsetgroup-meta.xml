@@ -18,8 +18,7 @@
     <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryEditAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
+    <permissionSets>InvoiceAdminAccess</permissionSets>
     <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>

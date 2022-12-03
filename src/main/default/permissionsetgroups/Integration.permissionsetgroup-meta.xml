@@ -14,8 +14,7 @@
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryAdminAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
+    <permissionSets>InvoiceIntegrationAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderIntegrationAccess</permissionSets>
