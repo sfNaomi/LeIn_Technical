@@ -50,7 +50,10 @@ jobs:
                     node-version: 16
             # Install Salesforce CLI.
             -   name: 'Install Salesforce CLI'
-                run: npm install sfdx-cli --global
+                run: | 
+                    npm install sfdx-cli --global
+                    sfdx config:set apiVersion=56.0 --global
+                    export SFDX_DISABLE_DNS_CHECK=true
 
             # Install sfdx plugin
             -   name: 'Install plugin'
