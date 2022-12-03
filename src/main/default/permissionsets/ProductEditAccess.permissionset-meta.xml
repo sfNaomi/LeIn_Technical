@@ -3,26 +3,6 @@
     <description>Edit access for Product object - Edit on object and Edit on relevant fields</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>PricebookEntry.aforza__Cost__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>PricebookEntry.aforza__Floor_Price__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>PricebookEntry.aforza__Sales_Commission_Percent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>PricebookEntry.aforza__Tax_Percent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Product2.DRSGrossUnits__c</field>
         <readable>true</readable>
     </fieldPermissions>
