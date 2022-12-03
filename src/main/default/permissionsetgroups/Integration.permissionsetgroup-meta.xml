@@ -14,15 +14,13 @@
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryAdminAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
+    <permissionSets>InvoiceIntegrationAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderIntegrationAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
-    <permissionSets>PricebookBaseAccess</permissionSets>
-    <permissionSets>PricebookEditAccess</permissionSets>
+    <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>

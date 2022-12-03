@@ -17,7 +17,6 @@
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryEditAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>

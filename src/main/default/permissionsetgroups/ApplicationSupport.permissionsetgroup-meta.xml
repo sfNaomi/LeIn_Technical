@@ -18,8 +18,7 @@
     <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryEditAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
+    <permissionSets>InvoiceAdminAccess</permissionSets>
     <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
@@ -27,7 +26,7 @@
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
-    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
