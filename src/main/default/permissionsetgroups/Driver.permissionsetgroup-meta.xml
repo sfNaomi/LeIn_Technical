@@ -8,7 +8,7 @@
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>InvoiceDriverAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>OrderDriverAccess</permissionSets>

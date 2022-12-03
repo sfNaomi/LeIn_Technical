@@ -8,8 +8,7 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
-    <permissionSets>InvoiceEditAccess</permissionSets>
+    <permissionSets>InvoiceFinanceAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
