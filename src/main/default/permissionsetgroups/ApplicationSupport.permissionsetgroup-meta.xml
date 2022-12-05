@@ -25,7 +25,7 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderAppSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>OutletAssetEditAccess</permissionSets>
+    <permissionSets>OutletAssetCrudObjectAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>

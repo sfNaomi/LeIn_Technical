@@ -23,7 +23,6 @@
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
