@@ -5,6 +5,9 @@
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -16,7 +19,12 @@
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>aforza__Aforza_Plan</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

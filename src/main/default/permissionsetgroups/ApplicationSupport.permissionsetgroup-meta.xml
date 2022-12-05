@@ -16,6 +16,12 @@
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCrudObjectAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCrudObjectAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryCrudObjectAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetCrudObjectAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>
@@ -37,10 +43,13 @@
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>RouteBaseAccess</permissionSets>
+    <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>VehicleAdminAccess</permissionSets>
+    <permissionSets>VisitAdminAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
