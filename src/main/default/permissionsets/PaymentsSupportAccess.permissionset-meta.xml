@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Edit access for all Payment related objects - Edit on objects and Edit on all fields</description>
+    <description>Operational Support Controller and Sales Support Manager access for all Payment related objects - Edit on objects and Edit on all fields</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Payments Edit Access</label>
+    <label>Payments Support Access</label>
     <license>Salesforce</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -23,7 +23,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
@@ -32,7 +32,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>

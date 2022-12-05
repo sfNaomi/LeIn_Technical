@@ -20,7 +20,6 @@
     <permissionSets>OrderTelesalesAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>

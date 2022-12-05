@@ -22,7 +22,6 @@
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetCruObjectAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>

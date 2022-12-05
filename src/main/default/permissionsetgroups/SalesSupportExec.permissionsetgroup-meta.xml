@@ -22,7 +22,6 @@
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>

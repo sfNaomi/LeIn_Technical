@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Edit access for all Payment related objects - Edit on objects and Edit on all fields</description>
+    <description>Drivers, Van Sales, Energy Reps access for all Payment related objects - Edit on objects and Edit on all fields</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Payments Edit Access</label>
+    <label>Payments Driver, Van Sales and Energy Reps Access</label>
     <license>Salesforce</license>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -12,15 +12,6 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Account</object>
         <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>aforza__Payment_Method__c</object>
-        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
