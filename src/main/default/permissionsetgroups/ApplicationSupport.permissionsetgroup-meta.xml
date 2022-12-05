@@ -27,8 +27,7 @@
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
-    <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>ProductEditAccess</permissionSets>
+    <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
