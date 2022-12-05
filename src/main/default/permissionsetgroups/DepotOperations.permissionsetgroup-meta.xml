@@ -2,8 +2,13 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Depot Operations</label>
+    <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
+    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
+    <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

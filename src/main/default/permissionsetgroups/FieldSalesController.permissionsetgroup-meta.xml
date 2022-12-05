@@ -2,13 +2,19 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Field Sales Controller</label>
+    <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
+    <permissionSets>AuditAssetCruObjectAccess</permissionSets>
     <permissionSets>ClassBasicAccess</permissionSets>
-    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
+    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FieldSalesUser</permissionSets>
@@ -18,9 +24,9 @@
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderFieldSalesAccess</permissionSets>
-    <permissionSets>OutletAssetEditAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>OutletAssetCruObjectAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>

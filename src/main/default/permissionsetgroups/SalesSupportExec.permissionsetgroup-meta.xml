@@ -3,15 +3,23 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Support Exec</label>
     <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
+    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
+    <permissionSets>AccessPickSheet</permissionSets>
+    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountSalesSupportExecAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>AuditAssetEditAccess</permissionSets>
-    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
+    <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
@@ -22,9 +30,7 @@
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
-    <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>

@@ -4,6 +4,8 @@
     <label>Pricing &amp; Product Manager</label>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactPricingProductManager</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
