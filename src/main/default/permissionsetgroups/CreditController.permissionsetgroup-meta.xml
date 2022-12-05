@@ -6,6 +6,9 @@
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactFinanceUsers</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

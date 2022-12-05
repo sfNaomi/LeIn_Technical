@@ -15,6 +15,9 @@
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>AssortmentAdminAccess</permissionSets>
+    <permissionSets>AttributeAdminAccess</permissionSets>
+    <permissionSets>AttributeCategoryAdminAccess</permissionSets>
+    <permissionSets>AttributeAssignmentAdminAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>
     <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>

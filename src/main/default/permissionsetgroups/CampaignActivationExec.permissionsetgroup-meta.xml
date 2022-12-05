@@ -5,6 +5,9 @@
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

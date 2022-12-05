@@ -16,6 +16,12 @@
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCruObjectAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryCruObjectAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
