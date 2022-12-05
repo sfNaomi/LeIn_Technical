@@ -22,6 +22,7 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductPricingProductManagerAccess</permissionSets>
+    <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SystemBasicFeatures</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
