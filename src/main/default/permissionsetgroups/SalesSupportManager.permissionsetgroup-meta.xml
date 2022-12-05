@@ -8,9 +8,8 @@
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
-    <permissionSets>AuditAssetEditAccess</permissionSets>
+    <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
-    <permissionSets>ContactCruObjectAccess</permissionSets>    
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
