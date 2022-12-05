@@ -15,6 +15,7 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderVanSalesAndEnergyRepsAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>OutletAssetCruObjectAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
