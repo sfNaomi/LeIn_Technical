@@ -34,6 +34,7 @@ jobs:
                 run: |
                     printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
                     printf 'y\n' | sfdx plugins:install sfdmu@latest
+                    sfdx config:set apiVersion=56.0 --global
 
             # Obtain JWT certificate for DEVHUB
             -   name: 'Obtain JWT certificate from secrets'
@@ -47,6 +48,7 @@ jobs:
                 env:
                     SFDX_PATH: 'https://login.salesforce.com'
                     SF_USERNAME: 'admin@agbarr.aforza.org'
+                    SFDX_DISABLE_DNS_CHECK: true
                 shell: bash
                 run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile ${HOME}/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 

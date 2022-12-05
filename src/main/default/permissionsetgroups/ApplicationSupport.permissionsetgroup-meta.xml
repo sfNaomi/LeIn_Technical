@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Application Support</label>
+    <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>
@@ -27,8 +28,7 @@
     <permissionSets>OutletAssetEditAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
-    <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>ProductEditAccess</permissionSets>
+    <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
