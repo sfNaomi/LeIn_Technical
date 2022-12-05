@@ -3,11 +3,21 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Administrator</label>
     <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
+    <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
+    <permissionSets>AccessPickSheet</permissionSets>
+    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
+    <permissionSets>AssortmentAdminAccess</permissionSets>
+    <permissionSets>AttributeAdminAccess</permissionSets>
+    <permissionSets>AttributeCategoryAdminAccess</permissionSets>
+    <permissionSets>AttributeAssignmentAdminAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>
     <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
@@ -31,6 +41,7 @@
     <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>RelationshipRuleAdminAccess</permissionSets>
+    <permissionSets>RouteAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>

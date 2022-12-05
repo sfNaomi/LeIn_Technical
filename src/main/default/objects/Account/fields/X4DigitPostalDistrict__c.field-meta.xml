@@ -5,6 +5,7 @@
     <formula>LEFT( ShippingPostalCode , 4)</formula>
     <label>4 Digit Postal District</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
