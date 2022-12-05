@@ -19,8 +19,7 @@
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
-    <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>ProductEditAccess</permissionSets>
+    <permissionSets>ProductPricingProductManagerAccess</permissionSets>
     <permissionSets>SystemBasicFeatures</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>

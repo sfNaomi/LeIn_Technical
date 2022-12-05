@@ -3,6 +3,6 @@
     <fullName>PreventUpdateOfUnitPrice</fullName>
     <active>true</active>
     <description>Prevent users without &quot;Edit of Unit Price on Order Items&quot; permission to edit unit price.</description>
-    <errorConditionFormula>ISCHANGED(UnitPrice) &amp;&amp; NOT(ISCHANGED(OrderRecalculationDate__c)) &amp;&amp; NOT( $Permission.EditUnitPriceOnOrderItems)</errorConditionFormula>
+    <errorConditionFormula>AND(ISCHANGED(UnitPrice), NOT(ISCHANGED(OrderRecalculationDate__c)), NOT($Permission.EditUnitPriceOnOrderItems), NOT(ISNEW()))</errorConditionFormula>
     <errorMessage>You don&apos;t have the permission to update the unit price on order products.</errorMessage>
 </ValidationRule>

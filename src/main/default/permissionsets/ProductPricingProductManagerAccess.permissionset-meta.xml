@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Base access for Product object - Read on object and Read on relevant fields</description>
+    <description>Pricing Product Manager access for Product object - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.DRSGrossUnits__c</field>
@@ -382,11 +382,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Product Base Access</label>
+    <label>Product Pricing And Product Manager Access</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Product2</object>
