@@ -6,7 +6,6 @@
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>
-    <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCrudObjectAccess</permissionSets>

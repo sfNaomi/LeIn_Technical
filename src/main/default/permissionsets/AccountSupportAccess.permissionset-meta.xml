@@ -546,4 +546,8 @@
         <recordType>Account.aforza__Outlet</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
