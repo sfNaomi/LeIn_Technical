@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>RT Direct Visit access for Visit object.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Visit Direct Visit Rt Access</label>
+    <recordTypeVisibilities>
+        <recordType>aforza__Visit__c.aforza__Direct_Visit</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

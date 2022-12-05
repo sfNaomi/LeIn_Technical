@@ -3,25 +3,10 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Support Manager</label>
     <permissionSets>AccessCallManagementPage</permissionSets>
-    <permissionSets>AccessDeliveryManifest</permissionSets>
-    <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
-    <permissionSets>AccessInvoiceDocument</permissionSets>
-    <permissionSets>AccessLoadPlanningScreen</permissionSets>
-    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
-    <permissionSets>AccessPickSheet</permissionSets>
-    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AssortmentCruObjectAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCrudObjectAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryCrudObjectAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
@@ -39,17 +24,19 @@
     <permissionSets>OrderSupportAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsSupportAccess</permissionSets>
+    <permissionSets>PaymentsEditAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>RouteBaseAccess</permissionSets>
-    <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>VisitEditAccess</permissionSets>
+    <permissionSets>VisitRemoteRtAccess</permissionSets>
+    <permissionSets>VisitTemplateRtAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

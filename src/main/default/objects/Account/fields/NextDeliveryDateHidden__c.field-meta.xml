@@ -30,6 +30,5 @@
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Next Delivery Date Hidden</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

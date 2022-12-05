@@ -4,12 +4,6 @@
     <label>Pricing &amp; Product Manager</label>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AssortmentCruObjectAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactPricingProductManager</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -26,10 +20,10 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductPricingProductManagerAccess</permissionSets>
-    <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SystemBasicFeatures</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

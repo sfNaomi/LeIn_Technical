@@ -2,16 +2,8 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Driver</label>
-    <permissionSets>AccessDeliveryManifest</permissionSets>
-    <permissionSets>AccessLoadPlanningScreen</permissionSets>
-    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
-    <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -22,14 +14,14 @@
     <permissionSets>OrderDriverAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
-    <permissionSets>PaymentsDriversVanSalesEnergyAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>RouteBaseAccess</permissionSets>
-    <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>VisitEditAccess</permissionSets>
+    <permissionSets>VisitDirectRtAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <status>Updated</status>

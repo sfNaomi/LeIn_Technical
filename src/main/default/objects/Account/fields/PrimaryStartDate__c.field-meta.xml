@@ -5,6 +5,5 @@
     <label>Primary Start Date</label>
     <required>false</required>
     <trackFeedHistory>true</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

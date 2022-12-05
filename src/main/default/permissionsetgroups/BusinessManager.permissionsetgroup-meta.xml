@@ -2,19 +2,9 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Business Manager</label>
-    <permissionSets>AccessCallManagementPage</permissionSets>
-    <permissionSets>AccessDeliveryNote</permissionSets>
-    <permissionSets>AccessDirectDebitWidget</permissionSets>
-    <permissionSets>AccessInvoiceDocument</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
-    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountTelesalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>
@@ -32,12 +22,12 @@
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>RouteBaseAccess</permissionSets>
-    <permissionSets>RouteTelesalesAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleSalesAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>VisitEditAccess</permissionSets>
+    <permissionSets>VisitRemoteRtAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>

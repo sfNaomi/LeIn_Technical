@@ -21,6 +21,5 @@
     </summaryFilterItems>
     <summaryForeignKey>aforza__Visit__c.aforza__Account__c</summaryForeignKey>
     <summaryOperation>min</summaryOperation>
-    <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>
