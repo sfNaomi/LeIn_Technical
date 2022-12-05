@@ -4,6 +4,7 @@
     <label>Local Business Development Manager</label>
     <permissionSets>AccountLocalBusDevManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetCruObjectAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>

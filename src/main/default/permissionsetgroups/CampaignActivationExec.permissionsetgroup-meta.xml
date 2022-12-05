@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Campaign Activation Exec</label>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

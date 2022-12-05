@@ -8,6 +8,8 @@
     <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>
     <permissionSets>AccountSupportAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AssortmentCrudObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetCrudObjectAccess</permissionSets>
     <permissionSets>ContactConsentFieldsAccess</permissionSets>

@@ -3,6 +3,7 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Credit Controller</label>
     <permissionSets>AccountFinanceAccess</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactFinanceUsers</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -7,6 +7,8 @@
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountSalesSupportExecAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>

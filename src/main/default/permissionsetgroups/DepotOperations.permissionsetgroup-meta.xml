@@ -4,6 +4,7 @@
     <label>Depot Operations</label>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -8,6 +8,7 @@
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
+    <permissionSets>AssortmentAdminAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>
     <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>

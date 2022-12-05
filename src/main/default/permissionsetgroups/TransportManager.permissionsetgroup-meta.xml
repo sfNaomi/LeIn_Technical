@@ -4,6 +4,7 @@
     <label>Transport Manager</label>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

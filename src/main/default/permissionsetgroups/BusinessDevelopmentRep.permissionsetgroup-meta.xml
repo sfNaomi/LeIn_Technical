@@ -4,6 +4,7 @@
     <label>Business Development Rep</label>
     <permissionSets>AccountBusDevRepAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>AuditAssetCruObjectAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
