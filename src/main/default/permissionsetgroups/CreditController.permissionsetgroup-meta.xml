@@ -22,6 +22,7 @@
     <permissionSets>PaymentsFinanceAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SegmentationBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>

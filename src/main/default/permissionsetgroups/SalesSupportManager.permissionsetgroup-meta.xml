@@ -43,6 +43,8 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
+    <permissionSets>PromotionSupportAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>

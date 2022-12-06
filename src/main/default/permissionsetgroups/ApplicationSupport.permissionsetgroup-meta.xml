@@ -43,6 +43,7 @@
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>

@@ -21,6 +21,7 @@
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductEditAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>

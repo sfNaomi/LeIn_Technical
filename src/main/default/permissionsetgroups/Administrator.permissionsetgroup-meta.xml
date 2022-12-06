@@ -39,6 +39,7 @@
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>RelationshipRuleAdminAccess</permissionSets>
     <permissionSets>RouteAdminAccess</permissionSets>

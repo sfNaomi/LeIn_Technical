@@ -26,6 +26,7 @@
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductPricingProductManagerAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SegmentationBaseAccess</permissionSets>
     <permissionSets>SegmentationEditAccess</permissionSets>
