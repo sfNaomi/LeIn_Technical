@@ -1,157 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Edit access for Inventory, Inventory Product and Inventory User objects - Edit on object and Edit on all fields</description>
+    <description>Base access for Segment object - Read on object and Read on all fields</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.ExternalId__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.JdeStockQuantity__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Assortment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.NonSalableStock__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Commercial_Policy__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.OffSale__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Effective_From__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.PickingLocation__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Effective_To__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.aforza__Local_Id__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Eligibility__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.aforza__Product__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Local_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_Product__c.aforza__Stock_Quantity__c</field>
+        <field>aforza__Eligibility_Rule__c.aforza__Promotion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_User__c.aforza__Default_Inventory__c</field>
+        <field>aforza__Segment__c.aforza__Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_User__c.aforza__Local_Id__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Channel_Ecommerce__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory_User__c.aforza__User__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Channel_Mobile__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.InventoryCode__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Channel_Telesales__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__City__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Profiles__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Country__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Proximity_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Inventory_Owner__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Proximity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Local_Id__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Rules_Formatted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Location__c</field>
+        <field>aforza__Segment__c.aforza__Segmentation_Rules__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Postal_Code__c</field>
+        <field>aforza__Segment__c.aforza__Simulation_Percentage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__State__c</field>
+        <field>aforza__Segment__c.aforza__Simulation_Total_Accounts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Street__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Vehicle_Manufacturer__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Vehicle_Registration_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Inventory__c.aforza__Vehicle_Type__c</field>
+        <field>aforza__Segment__c.aforza__Simulation_Total_Eligible_Accounts__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Inventory Edit Access</label>
-    <license>Salesforce</license>
+    <label>Segmentation Base Access</label>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>aforza__Inventory_Product__c</object>
+        <object>Account</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>aforza__Inventory_User__c</object>
+        <object>aforza__Eligibility_Rule__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>aforza__Inventory__c</object>
+        <object>aforza__Segment__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>aforza__Inventory__c.aforza__Building</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>aforza__Inventory__c.aforza__Vehicle</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    <tabSettings>
+        <tab>aforza__Eligibility_Rule__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>aforza__Segment__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

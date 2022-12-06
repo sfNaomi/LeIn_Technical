@@ -28,6 +28,8 @@
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryAdminAccess</permissionSets>
+    <permissionSets>InventoryProductAdminAccess</permissionSets>
+    <permissionSets>InventoryUserAdminAccess</permissionSets>
     <permissionSets>InvoiceAdminAccess</permissionSets>
     <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
@@ -39,9 +41,11 @@
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>RelationshipRuleAdminAccess</permissionSets>
     <permissionSets>RouteAdminAccess</permissionSets>
+    <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>

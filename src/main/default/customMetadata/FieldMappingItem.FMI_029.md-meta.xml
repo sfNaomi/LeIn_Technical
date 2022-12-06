@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>StaticValue__c</field>
-        <value xsi:type="xsd:string">Approve for Payment</value>
+        <value xsi:type="xsd:string">Approved for Payment</value>
     </values>
     <values>
         <field>TargetField__c</field>

@@ -21,6 +21,8 @@
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderTelesalesAccess</permissionSets>
@@ -28,8 +30,11 @@
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteTelesalesAccess</permissionSets>
+    <permissionSets>SegmentationBaseAccess</permissionSets>
+    <permissionSets>SegmentationEditAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleSalesAccess</permissionSets>

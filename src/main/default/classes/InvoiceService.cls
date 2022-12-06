@@ -10,7 +10,7 @@ public with sharing class InvoiceService {
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
-    private static final String APPROVE_INVOICE_STATUS = 'Approve for Payment';
+    private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String APPROVED_TRANSACTION_STATUS = 'Approved';
     private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs'};
 
@@ -247,7 +247,7 @@ public with sharing class InvoiceService {
         if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID) {
             invoiceStatus = PAID_INVOICE_STATUS;
         } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD) {
-            invoiceStatus = APPROVE_INVOICE_STATUS;
+            invoiceStatus = APPROVED_INVOICE_STATUS;
         } else if (paymentMethod == CREDIT_CARD_PAYMENT_METHOD) {
             invoiceStatus = PENDING_PAYMENT_INVOICE_STATUS;
         } else {

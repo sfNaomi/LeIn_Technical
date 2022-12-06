@@ -504,6 +504,13 @@
             <componentInstance>
                 <componentName>sixOrderSummary</componentName>
                 <identifier>c_sixOrderSummary</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.AccessSixAndSuggestedOrderWidget}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

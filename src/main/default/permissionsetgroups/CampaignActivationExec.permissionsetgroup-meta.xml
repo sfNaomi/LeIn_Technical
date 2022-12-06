@@ -12,6 +12,8 @@
     <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBaseAccess</permissionSets>
@@ -19,7 +21,10 @@
     <permissionSets>PaymentsBaseAccess</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
+    <permissionSets>PromotionEditAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
+    <permissionSets>SegmentationBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
