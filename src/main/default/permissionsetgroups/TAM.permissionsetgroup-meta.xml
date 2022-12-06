@@ -30,6 +30,8 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteTelesalesAccess</permissionSets>
+    <permissionSets>SegmentationBaseAccess</permissionSets>
+    <permissionSets>SegmentationEditAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleSalesAccess</permissionSets>
