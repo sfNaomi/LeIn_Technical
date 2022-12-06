@@ -19,9 +19,9 @@
                 <label>Payment Attempt Unsuccessful</label>
             </value>
             <value>
-                <fullName>Approve for Payment</fullName>
+                <fullName>Approved for Payment</fullName>
                 <default>true</default>
-                <label>Approve for Payment</label>
+                <label>Approved for Payment</label>
             </value>
             <value>
                 <fullName>Cash in Transit</fullName>

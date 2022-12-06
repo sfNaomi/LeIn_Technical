@@ -46,7 +46,7 @@ private with sharing class InvoiceTriggerHandlerTest {
     private static void testUpdatePaymentTransactionsForFailedInvoices() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID));
-        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Approve for Payment'));
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id, aforza__Status__c = 'Approved for Payment'));
         TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id, aforza__Status__c = 'Applied'));
 
         Test.startTest();

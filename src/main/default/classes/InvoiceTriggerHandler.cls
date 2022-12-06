@@ -5,7 +5,7 @@
 public with sharing class InvoiceTriggerHandler {
 
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
-    private static final String APPROVE_INVOICE_STATUS = 'Approve for Payment';
+    private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String UNSUCCESSFUL_INVOICE_STATUS = 'Payment Attempt Unsuccessful';
 
     private static final Boolean CREATE_PAYMENT = InvoiceSettings__c.getOrgDefaults().CreatePaymentWhenInvoiceIsCreated__c;
@@ -146,7 +146,7 @@ public with sharing class InvoiceTriggerHandler {
     public static void updateFailedInvoices(List<aforza__Invoice__c> newInvoices, Map<Id, aforza__Invoice__c> oldInvoices) {
         for (aforza__Invoice__c newInvoice : newInvoices) {
             aforza__Invoice__c oldInvoice = oldInvoices?.get(newInvoice.Id);
-            if (oldInvoice != null && oldInvoice.aforza__Status__c == PAID_INVOICE_STATUS && newInvoice.aforza__Status__c == APPROVE_INVOICE_STATUS) {
+            if (oldInvoice != null && oldInvoice.aforza__Status__c == PAID_INVOICE_STATUS && newInvoice.aforza__Status__c == APPROVED_INVOICE_STATUS) {
                 newInvoice.aforza__Status__c = UNSUCCESSFUL_INVOICE_STATUS;
             }
         }
