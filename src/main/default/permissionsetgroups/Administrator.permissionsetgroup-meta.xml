@@ -28,6 +28,8 @@
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryAdminAccess</permissionSets>
+    <permissionSets>InventoryProductAdminAccess</permissionSets>
+    <permissionSets>InventoryUserAdminAccess</permissionSets>
     <permissionSets>InvoiceAdminAccess</permissionSets>
     <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>

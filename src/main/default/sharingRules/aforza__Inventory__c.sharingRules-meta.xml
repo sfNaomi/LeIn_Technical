@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>ShareBuildingInventoriesWithLogistics</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share in read/write mode the building inventories with the Logistics Department.</description>
+        <label>Share Building Inventories with Logistics</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>TransportManager</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Building</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ShareInventoriesWithIt</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share inventory record in read/write mode with IT team.</description>
+        <label>Share Inventories with IT</label>
+        <sharedTo>
+            <group>IT</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Building,Vehicle</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ShareVehicleInventoriesWithFieldSales</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share Vehicle Inventories with Field Sales Department</description>
+        <label>Share Vehicle Inventories with Field Sales</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>FieldSalesController</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Vehicle</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+</SharingRules>

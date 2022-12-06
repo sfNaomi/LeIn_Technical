@@ -23,6 +23,8 @@
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FieldSalesUser</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>

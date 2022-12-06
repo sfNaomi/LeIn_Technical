@@ -17,6 +17,9 @@
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryProductCruObjectAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>

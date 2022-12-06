@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Van Sales</label>
+    <mutingPermissionSets>VanSalesMuted</mutingPermissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccountVanSalesAndEnergyRepAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
@@ -16,6 +17,10 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>FieldSalesUser</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryCruObjectAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryProductCruObjectAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderVanSalesAndEnergyRepsAccess</permissionSets>

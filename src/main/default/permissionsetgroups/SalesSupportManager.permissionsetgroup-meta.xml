@@ -30,7 +30,10 @@
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
-    <permissionSets>InventoryEditAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryProductRuObjectAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
+    <permissionSets>InventoryUserCruObjectAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
