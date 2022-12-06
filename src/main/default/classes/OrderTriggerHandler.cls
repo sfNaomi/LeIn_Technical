@@ -289,7 +289,9 @@ public with sharing class OrderTriggerHandler {
                 orderIdsToSendDeliveryNoteEmail.add(newOrder.Id);
             }
         }
-        DeliveryNoteService.generateOrderAttachmentsAndSendDeliveryEmails(orderIdsToSendDeliveryNoteEmail);
+        if ((!System.isBatch() || !System.isFuture()) && orderIdsToSendDeliveryNoteEmail.size() > 0) {
+            DeliveryNoteService.generateOrderAttachmentsAndSendDeliveryEmails(orderIdsToSendDeliveryNoteEmail);
+        }
     }
 
     public static void removeOrdersFromLoad(Map<Id, Order> ordersMap, Map<Id, Order> oldOrdersMap) {

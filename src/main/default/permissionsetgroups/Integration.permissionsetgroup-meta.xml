@@ -12,7 +12,12 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
-    <permissionSets>InventoryAdminAccess</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryCrudObjectAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryProductCrudObjectAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
+    <permissionSets>InventoryUserCrudObjectAccess</permissionSets>
     <permissionSets>InvoiceIntegrationAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
@@ -21,6 +26,7 @@
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductEditAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>

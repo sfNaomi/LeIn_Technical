@@ -68,11 +68,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CustomerMandateForm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.CustomerShopNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>

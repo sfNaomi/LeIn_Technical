@@ -18,11 +18,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.CustomerMandateForm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.DirectDebitMandateRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
