@@ -6,7 +6,7 @@
         <description>Share in read/write mode the building inventories with the Logistics Department.</description>
         <label>Share Building Inventories with Logistics</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>TransportManager</roleAndSubordinatesInternal>
+            <roleAndSubordinates>TransportManager</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
@@ -36,7 +36,7 @@
         <description>Share Vehicle Inventories with Field Sales Department</description>
         <label>Share Vehicle Inventories with Field Sales</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>FieldSalesController</roleAndSubordinatesInternal>
+            <roleAndSubordinates>FieldSalesController</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
