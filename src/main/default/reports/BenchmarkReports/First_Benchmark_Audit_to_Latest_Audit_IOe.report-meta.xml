@@ -19,7 +19,7 @@
         <field>aforza__Outlet_Asset__c$aforza__Type__c</field>
     </columns>
     <columns>
-        <field>aforza__Outlet_Asset__c$aforza__Name__c</field>
+        <field>aforza__Outlet_Asset__c$Name</field>
     </columns>
     <columns>
         <field>aforza__Outlet_Asset__c$BenchmarkDate__c</field>
@@ -65,7 +65,7 @@
     </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>aforza__Outlet_Asset__c$Name</field>
+        <field>aforza__Outlet_Asset__c$aforza__Name__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>First Benchmark Audit to Latest Audit</name>
@@ -77,7 +77,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <sortColumn>aforza__Outlet_Asset__c.aforza__Audit_Assets__r$aforza__Date_Checked__c</sortColumn>
     <sortOrder>Desc</sortOrder>
     <timeFrameFilter>

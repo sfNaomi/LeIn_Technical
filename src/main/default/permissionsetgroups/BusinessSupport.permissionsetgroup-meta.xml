@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Business Support</label>
+    <mutingPermissionSets>BusinessSupportMuted</mutingPermissionSets>
     <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessDeliveryManifest</permissionSets>
     <permissionSets>AccessDeliveryNote</permissionSets>
@@ -15,9 +16,9 @@
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactHelpDeskBusinessSupport</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -36,7 +36,9 @@ public with sharing class OrderTriggerHandler {
                 (order.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID ||
                     order.RecordTypeId == RecordTypes.ORDER_TELESALES_ID ||
                     order.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
-                    order.RecordTypeId == RecordTypes.ORDER_EDI_ID)
+                    order.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
+                    order.RecordTypeId == RecordTypes.ORDER_RETURN_ID
+                )
             ) {
                 toBeClonedOrders.add(order);
             }

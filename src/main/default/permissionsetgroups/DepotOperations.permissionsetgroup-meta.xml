@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Depot Operations</label>
+    <mutingPermissionSets>DepotOperationsMuted</mutingPermissionSets>
     <permissionSets>AccessDeliveryManifest</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
@@ -9,16 +10,16 @@
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
-    <permissionSets>InventoryRuObjectAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
     <permissionSets>InventoryProductRuObjectAccess</permissionSets>
+    <permissionSets>InventoryRuObjectAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InventoryUserRuObjectAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
@@ -38,8 +39,8 @@
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
-    <permissionSets>VisitEditAccess</permissionSets>
     <permissionSets>VisitDirectRtAccess</permissionSets>
+    <permissionSets>VisitEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Deliver</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <status>Updated</status>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allow Marking Eligible for Perfect  Store even when state is not populated. Needed for our test coverage as we can&apos; populate states in metadata.</description>
+    <isLicensed>false</isLicensed>
+    <label>Allow Marking Eligible for Perfect  Store</label>
+</CustomPermission>

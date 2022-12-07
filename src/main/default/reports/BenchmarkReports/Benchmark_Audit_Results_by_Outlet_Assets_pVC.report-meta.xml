@@ -50,9 +50,6 @@
         <field>CUST_NAME</field>
     </columns>
     <columns>
-        <field>aforza__Outlet_Asset__c.aforza__Name__c</field>
-    </columns>
-    <columns>
         <field>aforza__Outlet_Asset__c.aforza__Type__c</field>
     </columns>
     <columns>
@@ -93,18 +90,21 @@
         <field>FK_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>aforza__Outlet_Asset__c.aforza__Name__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
     <name>Benchmark Audit Results by Outlet Assets</name>
     <params>
         <name>co</name>
-        <value>1</value>
+        <value>0</value>
     </params>
     <reportType>CustomEntity$aforza__Outlet_Asset__c@aforza__Outlet_Asset__c.aforza__Account__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
-    <sortColumn>aforza__Outlet_Asset__c.aforza__Name__c</sortColumn>
-    <sortOrder>Asc</sortOrder>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>aforza__Outlet_Asset__c.BenchmarkDate__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

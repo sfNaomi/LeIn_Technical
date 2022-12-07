@@ -2,12 +2,14 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Campaign Activation Exec</label>
+    <mutingPermissionSets>CampaignActivationExecMuted</mutingPermissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCampainActivationManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
@@ -28,8 +30,7 @@
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
-    <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
