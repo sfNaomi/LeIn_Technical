@@ -326,7 +326,6 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <description>Customers by Trading Frequency</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>ag-barr-1670100339520@ci.org</runningUser>
     <textColor>#000000</textColor>
     <title>Customers by Trading Frequency</title>
     <titleColor>#000000</titleColor>

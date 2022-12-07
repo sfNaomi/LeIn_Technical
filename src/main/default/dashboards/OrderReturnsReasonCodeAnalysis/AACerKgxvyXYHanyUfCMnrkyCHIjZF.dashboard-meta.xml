@@ -337,7 +337,6 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <description>Reason Code Analysis of Full and Partial Order Returns</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>ag-barr-1670100339520@ci.org</runningUser>
     <textColor>#000000</textColor>
     <title>Reason Code Analysis Dashboard</title>
     <titleColor>#000000</titleColor>
