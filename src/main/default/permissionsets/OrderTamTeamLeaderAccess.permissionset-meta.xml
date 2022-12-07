@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Telesales access for Order and Order Line Item objects and fields</description>
+    <description>TAM and Team Leader access for Order and Order Line Item objects and fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.AccountName__c</field>
@@ -412,7 +412,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Order Telesales Access</label>
+    <label>Order Tam and Team Leader Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -424,6 +424,14 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Order.TelesalesOrder</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Order.ReturnOrder</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Order.StraightToJDEOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
