@@ -58,20 +58,20 @@
                     <div class="text-block">
                         <div class="headline">{!$Label.DeliveryAddress}:</div>
                         <div>
-                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingStreet != ''}">
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingStreet))}">
                                 <apex:outputField value="{!mapIdOrder[key].ShippingStreet}" />
                                 <br/>
                             </apex:outputPanel>
-                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingCity != ''}">
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingCity))}">
                                 <apex:outputField value="{!mapIdOrder[key].ShippingCity}" />
                                 <br/>
                             </apex:outputPanel>
-                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingPostalCode != ''}">
-                                <apex:outputField value="{!mapIdOrder[key].ShippingPostalCode}" />
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingState))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingState}" />
                                 <br/>
                             </apex:outputPanel>
-                            <apex:outputPanel rendered="{!mapIdOrder[key].ShippingState != ''}">
-                                <apex:outputField value="{!mapIdOrder[key].ShippingState}" />
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingPostalCode))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingPostalCode}" />
                                 <br/>
                             </apex:outputPanel>
                         </div>

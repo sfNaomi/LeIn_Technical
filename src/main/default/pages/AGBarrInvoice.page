@@ -15,10 +15,18 @@
 						<b>{!IF(invoice.type == 'Credit Note', $Label.InvoiceCreditedTo, $Label.InvoiceInvoicedTo)}</b>
 					</div>
 					<div class="m-bottom-small">{!invoice.billToName}</div>
-					<div class="{!IF(invoice.billToStreet == null,'display-none','display-block')}">{!invoice.billToStreet}, </div>
-					<div class="{!IF(invoice.billToCity == null,'display-none','display-block')}}">{!invoice.billToCity}, </div>
-					<div class="{!IF(invoice.billToState == null,'display-none','display-block')}}">{!invoice.billToState}</div>
-					<div class="{!IF(invoice.billToPostalCode == null,'display-none','display-block')}}">{!invoice.billToPostalCode}, </div>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToStreet))}">
+						<div>{!invoice.billToStreet},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToCity))}">
+						<div>{!invoice.billToCity},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToState))}">
+						<div>{!invoice.billToState},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToPostalCode))}">
+						<div>{!invoice.billToPostalCode}</div>
+					</apex:outputPanel>
 					<div class="m-top-small">{!$Label.InvoiceBillToRef} {!invoice.billToReference}</div>
 				</div>
 				<div class="float-right align-left">
@@ -26,10 +34,18 @@
 						<b>{!$Label.InvoiceDeliveredTo}</b>
 					</div>
 					<div class="m-bottom-small">{!invoice.shipToName}</div>
-					<div class="{!IF(invoice.shipToStreet == null,'display-none','display-block')}}">{!invoice.shipToStreet}, </div>
-					<div class="{!IF(invoice.shipToCity == null,'display-none','display-block')}}">{!invoice.shipToCity}, </div>
-					<div class="{!IF(invoice.shipToState == null,'display-none','display-block')}}">{!invoice.shipToState}</div>
-					<div class="{!IF(invoice.shipToPostalCode == null,'display-none','display-block')}}">{!invoice.shipToPostalCode}, </div>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToStreet))}">
+						<div>{!invoice.shipToStreet},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToCity))}">
+						<div>{!invoice.shipToCity},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToState))}">
+						<div>{!invoice.shipToState},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToPostalCode))}">
+						<div>{!invoice.shipToPostalCode}</div>
+					</apex:outputPanel>
 					<div class="m-top-small">{!$Label.InvoiceDpRef} {!invoice.shipToReference}</div>
 				</div>
 			</div>
