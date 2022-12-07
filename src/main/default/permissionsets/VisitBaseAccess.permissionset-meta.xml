@@ -33,6 +33,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Visit__c.DistancefromVisittoAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Visit__c.OnHoldIndicator__c</field>
         <readable>true</readable>
     </fieldPermissions>
