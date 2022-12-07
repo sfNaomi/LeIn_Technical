@@ -66,6 +66,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.DeliveredOrderNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.DeliveryDate__c</field>
         <readable>true</readable>
@@ -103,6 +108,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.DiscountTotal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.FullReturnOrder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

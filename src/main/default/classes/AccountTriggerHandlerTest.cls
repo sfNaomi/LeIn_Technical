@@ -4,6 +4,15 @@
 
 @IsTest
 private with sharing class AccountTriggerHandlerTest {
+    @TestSetup
+    private static void recalculatePermSetGroups() {
+        PermissionSetGroup adminPermSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'Administrator'][0];
+
+        Test.calculatePermissionSetGroup(new Id[]{
+            adminPermSetGroup.Id
+        });
+    }
+
     @IsTest
     private static void testPrimaryContactAutomation_InsertAccountWithPrimaryContact() {
         Account primaryContactParentAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -853,7 +862,6 @@ private with sharing class AccountTriggerHandlerTest {
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
         );
 
-        Map<Id, Account> accountMap = new Map<Id, Account>();
         List<Account> accountsToUpdate = new List<Account>();
 
         dpAccount1.ParentId = customerAccount1.Id;
@@ -959,7 +967,6 @@ private with sharing class AccountTriggerHandlerTest {
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
         );
 
-        Map<Id, Account> accountMap = new Map<Id, Account>();
         List<Account> accountsToUpdate = new List<Account>();
 
         dpAccount1.ParentId = customerAccount1.Id;
@@ -1007,7 +1014,6 @@ private with sharing class AccountTriggerHandlerTest {
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 300)
         );
 
-        Map<Id, Account> accountMap = new Map<Id, Account>();
         List<Account> accountsToUpdate = new List<Account>();
 
         dpAccount1.ParentId = customerAccount1.Id;
