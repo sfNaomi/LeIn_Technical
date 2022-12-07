@@ -14,10 +14,11 @@
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
+    <permissionSets>AllowMarkingEligibleForPerfectStore</permissionSets>
     <permissionSets>AssortmentAdminAccess</permissionSets>
     <permissionSets>AttributeAdminAccess</permissionSets>
-    <permissionSets>AttributeCategoryAdminAccess</permissionSets>
     <permissionSets>AttributeAssignmentAdminAccess</permissionSets>
+    <permissionSets>AttributeCategoryAdminAccess</permissionSets>
     <permissionSets>AuditAssetAdminAccess</permissionSets>
     <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>

@@ -12,10 +12,10 @@
     <permissionSets>AccountTelesalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactBaseAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>

@@ -12,10 +12,10 @@
     <permissionSets>AccountTeamLeaderAndTamAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactEditAccess</permissionSets>

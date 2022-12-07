@@ -8,9 +8,9 @@
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactFinanceUsers</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

@@ -7,10 +7,10 @@
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>
-    <permissionSets>AttributeBaseAccess</permissionSets>
-    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactPricingProductManager</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>

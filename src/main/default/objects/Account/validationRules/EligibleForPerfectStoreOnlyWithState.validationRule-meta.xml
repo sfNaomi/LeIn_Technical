@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EligibleForPerfectStoreOnlyWithState</fullName>
+    <active>true</active>
+    <description>To allow changes to eligible perfect store account only when shipping State is populated.</description>
+    <errorConditionFormula>AND(
+    ISBLANK(TEXT(ShippingStateCode)),
+				ISCHANGED(PerfectStoreScoreEligible__c),
+				NOT($Permission.AllowMarkingEligibleForPerfectStore) 
+)</errorConditionFormula>
+    <errorDisplayField>PerfectStoreScoreEligible__c</errorDisplayField>
+    <errorMessage>Before Changing Store Eligibility for Perfect Store, please populate Shipping State.</errorMessage>
+</ValidationRule>

@@ -16,9 +16,9 @@
     <permissionSets>AccountBaseAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactHelpDeskBusinessSupport</permissionSets>
     <permissionSets>ExportReports</permissionSets>
