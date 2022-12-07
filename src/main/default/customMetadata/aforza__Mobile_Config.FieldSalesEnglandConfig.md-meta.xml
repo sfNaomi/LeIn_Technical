@@ -1075,7 +1075,15 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Header__c</field>
-        <value xsi:nil="true"/>
+      <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+        AG Barr LTD&lt;br /&gt;
+        2 Westfield Place&lt;br /&gt;
+        Cumbernauld&lt;br /&gt;
+        G68 9YH&lt;br /&gt;
+        Tel: 0330 390 3584&lt;br /&gt;
+        Co.Reg.No. SC005653&lt;br /&gt;
+        Vat:Reg.No. 259 9895 02&lt;br /&gt;
+        AWRS URN: XAAW 000 0112386</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
@@ -1087,7 +1095,15 @@
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Header__c</field>
-        <value xsi:nil="true"/>
+      <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+        AG Barr LTD&lt;br /&gt;
+        2 Westfield Place&lt;br /&gt;
+        Cumbernauld&lt;br /&gt;
+        G68 9YH&lt;br /&gt;
+        Tel: 0330 390 3584&lt;br /&gt;
+        Co.Reg.No. SC005653&lt;br /&gt;
+        Vat:Reg.No. 259 9895 02&lt;br /&gt;
+        AWRS URN: XAAW 000 0112386</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>
