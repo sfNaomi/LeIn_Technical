@@ -3,6 +3,10 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Depot Manager</label>
     <mutingPermissionSets>DepotManagerMuted</mutingPermissionSets>
+    <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
+    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
+    <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccountLogisticsAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
