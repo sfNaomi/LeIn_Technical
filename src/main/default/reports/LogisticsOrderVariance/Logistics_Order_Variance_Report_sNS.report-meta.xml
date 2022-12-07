@@ -65,6 +65,13 @@
                 <operator>equals</operator>
                 <value></value>
             </criteriaItems>
+            <criteriaItems>
+                <column>Order.OrderItems$aforza__Type__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>false</isUnlocked>
+                <operator>equals</operator>
+                <value>Product</value>
+            </criteriaItems>
         </filter>
         <format>Summary</format>
         <name>Delivered Products</name>
@@ -73,9 +80,11 @@
             <value>0</value>
         </params>
         <reportType>OrdersandOrderProducts__c</reportType>
-        <scope>user</scope>
+        <scope>organization</scope>
         <showGrandTotal>true</showGrandTotal>
         <showSubTotals>true</showSubTotals>
+        <sortColumn>Order.OrderItems$Product2</sortColumn>
+        <sortOrder>Asc</sortOrder>
         <timeFrameFilter>
             <dateColumn>Order$ActivatedDate</dateColumn>
             <interval>INTERVAL_CUSTOM</interval>
@@ -89,6 +98,9 @@
             <blockId>B1</blockId>
             <joinTable>Order</joinTable>
         </blockInfo>
+        <columns>
+            <field>Order$OrderNumber</field>
+        </columns>
         <columns>
             <field>Order$aforza__Total_Products_In_Order__c</field>
         </columns>
@@ -117,6 +129,20 @@
                 <operator>notEqual</operator>
                 <value></value>
             </criteriaItems>
+            <criteriaItems>
+                <column>Order$DeliveredOrderNumber__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>false</isUnlocked>
+                <operator>notEqual</operator>
+                <value></value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>Order.OrderItems$aforza__Type__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>false</isUnlocked>
+                <operator>equals</operator>
+                <value>Product</value>
+            </criteriaItems>
         </filter>
         <format>Summary</format>
         <name>Ordered Products</name>
@@ -128,6 +154,8 @@
         <scope>organization</scope>
         <showGrandTotal>true</showGrandTotal>
         <showSubTotals>true</showSubTotals>
+        <sortColumn>Order.OrderItems$Product2</sortColumn>
+        <sortOrder>Asc</sortOrder>
         <timeFrameFilter>
             <dateColumn>Order$ActivatedDate</dateColumn>
             <interval>INTERVAL_CUSTOM</interval>

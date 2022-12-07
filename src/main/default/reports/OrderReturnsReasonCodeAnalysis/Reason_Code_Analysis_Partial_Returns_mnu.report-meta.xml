@@ -14,15 +14,18 @@
         <field>Order$aforza__Total_Products_In_Order__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
-        <field>Order$aforza__Original_Order__c.aforza__Total_Products_In_Order__c</field>
-    </columns>
-    <columns>
         <field>Order.OrderItems$Product2</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
         <field>Order.OrderItems$Quantity</field>
+    </columns>
+    <columns>
+        <field>Order$aforza__Original_Order__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Order$aforza__Original_Order__c.aforza__Total_Products_In_Order__c</field>
     </columns>
     <description>Reason code analysis report for partial order returns.</description>
     <filter>
@@ -46,6 +49,13 @@
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$aforza__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Product</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

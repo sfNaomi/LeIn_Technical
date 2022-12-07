@@ -3,7 +3,7 @@
     <fullName>DistancefromVisittoAccount__c</fullName>
     <description>Distance, in meters, from Visit Check-in Location to Account Location</description>
     <externalId>false</externalId>
-    <formula>DISTANCE( aforza__Check_In_Location__c, aforza__Account__r.aforza__Location__c, &apos;km&apos;) * 1000</formula>
+    <formula>IF( AND(NOT(ISNULL(aforza__Account__r.aforza__Location__c)), NOT(ISNULL(aforza__Check_In_Location__c))), DISTANCE( aforza__Check_In_Location__c, aforza__Account__r.aforza__Location__c, &apos;km&apos;) * 1000, null )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Distance from Visit to Account</label>
     <precision>18</precision>

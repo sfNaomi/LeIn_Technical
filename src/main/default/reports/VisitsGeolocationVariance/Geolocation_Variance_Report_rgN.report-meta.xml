@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
-    <colorRanges>
-        <aggregate>Sum</aggregate>
-        <columnName>aforza__Visit__c.DistancefromVisittoAccount__c</columnName>
-        <highColor>#FFFFFF</highColor>
-        <lowBreakpoint>750.0</lowBreakpoint>
-        <lowColor>#00B531</lowColor>
-        <midColor>#E74340</midColor>
-    </colorRanges>
     <columns>
         <field>Account.Depot__c</field>
     </columns>
@@ -51,20 +43,16 @@
             <operator>equals</operator>
             <value>Account.aforza__Outlet</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>aforza__Visit__c.DistancefromVisittoAccount__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>750</value>
+        </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
-    <formattingRules>
-        <aggregate>Sum</aggregate>
-        <columnName>aforza__Visit__c.DistancefromVisittoAccount__c</columnName>
-        <values>
-            <backgroundColor>#00B531</backgroundColor>
-            <rangeUpperBound>750.0</rangeUpperBound>
-        </values>
-        <values>
-            <backgroundColor>#E74340</backgroundColor>
-        </values>
-    </formattingRules>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>ACCOUNT.NAME</field>
@@ -84,7 +72,7 @@
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>false</showGrandTotal>
-    <showSubTotals>true</showSubTotals>
+    <showSubTotals>false</showSubTotals>
     <timeFrameFilter>
         <dateColumn>DUE_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

@@ -20,6 +20,9 @@
         <aggregateTypes>Sum</aggregateTypes>
         <field>Order.OrderItems$Quantity</field>
     </columns>
+    <columns>
+        <field>Order$aforza__Original_Order__c</field>
+    </columns>
     <description>Reason code analysis report for full order returns</description>
     <filter>
         <criteriaItems>
@@ -42,6 +45,13 @@
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Order.OrderItems$aforza__Type__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Product</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
