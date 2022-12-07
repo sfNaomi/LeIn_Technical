@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Pricing &amp; Product Manager</label>
+    <mutingPermissionSets>PricingProductManagerMuted</mutingPermissionSets>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>

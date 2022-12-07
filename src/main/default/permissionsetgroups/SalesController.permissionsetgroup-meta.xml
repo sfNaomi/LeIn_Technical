@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Sales Controller</label>
+    <mutingPermissionSets>SalesControllerMuted</mutingPermissionSets>
     <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>

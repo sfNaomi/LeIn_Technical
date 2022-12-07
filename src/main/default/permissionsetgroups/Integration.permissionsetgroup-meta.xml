@@ -2,6 +2,7 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Integration</label>
+    <mutingPermissionSets>IntegrationMuted</mutingPermissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
