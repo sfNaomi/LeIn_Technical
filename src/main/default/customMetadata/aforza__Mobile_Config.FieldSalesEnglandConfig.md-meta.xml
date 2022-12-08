@@ -1071,7 +1071,8 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Footer__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
+        Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Header__c</field>
@@ -1087,11 +1088,12 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&oid=00D8d000005xoV4</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Footer__c</field>
-        <value xsi:nil="true"/>
+      <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
+        Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Header__c</field>
@@ -1107,10 +1109,10 @@
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&oid=00D8d000005xoV4</value>
     </values>
     <values>
         <field>aforza__Profiles_JSON__c</field>
-        <value xsi:type="xsd:string">[&quot;00e2z000000TtNUAA0&quot;]</value>
+      <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
