@@ -103,7 +103,6 @@ public with sharing class OrderTriggerHandler {
                     relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount && 
                     newOrder.IsApproved__c == false) 
                 {
-                    System.debug('Second IF -> Second');
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
