@@ -154,7 +154,7 @@ private with sharing class OrderItemTriggerHandlerTest {
         Decimal expectedVat1 = insertedOrderItems.get(newProductOrderItem1.Id).Quantity * insertedOrderItems.get(newProductOrderItem1.Id).UnitPrice * insertedOrderItems.get(newProductOrderItem1.Id).aforza__Tax_Percent__c / 100;
         Decimal expectedVat2 = insertedOrderItems.get(newProductOrderItem2.Id).Quantity * insertedOrderItems.get(newProductOrderItem2.Id).UnitPrice * insertedOrderItems.get(newProductOrderItem2.Id).aforza__Tax_Percent__c / 100;
         Decimal totalVat = expectedVat1 + expectedVat2;
-
+		
         Assert.areEqual(totalVat, insertedOrderItems.get(newTaxOrderItem.Id).UnitPrice);
     }
 
@@ -244,5 +244,48 @@ private with sharing class OrderItemTriggerHandlerTest {
 
         totalVat = updatedOrderItems.get(newProductOrderItem1.Id).Quantity * updatedOrderItems.get(newProductOrderItem1.Id).UnitPrice * updatedOrderItems.get(newProductOrderItem1.Id).aforza__Tax_Percent__c / 100;
         Assert.areEqual(totalVat, updatedOrderItems.get(newTaxOrderItem.Id).UnitPrice);
+    }
+    
+    @IsTest
+    private static void testCalculateVatOnOrderLevel_PreventCloneOrderVatCalculation(){
+        
+        Test.startTest();
+		Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Clone__c = true));
+        OrderItem newTaxOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, aforza__Type__c = 'Tax', Quantity = 1, UnitPrice = 1, aforza__Tax__c = 0)
+        );
+        OrderItem newProductOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
+        );
+        OrderItem newProductOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
+        );
+        Test.stopTest();
+                                                                 
+		OrderItem orderItem = [SELECT Id, UnitPrice FROM OrderItem WHERE Id = :newTaxOrderItem.Id];
+        
+        Assert.areEqual(newTaxOrderItem.UnitPrice, orderItem.UnitPrice);
+    }
+    
+    @IsTest
+    private static void testCalculateVatOnOrderLevel_OriginalOrderVatCalculation(){
+        
+        Test.startTest();
+		Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID, Clone__c = false));
+        OrderItem newTaxOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, aforza__Type__c = 'Tax', Quantity = 1, UnitPrice = 1, aforza__Tax__c = 0)
+        );
+        OrderItem newProductOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
+        );
+        OrderItem newProductOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
+        );
+        Test.stopTest();
+                                                                 
+		OrderItem orderItem = [SELECT Id, UnitPrice FROM OrderItem WHERE Id = :newTaxOrderItem.Id];
+        
+        Assert.areEqual(20, orderItem.UnitPrice);
+        
     }
 }
