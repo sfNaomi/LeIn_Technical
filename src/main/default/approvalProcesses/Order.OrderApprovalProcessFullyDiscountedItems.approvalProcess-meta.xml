@@ -45,7 +45,7 @@
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
-    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
             <name>UpdateOrderStatusBackToDraft</name>
@@ -61,6 +61,6 @@
     </initialSubmissionActions>
     <label>OrderApprovalProcessFullyDiscountedItems</label>
     <processOrder>1</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>false</showApprovalHistory>
 </ApprovalProcess>

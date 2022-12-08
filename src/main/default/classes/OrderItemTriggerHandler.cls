@@ -54,12 +54,13 @@ public with sharing class OrderItemTriggerHandler {
 
             }
         }
-
-        Map<Id, Order> productOrderItemsByOrderId = getOrdersWithRelatedProductLineItems(allOrderIdsToUpdateTaxFor);
-        Map<Id, Order> taxOrderItemsByOrderId = getOrdersWithRelatedTaxOrderItem(allOrderIdsToUpdateTaxFor);
+		
+        Map<Id, Order> notClonedOrdersById = getNotClonedOrders(allOrderIdsToUpdateTaxFor);
+        Map<Id, Order> productOrderItemsByOrderId = getOrdersWithRelatedProductLineItems(notClonedOrdersById.KeySet());
+        Map<Id, Order> taxOrderItemsByOrderId = getOrdersWithRelatedTaxOrderItem(notClonedOrdersById.KeySet());
 
         List<OrderItem> taxOrderItemsToUpdate = new List<OrderItem>();
-        for (Id orderId : allOrderIdsToUpdateTaxFor) {
+        for (Id orderId : notClonedOrdersById.KeySet()) {
             List<OrderItem> productOrderItems = productOrderItemsByOrderId?.get(orderId)?.OrderItems;
             List<OrderItem> taxOrderItems = taxOrderItemsByOrderId?.get(orderId)?.OrderItems;
             if (!taxOrderItems.isEmpty()) {
@@ -171,5 +172,15 @@ public with sharing class OrderItemTriggerHandler {
             WHERE Id IN :orderIds
         ]);
         return orders;
+    }
+    
+    @TestVisible
+    private static Map<Id, Order> getNotClonedOrders(Set<Id> orderIds) {
+        Map<Id, Order> notClonedOrdersById = new Map<Id, Order>([
+            SELECT Id, Clone__c 
+            FROM Order 
+            WHERE Id IN :orderIds 
+            AND Clone__c = false]);
+        return notClonedOrdersById;
     }
 }
