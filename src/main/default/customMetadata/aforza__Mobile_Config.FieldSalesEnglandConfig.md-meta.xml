@@ -1088,7 +1088,7 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
-        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&oid=00D8d000005xoV4</value>
+        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&amp;oid=00D8d000005xoV4&amp;</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Footer__c</field>
@@ -1109,7 +1109,7 @@
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>
-        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&oid=00D8d000005xoV4</value>
+        <value xsi:type="xsd:string">https://agbarr.file.force.com/servlet/servlet.ImageServer?id=0158d000000i3qq&amp;oid=00D8d000005xoV4&amp;</value>
     </values>
     <values>
         <field>aforza__Profiles_JSON__c</field>
