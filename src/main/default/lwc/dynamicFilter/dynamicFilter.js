@@ -92,7 +92,8 @@ export default class DynamicFilter extends LightningElement {
                 'sObjectName': this.sobjectApiName,
                 'returnFields': this.queryFields,
                 'queryFields': JSON.stringify(this.filterFieldsWithPopulatedFilters),
-                'limit': this.limitOfRowsReturned
+                'limit': this.limitOfRowsReturned,
+                'defaultFilter': this.defaultFilter
             });
             if (this.toFlatten) {
                 this.flattenReturnedData(returnedData);
