@@ -28,7 +28,7 @@
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
-    <permissionSets>OrderFieldSalesAccess</permissionSets>
+    <permissionSets>OrderLocalBusinessAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetCruObjectAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
