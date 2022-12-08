@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Field Sales Controller and Manager access for Order and Order Line Item objects and fields. Field Direct and Van Sales Order Record Types</description>
+    <description>Local Business Development Rep access for Order and Order Line Item objects and fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.AccountName__c</field>
@@ -412,7 +412,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Order Field Sales Access</label>
+    <label>Order Local Business Access</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -422,16 +422,12 @@
         <object>Order</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>standard-Order</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
     <recordTypeVisibilities>
         <recordType>Order.FieldDirectOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Order.VanSalesOrder</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+        <tabSettings>
+        <tab>standard-Order</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
