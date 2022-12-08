@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>RTsToCreateInvoice__c</field>
-        <value xsi:type="xsd:string">ECommerceOrder,EDIOrder,FieldDirectOrder,TelesalesOrder,StraightToJDEOrder</value>
+        <value xsi:type="xsd:string">ECommerceOrder,ReturnOrder,EDIOrder,FieldDirectOrder,TelesalesOrder,StraightToJDEOrder</value>
     </values>
     <values>
         <field>RTsToUpdateAccOnOrderCompletion__c</field>
