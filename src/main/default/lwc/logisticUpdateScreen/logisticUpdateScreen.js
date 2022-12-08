@@ -314,34 +314,6 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         }
     }
 
-    /** Method to navigate to a web page with query params
-     *
-     * @author Magdalena Stanciu
-     * @date 2022-10-07
-     */
-    navigateToPage(page, params) {
-        let queryString = this.generateUrlQueryString(params);
-        this[NavigationMixin.Navigate]({
-            type: 'standard__webPage',
-            attributes: {
-                url: '/apex/' + page + queryString
-            }
-        });
-    }
-
-    /** Method to to generate url query string from params received as object
-     *
-     * @author Magdalena Stanciu
-     * @date 2022-10-07
-     */
-    generateUrlQueryString(params) {
-        let queryString = '?';
-        Object.keys(params).forEach(key => {
-            queryString += key + '=' + params[key];
-        });
-        return queryString;
-    }
-
     handleLoadIdSelection(event) {
         // when the empty value is selected transform it to actual value in order list
         const selectedLoadName = event.target.value === null ? undefined : event.target.value;
@@ -425,7 +397,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @author Magdalena Stanciu
      * @date 2022-10-18
      */
-    resetSelection(page, params) {
+    resetSelection() {
         this.template.querySelector('.table').selectedRows = [];
         this.selectedRows = [];
         this.selectedAction = '';
@@ -600,5 +572,19 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      */
     get disableLoadIdFilter() {
         return Boolean(this.loadIdsFromFilteredOrders.length === 1);
+    }
+
+    /** Method to return base filter
+     *
+     * @returns {string} - formatted base not removable filter
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-08
+     */
+    get ordersDefaultFilter() {
+        return ` AND Status != 'Draft' AND Status != 'Awaiting Approval' AND Status != 'Activated' AND 
+        (RecordType.DeveloperName = 'TelesalesOrder' OR RecordType.DeveloperName = 'FieldDirectOrder' OR
+          RecordType.DeveloperName = 'EDIOrder' OR RecordType.DeveloperName = 'ECommerceOrder' 
+          OR RecordType.DeveloperName = 'ReturnOrder')`
     }
 }
