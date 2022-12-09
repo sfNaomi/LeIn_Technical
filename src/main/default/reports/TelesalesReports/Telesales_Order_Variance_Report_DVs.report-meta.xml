@@ -76,6 +76,13 @@
                 <operator>equals</operator>
                 <value>Product</value>
             </criteriaItems>
+            <criteriaItems>
+                <column>Order$RecordType</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>false</isUnlocked>
+                <operator>equals</operator>
+                <value>Order.TelesalesOrder</value>
+            </criteriaItems>
         </filter>
         <format>Summary</format>
         <name>Delivered Products</name>
@@ -151,6 +158,13 @@
                 <operator>equals</operator>
                 <value>Product</value>
             </criteriaItems>
+            <criteriaItems>
+                <column>Order$RecordType</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>false</isUnlocked>
+                <operator>equals</operator>
+                <value>Order.TelesalesOrder</value>
+            </criteriaItems>
         </filter>
         <format>Summary</format>
         <name>Ordered Products</name>
@@ -173,14 +187,14 @@
         <blockId xsi:nil="true"/>
         <joinTable>Order</joinTable>
     </blockInfo>
-    <description>Logistics Order Variance Report</description>
+    <description>Telesales Order Variance Report</description>
     <format>MultiBlock</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
         <field>Order$DeliveredOrderNumber__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Logistics Order Variance Report</name>
+    <name>Telesales Order Variance Report</name>
     <params>
         <name>lsk</name>
         <value>1</value>
