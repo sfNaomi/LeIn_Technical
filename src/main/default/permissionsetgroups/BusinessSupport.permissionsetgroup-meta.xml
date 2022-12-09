@@ -23,7 +23,6 @@
     <permissionSets>ContactHelpDeskBusinessSupport</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>ExportReports</permissionSets>
-    <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>
