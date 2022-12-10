@@ -338,45 +338,31 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testValidateUpdateOfLockedOrders_UserWithEditLockedOrdersPermission() {
-        // create user with a PS which grants "Edit Locked Orders" custom permissions
-        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        PermissionSet editLockedOrdersPermission = [SELECT Id FROM PermissionSet WHERE Name = 'EditLockedOrders'];
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
-        User adminUser = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = adminProfile.Id));
-        TdfSObjectFactory.insertSObject(new PermissionSetAssignment(
-            AssigneeId = adminUser.Id, PermissionSetId = editLockedOrdersPermission.Id
-        ));
+        // create user with "Edit Locked Orders" custom permissions
+        User userWithRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            PermissionSet editLockedOrdersPermission = [SELECT Id FROM PermissionSet WHERE Name = 'EditLockedOrders'];
+            userWithRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+            TdfSObjectFactory.insertSObject(new PermissionSetAssignment(AssigneeId = userWithRightToEditLockedOrders.Id, PermissionSetId = editLockedOrdersPermission.Id));
+        }
 
-        System.runAs(adminUser) {
-            // attribute
-            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
-            // create account
-            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
-            );
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
+        );
 
-            // create product & add it to standard PB
-            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
-            TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
-            );
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today()
+            )
+        );
 
-            // create pricebook and add product to pricebook
-            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
-            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
-            );
-
-            // create order with order item
-            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(
-                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
-                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
-                )
-            );
-
-            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+        System.runAs(userWithRightToEditLockedOrders) {
             Test.startTest();
             try {
                 newOrder.EffectiveDate = System.today().addDays(1);
@@ -393,43 +379,29 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testValidateUpdateOfLockedOrders_UserWithoutEditLockedOrdersPermission() {
-        // create user with a PS which doesn't grant "Edit Locked Orders" custom permissions
-        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
-        User adminUserWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(
-            new User(ProfileId = adminProfile.Id)
+        // create user without "Edit Locked Orders" custom permissions
+        User userWithoutRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            userWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+        }
+
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
 
-        System.runAs(adminUserWithoutRightToEditLockedOrders) {
-            // attribute
-            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today(), OwnerId = userWithoutRightToEditLockedOrders.Id
+            )
+        );
 
-            // create account
-            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
-            );
-
-            // create product & add it to standard PB
-            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
-            TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
-            );
-
-            // create pricebook and add product to pricebook
-            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
-            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
-            );
-
-            // create order with order item
-            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(
-                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
-                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
-                )
-            );
-
-            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+        System.runAs(userWithoutRightToEditLockedOrders) {
             Test.startTest();
             try {
                 newOrder.EffectiveDate = System.today().addDays(1);
@@ -446,43 +418,29 @@ private with sharing class OrderTriggerHandlerTest {
 
     @IsTest
     private static void testValidateUpdateOfLockedOrders_SafeUpdateViaService() {
-        // create user with a PS which doesn't grant "Edit Locked Orders" custom permissions
-        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
-        User adminUserWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(
-            new User(ProfileId = adminProfile.Id)
+        // create user without "Edit Locked Orders" custom permissions
+        User userWithoutRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            userWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+        }
+
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
         );
 
-        System.runAs(adminUserWithoutRightToEditLockedOrders) {
-            // attribute
-            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today(), OwnerId = userWithoutRightToEditLockedOrders.Id
+            )
+        );
 
-            // create account
-            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
-            );
-
-            // create product & add it to standard PB
-            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
-            TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
-            );
-
-            // create pricebook and add product to pricebook
-            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
-            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
-                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
-            );
-
-            // create order with order item
-            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
-                new Order(
-                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
-                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
-                )
-            );
-
-            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+        System.runAs(userWithoutRightToEditLockedOrders) {
             Test.startTest();
             try {
                 newOrder.EffectiveDate = System.today().addDays(1);
