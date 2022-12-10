@@ -113,7 +113,7 @@ public with sharing class InvoiceService {
                 ordersToUpdate.add(new Order(Id = orderId, Invoice__c = invoiceId));
             }
         }
-        update ordersToUpdate;
+        OrderService.updateOrdersByPreventingLockValidation(ordersToUpdate);
 
         // generate invoice documents and mark them as ready for email evaluation
         Set<Id> invoicesWithProperPaymentMethod = new Set<Id>();

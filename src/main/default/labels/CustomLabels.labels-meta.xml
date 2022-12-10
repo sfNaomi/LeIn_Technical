@@ -1183,4 +1183,12 @@
         <shortDescription>SKU Code</shortDescription>
         <value>SKU Code</value>
     </labels>
+    <labels>
+        <fullName>PreventUpdateOfLockedOrdersErrorMessage</fullName>
+        <categories>Validation Rule</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prevent Update of Locked Orders Error Message</shortDescription>
+        <value>This order is locked and no further changes are allowed.</value>
+    </labels>
 </CustomLabels>

@@ -6,6 +6,7 @@ trigger OrderTrigger on Order (before insert, before update, after insert, after
         }
         when BEFORE_UPDATE {
             OrderTriggerHandler.validateOrderCreationOrCompletion(Trigger.new, Trigger.oldMap);
+            OrderTriggerHandler.validateUpdateOfLockedOrders(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.populateDefaultInventory(Trigger.new, Trigger.oldMap);
         }
         when AFTER_INSERT {

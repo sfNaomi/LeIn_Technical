@@ -5,7 +5,7 @@
 @IsTest
 private with sharing class OrderTriggerHandlerTest {
     @IsTest
-    private static void validateOrderCreationOrCompletion_ProspectAccountNewOrder() {
+    private static void testValidateOrderCreationOrCompletion_ProspectAccountNewOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -27,7 +27,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_ActiveProspectAccountNewTelesalesOrder() {
+    private static void testValidateOrderCreationOrCompletion_ActiveProspectAccountNewTelesalesOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -48,7 +48,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_ActiveProspectAccountNewDraftFieldDirectOrder() {
+    private static void testValidateOrderCreationOrCompletion_ActiveProspectAccountNewDraftFieldDirectOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -69,7 +69,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_DpAccountWithNotEnoughAvailableCredit() {
+    private static void testValidateOrderCreationOrCompletion_DpAccountWithNotEnoughAvailableCredit() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -135,7 +135,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_DpAccountOnHoldAndTelesales() {
+    private static void testValidateOrderCreationOrCompletion_DpAccountOnHoldAndTelesales() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -180,7 +180,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CustomerAccountWithNotEnoughAvailableCredit() {
+    private static void testValidateOrderCreationOrCompletion_CustomerAccountWithNotEnoughAvailableCredit() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -246,7 +246,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CustomerAccountOnHoldAndTelesales() {
+    private static void testValidateOrderCreationOrCompletion_CustomerAccountOnHoldAndTelesales() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -291,7 +291,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CheckIfOrderItemGotFullDiscount() {
+    private static void testValidateOrderCreationOrCompletion_CheckIfOrderItemGotFullDiscount() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -334,6 +334,167 @@ private with sharing class OrderTriggerHandlerTest {
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_UserWithEditLockedOrdersPermission() {
+        // create user with a PS which grants "Edit Locked Orders" custom permissions
+        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        PermissionSet editLockedOrdersPermission = [SELECT Id FROM PermissionSet WHERE Name = 'EditLockedOrders'];
+
+        User adminUser = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = adminProfile.Id));
+        TdfSObjectFactory.insertSObject(new PermissionSetAssignment(
+            AssigneeId = adminUser.Id, PermissionSetId = editLockedOrdersPermission.Id
+        ));
+
+        System.runAs(adminUser) {
+            // attribute
+            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+            // create account
+            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
+            );
+
+            // create product & add it to standard PB
+            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+            TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            );
+
+            // create pricebook and add product to pricebook
+            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            );
+
+            // create order with order item
+            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(
+                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
+                )
+            );
+
+            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                update newOrder;
+
+                Order updateOrder = [SELECT Id, EffectiveDate FROM Order WHERE Id = :newOrder.Id];
+                Assert.areEqual(System.today().addDays(1), updateOrder.EffectiveDate);
+            } catch (Exception ex) {
+                Assert.isTrue(false, 'Expecting no error to be thrown.');
+            }
+            Test.stopTest();
+        }
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_UserWithoutEditLockedOrdersPermission() {
+        // create user with a PS which doesn't grant "Edit Locked Orders" custom permissions
+        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+
+        User adminUserWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(
+            new User(ProfileId = adminProfile.Id)
+        );
+
+        System.runAs(adminUserWithoutRightToEditLockedOrders) {
+            // attribute
+            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+            // create account
+            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
+            );
+
+            // create product & add it to standard PB
+            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+            TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            );
+
+            // create pricebook and add product to pricebook
+            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            );
+
+            // create order with order item
+            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(
+                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
+                )
+            );
+
+            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                update newOrder;
+
+                Assert.isTrue(false, 'Expecting error to be thrown');
+            } catch (Exception ex) {
+                String expectedErrorMessage = Label.PreventUpdateOfLockedOrdersErrorMessage;
+                Assert.isTrue(ex.getMessage().contains(expectedErrorMessage));
+            }
+            Test.stopTest();
+        }
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_SafeUpdateViaService() {
+        // create user with a PS which doesn't grant "Edit Locked Orders" custom permissions
+        Profile adminProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+
+        User adminUserWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(
+            new User(ProfileId = adminProfile.Id)
+        );
+
+        System.runAs(adminUserWithoutRightToEditLockedOrders) {
+            // attribute
+            TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+            // create account
+            Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+                new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
+            );
+
+            // create product & add it to standard PB
+            Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+            TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+            );
+
+            // create pricebook and add product to pricebook
+            Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+            PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+                new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+            );
+
+            // create order with order item
+            Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+                new Order(
+                    RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                    Pricebook2Id = newPricebook.Id, IsApproved__c = false, EffectiveDate = System.today()
+                )
+            );
+
+            // move order to receipted -> allowed as the user has the "Edit Locked Orders" custom permission
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
+
+                Order updatedOrder = [SELECT Id, EffectiveDate FROM Order WHERE Id = :newOrder.Id];
+                Assert.areEqual(System.today().addDays(1), updatedOrder.EffectiveDate);
+            } catch (Exception ex) {
+                Assert.isTrue(false, 'Expecting no error to be thrown.');
+            }
+            Test.stopTest();
+        }
     }
 
     @IsTest
@@ -996,7 +1157,7 @@ private with sharing class OrderTriggerHandlerTest {
         // mark order as receipted
         Test.startTest();
         newOrder.Status = 'Receipted';
-        update newOrder;
+        OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
         Test.stopTest();
 
         // retrieve invoice and invoice line items, validate results

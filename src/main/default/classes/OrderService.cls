@@ -3,6 +3,8 @@
  */
 
 public with sharing class OrderService {
+    public static Boolean allowUpdateOfLockedOrders = false;
+
     public static final OrderSetting__mdt SETTINGS {
         get {
             if (SETTINGS == null) {
@@ -63,7 +65,6 @@ public with sharing class OrderService {
     }
 
 
-
     public static Boolean isOrderCompleted(String orderStatus) {
         return COMPLETED_ORDER_STATUSES.contains(orderStatus);
     }
@@ -90,5 +91,15 @@ public with sharing class OrderService {
             ordersToUpdate.add(new Order(Id = newOrder.Id, Status = newStatus));
         }
         update ordersToUpdate;
+    }
+
+    public static void updateOrdersByPreventingLockValidation(List<Order> newOrders) {
+        // enable saving of locked orders
+        OrderService.allowUpdateOfLockedOrders = true;
+
+        update newOrders;
+
+        // enable saving of locked orders
+        OrderService.allowUpdateOfLockedOrders = false;
     }
 }

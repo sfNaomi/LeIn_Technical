@@ -416,4 +416,15 @@ public with sharing class OrderTriggerHandler {
 
         delete routeAndLoadForDeletion;
     }
+
+    public static void validateUpdateOfLockedOrders(List<Order> newOrders, Map<Id, Order> oldOrders) {
+        for (Order newOrder : newOrders) {
+            Order oldOrder = oldOrders.get(newOrder.Id);
+            if (oldOrder != null && newOrder.Status == oldOrder.Status && newOrder.Status == 'Receipted' &&
+                (!FeatureManagement.checkPermission('EditLockedOrders') && OrderService.allowUpdateOfLockedOrders == false)
+            ) {
+                newOrder.addError(Label.PreventUpdateOfLockedOrdersErrorMessage);
+            }
+        }
+    }
 }

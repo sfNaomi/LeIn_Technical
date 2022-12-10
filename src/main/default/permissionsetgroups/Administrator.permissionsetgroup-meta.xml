@@ -24,6 +24,7 @@
     <permissionSets>ContactAdminAccess</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>DepotUser</permissionSets>
+    <permissionSets>EditLockedOrders</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
     <permissionSets>ExportReports</permissionSets>
