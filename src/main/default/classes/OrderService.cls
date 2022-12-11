@@ -63,7 +63,6 @@ public with sharing class OrderService {
     }
 
 
-
     public static Boolean isOrderCompleted(String orderStatus) {
         return COMPLETED_ORDER_STATUSES.contains(orderStatus);
     }
@@ -90,5 +89,15 @@ public with sharing class OrderService {
             ordersToUpdate.add(new Order(Id = newOrder.Id, Status = newStatus));
         }
         update ordersToUpdate;
+    }
+
+    public static void updateOrdersByPreventingLockValidation(List<Order> newOrders) {
+        // enable saving of locked orders
+        OrderTriggerHandler.allowUpdateOfLockedOrders = true;
+
+        update newOrders;
+
+        // disable saving of locked orders
+        OrderTriggerHandler.allowUpdateOfLockedOrders = false;
     }
 }

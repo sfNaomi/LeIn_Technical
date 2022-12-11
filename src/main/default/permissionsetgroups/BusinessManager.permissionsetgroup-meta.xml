@@ -22,7 +22,6 @@
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
-    <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>

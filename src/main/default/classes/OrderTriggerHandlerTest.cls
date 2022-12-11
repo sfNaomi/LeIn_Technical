@@ -4,8 +4,17 @@
 
 @IsTest
 private with sharing class OrderTriggerHandlerTest {
+    @TestSetup
+    private static void recalculatePermSetGroups() {
+        PermissionSetGroup adminPermSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'Administrator'][0];
+
+        Test.calculatePermissionSetGroup(new Id[]{
+            adminPermSetGroup.Id
+        });
+    }
+    
     @IsTest
-    private static void validateOrderCreationOrCompletion_ProspectAccountNewOrder() {
+    private static void testValidateOrderCreationOrCompletion_ProspectAccountNewOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -27,7 +36,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_ActiveProspectAccountNewTelesalesOrder() {
+    private static void testValidateOrderCreationOrCompletion_ActiveProspectAccountNewTelesalesOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -48,7 +57,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_ActiveProspectAccountNewDraftFieldDirectOrder() {
+    private static void testValidateOrderCreationOrCompletion_ActiveProspectAccountNewDraftFieldDirectOrder() {
         // create attribute for New DP attribute flow automation
         TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
 
@@ -69,7 +78,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_DpAccountWithNotEnoughAvailableCredit() {
+    private static void testValidateOrderCreationOrCompletion_DpAccountWithNotEnoughAvailableCredit() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -135,7 +144,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_DpAccountOnHoldAndTelesales() {
+    private static void testValidateOrderCreationOrCompletion_DpAccountOnHoldAndTelesales() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -180,7 +189,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CustomerAccountWithNotEnoughAvailableCredit() {
+    private static void testValidateOrderCreationOrCompletion_CustomerAccountWithNotEnoughAvailableCredit() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -246,7 +255,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CustomerAccountOnHoldAndTelesales() {
+    private static void testValidateOrderCreationOrCompletion_CustomerAccountOnHoldAndTelesales() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -291,7 +300,7 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
-    private static void validateOrderCreationOrCompletion_CheckIfOrderItemGotFullDiscount() {
+    private static void testValidateOrderCreationOrCompletion_CheckIfOrderItemGotFullDiscount() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
         TdfSObjectFactory.insertSObject(
@@ -334,6 +343,125 @@ private with sharing class OrderTriggerHandlerTest {
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
         }
         Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_UserWithEditLockedOrdersPermission() {
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        // create user with "Edit Locked Orders" custom permissions
+        User userWithRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            PermissionSet editLockedOrdersPermission = [SELECT Id FROM PermissionSet WHERE Name = 'EditLockedOrders'];
+            userWithRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+            TdfSObjectFactory.insertSObject(new PermissionSetAssignment(AssigneeId = userWithRightToEditLockedOrders.Id, PermissionSetId = editLockedOrdersPermission.Id));
+        }
+
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders', LastOrderDate__c = null)
+        );
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today()
+            )
+        );
+
+        System.runAs(userWithRightToEditLockedOrders) {
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                update newOrder;
+
+                Order updateOrder = [SELECT Id, EffectiveDate FROM Order WHERE Id = :newOrder.Id];
+                Assert.areEqual(System.today().addDays(1), updateOrder.EffectiveDate);
+            } catch (Exception ex) {
+                Assert.isTrue(false, 'Expecting no error to be thrown.');
+            }
+            Test.stopTest();
+        }
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_UserWithoutEditLockedOrdersPermission() {
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        // create user without "Edit Locked Orders" custom permissions
+        User userWithoutRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            userWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+        }
+
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today(), OwnerId = userWithoutRightToEditLockedOrders.Id
+            )
+        );
+
+        System.runAs(userWithoutRightToEditLockedOrders) {
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                update newOrder;
+
+                Assert.isTrue(false, 'Expecting error to be thrown');
+            } catch (Exception ex) {
+                String expectedErrorMessage = Label.PreventUpdateOfLockedOrdersErrorMessage;
+                Assert.isTrue(ex.getMessage().contains(expectedErrorMessage));
+            }
+            Test.stopTest();
+        }
+    }
+
+    @IsTest
+    private static void testValidateUpdateOfLockedOrders_SafeUpdateViaService() {
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        // create user without "Edit Locked Orders" custom permissions
+        User userWithoutRightToEditLockedOrders;
+        System.runAs(runningUser) {
+            Profile userProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+            userWithoutRightToEditLockedOrders = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = userProfile.Id));
+        }
+
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
+        );
+
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id, Status = 'Receipted',
+                IsApproved__c = false, EffectiveDate = System.today(), OwnerId = userWithoutRightToEditLockedOrders.Id
+            )
+        );
+
+        System.runAs(userWithoutRightToEditLockedOrders) {
+            Test.startTest();
+            try {
+                newOrder.EffectiveDate = System.today().addDays(1);
+                OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
+
+                Order updatedOrder = [SELECT Id, EffectiveDate FROM Order WHERE Id = :newOrder.Id];
+                Assert.areEqual(System.today().addDays(1), updatedOrder.EffectiveDate);
+            } catch (Exception ex) {
+                Assert.isTrue(false, 'Expecting no error to be thrown.');
+            }
+            Test.stopTest();
+        }
     }
 
     @IsTest
@@ -996,7 +1124,7 @@ private with sharing class OrderTriggerHandlerTest {
         // mark order as receipted
         Test.startTest();
         newOrder.Status = 'Receipted';
-        update newOrder;
+        OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
         Test.stopTest();
 
         // retrieve invoice and invoice line items, validate results
@@ -1293,7 +1421,7 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.id LIMIT 1
+            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
         ];
         Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
         Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
@@ -1318,7 +1446,7 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.id LIMIT 1
+            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
         ];
         Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
         Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
@@ -1371,7 +1499,7 @@ private with sharing class OrderTriggerHandlerTest {
 		);
 
         //insert BT payment
-		bt_stripe__Transaction__c btNewPayment = (bt_stripe__Transaction__c) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new bt_stripe__Transaction__c(
 				bt_stripe__Related_Account__c = dpAccount.Id,
 				RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
@@ -1407,6 +1535,7 @@ private with sharing class OrderTriggerHandlerTest {
         */
     }
 
+    @IsTest
     private static void testRemoveOrdersFromLoad_SingleOrdersRemoved() {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());

@@ -426,7 +426,11 @@
         <recordType>Order.FieldDirectOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-        <tabSettings>
+        <recordTypeVisibilities>
+        <recordType>Order.VanSalesOrder</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <tabSettings>
         <tab>standard-Order</tab>
         <visibility>Visible</visibility>
     </tabSettings>

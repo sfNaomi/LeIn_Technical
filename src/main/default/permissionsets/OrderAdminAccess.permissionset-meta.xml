@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>EditLockedOrders</name>
-    </customPermissions>
     <description>Admin access for Order and Order Product objects - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>false</editable>

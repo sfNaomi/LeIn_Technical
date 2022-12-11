@@ -11,6 +11,7 @@
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactIntegrationApplicationSupport</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>EditLockedOrders</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>

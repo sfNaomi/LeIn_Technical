@@ -525,7 +525,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
+                    <value>ADVGRID</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>rowsToDisplay</name>
@@ -670,7 +670,7 @@
                     </criteria>
                 </visibilityRule>
             </componentInstance>
-        </itemInstances> 
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>ddMandateLink</componentName>

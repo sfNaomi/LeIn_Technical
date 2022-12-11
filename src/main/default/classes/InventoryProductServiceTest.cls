@@ -377,25 +377,25 @@ private with sharing class InventoryProductServiceTest {
       );
 
       // create orders and add products to it
-      Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(
+      Order newOrder = (Order) TdfSObjectFactory.insertSObject(
           new Order(
               RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
               AccountId = dpAccount.Id,
               Pricebook2Id = newPricebook.Id,
               aforza__Inventory__c = newInventory.Id,
-              Status = 'Receipted'
+              Status = 'Draft'
         )
       );
       TdfSObjectFactory.insertSObject(
-          new OrderItem(OrderId = newOrder1.Id, Product2Id = newProduct1.Id, Quantity = 10, PricebookEntryId = product1PricebookEntry.Id)
+          new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct1.Id, Quantity = 10, PricebookEntryId = product1PricebookEntry.Id)
       );
       TdfSObjectFactory.insertSObject(
-          new OrderItem(OrderId = newOrder1.Id, Product2Id = newProduct2.Id, Quantity = 20, PricebookEntryId = product2PricebookEntry.Id)
+          new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct2.Id, Quantity = 20, PricebookEntryId = product2PricebookEntry.Id)
       );
 
-      TdfSObjectFactory.insertSObject(
-          new aforza__Invoice__c(aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder1.Id, PushedtoJde__c  = FALSE)
-      );
+      // move order to "Receipted"
+      newOrder.Status = 'Receipted';
+      update newOrder;
 
       List<aforza__Inventory_Product__c> oldList = [
           SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c

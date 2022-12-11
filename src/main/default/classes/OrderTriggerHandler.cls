@@ -27,6 +27,7 @@ public with sharing class OrderTriggerHandler {
     }
 
     private static final String CANCELLED_STATUS = 'Cancelled';
+    public static Boolean allowUpdateOfLockedOrders = false;
 
     public static void cloneCompletedOrder(List<Order> newOrders, Map<Id, Order> oldOrders) {
         List<Order> toBeClonedOrders = new List<Order>();
@@ -80,60 +81,42 @@ public with sharing class OrderTriggerHandler {
             FROM Account
             WHERE Id IN :relatedAccountIds
         ]);
-        
-        Map<Id,List<OrderItem>> orderIdToOrderItemsMap = getOrderIdToOrderItemsMap(newOrderIds);
 
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Account relatedAccount = relatedAccounts?.get(newOrder.AccountId);
+
+            // Account based check for order creation or update (stops anything that is for on hold customer)
             if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 ((oldOrder == null) || (oldOrder != null && newOrder.Status != oldOrder.Status &&
                     !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status)))) {
-                    newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
-            } else if (oldOrder != null && newOrder.Status != oldOrder.Status &&
-                !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && (
-                relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED || relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (
-                newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID || newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
-                    newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
-                    newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
+                newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
+            }
+
+            // check for order status change, we check that the status is changed and also changed from not completed to
+            // completed status
+            if (!(oldOrder != null && newOrder.Status != oldOrder.Status &&
+                !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))) {
+                continue;
+            }
+            // check if there are any full discount items
+            if (newOrder.IsApproved__c == false && newOrder.TotalNumberOfFullyDiscountedItems__c > 0) {
+                newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
+                // check for specific order types and some extra statuses
+            } else if ((relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED ||
+                relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID ||
+                newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
+                newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
+                newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
                     && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && 
-                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount && 
-                    newOrder.IsApproved__c == false) 
-                {
+                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount &&
+                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount &&
+                    newOrder.IsApproved__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
-            } else if (oldOrder != null && newOrder.Status != oldOrder.Status &&
-                !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status) && newOrder.IsApproved__c == false) {
-                if (orderIdToOrderItemsMap.keySet().contains(newOrder.Id)) {
-                    checkIfFullDiscountAppliedOnOrderItem(newOrder, orderIdToOrderItemsMap.get(newOrder.Id));
-                }    
-            }       
-        }
-    }
-
-    private static Map<Id,List<OrderItem>> getOrderIdToOrderItemsMap(Set<Id> newOrderIds){
-        List<OrderItem> relatedOrderItems = [SELECT Id, OrderId, aforza__Discount_Percent__c FROM OrderItem WHERE OrderId IN :newOrderIds];
-        Map<Id,List<OrderItem>> orderIdToOrderItemsMap = new Map<Id,List<OrderItem>>();
-        for (OrderItem orderItem : relatedOrderItems) {
-            if (orderIdToOrderItemsMap.containsKey(orderItem.OrderId)){
-            	orderIdToOrderItemsMap.get(orderItem.OrderId).add(orderItem); 
-            } else {
-                orderIdToOrderItemsMap.put(orderItem.OrderId, new List<OrderItem>{
-                    orderItem
-                        });
-            }
-        }
-        return orderIdToOrderItemsMap;          
-    }
-
-    private static void checkIfFullDiscountAppliedOnOrderItem(Order newOrder, List<OrderItem> relatedOrderItems){
-        for (OrderItem relatedOrderItem : relatedOrderItems) {
-            if (relatedOrderItem.aforza__Discount_Percent__c == 100) {
-                newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
             }
         }
     }
@@ -184,7 +167,9 @@ public with sharing class OrderTriggerHandler {
 
     public static void createPaymentTransaction(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> orderIdsToCreatePaymentTransactionFrom = new Set<Id>();
-        Set<String> allowedPrimaryPaymentMethods = new Set<String>{'Direct Debit', 'Bacs'};
+        Set<String> allowedPrimaryPaymentMethods = new Set<String>{
+            'Direct Debit', 'Bacs'
+        };
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Boolean isStatusChanged = oldOrder != null && newOrder.Status != oldOrder.Status;
@@ -319,7 +304,7 @@ public with sharing class OrderTriggerHandler {
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders.get(newOrder.Id);
             Boolean isStatusChanged = oldOrder != null && newOrder.Status != oldOrder.Status;
-            if (isStatusChanged && newOrder.Status == CANCELLED_STATUS && newOrder.PreAuthCaptured__c == True) {
+            if (isStatusChanged && newOrder.Status == CANCELLED_STATUS && newOrder.PreAuthCaptured__c == true) {
                 orderIds.add(newOrder.Id);
             }
         }
@@ -333,21 +318,21 @@ public with sharing class OrderTriggerHandler {
 
     private static void setOrderTransactionsToCancelledStatus(List<String> orderIds) {
         List<aforza__Payment_Transaction__c> agbTransactionsToUpdate = new List<aforza__Payment_Transaction__c>();
-        for(aforza__Payment_Transaction__c trans: [SELECT Id FROM aforza__Payment_Transaction__c WHERE OrderNumber__c IN :orderIds]) {
+        for (aforza__Payment_Transaction__c trans : [SELECT Id FROM aforza__Payment_Transaction__c WHERE OrderNumber__c IN :orderIds]) {
             trans.aforza__Status__c = CANCELLED_STATUS;
             agbTransactionsToUpdate.add(trans);
         }
-        Update agbTransactionsToUpdate;
+        update agbTransactionsToUpdate;
     }
 
     private static void setOrderBTTransactionsForRefund(List<String> orderIds) {
         List<bt_stripe__Transaction__c> btTransactionsToUpdate = new List<bt_stripe__Transaction__c>();
-        for(bt_stripe__Transaction__c trans: [SELECT Id FROM bt_stripe__Transaction__c WHERE Order__c IN :orderIds]) {
+        for (bt_stripe__Transaction__c trans : [SELECT Id FROM bt_stripe__Transaction__c WHERE Order__c IN :orderIds]) {
             trans.bt_stripe__Refund__c = true;
             btTransactionsToUpdate.add(trans);
         }
-        if(!Test.isRunningTest()) {
-            Update btTransactionsToUpdate;
+        if (!Test.isRunningTest()) {
+            update btTransactionsToUpdate;
         }
     }
 
@@ -431,5 +416,15 @@ public with sharing class OrderTriggerHandler {
         }
 
         delete routeAndLoadForDeletion;
+    }
+
+    public static void validateUpdateOfLockedOrders(List<Order> newOrders, Map<Id, Order> oldOrders) {
+        for (Order newOrder : newOrders) {
+            Order oldOrder = oldOrders.get(newOrder.Id);
+            if (oldOrder != null && newOrder.Status == oldOrder.Status && newOrder.Status == 'Receipted' &&
+                (!FeatureManagement.checkPermission('EditLockedOrders') && allowUpdateOfLockedOrders == false)) {
+                newOrder.addError(Label.PreventUpdateOfLockedOrdersErrorMessage);
+            }
+        }
     }
 }
