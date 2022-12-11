@@ -27,6 +27,7 @@ public with sharing class OrderTriggerHandler {
     }
 
     private static final String CANCELLED_STATUS = 'Cancelled';
+    public static Boolean allowUpdateOfLockedOrders = false;
 
     public static void cloneCompletedOrder(List<Order> newOrders, Map<Id, Order> oldOrders) {
         List<Order> toBeClonedOrders = new List<Order>();
@@ -421,8 +422,7 @@ public with sharing class OrderTriggerHandler {
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders.get(newOrder.Id);
             if (oldOrder != null && newOrder.Status == oldOrder.Status && newOrder.Status == 'Receipted' &&
-                (!FeatureManagement.checkPermission('EditLockedOrders') && OrderService.allowUpdateOfLockedOrders == false)
-            ) {
+                (!FeatureManagement.checkPermission('EditLockedOrders') && allowUpdateOfLockedOrders == false)) {
                 newOrder.addError(Label.PreventUpdateOfLockedOrdersErrorMessage);
             }
         }

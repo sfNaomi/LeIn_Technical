@@ -4,6 +4,14 @@
 
 @IsTest
 private with sharing class OrderTriggerHandlerTest {
+    @TestSetup
+    private static void recalculatePermSetGroups() {
+        PermissionSetGroup adminPermSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = 'Administrator'][0];
+
+        Test.calculatePermissionSetGroup(new Id[]{
+            adminPermSetGroup.Id
+        });
+    }
     @IsTest
     private static void testValidateOrderCreationOrCompletion_ProspectAccountNewOrder() {
         // create attribute for New DP attribute flow automation
@@ -1412,7 +1420,7 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.id LIMIT 1
+            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
         ];
         Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
         Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
@@ -1437,7 +1445,7 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.id LIMIT 1
+            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
         ];
         Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
         Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
@@ -1490,7 +1498,7 @@ private with sharing class OrderTriggerHandlerTest {
 		);
 
         //insert BT payment
-		bt_stripe__Transaction__c btNewPayment = (bt_stripe__Transaction__c) TdfSObjectFactory.insertSObject(
+		TdfSObjectFactory.insertSObject(
 			new bt_stripe__Transaction__c(
 				bt_stripe__Related_Account__c = dpAccount.Id,
 				RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
@@ -1526,6 +1534,7 @@ private with sharing class OrderTriggerHandlerTest {
         */
     }
 
+    @IsTest
     private static void testRemoveOrdersFromLoad_SingleOrdersRemoved() {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());

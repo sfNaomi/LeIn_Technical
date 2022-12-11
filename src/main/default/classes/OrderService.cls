@@ -3,8 +3,6 @@
  */
 
 public with sharing class OrderService {
-    public static Boolean allowUpdateOfLockedOrders = false;
-
     public static final OrderSetting__mdt SETTINGS {
         get {
             if (SETTINGS == null) {
@@ -95,11 +93,11 @@ public with sharing class OrderService {
 
     public static void updateOrdersByPreventingLockValidation(List<Order> newOrders) {
         // enable saving of locked orders
-        OrderService.allowUpdateOfLockedOrders = true;
+        OrderTriggerHandler.allowUpdateOfLockedOrders = true;
 
         update newOrders;
 
-        // enable saving of locked orders
-        OrderService.allowUpdateOfLockedOrders = false;
+        // disable saving of locked orders
+        OrderTriggerHandler.allowUpdateOfLockedOrders = false;
     }
 }
