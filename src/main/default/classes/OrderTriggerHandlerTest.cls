@@ -12,6 +12,7 @@ private with sharing class OrderTriggerHandlerTest {
             adminPermSetGroup.Id
         });
     }
+    
     @IsTest
     private static void testValidateOrderCreationOrCompletion_ProspectAccountNewOrder() {
         // create attribute for New DP attribute flow automation
