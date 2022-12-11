@@ -37,12 +37,25 @@ public with sharing class LoadPlanningScreenController {
     @AuraEnabled
     public static Vehicle__c fetchVehicle(String driverName) {
         try {
-            List<Vehicle__c> vehicle = [SELECT Id, Driver__c  FROM Vehicle__c WHERE Driver__r.Name LIKE :driverName];
+            List<Vehicle__c> vehicle = [SELECT Id, Driver__c FROM Vehicle__c WHERE Driver__r.Name LIKE :driverName];
 
             return vehicle.isEmpty() ? null : vehicle[0];
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            throw new PopulateAuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void updateOrders(Object data) {
+        try {
+            List<Order> ordersForUpdate = (List<Order>) JSON.deserialize(
+                JSON.serialize(data),
+                List<Order>.class
+            );
+            update ordersForUpdate;
+        } catch (Exception e) {
             throw new PopulateAuraHandledException(e.getMessage());
         }
     }

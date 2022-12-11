@@ -57,4 +57,18 @@ private class LoadPlanningScreenControllerTest {
             Assert.areEqual(vehicle.Driver__c, fetchedVehicle.Driver__c);
         }
     }
+
+    @IsTest
+    private static void testUpdateOrders() {
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID));
+        List<Object> orderData = new List<Object>{new Order(Id = order.Id, PalletSequence__c = 4)};
+
+        Test.startTest();
+        LoadPlanningScreenController.updateOrders(orderData);
+        Test.stopTest();
+
+        List<Order> updatedOrder = [SELECT Id, PalletSequence__c FROM Order];
+        Assert.areEqual(1, updatedOrder.size(), 'There should be only one order');
+        Assert.areEqual(4, updatedOrder[0].PalletSequence__c, 'Expecting Pallet Sequence of 4');
+    }
 }

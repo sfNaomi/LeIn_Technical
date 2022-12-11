@@ -8,6 +8,7 @@ import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenCont
 import fetchOrdersForLoad from '@salesforce/apex/LoadPlanningScreenController.fetchOrdersForLoad';
 import fetchLoadData from '@salesforce/apex/LoadPlanningScreenController.fetchLoadData';
 import fetchVehicle from '@salesforce/apex/LoadPlanningScreenController.fetchVehicle';
+import updateOrders from '@salesforce/apex/LoadPlanningScreenController.updateOrders';
 import {processError} from 'c/errorHandlingService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
 import {FlattenDataService} from 'c/flattenDataService'
@@ -44,15 +45,15 @@ const columns = [
             year: 'numeric',
             hour12: false
         },
-        sortable: "true"
+        sortable: true
     },
-    {label: loadId, fieldName: 'Load__rName', sortable: "true"},
-    {label: primaryGrid, fieldName: 'Grid__c', sortable: "true"},
-    {label: status, fieldName: 'Status', sortable: "true"},
-    {label: quantity, fieldName: 'TotalQuantity__c', sortable: "true"},
-    {label: palletSequence, fieldName: 'PalletSequence__c', sortable: "true"},
-    {label: description, fieldName: 'ShortDescription__c'},
-    {label: postCode, fieldName: 'ShippingPostalCode', sortable: "true"},
+    {label: loadId, fieldName: 'Load__rName', sortable: true},
+    {label: primaryGrid, fieldName: 'Grid__c', sortable: true},
+    {label: status, fieldName: 'Status', sortable: true},
+    {label: quantity, fieldName: 'TotalQuantity__c', sortable: true},
+    {label: palletSequence, fieldName: 'PalletSequence__c', sortable: true, editable: true},
+    {label: description, fieldName: 'ShortDescription__c', editable: true},
+    {label: postCode, fieldName: 'ShippingPostalCode', sortable: true},
     {label: deliveryPointReference, fieldName: 'AccountDeliveryPointReference__c'},
     {label: deliveryPointName, fieldName: 'AccountName__c'},
     {label: shippingAddress, fieldName: 'ShippingStreet'},
@@ -75,9 +76,9 @@ const columns = [
         type: 'url',
         typeAttributes: {label: {fieldName: 'OrderNumber'}},
         target: '_blank',
-        sortable: "true"
+        sortable: true
     },
-    {label: tamName, fieldName: 'CreatedByName', sortable: "true"},
+    {label: tamName, fieldName: 'CreatedByName', sortable: true},
 ];
 
 export default class LoadPlanningScreen extends LightningElement {
@@ -121,6 +122,8 @@ export default class LoadPlanningScreen extends LightningElement {
     @track showLoadLoader = false;
     @track targetStatus;
     @track selectedScenario;
+
+    draftValues = [];
 
     labels = {
         createLoad,
@@ -761,6 +764,55 @@ export default class LoadPlanningScreen extends LightningElement {
             return isReverse * ((x > y) - (y > x));
         });
         this.tableData = parseData;
+    }
+
+    /** Method to save orders when there would be inline edit on them
+     * IMPORTANT this update mechanism will work only for Order fields as other are flattened.
+     *
+     * @param event from the default lightning datatable
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    async handleOrderSave(event) {
+        try {
+            const updatedFields = event.detail.draftValues;
+
+            await updateOrders({data: updatedFields});
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Orders have been updated',
+                    variant: 'success'
+                })
+            );
+            // Update data in datatable
+            this.refreshDataTableValues(updatedFields);
+            // Clear all draft values in the datatable
+            this.draftValues = [];
+        } catch (error) {
+            processError(this, error);
+        }
+    }
+
+    /** Method to iterate in each changed item and search that item in original table data to update for new values to
+     * be visible in the table immediately
+     * @param updatedFields list of objects with orders that are returned from save event. They only contain updated fields
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    refreshDataTableValues(updatedFields) {
+        updatedFields.forEach((updatedOrder) => {
+            let orderToUpdate = this.tableData.find((order) => {
+                return updatedOrder.Id === order.Id;
+            });
+            for (const key in updatedOrder) {
+                if (key !== 'Id') {
+                    orderToUpdate[key] = updatedOrder[key];
+                }
+            }
+        });
     }
 
     get showLoadLookup() {
