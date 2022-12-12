@@ -50,7 +50,6 @@
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
-    <permissionSets>ProductCrudObjectAccess</permissionSets>
     <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
