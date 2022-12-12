@@ -54,6 +54,6 @@
     </initialSubmissionActions>
     <label>Order Approval Process Sales Supp Team</label>
     <processOrder>1</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

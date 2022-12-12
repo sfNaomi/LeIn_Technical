@@ -74,6 +74,6 @@
     </initialSubmissionActions>
     <label>Order Approval Process Finance Team</label>
     <processOrder>3</processOrder>
-    <recordEditability>AdminOnly</recordEditability>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>
