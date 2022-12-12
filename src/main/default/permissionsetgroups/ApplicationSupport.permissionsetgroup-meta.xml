@@ -29,6 +29,7 @@
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactIntegrationApplicationSupport</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
     <permissionSets>EditLockedOrders</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
@@ -47,6 +48,7 @@
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>OutletAssetCrudObjectAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
     <permissionSets>ProductAdminAccess</permissionSets>
     <permissionSets>PromotionAdminAccess</permissionSets>
