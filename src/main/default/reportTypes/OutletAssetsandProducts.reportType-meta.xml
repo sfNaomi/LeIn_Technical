@@ -3,7 +3,7 @@
     <baseObject>Product2</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>Outlet Assets and Products</description>
+    <description>Outlet Assets with at least one Product. Custom report type to include relevant fields from related objects.</description>
     <join>
         <outerJoin>false</outerJoin>
         <relationship>aforza__Outlet_Assets__r</relationship>
