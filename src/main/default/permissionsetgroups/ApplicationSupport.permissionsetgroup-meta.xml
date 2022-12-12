@@ -33,7 +33,6 @@
     <permissionSets>EditLockedOrders</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
-    <permissionSets>FocusProductManagement</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryCrudObjectAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
@@ -50,7 +49,8 @@
     <permissionSets>PaymentsAdminAccess</permissionSets>
     <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookAdminAccess</permissionSets>
-    <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>ProductCrudObjectAccess</permissionSets>
     <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
