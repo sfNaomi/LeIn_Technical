@@ -400,7 +400,7 @@ private class AccountTeamMemberTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_TAM() {
+    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_Tam() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
@@ -412,28 +412,6 @@ private class AccountTeamMemberTriggerHandlerTest {
             Test.startTest();
             try {
                 TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'TAM'));
-                Assert.isTrue(false, 'We expect an error to be thrown');
-            } catch (Exception e) {
-                Assert.areEqual('Exceptions.TdfSObjectFactoryException', e.getTypeName());
-                Assert.isTrue(e.getMessage().contains('There is already a user with the'));
-            }
-            Test.stopTest();
-        }
-    }
-
-    @IsTest
-    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_FieldSalesRep() {
-        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Field Sales Rep'));
-
-        System.runAs(runningUser) {
-            User newUser = (User) TdfSObjectFactory.insertSObject(new User());
-
-            Test.startTest();
-            try {
-                TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'Field Sales Rep'));
                 Assert.isTrue(false, 'We expect an error to be thrown');
             } catch (Exception e) {
                 Assert.areEqual('Exceptions.TdfSObjectFactoryException', e.getTypeName());
@@ -466,35 +444,13 @@ private class AccountTeamMemberTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_ExistingTAMInsertDifferentRole() {
+    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_ExistingTamInsertDifferentRole() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'TAM'));
-
-        System.runAs(runningUser) {
-            User newUser = (User) TdfSObjectFactory.insertSObject(new User());
-
-            Test.startTest();
-            TdfSObjectFactory.insertSObject(
-                new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Driver', UserId = newUser.Id)
-            );
-            Test.stopTest();
-        }
-
-        List<AccountTeamMember> members = [SELECT Id FROM AccountTeamMember WHERE AccountId = :acc.Id];
-
-        Assert.areEqual(2, members.size());
-    }
-
-    @IsTest
-    private static void testAllowOnlyOneUserWithSpecifiedRolePerAccount_ExistingFieldSalesRepInsertDifferentRole() {
-        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-
-        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
-        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Field Sales Rep'));
 
         System.runAs(runningUser) {
             User newUser = (User) TdfSObjectFactory.insertSObject(new User());
@@ -543,7 +499,7 @@ private class AccountTeamMemberTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testAllowOnlyUserWithSpecifiedRolePerAccount_TryMoreFieldSalesRepsInSingleTransaction() {
+    private static void testAllowOnlyUserWithSpecifiedRolePerAccount_TryMoreDriversSingleTransaction() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
@@ -553,10 +509,10 @@ private class AccountTeamMemberTriggerHandlerTest {
 
             List<AccountTeamMember> accountTeamMembers = new List<AccountTeamMember>();
             accountTeamMembers.add((AccountTeamMember) TdfSObjectFactory.createSObject(
-                new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Field Sales Rep'))
+                new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Driver'))
             );
             accountTeamMembers.add((AccountTeamMember) TdfSObjectFactory.createSObject(
-                new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'Field Sales Rep'))
+                new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'Driver'))
             );
 
             Test.startTest();
@@ -572,7 +528,7 @@ private class AccountTeamMemberTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testAllowOnlyUserWithSpecifiedRolePerAccount_TryTamAndFieldSalesRepsInSingleTransaction() {
+    private static void testAllowOnlyUserWithSpecifiedRolePerAccount_TryTamAndDriverInSingleTransaction() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
@@ -585,7 +541,7 @@ private class AccountTeamMemberTriggerHandlerTest {
                 new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'TAM'))
             );
             accountTeamMembers.add((AccountTeamMember) TdfSObjectFactory.createSObject(
-                new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'Field Sales Rep'))
+                new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'Driver'))
             );
 
             Test.startTest();
@@ -604,7 +560,7 @@ private class AccountTeamMemberTriggerHandlerTest {
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         AccountTeamMember accountTeamMember1 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Field Sales Rep')
+            new AccountTeamMember(AccountId = acc.Id, TeamMemberRole = 'Driver')
         );
         AccountTeamMember accountTeamMember2 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
             new AccountTeamMember(AccountId = acc.Id, UserId = newUser.Id, TeamMemberRole = 'TAM')
@@ -613,7 +569,7 @@ private class AccountTeamMemberTriggerHandlerTest {
         Test.startTest();
         try {
             accountTeamMember1.TeamMemberRole = 'TAM';
-            accountTeamMember2.TeamMemberRole = 'Field Sales Rep';
+            accountTeamMember2.TeamMemberRole = 'Driver';
 
             List<AccountTeamMember> accountTeamMembersToUpdate = new List<AccountTeamMember>{
                     accountTeamMember1, accountTeamMember2
@@ -658,18 +614,19 @@ private class AccountTeamMemberTriggerHandlerTest {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
 
         Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'Field Sales Rep')
-        );
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id,
+            UserId = UserInfo.getUserId(), TeamMemberRole = 'Field Sales Rep', AccountAccessLevel = 'Edit'));
+        TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = dpAccount.Id,
+            UserId = newUser.Id, TeamMemberRole = 'Field Sales Rep'));
         Test.stopTest();
-
         Account updatedAccount = [
             SELECT Id, FieldSalesRepId__c
             FROM Account
             WHERE Id = :dpAccount.Id
         ];
 
-        Assert.areEqual(newUser.Id, updatedAccount.FieldSalesRepId__c, 'Expecting to have same name as user');
+        Assert.isTrue(updatedAccount.FieldSalesRepId__c.contains(UserInfo.getUserId()));
+        Assert.isFalse(updatedAccount.FieldSalesRepId__c.contains(newUser.Id));
     }
 
     @IsTest
@@ -704,12 +661,12 @@ private class AccountTeamMemberTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testCopyInformationFromAccountTeamMemberToAccount_UpdateToFieldSalesRepTeamMember() {
+    private static void testCopyInformationFromAccountTeamMemberToAccount_UpdateFieldSalesRepRole() {
         User newUser = (User) TdfSObjectFactory.insertSObject(new User(FirstName = 'John', LastName = 'Stewart'));
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'TAM')
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'TAM', AccountAccessLevel = 'Edit')
         );
 
         Account accountBeforeRoleUpdate = [
@@ -731,7 +688,38 @@ private class AccountTeamMemberTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
 
-        Assert.areEqual(newUser.Id, accountAfterRoleUpdate.FieldSalesRepId__c);
+        Assert.isTrue(accountAfterRoleUpdate.FieldSalesRepId__c.contains(newUser.Id));
+    }
+
+    @IsTest
+    private static void testCopyInformationFromAccountTeamMemberToAccount_UpdateFieldSalesRepAccessLevel() {
+        User newUser = (User) TdfSObjectFactory.insertSObject(new User(FirstName = 'John', LastName = 'Stewart'));
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'field Sales Rep')
+        );
+
+        Account accountBeforeRoleUpdate = [
+            SELECT Id, FieldSalesRepId__c
+            FROM Account
+            WHERE Id = :dpAccount.Id
+        ];
+
+        Assert.isNull(accountBeforeRoleUpdate.FieldSalesRepId__c);
+
+        Test.startTest();
+        accountTeamMember.AccountAccessLevel = 'Edit';
+        update accountTeamMember;
+        Test.stopTest();
+
+        Account accountAfterRoleUpdate = [
+            SELECT Id, FieldSalesRepId__c
+            FROM Account
+            WHERE Id = :dpAccount.Id
+        ];
+
+        Assert.isTrue(accountAfterRoleUpdate.FieldSalesRepId__c.contains(newUser.Id));
     }
 
     @IsTest
@@ -771,7 +759,7 @@ private class AccountTeamMemberTriggerHandlerTest {
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'Field Sales Rep')
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'Field Sales Rep', AccountAccessLevel = 'Edit')
         );
 
         Account accountBeforeRoleUpdate = [
@@ -780,7 +768,7 @@ private class AccountTeamMemberTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
 
-        Assert.areEqual(newUser.Id, accountBeforeRoleUpdate.FieldSalesRepId__c);
+        Assert.isTrue(accountBeforeRoleUpdate.FieldSalesRepId__c.contains(newUser.Id));
 
         Test.startTest();
         accountTeamMember.TeamMemberRole = 'TAM';
@@ -832,7 +820,7 @@ private class AccountTeamMemberTriggerHandlerTest {
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         AccountTeamMember accountTeamMember = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'Field Sales Rep')
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = newUser.Id , TeamMemberRole = 'Field Sales Rep', AccountAccessLevel = 'Edit')
         );
 
         Account accountBeforeDelete = [
@@ -841,7 +829,7 @@ private class AccountTeamMemberTriggerHandlerTest {
             WHERE Id = :dpAccount.Id
         ];
 
-        Assert.areEqual(newUser.Id, accountBeforeDelete.FieldSalesRepId__c);
+        Assert.isTrue(accountBeforeDelete.FieldSalesRepId__c.contains(newUser.Id));
 
         Test.startTest();
         delete accountTeamMember;
@@ -860,15 +848,19 @@ private class AccountTeamMemberTriggerHandlerTest {
     private static void testCopyInformationFromAccountTeamMemberToAccount_OnMultipleUpdates() {
         User user1 = (User) TdfSObjectFactory.insertSObject(new User(FirstName = 'John', LastName = 'Stewart'));
         User user2 = (User) TdfSObjectFactory.insertSObject(new User(FirstName = 'Fred', LastName = 'Davies'));
+        User user3 = (User) TdfSObjectFactory.insertSObject(new User(FirstName = 'Mark', LastName = 'Twain'));
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
         );
         AccountTeamMember accountTeamMember1 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = user1.Id , TeamMemberRole = 'TAM')
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = user1.Id , TeamMemberRole = 'TAM', AccountAccessLevel = 'Edit')
         );
         AccountTeamMember accountTeamMember2 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
-            new AccountTeamMember(AccountId = dpAccount.Id, UserId = user2.Id , TeamMemberRole = 'TAM Manager')
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = user2.Id , TeamMemberRole = 'TAM Manager', AccountAccessLevel = 'Edit')
+        );
+        AccountTeamMember accountTeamMember3 = (AccountTeamMember) TdfSObjectFactory.insertSObject(
+            new AccountTeamMember(AccountId = dpAccount.Id, UserId = user3.Id , TeamMemberRole = 'Field Sales Rep')
         );
 
         Account accountBeforeUpdate = [
@@ -885,9 +877,11 @@ private class AccountTeamMemberTriggerHandlerTest {
 
         accountTeamMember1.TeamMemberRole = 'Field Sales Rep';
         accountTeamMember2.TeamMemberRole = 'Driver';
+        accountTeamMember3.AccountAccessLevel = 'Edit';
 
         atmList.add(accountTeamMember1);
         atmList.add(accountTeamMember2);
+        atmList.add(accountTeamMember3);
 
         update atmList;
         Test.stopTest();
@@ -899,6 +893,7 @@ private class AccountTeamMemberTriggerHandlerTest {
         ];
 
         Assert.areEqual('Fred Davies', account.DriverName__c);
-        Assert.areEqual(user1.Id, account.FieldSalesRepId__c);
+        Assert.isTrue(account.FieldSalesRepId__c.contains(user1.Id));
+        Assert.isTrue(account.FieldSalesRepId__c.contains(user3.Id));
     }
 }

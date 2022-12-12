@@ -49,6 +49,7 @@ public class TdfAccountTeamMemberTemplate extends TdfSObjectTemplate {
         template.TeamMemberRole = 'TAM';
         template.AccountId = accountId;
         template.UserId = userId;
+        template.AccountAccessLevel = 'Read';
         return template;
     }
 }

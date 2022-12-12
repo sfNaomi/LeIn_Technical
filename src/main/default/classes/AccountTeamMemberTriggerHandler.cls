@@ -7,6 +7,8 @@ public with sharing class AccountTeamMemberTriggerHandler {
     private static final String FIELD_SALES_REP_ROLE_NAME = 'Field Sales Rep';
     private static final String DRIVER_ROLE_NAME = 'Driver';
 
+    private static final String EDIT_ACCESS_LEVEL = 'Edit';
+
     /**
      * @description prepares data and checks them if the recurring record should be updated. On account team a user cannot be changed,
      * so we are not checking that option.
@@ -75,7 +77,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
      */
     public static void allowOnlyOneUserWithSpecifiedRolePerAccount(List<AccountTeamMember> newAccountTeamMembers) {
         // roles for which only one account team member is allowed
-        final Set<String> UNIQUE_ROLES = new Set<String>{TAM_ROLE_NAME, FIELD_SALES_REP_ROLE_NAME, DRIVER_ROLE_NAME};
+        final Set<String> UNIQUE_ROLES = new Set<String>{TAM_ROLE_NAME, DRIVER_ROLE_NAME};
 
         // accounts ids to team roles by count
         Map<Id, Map<String, Integer>> accountIdsInCurrentOperation = buildRolesCountMapForAccounts(newAccountTeamMembers, UNIQUE_ROLES);
@@ -134,9 +136,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
     /**
     * @description copy information from team members with relevant roles (e.g. driver, field sales rep) to accounts
     *
-    * @param modifiedTeamMembers list of modified accounts (inserted/updated/deleted)
-    *
-    * @return accounts - list of accounts based on conditions
+    * @param modifiedTeamMembers list of modified account team members (inserted/updated/deleted)
     *
     * @author Magdalena Stanciu
     * @date 2022-11-15
@@ -155,26 +155,43 @@ public with sharing class AccountTeamMemberTriggerHandler {
         Map<Id, Account> accountWithTeamMembers = getAccountsWithTeamMembersHavingSpecifiedRoles(accountIdsInCurrentOperation, ROLES_TO_UPDATE_ACCOUNTS);
 
         // build helper maps
-        Map<Account, Map<String, AccountTeamMember>> accountIdsWithExistingUserRoles = buildAccountTeamMembersByAccountIdsAndRoles(accountWithTeamMembers.values());
+        Map<Account, Map<String, List<AccountTeamMember>>> accountIdsWithExistingUserRoles = buildAccountTeamMembersByAccountIdsAndRoles(accountWithTeamMembers.values());
 
         // copy information from account team members to accounts and update accounts (where needed)
-        List<Account> accountsToUpdate = new List<Account>();
+        Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
         for (Account newAccount : accountIdsWithExistingUserRoles.keyset()) {
+            // driver name
+            List<AccountTeamMember> drivers = accountIdsWithExistingUserRoles.get(newAccount).get(DRIVER_ROLE_NAME);
+            String driverName = '';
+            if (drivers != null) {
+                driverName = drivers.get(0).User.Name;
+            }
 
-            AccountTeamMember driver = accountIdsWithExistingUserRoles.get(newAccount).get(DRIVER_ROLE_NAME);
-            AccountTeamMember fieldSalesRep = accountIdsWithExistingUserRoles.get(newAccount).get(FIELD_SALES_REP_ROLE_NAME);
+            // field sales rep ids
+            List<AccountTeamMember> fieldSalesReps = accountIdsWithExistingUserRoles.get(newAccount).get(FIELD_SALES_REP_ROLE_NAME);
+            String fieldSalesRepIds = '';
+            if (fieldSalesReps != null) {
+                for (AccountTeamMember teamMember : fieldSalesReps) {
+                    if (teamMember.AccountAccessLevel == EDIT_ACCESS_LEVEL) {
+                        fieldSalesRepIds += teamMember.UserId + ';';
+                    }
+                }
+            }
 
-            String driverName = driver?.User?.Name;
-            String fieldSalesRepId = fieldSalesRep?.UserId;
+            if (newAccount.DriverName__c != driverName || newAccount.FieldSalesRepId__c != fieldSalesRepIds) {
+                Account accountToUpdate = accountsToUpdate.get(newAccount.Id);
+                if (accountToUpdate == null) {
+                    accountToUpdate = new Account(Id = newAccount.Id);
+                }
 
-            if (newAccount.DriverName__c != driverName || newAccount.FieldSalesRepId__c != fieldSalesRepId) {
-                newAccount.DriverName__c = driverName;
-                newAccount.FieldSalesRepId__c = fieldSalesRepId;
-                accountsToUpdate.add(newAccount);
+                accountToUpdate.DriverName__c = driverName;
+                accountToUpdate.FieldSalesRepId__c = fieldSalesRepIds;
+
+                accountsToUpdate.put(accountToUpdate.Id, accountToUpdate);
             }
         }
 
-        update accountsToUpdate;
+        update accountsToUpdate.values();
     }
 
     /**
@@ -220,9 +237,10 @@ public with sharing class AccountTeamMemberTriggerHandler {
     private static Map<Id, Account> getAccountsWithTeamMembersHavingSpecifiedRoles(Set<Id> accountIds, Set<String> roles) {
         Map<Id, Account> accountsWithTeamMembers = new Map<Id, Account>([
             SELECT Id, FieldSalesRepId__c, DriverName__c, (
-                SELECT Id, TeamMemberRole, UserId, User.Name
+                SELECT Id, TeamMemberRole, UserId, User.Name, AccountAccessLevel
                 FROM AccountTeamMembers
                 WHERE TeamMemberRole IN :roles
+                ORDER BY UserId
             )
             FROM Account
             WHERE Id IN :accountIds
@@ -233,23 +251,28 @@ public with sharing class AccountTeamMemberTriggerHandler {
     /**
     * @description builds a helper map from a list of account team members
     *
-    * @param teamMembers list of team members
+    * @param newAccounts list of accounts
     *
-    * @return map with accounts ids as keys to account team members by roles
+    * @return map of accounts with team members by roles
     *
     * @author Magdalena Stanciu
     * @date 2022-11-15
     */
-    private static Map<Account, Map<String, AccountTeamMember>> buildAccountTeamMembersByAccountIdsAndRoles(List<Account> newAccounts) {
-        Map<Account, Map<String, AccountTeamMember>> accountIdsWithExistingUserRoles = new Map<Account, Map<String, AccountTeamMember>>();
+    private static Map<Account, Map<String, List<AccountTeamMember>>> buildAccountTeamMembersByAccountIdsAndRoles(List<Account> newAccounts) {
+        Map<Account, Map<String, List<AccountTeamMember>>> accountsWithTeamMembersByRoles = new Map<Account, Map<String, List<AccountTeamMember>>>();
         for (Account newAccount : newAccounts) {
-            Map<String, AccountTeamMember> existingUserRoles = new Map<String, AccountTeamMember>();
+            Map<String, List<AccountTeamMember>> teamMembersByRoles = new Map<String, List<AccountTeamMember>>();
             for (AccountTeamMember member : newAccount.AccountTeamMembers) {
-                existingUserRoles.put(member.TeamMemberRole, member);
+                List<AccountTeamMember> teamMembers = teamMembersByRoles.get(member.TeamMemberRole);
+                if (teamMembers == null) {
+                    teamMembers = new List<AccountTeamMember>();
+                }
+                teamMembers.add(member);
+                teamMembersByRoles.put(member.TeamMemberRole, teamMembers);
             }
-            accountIdsWithExistingUserRoles.put(newAccount, existingUserRoles);
+            accountsWithTeamMembersByRoles.put(newAccount, teamMembersByRoles);
         }
-        return accountIdsWithExistingUserRoles;
+        return accountsWithTeamMembersByRoles;
     }
 
     /**

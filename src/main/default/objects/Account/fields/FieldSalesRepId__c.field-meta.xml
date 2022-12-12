@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FieldSalesRepId__c</fullName>
+    <description>Stores the ids of the users with &quot;Read/Write&quot; access to account and &quot;Field Sales Rep&quot; role (ids are separated by semicolon).</description>
     <externalId>false</externalId>
     <label>Field Sales Rep Id</label>
     <length>255</length>
