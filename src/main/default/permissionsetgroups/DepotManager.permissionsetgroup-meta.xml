@@ -16,6 +16,7 @@
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
@@ -29,6 +30,7 @@
     <permissionSets>OrderLogisticsAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>PromotionBaseAccess</permissionSets>

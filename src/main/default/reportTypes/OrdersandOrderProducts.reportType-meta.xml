@@ -3,7 +3,7 @@
     <baseObject>Order</baseObject>
     <category>busop</category>
     <deployed>true</deployed>
-    <description>Orders with Order Products</description>
+    <description>Orders with at least one Order Products. Custom report type to include relevant fields from related objects.</description>
     <join>
         <outerJoin>false</outerJoin>
         <relationship>OrderItems</relationship>

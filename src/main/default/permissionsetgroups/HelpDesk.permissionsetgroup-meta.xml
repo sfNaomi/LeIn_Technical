@@ -21,6 +21,7 @@
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactHelpDeskBusinessSupport</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
@@ -31,6 +32,7 @@
     <permissionSets>OrderBaseAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>PromotionBaseAccess</permissionSets>

@@ -141,7 +141,7 @@
                         </lightning-layout-item>
                     </lightning-layout>
                 </div>
-                <div if:true={showTable} style="height: 50em">
+                <template if:true={showTable} style="height: 50em">
                     <lightning-datatable
                             class="table"
                             key-field="Id"
@@ -152,8 +152,10 @@
                             selected-rows={loadOrderIds}
                             onrowselection={handleSelectRowsEvent}
                             onsort={doSorting}
+                            onsave={handleOrderSave}
+                            draft-values={draftValues}
                     ></lightning-datatable>
-                </div>
+                </template>
             </lightning-card>
         </div>
         <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading"></lightning-spinner>

@@ -24,7 +24,7 @@ public with sharing class LoadPlanningScreenController {
     @AuraEnabled
     public static Load__c fetchLoadData(String loadId) {
         try {
-            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c, RouteIdentification__c FROM Load__c WHERE Id = :loadId];
+            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c, RouteIdentification__c, Depot__c FROM Load__c WHERE Id = :loadId];
 
             return load.isEmpty() ? null : load[0];
         } catch (Exception e) {
@@ -37,12 +37,25 @@ public with sharing class LoadPlanningScreenController {
     @AuraEnabled
     public static Vehicle__c fetchVehicle(String driverName) {
         try {
-            List<Vehicle__c> vehicle = [SELECT Id, Driver__c  FROM Vehicle__c WHERE Driver__r.Name LIKE :driverName];
+            List<Vehicle__c> vehicle = [SELECT Id, Driver__c FROM Vehicle__c WHERE Driver__r.Name LIKE :driverName];
 
             return vehicle.isEmpty() ? null : vehicle[0];
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
             System.debug(LoggingLevel.ERROR, e.getStackTraceString());
+            throw new PopulateAuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void updateOrders(Object data) {
+        try {
+            List<Order> ordersForUpdate = (List<Order>) JSON.deserialize(
+                JSON.serialize(data),
+                List<Order>.class
+            );
+            update ordersForUpdate;
+        } catch (Exception e) {
             throw new PopulateAuraHandledException(e.getMessage());
         }
     }

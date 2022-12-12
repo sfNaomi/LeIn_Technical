@@ -30,6 +30,7 @@ import deliveryManifestPrinted from '@salesforce/label/c.DeliveryManifestPrinted
 import deliveryNotePrinted from '@salesforce/label/c.DeliveryNotePrinted';
 import receipt from '@salesforce/label/c.Receipt';
 import invoicePrinted from '@salesforce/label/c.InvoicePrinted';
+import palletSequence from '@salesforce/label/c.PickSheetPalletSequence';
 
 const columns = [
     {label: loadId, fieldName: 'Load__rName'},
@@ -51,6 +52,7 @@ const columns = [
     },
     {label: accountName, fieldName: 'AccountName__c'},
     {label: status, fieldName: 'Status'},
+    {label: palletSequence, fieldName: 'PalletSequence__c'},
     {label: pickingSheetPrinted, fieldName: 'PickingSheetPrinted__c', type: 'boolean'},
     {label: pickingCompleted, fieldName: 'PickingCompleted__c', type: 'boolean'},
     {label: isLoaded, fieldName: 'IsLoaded__c', type: 'boolean'},
@@ -104,7 +106,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,OrderNumber,AccountName__c,Status,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
@@ -306,7 +308,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                     break;
                 default:
             }
-            this.resetSelection();
+            this.resetAction();
         } catch (error) {
             processError(this, error);
         } finally {
@@ -397,9 +399,13 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      * @author Magdalena Stanciu
      * @date 2022-10-18
      */
-    resetSelection() {
+    handleResetSelection() {
         this.template.querySelector('.table').selectedRows = [];
         this.selectedRows = [];
+        this.resetAction();
+    }
+
+    resetAction() {
         this.selectedAction = '';
     }
 
@@ -439,7 +445,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     checkOrderStatusesForSelectedAction(selectedAction) {
         switch (selectedAction) {
             case 'Print Pick Sheets':
-                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Pick', 'Picking in Progress', 'Ready to Load', 'Delivered', 'Receipted']);
+                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Pick', 'Picking in Progress', 'Ready to Load', 'Delivered', 'Pending Delivery', 'Receipted']);
                 break;
             case 'Picked':
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Picking in Progress']);
@@ -448,7 +454,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Pending Delivery', 'Receipted']);
                 break;
             case 'Print Delivery Note':
-                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Receipted']);
+                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load', 'Delivered', 'Pending Delivery', 'Receipted']);
                 break;
             case 'Loaded':
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Ready to Load']);

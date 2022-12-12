@@ -28,6 +28,7 @@
     <permissionSets>OrderLogisticsAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
     <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
     <permissionSets>PricebookBaseAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>PromotionBaseAccess</permissionSets>
