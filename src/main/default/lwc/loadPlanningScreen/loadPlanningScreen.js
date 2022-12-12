@@ -292,7 +292,7 @@ export default class LoadPlanningScreen extends LightningElement {
      * @date 2022-11-23
      */
     processOrderData(ordersFromApex) {
-        let processedOrders = [];
+        let processedOrders;
         let orderUrl;
         processedOrders = ordersFromApex.map(row => {
             orderUrl = `/${row.Id}`;
@@ -662,6 +662,7 @@ export default class LoadPlanningScreen extends LightningElement {
 
     handleLookupSelection(event) {
         try {
+            this.isLoading = true;
             const loadId = event.detail.id;
             if (loadId && loadId !== this.loadId) {
                 this.processLoadIdChange(loadId);
@@ -723,6 +724,8 @@ export default class LoadPlanningScreen extends LightningElement {
             this.loadDriver = null;
             this.loadDeliveryDate = null;
             this.loadVehicle = null;
+            this.depot = null;
+            this.route = null;
         }
     }
 
@@ -732,6 +735,7 @@ export default class LoadPlanningScreen extends LightningElement {
         this.loadDeliveryDate = loadData.DeliveryDate__c;
         this.loadVehicle = loadData.Vehicle__c;
         this.route = loadData.RouteIdentification__c;
+        this.depot = loadData.Depot__c;
     }
 
     removeOrdersFromList(listToRemoveOrdersFrom, ordersToRemove) {
