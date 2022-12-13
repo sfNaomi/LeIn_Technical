@@ -54,7 +54,7 @@
     <format>Summary</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>aforza__Promotion__c.aforza__Order_Products__r$Order.ActivatedBy</field>
+        <field>aforza__Promotion__c.aforza__Order_Products__r$Order.OwnerName__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>

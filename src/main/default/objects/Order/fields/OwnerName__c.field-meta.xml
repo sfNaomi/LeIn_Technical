@@ -3,7 +3,7 @@
     <fullName>OwnerName__c</fullName>
     <description>Hidden Field used in Email Templates.</description>
     <externalId>false</externalId>
-    <formula>Owner:User.FirstName + Owner:User.LastName</formula>
+    <formula>Owner:User.FirstName + &apos; &apos; + Owner:User.LastName</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Owner Name</label>
     <required>false</required>
