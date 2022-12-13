@@ -14,7 +14,7 @@ public without sharing class DdMandateCreationController {
             currentAccount = currentAccounts[0];
         }
 
-        if (Integer.valueOf(stage) >6){
+        if (Integer.valueOf(stage) >5){
             if(String.isBlank(currentAccount.DirectDebitMandateRef__c)){
                 currentAccount.DirectDebitMandateRef__c = ddPlan;
                 currentAccount.DdActive__c = TRUE;
