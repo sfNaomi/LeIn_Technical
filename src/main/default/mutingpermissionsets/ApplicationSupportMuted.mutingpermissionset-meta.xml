@@ -91,4 +91,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <label>Application Support Muted</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>false</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>aforza__Route__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
 </MutingPermissionSet>

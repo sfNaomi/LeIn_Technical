@@ -33,12 +33,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Load__c.NumberOfDeliveryPoints__c</field>
+        <field>Load__c.JdeTimeStamp__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Load__c.Route__c</field>
+        <field>Load__c.NumberOfDeliveryPoints__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -48,12 +48,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Load__c.SiteNo__c</field>
+        <field>Load__c.Route__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Load__c.JdeTimeStamp__c</field>
+        <field>Load__c.SiteNo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

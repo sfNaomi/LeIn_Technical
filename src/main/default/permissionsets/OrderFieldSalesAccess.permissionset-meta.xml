@@ -422,10 +422,6 @@
         <object>Order</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>standard-Order</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
     <recordTypeVisibilities>
         <recordType>Order.FieldDirectOrder</recordType>
         <visible>true</visible>
@@ -434,4 +430,8 @@
         <recordType>Order.VanSalesOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>standard-Order</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
