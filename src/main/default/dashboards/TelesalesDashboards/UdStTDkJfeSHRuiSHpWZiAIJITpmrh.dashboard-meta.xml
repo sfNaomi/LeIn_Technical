@@ -55,7 +55,7 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>aforza__Promotion__c.aforza__Order_Products__r$Order.ActivatedBy</groupingColumn>
+                <groupingColumn>aforza__Promotion__c.aforza__Order_Products__r$Order.OwnerName__c</groupingColumn>
                 <groupingColumn>aforza__Promotion__c$Name</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>

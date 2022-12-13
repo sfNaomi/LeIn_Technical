@@ -4,7 +4,7 @@
         <enabled>true</enabled>
         <name>EditUnitPriceOnOrderItems</name>
     </customPermissions>
-    <description>Permission set which grants the &quot;Edit Unit Price on Order Items&quot; custom permission (used to bypass validation which prevents updates on the UnitPrice field on OrderItem records.</description>
+    <description>Permission set which grants the "Edit Unit Price on Order Items" custom permission (used to bypass validation which prevents updates on the UnitPrice field on OrderItem records.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Edit Unit Price on Order Items</label>
 </PermissionSet>

@@ -27,8 +27,8 @@
     <permissionSets>ContactCruObjectAccess</permissionSets>
     <permissionSets>ContactOperationalSupportSalesSupportManagerExec</permissionSets>
     <permissionSets>CreateEditReportsAndDashboards</permissionSets>
-    <permissionSets>DepotUser</permissionSets>
     <permissionSets>DataLoaderAccess</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
     <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>ExportReports</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>

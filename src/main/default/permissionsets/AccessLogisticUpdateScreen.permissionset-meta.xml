@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Access to tab and classes needed for Logistic Update Screen</description>
-    <classAccesses>
-        <apexClass>LogisticUpdateScreenController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DynamicFilterController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <classAccesses>
         <apexClass>CustomLookupInputController</apexClass>
         <enabled>true</enabled>
@@ -18,9 +9,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>DynamicFilterController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogisticUpdateScreenController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PickSheetPDFController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <description>Access to tab and classes needed for Logistic Update Screen</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Access Logistic Update Screen</label>
     <pageAccesses>

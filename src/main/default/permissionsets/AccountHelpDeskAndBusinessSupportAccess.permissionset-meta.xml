@@ -541,11 +541,6 @@
         <field>Account.aforza__Primary_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.aforza__Primary_Contact__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account HelpDesk And Business Support Access</label>
     <objectPermissions>

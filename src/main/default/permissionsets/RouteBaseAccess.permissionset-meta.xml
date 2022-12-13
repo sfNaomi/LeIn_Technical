@@ -2,6 +2,11 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Base access permission for Route object - Read on object and Read on relevant fields.</description>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>aforza__Route__c.LoadId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>aforza__Route__c.aforza__Average_Duration__c</field>
         <readable>true</readable>
@@ -9,11 +14,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>aforza__Route__c.aforza__Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>aforza__Route__c.LoadId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
