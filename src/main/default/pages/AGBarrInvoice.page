@@ -94,16 +94,31 @@
 						<td class="align-center">{!invoiceItem.code}</td>
 						<td class="align-left">{!invoiceItem.description}</td>
 						<td class="align-center">{!invoiceItem.quantity}</td>
-						<td>£{!invoiceItem.unitPrice}</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.unitPrice}" />
+							</apex:outputText>
+						</td>
 						<td>{!invoiceItem.vatRate}%</td>
-						<td>£{!invoiceItem.vatValue}</td>
-						<td>£{!invoiceItem.netPrice}</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.vatValue}" />
+							</apex:outputText>
+						</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.netPrice}" />
+							</apex:outputText>
+						</td>
 					</tr>
 				</apex:repeat>
 			</table>
 			<br/>
 			<div class="align-left">
-				{!$Label.InvoiceDiscountApplied} £{!invoice.discountTotal}
+				{!$Label.InvoiceDiscountApplied} &nbsp;
+				<apex:outputText value="{0,number, £#########0.00}">
+					<apex:param value="{!invoice.discountTotal}" />
+				</apex:outputText>
 			</div>
 			<br/>
 			<div class="inline-block">
@@ -121,9 +136,17 @@
 								</tr>
 								<apex:repeat value="{!invoice.vatDistribution.vatItems}" var="vatItem">
 									<tr class="align-right">
-										<td>£{!vatItem.netValue}</td>
+										<td>
+											<apex:outputText value="{0,number, £#########0.00}">
+												<apex:param value="{!vatItem.netValue}" />
+											</apex:outputText>
+										</td>
 										<td>{!vatItem.vatRate}%</td>
-										<td>£{!vatItem.vatValue}</td>
+										<td>
+											<apex:outputText value="{0,number, £#########0.00}">
+												<apex:param value="{!vatItem.vatValue}" />
+											</apex:outputText>
+										</td>
 									</tr>
 								</apex:repeat>
 							</table>
@@ -141,9 +164,21 @@
 							<th>{!$Label.InvoiceTotalPayable}</th>
 						</tr>
 						<tr class="align-right">
-							<td>£{!invoice.netValue}</td>
-							<td>£{!invoice.vatValue}</td>
-							<td>£{!invoice.total}</td>
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.netValue}" />
+								</apex:outputText>
+							</td>
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.vatValue}" />
+								</apex:outputText>
+							</td>
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.total}" />
+								</apex:outputText>
+							</td>
 						</tr>
 					</table>
 				</div>

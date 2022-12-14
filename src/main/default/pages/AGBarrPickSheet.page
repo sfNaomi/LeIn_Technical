@@ -1,11 +1,12 @@
-<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="PickSheetPDFController">
+<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false"
+    controller="PickSheetPDFController">
 
-    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'picksheet.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'picksheet.css')}" />
 
     <apex:repeat value="{!loadPlans}" var="loadPlan">
         <apex:repeat value="{!loadPlan.palletSequences}" var="palletSequence">
-            <div class="page-break"/>
+            <div class="page-break" />
             <table class="document-table document-table-fixed">
                 <tr>
                     <td class="document-table-header">
@@ -48,13 +49,21 @@
                     </td>
                     <td>
                         <apex:outputText value="{0,date,dd/MM/yyyy}">
-                            <apex:param value="{!loadPlan.deliveryDate}"/>
+                            <apex:param value="{!loadPlan.deliveryDate}" />
                         </apex:outputText>
                     </td>
                 </tr>
             </table>
             <br/>
             <table class="document-table document-table-fixed">
+                <tr>
+                    <td class="no-border" />
+                    <td class="no-border" />
+                    <td class="no-border" />
+                    <td class="no-border" />
+                    <td class="no-border" />
+                    <td class="no-border" />
+                </tr>
                 <tr>
                     <td class="document-table-header">
                         {!$Label.PickSheetPalletSequence}
@@ -65,11 +74,9 @@
                     <td class="document-table-header">
                         {!$Label.PickSheetDescription}
                     </td>
-                    <td>
+                    <td colspan="3">
                         {!palletSequence.palletDescription}
                     </td>
-                    <td class="no-border"></td>
-                    <td class="no-border"></td>
                 </tr>
             </table>
             <br/>
@@ -88,7 +95,7 @@
                         {!$Label.PickSheetQuantity}
                     </th>
                 </tr>
-                <apex:variable value="{!1}" var="itemIndex"/>
+                <apex:variable value="{!1}" var="itemIndex" />
                 <apex:repeat value="{!palletSequence.palletSequenceItems}" var="palletSequenceItem">
                     <tr class="{!IF(mod(itemIndex,2)==0, 'gray-bkg', '')}">
                         <td>
@@ -101,10 +108,12 @@
                             {!palletSequenceItem.productDescription}
                         </td>
                         <td>
-                            {!palletSequenceItem.quantity}
+                            <apex:outputText value="{0,number, #####}">
+                                <apex:param value="{!palletSequenceItem.quantity}" />
+                            </apex:outputText>
                         </td>
                     </tr>
-                    <apex:variable value="{!itemIndex+1}" var="itemIndex"/>
+                    <apex:variable value="{!itemIndex+1}" var="itemIndex" />
                 </apex:repeat>
                 <tr>
                     <td colspan="4" class="no-border"></td>
@@ -112,7 +121,9 @@
                         {!$Label.PickSheetTotalCases}
                     </td>
                     <td class="double-border-bottom">
-                        {!palletSequence.totalCases}
+                        <apex:outputText value="{0,number, ######}">
+                            <apex:param value="{!palletSequence.totalCases}" />
+                        </apex:outputText>
                     </td>
                 </tr>
             </table>

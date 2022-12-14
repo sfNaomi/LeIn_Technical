@@ -916,15 +916,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>recordId</name>
-                </componentInstanceProperties>
-                <componentName>bt_stripe:VirtualTerminal</componentName>
-                <identifier>bt_stripe_VirtualTerminal</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>cacheAge</name>
                     <value>1440</value>
                 </componentInstanceProperties>
