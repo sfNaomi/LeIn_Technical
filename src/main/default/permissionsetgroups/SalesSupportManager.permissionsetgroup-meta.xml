@@ -13,7 +13,7 @@
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
     <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
-    <permissionSets>AccountSupportAccess</permissionSets>
+    <permissionSets>AccountSalesSupportManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>

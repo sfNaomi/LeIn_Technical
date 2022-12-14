@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Sales Support Exec access for Account object and fields</description>
+    <description>Sales Support Manager access for Account object and fields</description>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.AccountNumber</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -42,7 +42,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.BottomlineRefNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -92,7 +92,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.DdActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -127,7 +127,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.DirectDebitMandateRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -527,7 +527,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Account Sales Support Exec Access</label>
+    <label>Account Sales Support Manager Access</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -541,8 +541,4 @@
         <recordType>Account.aforza__Outlet</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabSettings>
-        <tab>standard-Account</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
