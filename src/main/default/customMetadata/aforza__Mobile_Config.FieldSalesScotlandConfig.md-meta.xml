@@ -278,6 +278,12 @@
               &quot;Details&quot;: {
                 &quot;Required&quot;: false
               }
+            },
+            {
+              &quot;Name&quot;: &quot;PerfectStoreScoreEligible__c&quot;,
+              &quot;Details&quot;: {
+                &quot;Required&quot;: false
+              }
             }
           ],
           &quot;ApplicableRecordTypes&quot;: []
