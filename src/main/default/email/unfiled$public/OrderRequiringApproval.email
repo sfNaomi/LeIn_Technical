@@ -4,4 +4,3 @@ Order number {!Order.OrderNumber} from account {!Order.AccountName__c} is requir
 
 To approve or reject, click here
 {!ApprovalRequest.External_URL}
-{!ApprovalRequest.Internal_URL}
