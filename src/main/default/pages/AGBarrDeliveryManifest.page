@@ -1,15 +1,14 @@
 <!--
  - Created by magdalena.stanciu on 21.10.2022.
  -->
+<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false"
+    controller="DeliveryManifestPDFController">
 
-
-<apex:page showHeader="false" renderAs="pdf" sidebar="false" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false" controller="DeliveryManifestPDFController">
-
-    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}"/>
-    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'deliveryManifest.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'deliveryManifest.css')}" />
 
     <apex:repeat value="{!loads}" var="load">
-        <div class="page-break"/>
+        <div class="page-break" />
         <table class="document-table document-table-fixed">
             <tr>
                 <td class="document-table-header">
@@ -37,7 +36,7 @@
                 </td>
                 <td>
                     <apex:outputText value="{0,date,dd/MM/yyyy}">
-                        <apex:param value="{!load.deliveryDate}"/>
+                        <apex:param value="{!load.deliveryDate}" />
                     </apex:outputText>
                 </td>
                 <td class="document-table-header">
@@ -86,7 +85,7 @@
             </tr>
         </table>
         <br/>
-        <table class="document-table document-table-fixed">
+        <table class="document-table width-100">
             <tr>
                 <th>
                     {!$Label.DeliveryManifestPalletSequence}
@@ -128,7 +127,7 @@
                     {!$Label.DeliveryManifestWeight}
                 </th>
             </tr>
-            <apex:variable value="{!1}" var="itemIndex"/>
+            <apex:variable value="{!1}" var="itemIndex" />
             <apex:repeat value="{!load.loadItems}" var="loadItem">
                 <tr class="{!IF(mod(itemIndex,2)==0, 'gray-bkg', '')}">
                     <td>
@@ -171,7 +170,7 @@
                         {!loadItem.weight}
                     </td>
                 </tr>
-                <apex:variable value="{!itemIndex+1}" var="itemIndex"/>
+                <apex:variable value="{!itemIndex+1}" var="itemIndex" />
             </apex:repeat>
         </table>
     </apex:repeat>

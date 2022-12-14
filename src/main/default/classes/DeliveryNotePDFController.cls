@@ -25,6 +25,7 @@ public without sharing class DeliveryNotePDFController {
                 Id,
                 OrderNumber,
                 OrderReferenceNumber,
+                AccountName__c,
                 DeliveryPointReference__c,
                 OrderInstructions__c,
                 ShippingStreet,
