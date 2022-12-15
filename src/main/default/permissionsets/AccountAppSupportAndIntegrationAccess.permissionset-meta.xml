@@ -342,7 +342,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.PrimaryRouteReference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -412,7 +412,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.SecondaryRouteReference__c</field>
         <readable>true</readable>
     </fieldPermissions>
