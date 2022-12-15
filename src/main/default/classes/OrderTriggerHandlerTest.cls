@@ -817,30 +817,37 @@ private with sharing class OrderTriggerHandlerTest {
             )
         );
 
-        // create order and add items to the order
-        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+        Order originalOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
-                RecordTypeId = RecordTypes.ORDER_RETURN_ID, AccountId = dpAccount.Id,
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
                 Status = 'Draft', Pricebook2Id = newPricebook.Id
             )
         );
+
+        // create order and add items to the order
+        Order returnOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_RETURN_ID, AccountId = dpAccount.Id, Status = 'Draft',
+                Pricebook2Id = newPricebook.Id, aforza__Original_Order__c = originalOrder.Id
+            )
+        );
         TdfSObjectFactory.insertSObject(
-            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+            new OrderItem(OrderId = returnOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
         Test.startTest();
-        newOrder.Status = new List<String>(OrderService.COMPLETED_ORDER_STATUSES).get(0);
-        update newOrder;
+        returnOrder.Status = 'Activated';
+        update returnOrder;
         Test.stopTest();
 
         Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Assert.areEqual(returnOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
         Assert.areEqual(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
 
-        Order updatedOriginalOrder = [SELECT Id, Status FROM Order WHERE Id = :newOrder.Id];
+        Order updatedOriginalOrder = [SELECT Id, Status FROM Order WHERE Id = :returnOrder.Id];
         Assert.areEqual(OrderTriggerHandler.ORDER_STATUS_AFTER_CLONING, updatedOriginalOrder.Status, 'Expecting status of the original order to be updated)');
     }
 
