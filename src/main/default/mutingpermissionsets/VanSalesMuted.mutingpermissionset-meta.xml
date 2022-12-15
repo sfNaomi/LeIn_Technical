@@ -342,7 +342,7 @@
     </fieldPermissions>
     <label>Van Sales Muted</label>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
