@@ -3,6 +3,11 @@
     <description>Base access for Price Book and Price Book Entry objects - Read on object and Read on relevant fields</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Pricebook2.SwiftcloudPriceBookCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Pricebook2.TaxCode__c</field>
         <readable>true</readable>
     </fieldPermissions>

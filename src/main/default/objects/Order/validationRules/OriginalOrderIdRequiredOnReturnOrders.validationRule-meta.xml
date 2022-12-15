@@ -4,9 +4,9 @@
     <active>true</active>
     <description>Validation which ensures that Original Order is filled on return type orders.</description>
     <errorConditionFormula>AND(
-    RecordType.DeveloperName == &quot;ReturnOrder&quot;,
-    ISNULL(aforza__Original_Order__c)
+    ISPICKVAL(Type, &apos;Return Order&apos;),
+    ISBLANK(aforza__Original_Order__c)
 )</errorConditionFormula>
     <errorDisplayField>aforza__Original_Order__c</errorDisplayField>
-    <errorMessage>Please select the order for which you are creating a return order.</errorMessage>
+    <errorMessage>Please select the original order for which you are creating the return order.</errorMessage>
 </ValidationRule>

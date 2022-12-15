@@ -38,7 +38,7 @@ public with sharing class PaymentTransactionTriggerHandler {
             update parentAccounts.values();
         }
         if (!parentOrders.isEmpty()) {
-            update parentOrders.values();
-        }    
+            OrderService.updateOrdersByPreventingLockValidation(parentOrders.values());
+        }
     }
 }

@@ -35,11 +35,11 @@ public with sharing class AccountTeamMemberTriggerHandler {
             }
         }
 
-        List<Account> accountsToHandleRecurringRecordFor = new List<Account>();
+        List<RecurringRecordService.AccountToTamDto> accountsToTamToHandleRecurringRecordFor = new List<RecurringRecordService.AccountToTamDto>();
         if (relatedAccounts.size() > 0) {
             for (Account acc : fetchValidAccountsForTeamRoles(relatedAccounts)) {
-                acc.OwnerId = teamMemberAccountIdToUserIdMap.get(acc.Id);
-                accountsToHandleRecurringRecordFor.add(acc);
+                RecurringRecordService.AccountToTamDto accountToTamDto = new RecurringRecordService.AccountToTamDto(acc, teamMemberAccountIdToUserIdMap.get(acc.Id));
+                accountsToTamToHandleRecurringRecordFor.add(accountToTamDto);
             }
         }
 
@@ -47,7 +47,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
             deleteReoccurrenceRecord(accountTeamMembersForDeletion);
         }
 
-        RecurringRecordService.upsertRecurringRecords(accountsToHandleRecurringRecordFor);
+        RecurringRecordService.upsertRecurringRecords(accountsToTamToHandleRecurringRecordFor);
     }
 
     /**
@@ -159,7 +159,7 @@ public with sharing class AccountTeamMemberTriggerHandler {
 
         // copy information from account team members to accounts and update accounts (where needed)
         Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
-        for (Account newAccount : accountIdsWithExistingUserRoles.keyset()) {
+        for (Account newAccount : accountIdsWithExistingUserRoles.keySet()) {
             // driver name
             List<AccountTeamMember> drivers = accountIdsWithExistingUserRoles.get(newAccount).get(DRIVER_ROLE_NAME);
             String driverName = '';

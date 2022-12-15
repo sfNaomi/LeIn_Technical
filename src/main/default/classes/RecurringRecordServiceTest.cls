@@ -16,7 +16,7 @@ private class RecurringRecordServiceTest {
         ];
 
         Test.startTest();
-        aforza__Recurring_Record__c recurringRecord = RecurringRecordService.createRecurringRecord(acc, 'Primary');
+        aforza__Recurring_Record__c recurringRecord = RecurringRecordService.createRecurringRecord(new RecurringRecordService.AccountToTamDto(acc, acc.OwnerId) , 'Primary');
         insert recurringRecord;
         Test.stopTest();
 
@@ -52,7 +52,7 @@ private class RecurringRecordServiceTest {
         ];
 
         Test.startTest();
-                aforza__Recurring_Record__c recurringRecord = RecurringRecordService.createRecurringRecord(acc, 'Primary');
+                aforza__Recurring_Record__c recurringRecord = RecurringRecordService.createRecurringRecord(new RecurringRecordService.AccountToTamDto(acc, acc.OwnerId), 'Primary');
             insert recurringRecord;
         Test.stopTest();
 
@@ -91,8 +91,8 @@ private class RecurringRecordServiceTest {
         ];
 
         Test.startTest();
-        RecurringRecordService.upsertRecurringRecords(new List<Account>{
-                acc
+        RecurringRecordService.upsertRecurringRecords(new List<RecurringRecordService.AccountToTamDto>{
+            new RecurringRecordService.AccountToTamDto(acc, acc.OwnerId)
         });
         Test.stopTest();
 
@@ -118,8 +118,8 @@ private class RecurringRecordServiceTest {
         ];
 
         Test.startTest();
-        RecurringRecordService.upsertRecurringRecords(new List<Account>{
-                acc
+        RecurringRecordService.upsertRecurringRecords(new List<RecurringRecordService.AccountToTamDto>{
+            new RecurringRecordService.AccountToTamDto(acc, acc.OwnerId)
         });
         Test.stopTest();
 

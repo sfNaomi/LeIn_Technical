@@ -1037,4 +1037,44 @@ private with sharing class AccountTriggerHandlerTest {
         cAccount = [SELECT AvailableCustomerCredit__c FROM Account WHERE RecordTypeId = :RecordTypes.ACCOUNT_CUSTOMER_ID LIMIT 1];
         Assert.areEqual(400, cAccount.AvailableCustomerCredit__c);
     }
+
+    @IsTest
+    private static void testManageReoccurrenceRecord_CheckOwnerStaysAfterAccountUpdate() {
+        User tamUser = (User) TdfSObjectFactory.insertSObject(new User());
+
+        System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1][0]) {
+            Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+            Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
+            TdfSObjectFactory.insertSObject(new AccountTeamMember(AccountId = acc.Id, UserId = tamUser.Id));
+            TdfSObjectFactory.insertSObject(new aforza__Recurring_Record__c(Account__c = acc.Id, aforza__Last_Recurrence_Date__c = System.today(),
+                Name = createdAcc.DeliveryPointReference__c + createdAcc.Id + '_Primary', OwnerId = tamUser.Id));
+
+            Test.startTest();
+            acc.PrimaryGridNumber__c = '3C7201WEW'; //changing any tracked item on account
+            update acc;
+            Test.stopTest();
+
+            aforza__Recurring_Record__c record = [
+                SELECT
+                    Id,
+                    aforza__Type__c,
+                    Account__c,
+                    OwnerId,
+                    Status__c,
+                    aforza__Frequency__c,
+                    Name,
+                    StartDate__c,
+                    PlanAnotherVisit__c,
+                    DaysBetweenRecurrence__c,
+                    aforza__Last_Recurrence_Date__c,
+                    CallDayOfWeek__c,
+                    Priority__c,
+                    aforza__Number_Of_Recurrences__c
+                FROM aforza__Recurring_Record__c
+                LIMIT 1
+            ][0];
+
+            Assert.areEqual(tamUser.Id, record.OwnerId);
+        }
+    }
 }

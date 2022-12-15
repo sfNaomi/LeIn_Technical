@@ -38,11 +38,10 @@ public with sharing class AccountTriggerHandler {
     }
 
     public static void manageReoccurrenceRecord(List<Account> newAccounts, Map<Id, Account> oldMap) {
-        Map<Operation, Map<Id, Account>> operationToAccountListMap = determineAccountsToManageRecurrenceFor(
+        Map<Operation, Map<Id, RecurringRecordService.AccountToTamDto>> operationToAccountListMap = determineAccountsToManageRecurrenceFor(
                 newAccounts,
                 oldMap
         );
-
         if (operationToAccountListMap.get(Operation.UPDATION).size() > 0) {
             checkIfRecurringRecordExists(operationToAccountListMap.get(Operation.UPDATION));
             RecurringRecordService.upsertRecurringRecords(operationToAccountListMap.get(Operation.UPDATION).values());
@@ -53,13 +52,13 @@ public with sharing class AccountTriggerHandler {
         }
     }
 
-    private static Map<Operation, Map<Id, Account>> determineAccountsToManageRecurrenceFor(
+    private static Map<Operation, Map<Id, RecurringRecordService.AccountToTamDto>> determineAccountsToManageRecurrenceFor(
             List<Account> newAccounts,
             Map<Id, Account> oldMap
     ) {
-        Map<Operation, Map<Id, Account>> operationToAccountListMap = new Map<Operation, Map<Id, Account>>();
-        operationToAccountListMap.put(Operation.UPDATION, new Map<Id, Account>());
-        operationToAccountListMap.put(Operation.DELETION, new Map<Id, Account>());
+        Map<Operation, Map<Id, RecurringRecordService.AccountToTamDto>> operationToAccountToTamList = new Map<Operation, Map<Id, RecurringRecordService.AccountToTamDto>>();
+        operationToAccountToTamList.put(Operation.UPDATION, new Map<Id, RecurringRecordService.AccountToTamDto>());
+        operationToAccountToTamList.put(Operation.DELETION, new Map<Id, RecurringRecordService.AccountToTamDto>());
         for (Account account : newAccounts) {
             Account oldAccount = oldMap.get(account.Id);
             // check for update after update context
@@ -74,7 +73,8 @@ public with sharing class AccountTriggerHandler {
                             account.CallPriority__c <> oldAccount.CallPriority__c ||
                             account.PreferredCallTimeTelesales__c <> oldAccount.PreferredCallTimeTelesales__c)
             ) {
-                operationToAccountListMap.get(Operation.UPDATION).put(account.Id, account);
+
+                operationToAccountToTamList.get(Operation.UPDATION).put(account.Id, new RecurringRecordService.AccountToTamDto(account, null));
                 continue;
             }
             // check for delete after update context
@@ -87,10 +87,10 @@ public with sharing class AccountTriggerHandler {
                             (oldAccount.PrimaryStartDate__c != null &&
                                     account.PrimaryStartDate__c == null)
             ) {
-                operationToAccountListMap.get(Operation.DELETION).put(account.Id, account);
+                operationToAccountToTamList.get(Operation.DELETION).put(account.Id, new RecurringRecordService.AccountToTamDto(account, null));
             }
         }
-        return operationToAccountListMap;
+        return operationToAccountToTamList;
     }
 
     public static void manageAccountTeamMembership(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
@@ -135,16 +135,20 @@ public with sharing class AccountTriggerHandler {
         return priceBookNameToId;
     }
 
-    private static void checkIfRecurringRecordExists(Map<Id, Account> accountsMap) {
+    private static void checkIfRecurringRecordExists(Map<Id, RecurringRecordService.AccountToTamDto> accountsMap) {
         // get recurring records account Ids
         Set<Id> accountIdsFromRecurringRecords = new Set<Id>();
-        for (aforza__Recurring_Record__c recurringRecord : [SELECT Id, Account__c FROM aforza__Recurring_Record__c WHERE Account__c IN :accountsMap.keySet()]) {
+        Map<Id, Id> teamMemberAccountIdToUserIdMap = new Map<Id, Id>();
+        for (aforza__Recurring_Record__c recurringRecord : [SELECT Id, Account__c, OwnerId FROM aforza__Recurring_Record__c WHERE Account__c IN :accountsMap.keySet()]) {
             accountIdsFromRecurringRecords.add(recurringRecord.Account__c);
+            teamMemberAccountIdToUserIdMap.put(recurringRecord.Account__c, recurringRecord.OwnerId);
         }
         Set<Id> accountIdsWithoutRecurringRecord = new Set<Id>();
-        for (Account account : accountsMap.values()) {
-            if (!accountIdsFromRecurringRecords.contains(account.Id)) {
-                accountIdsWithoutRecurringRecord.add(account.Id);
+        for (RecurringRecordService.AccountToTamDto accountToTam : accountsMap.values()) {
+            if (!accountIdsFromRecurringRecords.contains(accountToTam.account.Id)) {
+                accountIdsWithoutRecurringRecord.add(accountToTam.account.Id);
+            } else {
+                accountToTam.tamId = teamMemberAccountIdToUserIdMap?.get(accountToTam.account.Id);
             }
         }
 
@@ -260,7 +264,6 @@ public with sharing class AccountTriggerHandler {
             Boolean isAccountClosed = newAccount.AccountStatus__c == 'Closed';
 
             if (newAccount.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && (isAmountChanged || isParentUpdated)) {
-                Decimal newValue = 0;
                 if(!isNewParentBlank) {
                     getUpdatedParentAccountIdToNewAvailableCreditMap(
                         parentAccountIdToNewAvailableCredit, 
@@ -286,7 +289,7 @@ public with sharing class AccountTriggerHandler {
         }
         List<Account> parentAccountsToUpdate = new List<Account>();
         if(parentAccountIdToNewAvailableCredit.size() > 0) {
-            for(Account acc: [SELECT DefaultInvoiceBillingAddress__c, AvailableCustomerCredit__c FROM Account WHERE ID IN :parentAccountIdToNewAvailableCredit.keySet()]) {
+            for(Account acc: [SELECT DefaultInvoiceBillingAddress__c, AvailableCustomerCredit__c FROM Account WHERE Id IN :parentAccountIdToNewAvailableCredit.keySet()]) {
                 acc.AvailableCustomerCredit__c = acc.AvailableCustomerCredit__c == null ? 0 : acc.AvailableCustomerCredit__c;
                 if(acc.DefaultInvoiceBillingAddress__c == true) {
                     acc.AvailableCustomerCredit__c += parentAccountIdToNewAvailableCredit.get(acc.Id);

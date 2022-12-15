@@ -796,6 +796,7 @@
     }
   ],
   &quot;AutoDownloadVisitResources&quot;: false,
+          &quot;DisableOrderStatusValidation&quot;:true,
   &quot;AuditTypes&quot;: [
     {
       &quot;Type&quot;: &quot;Perfect Store Core &amp; Energy&quot;,

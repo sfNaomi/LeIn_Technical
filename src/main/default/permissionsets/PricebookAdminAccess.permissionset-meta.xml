@@ -3,6 +3,11 @@
     <description>Admin access for Price Book object - CRUD on object and Edit on all fields</description>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Pricebook2.SwiftcloudPriceBookCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Pricebook2.TaxCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
