@@ -36,7 +36,15 @@ const columns = [
     {label: loadId, fieldName: 'Load__rName'},
     {label: depot, fieldName: 'Depot__c'},
     {
-        label: deliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+        label: 'Requested Delivery Date', fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+            hour12: false
+        }
+    },
+    {
+        label: deliveryDate, fieldName: 'Load__rDeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
@@ -106,7 +114,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
@@ -130,8 +138,8 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Depot__c',
             'Depot', null, this.depotPicklist, null, 'equals'));
 
-        this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'DeliveryDate__c',
-            'Delivery Date', null, null, null, 'equals'));
+        this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'Load__r.DeliveryDate__c',
+            'Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Status',
             'Status', null, this.statusPicklist, null, 'equals'));
@@ -319,6 +327,11 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     handleLoadIdSelection(event) {
         // when the empty value is selected transform it to actual value in order list
         const selectedLoadName = event.target.value === null ? undefined : event.target.value;
+        this.processLoadIdSelection(selectedLoadName);
+
+    }
+
+    processLoadIdSelection(selectedLoadName) {
         this.selectedLoadId = selectedLoadName;
         this.tableData = [];
         if (selectedLoadName === RESET_FILTER) {
@@ -385,6 +398,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             await updateRecords({recordIds: recordIds, fieldValues: fieldValues});
             const dynamicFilter = this.template.querySelector('c-dynamic-filter');
             await dynamicFilter.handleFilterClick();
+            this.processLoadIdSelection(this.selectedLoadId);
             const toastSuccess = new ShowToastEvent({
                 title: 'Success',
                 message: 'Records have been updated.',
