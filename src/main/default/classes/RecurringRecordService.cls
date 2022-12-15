@@ -15,13 +15,13 @@ public with sharing class RecurringRecordService {
         set;
     }
 
-    public static void upsertRecurringRecords(List<Account> accounts) {
+    public static void upsertRecurringRecords(List<AccountToTamDto> accountsToTam) {
         List<aforza__Recurring_Record__c> recurringToUpsert = new List<aforza__Recurring_Record__c>();
-        for (Account acc : accounts) {
+        for (AccountToTamDto accToTam : accountsToTam) {
             // we expect that primary is always populated
-            recurringToUpsert.add(createRecurringRecord(acc, 'Primary'));
-            if (String.isNotEmpty(acc.SecondaryGridNumber__c) && acc.SecondaryStartDate__c != null) {
-                recurringToUpsert.add(createRecurringRecord(acc, 'Secondary'));
+            recurringToUpsert.add(createRecurringRecord(accToTam, 'Primary'));
+            if (String.isNotEmpty(accToTam.account.SecondaryGridNumber__c) && accToTam.account.SecondaryStartDate__c != null) {
+                recurringToUpsert.add(createRecurringRecord(accToTam, 'Secondary'));
             }
         }
         upsert recurringToUpsert Name;
@@ -47,23 +47,23 @@ public with sharing class RecurringRecordService {
     }
 
     @TestVisible
-    private static aforza__Recurring_Record__c createRecurringRecord(Account acc, String priority) {
+    private static aforza__Recurring_Record__c createRecurringRecord(AccountToTamDto accToTam, String priority) {
         aforza__Recurring_Record__c recurring = new aforza__Recurring_Record__c();
         recurring.aforza__Type__c = CALL_SETTINGS.CallType__c;
-        recurring.Account__c = acc.Id;
-        recurring.OwnerId = acc.OwnerId;
+        recurring.Account__c = accToTam.account.Id;
+        recurring.OwnerId = accToTam.tamId;
         recurring.Status__c = CALL_SETTINGS.CallStatus__c;
-        recurring.aforza__Frequency__c = acc.Frequency__c;
-        recurring.Name = acc.DeliveryPointReference__c + '_' + acc.Id + '_' + priority;
-        recurring.StartDate__c = priority == 'Primary' ? acc.PrimaryStartDate__c : acc.SecondaryStartDate__c;
-        recurring.CallDayOfWeek__c = priority == 'Primary' ? acc.PrimaryCallDay__c : acc.SecondaryCallDay__c;
+        recurring.aforza__Frequency__c = accToTam.account.Frequency__c;
+        recurring.Name = accToTam.account.DeliveryPointReference__c + '_' + accToTam.account.Id + '_' + priority;
+        recurring.StartDate__c = priority == 'Primary' ? accToTam.account.PrimaryStartDate__c : accToTam.account.SecondaryStartDate__c;
+        recurring.CallDayOfWeek__c = priority == 'Primary' ? accToTam.account.PrimaryCallDay__c : accToTam.account.SecondaryCallDay__c;
         recurring.aforza__Last_Recurrence_Date__c = null; // setting to null to trigger recreation of visits for any update
-        recurring.aforza__Number_Of_Recurrences__c = acc.Frequency__c == 'W' ? 12 : acc.Frequency__c == 'M' ? 3 : acc.Frequency__c == 'F' ? 6 : 12;
-        if (acc.PreferredCallTimeTelesales__c != null){
+        recurring.aforza__Number_Of_Recurrences__c = accToTam.account.Frequency__c == 'W' ? 12 : accToTam.account.Frequency__c == 'M' ? 3 : accToTam.account.Frequency__c == 'F' ? 6 : 12;
+        if (accToTam.account.PreferredCallTimeTelesales__c != null) {
             recurring.Priority__c = 'Custom';
-            recurring.StartTime__c = acc.PreferredCallTimeTelesales__c; 
+            recurring.StartTime__c = accToTam.account.PreferredCallTimeTelesales__c;
         } else {
-            recurring.Priority__c = acc.CallPriority__c;
+            recurring.Priority__c = accToTam.account.CallPriority__c;
         }
         return recurring;
     }
@@ -72,4 +72,13 @@ public with sharing class RecurringRecordService {
         return [SELECT Id FROM aforza__Recurring_Record__c WHERE Account__c IN :accountIds];
     }
 
+    public class AccountToTamDto {
+        public Account account;
+        public Id tamId;
+
+        public AccountToTamDto(Account account, Id tamId) {
+            this.account = account;
+            this.tamId = tamId;
+        }
+    }
 }
