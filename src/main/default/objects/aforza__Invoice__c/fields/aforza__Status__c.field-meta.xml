@@ -53,7 +53,7 @@
             <value>
                 <fullName>Pending</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Pending</label>
             </value>
             <value>

@@ -424,7 +424,7 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>aforza__Inventory_Product__c</object>
@@ -433,7 +433,7 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>aforza__Inventory_User__c</object>
@@ -442,14 +442,14 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>aforza__Inventory__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
@@ -467,9 +467,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
+        <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>aforza__Outlet_Asset__c</object>
