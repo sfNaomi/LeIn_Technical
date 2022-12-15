@@ -15,6 +15,10 @@
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SwiftcloudPriceBookCode__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
@@ -63,7 +67,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4J000001KHJV</masterLabel>
+        <masterLabel>00h5E000002DSjE</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

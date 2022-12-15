@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>KeyAccount__c</fullName>
+    <externalId>false</externalId>
+    <label>Key Account</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>A Cash\Credit Open Case</fullName>
+                <default>false</default>
+                <label>A Cash\Credit Open Case</label>
+            </value>
+            <value>
+                <fullName>Abm Catering</fullName>
+                <default>false</default>
+                <label>Abm Catering</label>
+            </value>
+            <value>
+                <fullName>Amey Business Services</fullName>
+                <default>false</default>
+                <label>Amey Business Services</label>
+            </value>
+            <value>
+                <fullName>Aramark P.L.C.</fullName>
+                <default>false</default>
+                <label>Aramark P.L.C.</label>
+            </value>
+            <value>
+                <fullName>Argyll &amp; Bute Council</fullName>
+                <default>false</default>
+                <label>Argyll &amp; Bute Council</label>
+            </value>
+            <value>
+                <fullName>Bako</fullName>
+                <default>false</default>
+                <label>Bako</label>
+            </value>
+            <value>
+                <fullName>Baxter Storey</fullName>
+                <default>false</default>
+                <label>Baxter Storey</label>
+            </value>
+            <value>
+                <fullName>Beamish Museum</fullName>
+                <default>false</default>
+                <label>Beamish Museum</label>
+            </value>
+            <value>
+                <fullName>Booker C&amp;C</fullName>
+                <default>false</default>
+                <label>Booker C&amp;C</label>
+            </value>
+            <value>
+                <fullName>Bp Dealer</fullName>
+                <default>false</default>
+                <label>Bp Dealer</label>
+            </value>
+            <value>
+                <fullName>Bridewell Direct</fullName>
+                <default>false</default>
+                <label>Bridewell Direct</label>
+            </value>
+            <value>
+                <fullName>Bridewell Uk</fullName>
+                <default>false</default>
+                <label>Bridewell Uk</label>
+            </value>
+            <value>
+                <fullName>C.C.A(Consortium Cat &amp; Admin)</fullName>
+                <default>false</default>
+                <label>C.C.A(Consortium Cat &amp; Admin)</label>
+            </value>
+            <value>
+                <fullName>Compass</fullName>
+                <default>false</default>
+                <label>Compass</label>
+            </value>
+            <value>
+                <fullName>Confex</fullName>
+                <default>false</default>
+                <label>Confex</label>
+            </value>
+            <value>
+                <fullName>Cost Effective Catering</fullName>
+                <default>false</default>
+                <label>Cost Effective Catering</label>
+            </value>
+            <value>
+                <fullName>Costcutter Dsd</fullName>
+                <default>false</default>
+                <label>Costcutter Dsd</label>
+            </value>
+            <value>
+                <fullName>Derbyshire County Council</fullName>
+                <default>false</default>
+                <label>Derbyshire County Council</label>
+            </value>
+            <value>
+                <fullName>Dominos Pizza</fullName>
+                <default>false</default>
+                <label>Dominos Pizza</label>
+            </value>
+            <value>
+                <fullName>East Ayrshire Council</fullName>
+                <default>false</default>
+                <label>East Ayrshire Council</label>
+            </value>
+            <value>
+                <fullName>Epso</fullName>
+                <default>false</default>
+                <label>Epso</label>
+            </value>
+            <value>
+                <fullName>Falkirk Council Leisure Serv.</fullName>
+                <default>false</default>
+                <label>Falkirk Council Leisure Serv.</label>
+            </value>
+            <value>
+                <fullName>Finch Walthamstow</fullName>
+                <default>false</default>
+                <label>Finch Walthamstow</label>
+            </value>
+            <value>
+                <fullName>Findlay&apos;S Water</fullName>
+                <default>false</default>
+                <label>Findlay&apos;S Water</label>
+            </value>
+            <value>
+                <fullName>Foodservice Options Colleges</fullName>
+                <default>false</default>
+                <label>Foodservice Options Colleges</label>
+            </value>
+            <value>
+                <fullName>Foodservice Options Schools</fullName>
+                <default>false</default>
+                <label>Foodservice Options Schools</label>
+            </value>
+            <value>
+                <fullName>Fozmans (Helpertons) Buy Group</fullName>
+                <default>false</default>
+                <label>Fozmans (Helpertons) Buy Group</label>
+            </value>
+            <value>
+                <fullName>G101 Off Sales</fullName>
+                <default>false</default>
+                <label>G101 Off Sales</label>
+            </value>
+            <value>
+                <fullName>Glasgow Direct &amp; Care</fullName>
+                <default>false</default>
+                <label>Glasgow Direct &amp; Care</label>
+            </value>
+            <value>
+                <fullName>Gold Stores</fullName>
+                <default>false</default>
+                <label>Gold Stores</label>
+            </value>
+            <value>
+                <fullName>Goodnews Group</fullName>
+                <default>false</default>
+                <label>Goodnews Group</label>
+            </value>
+            <value>
+                <fullName>Independant W/S Edsd</fullName>
+                <default>false</default>
+                <label>Independant W/S Edsd</label>
+            </value>
+            <value>
+                <fullName>Independent Garages</fullName>
+                <default>false</default>
+                <label>Independent Garages</label>
+            </value>
+            <value>
+                <fullName>Independent Outlets</fullName>
+                <default>false</default>
+                <label>Independent Outlets</label>
+            </value>
+            <value>
+                <fullName>Independent Scottish Outlets</fullName>
+                <default>false</default>
+                <label>Independent Scottish Outlets</label>
+            </value>
+            <value>
+                <fullName>Jet/Conoco Independent Garage</fullName>
+                <default>false</default>
+                <label>Jet/Conoco Independent Garage</label>
+            </value>
+            <value>
+                <fullName>Kent Buying Group</fullName>
+                <default>false</default>
+                <label>Kent Buying Group</label>
+            </value>
+            <value>
+                <fullName>Martin Mccoll</fullName>
+                <default>false</default>
+                <label>Martin Mccoll</label>
+            </value>
+            <value>
+                <fullName>Midlothian Council</fullName>
+                <default>false</default>
+                <label>Midlothian Council</label>
+            </value>
+            <value>
+                <fullName>Nat Buy Consort</fullName>
+                <default>false</default>
+                <label>Nat Buy Consort</label>
+            </value>
+            <value>
+                <fullName>Newspower (Scotland)</fullName>
+                <default>false</default>
+                <label>Newspower (Scotland)</label>
+            </value>
+            <value>
+                <fullName>Nfrn Direct</fullName>
+                <default>false</default>
+                <label>Nfrn Direct</label>
+            </value>
+            <value>
+                <fullName>Nisa-Today&apos;S</fullName>
+                <default>false</default>
+                <label>Nisa-Today&apos;S</label>
+            </value>
+            <value>
+                <fullName>North Ayshire Council</fullName>
+                <default>false</default>
+                <label>North Ayshire Council</label>
+            </value>
+            <value>
+                <fullName>North Lanarkshire Leisure Serv</fullName>
+                <default>false</default>
+                <label>North Lanarkshire Leisure Serv</label>
+            </value>
+            <value>
+                <fullName>Nus Services Ltd</fullName>
+                <default>false</default>
+                <label>Nus Services Ltd</label>
+            </value>
+            <value>
+                <fullName>Others W/Sale</fullName>
+                <default>false</default>
+                <label>Others W/Sale</label>
+            </value>
+            <value>
+                <fullName>Pelican Buying Group</fullName>
+                <default>false</default>
+                <label>Pelican Buying Group</label>
+            </value>
+            <value>
+                <fullName>Scottish Hospitals</fullName>
+                <default>false</default>
+                <label>Scottish Hospitals</label>
+            </value>
+            <value>
+                <fullName>Select Service Partner</fullName>
+                <default>false</default>
+                <label>Select Service Partner</label>
+            </value>
+            <value>
+                <fullName>Shakti Buying Group</fullName>
+                <default>false</default>
+                <label>Shakti Buying Group</label>
+            </value>
+            <value>
+                <fullName>Shepherds Foods</fullName>
+                <default>false</default>
+                <label>Shepherds Foods</label>
+            </value>
+            <value>
+                <fullName>Sodexo Nett &amp; Prestige</fullName>
+                <default>false</default>
+                <label>Sodexo Nett &amp; Prestige</label>
+            </value>
+            <value>
+                <fullName>South Lanarkshire Council</fullName>
+                <default>false</default>
+                <label>South Lanarkshire Council</label>
+            </value>
+            <value>
+                <fullName>Spar Group</fullName>
+                <default>false</default>
+                <label>Spar Group</label>
+            </value>
+            <value>
+                <fullName>Subway</fullName>
+                <default>false</default>
+                <label>Subway</label>
+            </value>
+            <value>
+                <fullName>Sugro</fullName>
+                <default>false</default>
+                <label>Sugro</label>
+            </value>
+            <value>
+                <fullName>T.U.C.O.Services Ltd.</fullName>
+                <default>false</default>
+                <label>T.U.C.O.Services Ltd.</label>
+            </value>
+            <value>
+                <fullName>Tesco</fullName>
+                <default>false</default>
+                <label>Tesco</label>
+            </value>
+            <value>
+                <fullName>Texaco</fullName>
+                <default>false</default>
+                <label>Texaco</label>
+            </value>
+            <value>
+                <fullName>Unitas</fullName>
+                <default>false</default>
+                <label>Unitas</label>
+            </value>
+            <value>
+                <fullName>Vending And Dispense</fullName>
+                <default>false</default>
+                <label>Vending And Dispense</label>
+            </value>
+            <value>
+                <fullName>Vikas Buying Group</fullName>
+                <default>false</default>
+                <label>Vikas Buying Group</label>
+            </value>
+            <value>
+                <fullName>Waitrose</fullName>
+                <default>false</default>
+                <label>Waitrose</label>
+            </value>
+            <value>
+                <fullName>Welcome Break</fullName>
+                <default>false</default>
+                <label>Welcome Break</label>
+            </value>
+            <value>
+                <fullName>Wrexham C Council</fullName>
+                <default>false</default>
+                <label>Wrexham C Council</label>
+            </value>
+            <value>
+                <fullName>Yiga Buying Group</fullName>
+                <default>false</default>
+                <label>Yiga Buying Group</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
