@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventTamToCloseAccounts</fullName>
+    <active>true</active>
+    <description>This rule is to prevent anyone with the TAM role to close an account without sending a proper request for it.</description>
+    <errorConditionFormula>IF(
+					AND($UserRole.Name = &apos;TAM&apos;, ISPICKVAL(AccountStatus__c, &apos;Closed&apos;)),
+					True, False
+	)</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to close this account. Please send a request to close this account to the Sales Support Team using the button &quot;Send Account Closing Request&quot;.</errorMessage>
+</ValidationRule>

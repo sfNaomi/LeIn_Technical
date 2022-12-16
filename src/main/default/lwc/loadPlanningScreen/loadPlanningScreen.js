@@ -154,7 +154,7 @@ export default class LoadPlanningScreen extends LightningElement {
     prepareFilterDefinition() {
         try {
             this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'DeliveryDate__c',
-                'Requested Delivery Date', null, null, null, 'equals', false));
+                requestedDeliveryDate, null, null, null, 'equals', false));
 
             this.filterFields.push(this.createInputFieldDefinitionJson('Text', 'Grid__c',
                 'Grid', null, null, null, 'contains', false));
@@ -168,10 +168,10 @@ export default class LoadPlanningScreen extends LightningElement {
                 depot, null, this.depotPicklist, null, 'equals', false));
 
             this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Status',
-                'Status', null, this.statusPicklist, null, 'equals', false));
+                status, null, this.statusPicklist, null, 'equals', false));
 
             this.filterFields.push(this.createInputFieldDefinitionJson('Lookup', 'Load__c',
-                'Load Id', null, null, null, 'equals', false, 'Load__c',
+                loadId, null, null, null, 'equals', false, 'Load__c',
                 'standard:webcart', ['Name'], ['Name'], 'Name'));
         } catch (error) {
             processError(this, error);

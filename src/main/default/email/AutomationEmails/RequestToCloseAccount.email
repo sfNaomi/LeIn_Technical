@@ -1,0 +1,6 @@
+Hello!
+
+{!Account.OwningTAM__c} has just requested for the account {!Account.Name} to be closed.
+
+
+Your SF Team

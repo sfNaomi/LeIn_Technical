@@ -21,7 +21,7 @@ import action from '@salesforce/label/c.Action';
 import printUpdate from '@salesforce/label/c.PrintUpdate';
 import loadId from '@salesforce/label/c.LoadId';
 import depot from '@salesforce/label/c.Depot';
-import deliveryDate from '@salesforce/label/c.DeliveryDate';
+import plannedDeliveryDate from '@salesforce/label/c.PlannedDeliveryDate';
 import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate'
 import orderId from '@salesforce/label/c.OrderId';
 import accountName from '@salesforce/label/c.AccountName';
@@ -49,7 +49,7 @@ const columns = [
         }, sortable: true
     },
     {
-        label: deliveryDate, fieldName: 'Load__rDeliveryDate__c', type: 'date', typeAttributes: {
+        label: plannedDeliveryDate, fieldName: 'Load__rDeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
@@ -140,17 +140,17 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
      */
     prepareFilterDefinition() {
         this.filterFields.push(this.createInputFieldDefinitionJson('Lookup', 'Load__c',
-            'Load ID', null, null, null, 'equals', 'Load__c',
+            loadId, null, null, null, 'equals', 'Load__c',
             'standard:webcart', ['Name'], ['Name'], 'Name'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Depot__c',
-            'Depot', null, this.depotPicklist, null, 'equals'));
+            depot, null, this.depotPicklist, null, 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'Load__r.DeliveryDate__c',
-            'Planned Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
+            plannedDeliveryDate, null, null, 'Load__r.DeliveryDate__c', 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Status',
-            'Status', null, this.statusPicklist, null, 'equals'));
+            status, null, this.statusPicklist, null, 'equals'));
     }
 
     /**
