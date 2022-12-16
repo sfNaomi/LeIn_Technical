@@ -167,7 +167,7 @@
               }
             },
             {
-              &quot;Name&quot;: &quot;ShippingState&quot;,
+              &quot;Name&quot;: &quot;ShippingStateCode&quot;,
               &quot;Details&quot;: {
                 &quot;Required&quot;: false
               }
@@ -203,7 +203,7 @@
               }
             },
             {
-              &quot;Name&quot;: &quot;BillingState&quot;,
+              &quot;Name&quot;: &quot;BillingStateCode&quot;,
               &quot;Details&quot;: {
                 &quot;Required&quot;: false
               }

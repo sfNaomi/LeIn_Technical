@@ -11,6 +11,11 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>BusinessManager</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
         <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DepotManager</sharedTo>
         <sharedToType>Role</sharedToType>
@@ -37,6 +42,11 @@
     </folderShares>
     <folderShares>
         <accessLevel>View</accessLevel>
+        <sharedTo>SalesController</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
         <sharedTo>SalesSupportExec</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
@@ -48,6 +58,16 @@
     <folderShares>
         <accessLevel>View</accessLevel>
         <sharedTo>TAM</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TeamLeader</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>TerritoryManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>

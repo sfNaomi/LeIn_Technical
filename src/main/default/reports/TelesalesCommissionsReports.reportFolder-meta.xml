@@ -17,26 +17,6 @@
     </folderShares>
     <folderShares>
         <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DepotManager</sharedTo>
-        <sharedToType>Role</sharedToType>
-    </folderShares>
-    <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DepotOperations</sharedTo>
-        <sharedToType>Role</sharedToType>
-    </folderShares>
-    <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DistributionAdmin</sharedTo>
-        <sharedToType>Role</sharedToType>
-    </folderShares>
-    <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>Driver</sharedTo>
-        <sharedToType>Role</sharedToType>
-    </folderShares>
-    <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>OperationalSupportController</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
@@ -56,7 +36,7 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
+        <accessLevel>View</accessLevel>
         <sharedTo>TAM</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
@@ -70,10 +50,5 @@
         <sharedTo>TerritoryManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
-    <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>TransportManager</sharedTo>
-        <sharedToType>Role</sharedToType>
-    </folderShares>
-    <name>Order Returns - Reason Code Analysis</name>
+    <name>Telesales Commissions Reports</name>
 </ReportFolder>

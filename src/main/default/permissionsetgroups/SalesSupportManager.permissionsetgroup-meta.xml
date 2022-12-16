@@ -51,7 +51,7 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductCruObjectAccess</permissionSets>
     <permissionSets>PromotionBaseAccess</permissionSets>
-    <permissionSets>PromotionSupportAccess</permissionSets>
+    <permissionSets>PromotionEditAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
