@@ -30,7 +30,7 @@
     <permissionSets>PricebookEditAccess</permissionSets>
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductRuObjectAccess</permissionSets>
-    <permissionSets>PromotionBaseAccess</permissionSets>
+    <permissionSets>PromotionAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>SegmentationBaseAccess</permissionSets>
     <permissionSets>SegmentationEditAccess</permissionSets>

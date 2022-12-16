@@ -24,8 +24,10 @@
     <permissionSets>FieldSalesUser</permissionSets>
     <permissionSets>InventoryBaseAccess</permissionSets>
     <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryProductRuObjectAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>InvoiceCreateAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>ManageListViews</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
