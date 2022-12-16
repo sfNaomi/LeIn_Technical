@@ -6,9 +6,11 @@ import {LightningElement, track} from 'lwc';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenController.fetchNeededPicklistValues'
 import updateRecords from '@salesforce/apex/LogisticUpdateScreenController.updateRecords'
+import updateOrders from '@salesforce/apex/LoadPlanningScreenController.updateOrders';
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
+import {basicSort} from 'c/sortingService';
 import {NavigationMixin} from 'lightning/navigation';
 
 import isDepotUser from '@salesforce/customPermission/DepotUser';
@@ -20,6 +22,7 @@ import printUpdate from '@salesforce/label/c.PrintUpdate';
 import loadId from '@salesforce/label/c.LoadId';
 import depot from '@salesforce/label/c.Depot';
 import deliveryDate from '@salesforce/label/c.DeliveryDate';
+import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate'
 import orderId from '@salesforce/label/c.OrderId';
 import accountName from '@salesforce/label/c.AccountName';
 import status from '@salesforce/label/c.Status';
@@ -33,15 +36,17 @@ import invoicePrinted from '@salesforce/label/c.InvoicePrinted';
 import palletSequence from '@salesforce/label/c.PickSheetPalletSequence';
 
 const columns = [
-    {label: loadId, fieldName: 'Load__rName'},
-    {label: depot, fieldName: 'Depot__c'},
+    {label: loadId, fieldName: 'Load__rName', sortable: true},
+    {label: 'Vehicle', fieldName: 'Load__rVehicle__rName', sortable: true},
+    {label: 'Driver', fieldName: 'Load__rDriverFullName__c', sortable: true},
+    {label: depot, fieldName: 'Depot__c', sortable: true},
     {
-        label: 'Requested Delivery Date', fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+        label: requestedDeliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
             hour12: false
-        }
+        }, sortable: true
     },
     {
         label: deliveryDate, fieldName: 'Load__rDeliveryDate__c', type: 'date', typeAttributes: {
@@ -49,7 +54,7 @@ const columns = [
             month: 'numeric',
             year: 'numeric',
             hour12: false
-        }
+        }, sortable: true
     },
     {
         label: orderId,
@@ -58,9 +63,9 @@ const columns = [
         typeAttributes: {label: {fieldName: 'OrderNumber'}},
         target: '_blank'
     },
-    {label: accountName, fieldName: 'AccountName__c'},
-    {label: status, fieldName: 'Status'},
-    {label: palletSequence, fieldName: 'PalletSequence__c'},
+    {label: accountName, fieldName: 'AccountName__c', sortable: true},
+    {label: status, fieldName: 'Status', sortable: true},
+    {label: palletSequence, fieldName: 'PalletSequence__c', sortable: true, editable: true},
     {label: pickingSheetPrinted, fieldName: 'PickingSheetPrinted__c', type: 'boolean'},
     {label: pickingCompleted, fieldName: 'PickingCompleted__c', type: 'boolean'},
     {label: isLoaded, fieldName: 'IsLoaded__c', type: 'boolean'},
@@ -98,6 +103,8 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     @track tableData = [];
     @track selectedRows = [];
     columns = columns;
+    @track sortBy;
+    @track sortDirection;
     toFlatten = true;
     limitOfRowsReturned = 900;
     isLoading = false;
@@ -110,11 +117,12 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     @track selectedAction = '';
     @track actionConfirmDisabled = true;
     @track selectedLoadId;
+    draftValues = [];
     label = {
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
@@ -139,7 +147,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             'Depot', null, this.depotPicklist, null, 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'Load__r.DeliveryDate__c',
-            'Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
+            'Planned Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Status',
             'Status', null, this.statusPicklist, null, 'equals'));
@@ -416,6 +424,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     handleResetSelection() {
         this.template.querySelector('.table').selectedRows = [];
         this.selectedRows = [];
+        this.processLoadIdSelection(RESET_FILTER);
         this.resetAction();
     }
 
@@ -522,7 +531,61 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         } else if (isPickingUser) {
             this.actions = [...pickingUserActions];
         }
+    }
 
+    /** Method to save orders when there would be inline edit on them
+     * IMPORTANT this update mechanism will work only for Order fields as other are flattened.
+     *
+     * @param event from the default lightning datatable
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    async handleOrderSave(event) {
+        try {
+            const updatedFields = event.detail.draftValues;
+
+            await updateOrders({data: updatedFields});
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Orders have been updated',
+                    variant: 'success'
+                })
+            );
+            // Update data in datatable
+            this.refreshDataTableValues(updatedFields);
+            // Clear all draft values in the datatable
+            this.draftValues = [];
+        } catch (error) {
+            processError(this, error);
+        }
+    }
+
+    /** Method to iterate in each changed item and search that item in original table data to update for new values to
+     * be visible in the table immediately
+     * @param updatedFields list of objects with orders that are returned from save event. They only contain updated fields
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    refreshDataTableValues(updatedFields) {
+        updatedFields.forEach((updatedOrder) => {
+            let orderToUpdate = this.tableData.find((order) => {
+                return updatedOrder.Id === order.Id;
+            });
+            for (const key in updatedOrder) {
+                if (key !== 'Id') {
+                    orderToUpdate[key] = updatedOrder[key];
+                }
+            }
+        });
+    }
+
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.tableData = basicSort(this.sortBy, this.sortDirection, this.tableData);
     }
 
     /** Method to obtain text with replaced dynamic values

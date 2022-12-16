@@ -5,4 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Credit Manager</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
+    <parentRole>ApplicationSupport</parentRole>
 </Role>

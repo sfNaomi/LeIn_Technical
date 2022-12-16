@@ -12,10 +12,11 @@ import updateOrders from '@salesforce/apex/LoadPlanningScreenController.updateOr
 import {processError} from 'c/errorHandlingService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
 import {FlattenDataService} from 'c/flattenDataService'
+import {basicSort} from 'c/sortingService';
 
 import loadId from '@salesforce/label/c.LoadId';
 import depot from '@salesforce/label/c.Depot';
-import deliveryDate from '@salesforce/label/c.DeliveryDate';
+import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate';
 import primaryGrid from '@salesforce/label/c.PrimaryGrid';
 import status from '@salesforce/label/c.Status';
 import orderId from '@salesforce/label/c.OrderId';
@@ -39,7 +40,7 @@ import tamName from '@salesforce/label/c.TamName';
 
 const columns = [
     {
-        label: deliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+        label: requestedDeliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
@@ -54,16 +55,16 @@ const columns = [
     {label: palletSequence, fieldName: 'PalletSequence__c', sortable: true, editable: true},
     {label: description, fieldName: 'ShortDescription__c', editable: true},
     {label: postCode, fieldName: 'ShippingPostalCode', sortable: true},
-    {label: deliveryPointReference, fieldName: 'AccountDeliveryPointReference__c'},
-    {label: deliveryPointName, fieldName: 'AccountName__c'},
-    {label: shippingAddress, fieldName: 'ShippingStreet'},
-    {label: weight, fieldName: 'TotalOrderWeight__c'},
+    {label: deliveryPointReference, fieldName: 'AccountDeliveryPointReference__c', sortable: true},
+    {label: deliveryPointName, fieldName: 'AccountName__c', sortable: true},
+    {label: shippingAddress, fieldName: 'ShippingStreet', sortable: true},
+    {label: weight, fieldName: 'TotalOrderWeight__c', sortable: true},
     {
         label: openingTimes, fieldName: 'AccountOpeningTime__c', type: 'date', typeAttributes: {
             hour: '2-digit',
             minute: '2-digit',
             hour12: false
-        }
+        }, sortable: true
     },
     {
         label: fixedDeliveryInstructions,
@@ -153,7 +154,7 @@ export default class LoadPlanningScreen extends LightningElement {
     prepareFilterDefinition() {
         try {
             this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'DeliveryDate__c',
-                'Delivery Date', null, null, null, 'equals', false));
+                'Requested Delivery Date', null, null, null, 'equals', false));
 
             this.filterFields.push(this.createInputFieldDefinitionJson('Text', 'Grid__c',
                 'Grid', null, null, null, 'contains', false));
@@ -749,25 +750,7 @@ export default class LoadPlanningScreen extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.sortData(this.sortBy, this.sortDirection);
-    }
-
-    sortData(fieldName, direction) {
-        let parseData = JSON.parse(JSON.stringify(this.tableData));
-        // Return the value stored in the field
-        let keyValue = (order) => {
-            return order[fieldName];
-        };
-        // checking reverse direction
-        let isReverse = direction === 'asc' ? 1 : -1;
-        // sorting data
-        parseData.sort((x, y) => {
-            x = keyValue(x) ? keyValue(x) : ''; // handling null values
-            y = keyValue(y) ? keyValue(y) : '';
-            // sorting values based on direction
-            return isReverse * ((x > y) - (y > x));
-        });
-        this.tableData = parseData;
+        this.tableData = basicSort(this.sortBy, this.sortDirection, this.tableData);
     }
 
     /** Method to save orders when there would be inline edit on them
@@ -839,5 +822,9 @@ export default class LoadPlanningScreen extends LightningElement {
         return ` AND (RecordType.DeveloperName = 'TelesalesOrder' OR RecordType.DeveloperName = 'FieldDirectOrder' OR
           RecordType.DeveloperName = 'EDIOrder' OR RecordType.DeveloperName = 'ECommerceOrder' 
           OR RecordType.DeveloperName = 'ReturnOrder')`
+    }
+
+    get maxResults() {
+        return 20;
     }
 }

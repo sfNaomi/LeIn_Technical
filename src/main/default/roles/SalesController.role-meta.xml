@@ -5,4 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Sales Controller</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
+    <parentRole>ApplicationSupport</parentRole>
 </Role>

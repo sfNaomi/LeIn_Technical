@@ -51,6 +51,15 @@ export default class CustomLookupInput extends LightningElement {
     @api selectRecordName;
     @api searchRecords = [];
     @api dropdownLength;
+    @api
+    get maxResults() {
+        return typeof this._maxResults === 'number' ? this._maxResults : 0;
+    }
+
+    set maxResults(value) {
+        this._maxResults = value;
+    }
+    _maxResults;
     _filter = '';
     @api
     get filter() {
@@ -213,6 +222,7 @@ export default class CustomLookupInput extends LightningElement {
                 returnFields: this.returnFields,
                 queryFields: this.queryFields,
                 searchText: this.currentSearchedText,
+                maxResults: this.maxResults,
                 filter: this.filter,
                 mainField: this.mainField
             });
