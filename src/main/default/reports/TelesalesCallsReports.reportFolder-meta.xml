@@ -11,28 +11,33 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>BusinessDevelopmentRep</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
+    <folderShares>
         <accessLevel>EditAllContents</accessLevel>
         <sharedTo>BusinessManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DepotManager</sharedTo>
+        <accessLevel>View</accessLevel>
+        <sharedTo>EnergyRep</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DepotOperations</sharedTo>
+        <accessLevel>View</accessLevel>
+        <sharedTo>FieldSalesController</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>DistributionAdmin</sharedTo>
+        <accessLevel>View</accessLevel>
+        <sharedTo>FieldSalesManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>Driver</sharedTo>
+        <accessLevel>View</accessLevel>
+        <sharedTo>LocalBusinessDevelopmentManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
@@ -56,7 +61,7 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
+        <accessLevel>View</accessLevel>
         <sharedTo>TAM</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
@@ -71,9 +76,9 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>EditAllContents</accessLevel>
-        <sharedTo>TransportManager</sharedTo>
+        <accessLevel>View</accessLevel>
+        <sharedTo>VanSales</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
-    <name>Order Returns - Reason Code Analysis</name>
+    <name>Telesales Calls Reports</name>
 </ReportFolder>

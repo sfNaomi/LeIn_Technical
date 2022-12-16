@@ -21,12 +21,12 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DepotManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DepotOperations</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>

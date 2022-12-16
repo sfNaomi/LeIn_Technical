@@ -16,22 +16,22 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DepotManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DepotOperations</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>DistributionAdmin</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>Driver</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
@@ -71,7 +71,7 @@
         <sharedToType>Role</sharedToType>
     </folderShares>
     <folderShares>
-        <accessLevel>View</accessLevel>
+        <accessLevel>EditAllContents</accessLevel>
         <sharedTo>TransportManager</sharedTo>
         <sharedToType>Role</sharedToType>
     </folderShares>
