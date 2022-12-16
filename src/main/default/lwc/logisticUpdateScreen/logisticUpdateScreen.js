@@ -6,6 +6,7 @@ import {LightningElement, track} from 'lwc';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import fetchNeededPicklistValues from '@salesforce/apex/LogisticUpdateScreenController.fetchNeededPicklistValues'
 import updateRecords from '@salesforce/apex/LogisticUpdateScreenController.updateRecords'
+import updateOrders from '@salesforce/apex/LoadPlanningScreenController.updateOrders';
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
@@ -60,7 +61,7 @@ const columns = [
     },
     {label: accountName, fieldName: 'AccountName__c'},
     {label: status, fieldName: 'Status'},
-    {label: palletSequence, fieldName: 'PalletSequence__c'},
+    {label: palletSequence, fieldName: 'PalletSequence__c', editable: true},
     {label: pickingSheetPrinted, fieldName: 'PickingSheetPrinted__c', type: 'boolean'},
     {label: pickingCompleted, fieldName: 'PickingCompleted__c', type: 'boolean'},
     {label: isLoaded, fieldName: 'IsLoaded__c', type: 'boolean'},
@@ -110,6 +111,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     @track selectedAction = '';
     @track actionConfirmDisabled = true;
     @track selectedLoadId;
+    draftValues = [];
     label = {
         action,
         printUpdate
@@ -416,6 +418,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     handleResetSelection() {
         this.template.querySelector('.table').selectedRows = [];
         this.selectedRows = [];
+        this.processLoadIdSelection(RESET_FILTER);
         this.resetAction();
     }
 
@@ -522,7 +525,55 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         } else if (isPickingUser) {
             this.actions = [...pickingUserActions];
         }
+    }
 
+    /** Method to save orders when there would be inline edit on them
+     * IMPORTANT this update mechanism will work only for Order fields as other are flattened.
+     *
+     * @param event from the default lightning datatable
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    async handleOrderSave(event) {
+        try {
+            const updatedFields = event.detail.draftValues;
+
+            await updateOrders({data: updatedFields});
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Orders have been updated',
+                    variant: 'success'
+                })
+            );
+            // Update data in datatable
+            this.refreshDataTableValues(updatedFields);
+            // Clear all draft values in the datatable
+            this.draftValues = [];
+        } catch (error) {
+            processError(this, error);
+        }
+    }
+
+    /** Method to iterate in each changed item and search that item in original table data to update for new values to
+     * be visible in the table immediately
+     * @param updatedFields list of objects with orders that are returned from save event. They only contain updated fields
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-09
+     */
+    refreshDataTableValues(updatedFields) {
+        updatedFields.forEach((updatedOrder) => {
+            let orderToUpdate = this.tableData.find((order) => {
+                return updatedOrder.Id === order.Id;
+            });
+            for (const key in updatedOrder) {
+                if (key !== 'Id') {
+                    orderToUpdate[key] = updatedOrder[key];
+                }
+            }
+        });
     }
 
     /** Method to obtain text with replaced dynamic values

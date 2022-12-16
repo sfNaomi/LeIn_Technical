@@ -5,68 +5,72 @@
     <div class="slds-is-relative">
         <div if:true={filterDataReady}>
             <c-dynamic-filter
-                    filter-fields={filterFields}
-                    sobject-api-name={sObjectApiName}
-                    query-fields={queryFields}
-                    to-flatten={toFlatten}
-                    limit-of-rows-returned={limitOfRowsReturned}
-                    filter-size={filterSize}
-                    default-filter={ordersDefaultFilter}
-                    onreturneddata={processReturnedData}
+                filter-fields={filterFields}
+                sobject-api-name={sObjectApiName}
+                query-fields={queryFields}
+                to-flatten={toFlatten}
+                limit-of-rows-returned={limitOfRowsReturned}
+                filter-size={filterSize}
+                default-filter={ordersDefaultFilter}
+                onreturneddata={processReturnedData}
             ></c-dynamic-filter>
         </div>
         <lightning-card if:true={showTable}>
-            <lightning-layout class="slds-container_center slds-m-bottom_large">
-                <lightning-layout-item size="2"
-                                       class="slds-m-left_medium slds-m-right_medium">
-                    <lightning-combobox
+            <div>
+                <lightning-layout class="slds-container_center slds-m-bottom_large">
+                    <lightning-layout-item size="2"
+                                           class="slds-m-left_medium slds-m-right_medium">
+                        <lightning-combobox
                             label="Load ID"
                             options={loadIdsFromFilteredOrders}
                             value={selectedLoadId}
                             disabled={disableLoadIdFilter}
                             onchange={handleLoadIdSelection}
-                    ></lightning-combobox>
-                </lightning-layout-item>
-                <lightning-layout-item size="3"
-                                       class="slds-align_absolute-center slds-m-left_medium slds-m-right_medium slds-text-heading_small slds-m-top_large">
-                    {selectedRowsText}
-                </lightning-layout-item>
-                <lightning-layout-item size="2" class="slds-m-left_medium slds-m-right_medium">
-                    <lightning-combobox
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3"
+                                           class="slds-align_absolute-center slds-m-left_medium slds-m-right_medium slds-text-heading_small slds-m-top_large">
+                        {selectedRowsText}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" class="slds-m-left_medium slds-m-right_medium">
+                        <lightning-combobox
                             label={label.action}
                             options={actions}
                             value={selectedAction}
                             disabled={disableActionSelection}
                             onchange={handleActionSelection}
-                    ></lightning-combobox>
-                </lightning-layout-item>
-                <lightning-layout-item
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item
                         size="2"
                         class="slds-m-left_medium slds-m-right_medium slds-align_absolute-center slds-m-top_large">
-                    <lightning-button
+                        <lightning-button
                             variant="brand"
                             disabled={actionButtonDisabled}
                             label={label.printUpdate}
                             onclick={handleActionButton}
-                    ></lightning-button>
-                </lightning-layout-item>
-                <lightning-layout-item
-                    size="1"
-                    class="slds-m-left_medium slds-m-right_medium slds-align_absolute-center slds-m-top_large">
-                    <lightning-button
-                        variant="brand"
-                        label="Reset Selection"
-                        onclick={handleResetSelection}
-                    ></lightning-button>
-                </lightning-layout-item>
-            </lightning-layout>
+                        ></lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item
+                        size="1"
+                        class="slds-m-left_medium slds-m-right_medium slds-align_absolute-center slds-m-top_large">
+                        <lightning-button
+                            variant="brand"
+                            label="Reset Selection"
+                            onclick={handleResetSelection}
+                        ></lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
             <div style="height: 50em">
                 <lightning-datatable
-                        class="table"
-                        key-field="Id"
-                        data={tableData}
-                        columns={columns}
-                        onrowselection={getSelectedRows}
+                    class="table"
+                    key-field="Id"
+                    data={tableData}
+                    columns={columns}
+                    onrowselection={getSelectedRows}
+                    onsave={handleOrderSave}
+                    draft-values={draftValues}
                 ></lightning-datatable>
             </div>
         </lightning-card>
