@@ -22,6 +22,7 @@ import printUpdate from '@salesforce/label/c.PrintUpdate';
 import loadId from '@salesforce/label/c.LoadId';
 import depot from '@salesforce/label/c.Depot';
 import deliveryDate from '@salesforce/label/c.DeliveryDate';
+import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate'
 import orderId from '@salesforce/label/c.OrderId';
 import accountName from '@salesforce/label/c.AccountName';
 import status from '@salesforce/label/c.Status';
@@ -40,7 +41,7 @@ const columns = [
     {label: 'Driver', fieldName: 'Load__rDriverFullName__c', sortable: true},
     {label: depot, fieldName: 'Depot__c', sortable: true},
     {
-        label: 'Requested Delivery Date', fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+        label: requestedDeliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
@@ -146,7 +147,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
             'Depot', null, this.depotPicklist, null, 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'Load__r.DeliveryDate__c',
-            'Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
+            'Planned Delivery Date', null, null, 'Load__r.DeliveryDate__c', 'equals'));
 
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'Status',
             'Status', null, this.statusPicklist, null, 'equals'));

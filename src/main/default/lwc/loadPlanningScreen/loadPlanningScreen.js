@@ -16,7 +16,7 @@ import {basicSort} from 'c/sortingService';
 
 import loadId from '@salesforce/label/c.LoadId';
 import depot from '@salesforce/label/c.Depot';
-import deliveryDate from '@salesforce/label/c.DeliveryDate';
+import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate';
 import primaryGrid from '@salesforce/label/c.PrimaryGrid';
 import status from '@salesforce/label/c.Status';
 import orderId from '@salesforce/label/c.OrderId';
@@ -40,7 +40,7 @@ import tamName from '@salesforce/label/c.TamName';
 
 const columns = [
     {
-        label: deliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
+        label: requestedDeliveryDate, fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
@@ -154,7 +154,7 @@ export default class LoadPlanningScreen extends LightningElement {
     prepareFilterDefinition() {
         try {
             this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'DeliveryDate__c',
-                'Delivery Date', null, null, null, 'equals', false));
+                'Requested Delivery Date', null, null, null, 'equals', false));
 
             this.filterFields.push(this.createInputFieldDefinitionJson('Text', 'Grid__c',
                 'Grid', null, null, null, 'contains', false));

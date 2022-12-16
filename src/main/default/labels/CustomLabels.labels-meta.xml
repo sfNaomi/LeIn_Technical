@@ -289,6 +289,14 @@
         <value>Delivery Date</value>
     </labels>
     <labels>
+        <fullName>RequestedDeliveryDate</fullName>
+        <categories>LogisticUpdateScreen, LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RequestedDeliveryDate</shortDescription>
+        <value>Requested Delivery Date</value>
+    </labels>
+    <labels>
         <fullName>OrderId</fullName>
         <categories>LogisticUpdateScreen</categories>
         <language>en_US</language>
