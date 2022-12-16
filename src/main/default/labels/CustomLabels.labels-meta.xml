@@ -282,11 +282,19 @@
     </labels>
     <labels>
         <fullName>DeliveryDate</fullName>
-        <categories>LogisticUpdateScreen, Delivery Note</categories>
+        <categories>Delivery Note</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>DeliveryDate</shortDescription>
         <value>Delivery Date</value>
+    </labels>
+    <labels>
+        <fullName>PlannedDeliveryDate</fullName>
+        <categories>LogisticUpdateScreen, LoadPlanningScreen</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeliveryDate</shortDescription>
+        <value>Planned Delivery Date</value>
     </labels>
     <labels>
         <fullName>RequestedDeliveryDate</fullName>
