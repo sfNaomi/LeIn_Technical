@@ -10,6 +10,7 @@ import updateOrders from '@salesforce/apex/LoadPlanningScreenController.updateOr
 import {processError} from 'c/errorHandlingService';
 import {replaceStringValues} from 'c/stringOperationsService';
 import {setTabNameAndIcon} from 'c/workspaceApiService';
+import {basicSort} from 'c/sortingService';
 import {NavigationMixin} from 'lightning/navigation';
 
 import isDepotUser from '@salesforce/customPermission/DepotUser';
@@ -34,15 +35,17 @@ import invoicePrinted from '@salesforce/label/c.InvoicePrinted';
 import palletSequence from '@salesforce/label/c.PickSheetPalletSequence';
 
 const columns = [
-    {label: loadId, fieldName: 'Load__rName'},
-    {label: depot, fieldName: 'Depot__c'},
+    {label: loadId, fieldName: 'Load__rName', sortable: true},
+    {label: 'Vehicle', fieldName: 'Load__rVehicle__rName', sortable: true},
+    {label: 'Driver', fieldName: 'Load__rDriverFullName__c', sortable: true},
+    {label: depot, fieldName: 'Depot__c', sortable: true},
     {
         label: 'Requested Delivery Date', fieldName: 'DeliveryDate__c', type: 'date', typeAttributes: {
             day: 'numeric',
             month: 'numeric',
             year: 'numeric',
             hour12: false
-        }
+        }, sortable: true
     },
     {
         label: deliveryDate, fieldName: 'Load__rDeliveryDate__c', type: 'date', typeAttributes: {
@@ -50,7 +53,7 @@ const columns = [
             month: 'numeric',
             year: 'numeric',
             hour12: false
-        }
+        }, sortable: true
     },
     {
         label: orderId,
@@ -59,9 +62,9 @@ const columns = [
         typeAttributes: {label: {fieldName: 'OrderNumber'}},
         target: '_blank'
     },
-    {label: accountName, fieldName: 'AccountName__c'},
-    {label: status, fieldName: 'Status'},
-    {label: palletSequence, fieldName: 'PalletSequence__c', editable: true},
+    {label: accountName, fieldName: 'AccountName__c', sortable: true},
+    {label: status, fieldName: 'Status', sortable: true},
+    {label: palletSequence, fieldName: 'PalletSequence__c', sortable: true, editable: true},
     {label: pickingSheetPrinted, fieldName: 'PickingSheetPrinted__c', type: 'boolean'},
     {label: pickingCompleted, fieldName: 'PickingCompleted__c', type: 'boolean'},
     {label: isLoaded, fieldName: 'IsLoaded__c', type: 'boolean'},
@@ -99,6 +102,8 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     @track tableData = [];
     @track selectedRows = [];
     columns = columns;
+    @track sortBy;
+    @track sortDirection;
     toFlatten = true;
     limitOfRowsReturned = 900;
     isLoading = false;
@@ -116,7 +121,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {
@@ -574,6 +579,12 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                 }
             }
         });
+    }
+
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.tableData = basicSort(this.sortBy, this.sortDirection, this.tableData);
     }
 
     /** Method to obtain text with replaced dynamic values

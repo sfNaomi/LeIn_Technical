@@ -66,9 +66,12 @@
                 <lightning-datatable
                     class="table"
                     key-field="Id"
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
                     data={tableData}
                     columns={columns}
                     onrowselection={getSelectedRows}
+                    onsort={doSorting}
                     onsave={handleOrderSave}
                     draft-values={draftValues}
                 ></lightning-datatable>
