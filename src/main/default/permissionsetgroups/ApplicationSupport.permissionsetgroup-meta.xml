@@ -66,6 +66,7 @@
     <permissionSets>aforza__Aforza_Visit</permissionSets>
     <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
     <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
+    <permissionSets>bt_stripe__Stripe_Billing</permissionSets>
     <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
