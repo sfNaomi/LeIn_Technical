@@ -5,4 +5,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Transport Manager</name>
     <opportunityAccessLevel>None</opportunityAccessLevel>
+    <parentRole>ApplicationSupport</parentRole>
 </Role>
