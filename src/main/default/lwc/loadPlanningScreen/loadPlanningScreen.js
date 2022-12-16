@@ -840,4 +840,8 @@ export default class LoadPlanningScreen extends LightningElement {
           RecordType.DeveloperName = 'EDIOrder' OR RecordType.DeveloperName = 'ECommerceOrder' 
           OR RecordType.DeveloperName = 'ReturnOrder')`
     }
+
+    get maxResults() {
+        return 20;
+    }
 }
