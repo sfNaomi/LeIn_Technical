@@ -26,10 +26,9 @@
         <label>Card Payment</label>
     </customValue>
     <customValue>
-        <fullName>Credit</fullName>
+        <fullName>JDE DD</fullName>
         <default>false</default>
-        <isActive>false</isActive>
-        <label>Credit</label>
+        <label>JDE DD</label>
     </customValue>
     <customValue>
         <fullName>Buying Group Central Billing</fullName>

@@ -11,7 +11,7 @@
 
 public without sharing class InvoiceEmailService {
     private static final Set<String> NO_INVOICE_PAYMENT_METHODS = new Set<String>{'Cash', 'Cheque'};
-    private static final Set<String> TO_INVOICE_PAYMENT_METHODS = new Set<String>{'Direct Debit', 'Bacs'};
+    private static final Set<String> TO_INVOICE_PAYMENT_METHODS = new Set<String>{'Direct Debit', 'Bacs', 'JDE DD'};
     private static final String CARD_PAYMENT_METHOD = 'Card Payment';
 
     private static final String TYPE_CREDIT_NOTE = 'Credit Note';
@@ -91,7 +91,7 @@ public without sharing class InvoiceEmailService {
                 continue;
             }
 
-            // DD & Bacs payment types -> send invoice if invoice type on account is set to email
+            // DD, Bacs & JDE DD payment types -> send invoice if invoice type on account is set to email
             // second condition is to check for Card Payment, and there are two options in it
             // we expect only one of the scenarios to be active
             if (TO_INVOICE_PAYMENT_METHODS.contains(invoice.aforza__Order__r.PaymentMethod__c) &&

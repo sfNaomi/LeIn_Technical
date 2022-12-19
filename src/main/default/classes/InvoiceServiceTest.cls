@@ -461,6 +461,79 @@ private with sharing class InvoiceServiceTest {
 	}
 
 	@IsTest
+	private static void testCreateInvoicesFromOrders_CheckPaymentsLinksJdeDd() {
+		String jdePaymentMethod = 'JDE DD';
+		String approvedTransactionStatus = 'Approved';
+		// create product
+		Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+
+		// add new product to standard PB
+		TdfSObjectFactory.insertSObject(
+			new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+		);
+
+		// create pricebook and add products to pricebook
+		Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+		PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+			new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+		);
+
+		// create account
+		Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+			new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Default_Price_Book__c = newPricebook.Id)
+		);
+
+		Contact newContact = (Contact) TdfSObjectFactory.insertSObject(
+			new Contact(AccountId = dpAccount.Id, Email = 'test@test.com')
+		);
+		dpAccount.aforza__Primary_Contact__c = newContact.Id;
+		update dpAccount;
+
+		// create order and add items to the order
+		Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+			new Order(
+				RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
+				AccountId = dpAccount.Id,
+				Status = 'Draft',
+				Pricebook2Id = newPricebook.Id,
+				PaymentMethod__c = jdePaymentMethod
+			)
+		);
+		TdfSObjectFactory.insertSObject(
+			new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+		);
+
+		//insert BT payment
+		TdfSObjectFactory.insertSObject(
+			new bt_stripe__Transaction__c(
+				bt_stripe__Related_Account__c = dpAccount.Id,
+				RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
+				Order__c = newOrder.Id
+			)
+		);
+
+		Test.startTest();
+		InvoiceService.createInvoicesFromOrders(new Set<Id>{newOrder.Id});
+		Test.stopTest();
+
+		// get invoice
+		aforza__Invoice__c invoice = [SELECT Id, Gross__c FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+
+		// check that payments are linked (Aforza payment is created when BT is created
+		List<bt_stripe__Transaction__c> btTransactions = [SELECT Id, Invoice__c, bt_stripe__Amount_To_Capture__c FROM bt_stripe__Transaction__c WHERE Order__c = :newOrder.Id];
+		Assert.isTrue(btTransactions.size() == 1, 'There should be single Payment');
+		Assert.areEqual(invoice.Id, btTransactions[0].Invoice__c);
+		Assert.areEqual(invoice.Gross__c, btTransactions[0].bt_stripe__Amount_To_Capture__c);
+
+		List<aforza__Payment_Transaction__c> paymentTransactions = [SELECT Id, aforza__Invoice__c, aforza__Amount__c, aforza__Status__c FROM aforza__Payment_Transaction__c];
+		Assert.isTrue(paymentTransactions.size() == 1, 'There should be single Payment');
+		Assert.areEqual(invoice.Id, paymentTransactions[0].aforza__Invoice__c);
+		Assert.areEqual(invoice.Gross__c, paymentTransactions[0].aforza__Amount__c);
+		Assert.areEqual(approvedTransactionStatus, paymentTransactions[0].aforza__Status__c);
+	}
+
+
+	@IsTest
 	private static void testComputeInvoiceStatus_CreditCardAccount() {
 		String paymentMethod = 'Credit Card';
 

@@ -1460,6 +1460,31 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testCreatePaymentTransactionForJdeDd() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'JDE DD' )
+        );
+        TdfSObjectFactory.insertSObject(
+            new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_JDE_DD_ID, aforza__Account__c = acc.Id)
+        );
+        Order order = (Order) TdfSObjectFactory.insertSObject(
+            new Order(AccountId = acc.Id, PaymentMethod__c = 'JDE DD', RecordTypeId = RecordTypes.ORDER_EDI_ID)
+        );
+        TdfSObjectFactory.insertSObject(new OrderItem(OrderId = order.Id));
+
+        Test.startTest();
+        order.Status = 'Activated';
+        update order;
+        Test.stopTest();
+
+        aforza__Payment_Transaction__c pTransaction = [
+            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
+        ];
+        Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
+        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
+    }
+
+    @IsTest
     private static void testOrdersCancellation() {
         // create product
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());

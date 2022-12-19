@@ -168,7 +168,7 @@ public with sharing class OrderTriggerHandler {
     public static void createPaymentTransaction(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> orderIdsToCreatePaymentTransactionFrom = new Set<Id>();
         Set<String> allowedPrimaryPaymentMethods = new Set<String>{
-            'Direct Debit', 'Bacs'
+            'Direct Debit', 'Bacs', 'JDE DD'
         };
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);

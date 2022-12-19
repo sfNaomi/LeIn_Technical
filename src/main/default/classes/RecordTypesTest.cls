@@ -49,6 +49,8 @@
         notNull(RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT_ID);
         notNull(RecordTypes.PAYMENT_METHOD_CHEQUE);
         notNull(RecordTypes.PAYMENT_METHOD_CHEQUE_ID);
+        notNull(RecordTypes.PAYMENT_METHOD_JDE_DD);
+        notNull(RecordTypes.PAYMENT_METHOD_JDE_DD_ID);
     }
 
     @IsTest private static void testBtPaymentMethodRecordTypes() {

@@ -34,6 +34,27 @@ private with sharing class PaymentMethodTriggerHandlerTest {
         Assert.areEqual('Cash', dpAccountInserted.PrimaryPaymentMethod__c);
     }
 
+    private static void testAssignPrimaryPaymentMethodToParentAccount_onInsertJdeDd() {
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID
+            )
+        );
+
+        Test.startTest();
+        //new Payment Method
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Method__c(
+            RecordTypeId = RecordTypes.PAYMENT_METHOD_JDE_DD_ID,
+            aforza__Account__c = dpAccount.Id,
+            aforza__Primary__c = true
+        ));
+        Test.stopTest();
+
+        Account dpAccountInserted = [SELECT Id, PrimaryPaymentMethod__c FROM Account WHERE Id = :dpAccount.Id];
+
+        Assert.areEqual('JDE DD', dpAccountInserted.PrimaryPaymentMethod__c);
+    }
+
     @IsTest
     private static void testAssignPrimaryPaymentMethodToParentAccount_onUpdate() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(

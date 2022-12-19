@@ -45,10 +45,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Card Payment</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cash</fullName>
             <default>false</default>
         </values>
@@ -57,7 +53,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Card Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Direct Debit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JDE DD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

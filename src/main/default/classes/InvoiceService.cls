@@ -6,6 +6,7 @@ public with sharing class InvoiceService {
     private static final String TYPE_INVOICE = 'Invoice';
     private static final String TYPE_CREDIT_NOTE = 'Credit Note';
     private static final String DD_PAYMENT_METHOD = 'Direct Debit';
+    private static final String JDE_DD_PAYMENT_METHOD = 'JDE DD';
     private static final String BACS_PAYMENT_METHOD = 'Bacs';
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
@@ -86,7 +87,8 @@ public with sharing class InvoiceService {
             Decimal amount = invoicesByOriginalOrderId?.get(newTransaction.OrderNumber__c)?.Gross__c;
             newTransaction.aforza__Invoice__c = invoiceId;
             newTransaction.aforza__Amount__c = amount;
-            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD) {
+            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD ||
+                newTransaction.OrderNumber__r.PaymentMethod__c == JDE_DD_PAYMENT_METHOD) {
                 newTransaction.aforza__Status__c = APPROVED_TRANSACTION_STATUS;
             }
         }
@@ -248,7 +250,7 @@ public with sharing class InvoiceService {
         	(orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
            ) {
             invoiceStatus = PAID_INVOICE_STATUS;
-        } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD) {
+        } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD || paymentMethod == JDE_DD_PAYMENT_METHOD) {
             invoiceStatus = APPROVED_INVOICE_STATUS;
         } else if (paymentMethod == CREDIT_CARD_PAYMENT_METHOD) {
             invoiceStatus = PENDING_PAYMENT_INVOICE_STATUS;
