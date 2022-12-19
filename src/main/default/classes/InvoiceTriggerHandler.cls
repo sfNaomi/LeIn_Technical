@@ -14,7 +14,7 @@ public with sharing class InvoiceTriggerHandler {
         'EDIOrder', 'FieldDirectOrder', 'TelesalesOrder', 'VanSalesOrder'
     };
     private static final String ORDER_RECORD_TYPE_COMMERCE = 'ECommerceOrder';
-    private static final String ORDER_RECORD_TYPE_RETURN = 'ReturnOrder';
+    private static final String ORDER_TYPE_RETURN = 'Return Order';
 
     //'StraightToJDEOrder' - yet unused order record types
 
@@ -46,7 +46,7 @@ public with sharing class InvoiceTriggerHandler {
             }
             if (invoice.Gross__c < 0 && invoice.aforza__Order__r.aforza__Original_Order__c != null &&
                 invoice.aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c == 'Card Payment' &&
-                invoice.aforza__Order__r.RecordType.DeveloperName == ORDER_RECORD_TYPE_RETURN) {
+                invoice.aforza__Order__r.Type == ORDER_TYPE_RETURN) {
                 ordersToGetTransactionsFor.add(invoice.aforza__Order__r.aforza__Original_Order__c);
                 refundInvoices.add(invoice);
             }
@@ -137,7 +137,8 @@ public with sharing class InvoiceTriggerHandler {
             SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, PaymentLink__c,
-                aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c, aforza__Order__r.aforza__Original_Order__c
+                aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c, aforza__Order__r.aforza__Original_Order__c,
+                aforza__Order__r.Type
             FROM aforza__Invoice__c
             WHERE Id IN :invoicesIds
         ];

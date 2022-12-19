@@ -34,6 +34,7 @@
     <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteTelesalesAccess</permissionSets>
+    <permissionSets>RunFlowsAccess</permissionSets>
     <permissionSets>SegmentationBaseAccess</permissionSets>
     <permissionSets>SegmentationEditAccess</permissionSets>
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>

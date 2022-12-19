@@ -48,6 +48,11 @@
                 <default>false</default>
                 <label>Bacs</label>
             </value>
+            <value>
+                <fullName>JDE DD</fullName>
+                <default>false</default>
+                <label>JDE DD</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

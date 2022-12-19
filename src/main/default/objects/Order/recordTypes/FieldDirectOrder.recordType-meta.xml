@@ -40,26 +40,30 @@
     </picklistValues>
     <picklistValues>
         <picklist>PaymentMethod__c</picklist>
-        <values>
-            <fullName>Bacs</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Card Payment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cash</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cheque</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Direct Debit</fullName>
-            <default>false</default>
-        </values>
+            <values>
+                <fullName>Bacs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cheque</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Debit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JDE DD</fullName>
+                <default>false</default>
+            </values>
     </picklistValues>
     <picklistValues>
         <picklist>ReturnReason__c</picklist>

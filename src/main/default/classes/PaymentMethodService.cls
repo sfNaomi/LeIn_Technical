@@ -31,6 +31,9 @@ public with sharing class PaymentMethodService {
                      if (newPaymentMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_CHEQUE_ID) {
                             parentAccount.PrimaryPaymentMethod__c = 'Cheque';
                      }
+                     if (newPaymentMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_JDE_DD_ID) {
+                            parentAccount.PrimaryPaymentMethod__c = 'JDE DD';
+                     }
                      accountsToUpdate.add(parentAccount);    
               } 
        }

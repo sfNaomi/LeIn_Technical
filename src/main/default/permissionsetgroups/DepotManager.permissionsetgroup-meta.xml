@@ -4,11 +4,14 @@
     <label>Depot Manager</label>
     <mutingPermissionSets>DepotManagerMuted</mutingPermissionSets>
     <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccountLogisticsAccess</permissionSets>
-    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>    
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>

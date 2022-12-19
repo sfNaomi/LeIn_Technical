@@ -288,6 +288,21 @@ public inherited sharing class RecordTypes {
         }
         private set;
     }
+
+    public static RecordTypeInfo PAYMENT_METHOD_JDE_DD {
+        get {
+            return PAYMENT_METHOD_JDE_DD = PAYMENT_METHOD_JDE_DD != null
+                    ? PAYMENT_METHOD_JDE_DD : Schema.SObjectType.aforza__Payment_Method__c.getRecordTypeInfosByDeveloperName().get('JdeDd');
+        }
+        private set;
+    }
+
+    public static Id PAYMENT_METHOD_JDE_DD_ID {
+        get { 
+            return PAYMENT_METHOD_JDE_DD.getRecordTypeId(); 
+        }
+        private set;
+    }
     
     public static RecordTypeInfo BT_PAYMENT_METHOD_CARD {
         get {

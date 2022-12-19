@@ -992,6 +992,10 @@
             <fullName>Direct Debit</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>JDE DD</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>RTM__c</picklist>

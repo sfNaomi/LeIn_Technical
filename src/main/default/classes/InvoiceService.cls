@@ -6,6 +6,7 @@ public with sharing class InvoiceService {
     private static final String TYPE_INVOICE = 'Invoice';
     private static final String TYPE_CREDIT_NOTE = 'Credit Note';
     private static final String DD_PAYMENT_METHOD = 'Direct Debit';
+    private static final String JDE_DD_PAYMENT_METHOD = 'JDE DD';
     private static final String BACS_PAYMENT_METHOD = 'Bacs';
     private static final String PAID_INVOICE_STATUS = 'Paid in Full';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
@@ -86,7 +87,8 @@ public with sharing class InvoiceService {
             Decimal amount = invoicesByOriginalOrderId?.get(newTransaction.OrderNumber__c)?.Gross__c;
             newTransaction.aforza__Invoice__c = invoiceId;
             newTransaction.aforza__Amount__c = amount;
-            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD) {
+            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD ||
+                newTransaction.OrderNumber__r.PaymentMethod__c == JDE_DD_PAYMENT_METHOD) {
                 newTransaction.aforza__Status__c = APPROVED_TRANSACTION_STATUS;
             }
         }
@@ -190,7 +192,7 @@ public with sharing class InvoiceService {
         // set fixed fields
         newInvoice.aforza__Issued_Date__c = computeInvoiceIssuedDate(newInvoice.aforza__Issued_Date__c);
         newInvoice.aforza__Due_Date__c = calculateInvoiceDueDate(existingOrder.Account.PaymentTerms__c, newInvoice.aforza__Issued_Date__c);
-        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c, existingOrder.RecordTypeId);
+        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c, existingOrder.RecordTypeId, existingOrder.TotalAmount);
 
         // populate fields on the new invoice based on mapping
         CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
@@ -241,12 +243,14 @@ public with sharing class InvoiceService {
      * @date 2022-11-10
      */
     @TestVisible
-    private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId) {
+    private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId, Decimal orderTotalAmount) {
         String invoiceStatus = '';
 
-        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID) {
+        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID ||
+        	(orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
+           ) {
             invoiceStatus = PAID_INVOICE_STATUS;
-        } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD) {
+        } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD || paymentMethod == JDE_DD_PAYMENT_METHOD) {
             invoiceStatus = APPROVED_INVOICE_STATUS;
         } else if (paymentMethod == CREDIT_CARD_PAYMENT_METHOD) {
             invoiceStatus = PENDING_PAYMENT_INVOICE_STATUS;

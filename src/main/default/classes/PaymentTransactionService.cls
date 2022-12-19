@@ -35,6 +35,9 @@ public with sharing class PaymentTransactionService {
             if (pMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT_ID) {
                 primaryMethodToPaymentRecord.put((pMethod.aforza__Account__c+'Bacs'), pMethod);
             }
+            if (pMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_JDE_DD_ID) {
+                primaryMethodToPaymentRecord.put((pMethod.aforza__Account__c+'JDE DD'), pMethod);
+            }
         }
 
         for( Order ord: parentOrders.values() ) {

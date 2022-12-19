@@ -116,6 +116,32 @@ private with sharing class InvoiceEmailServiceTest {
     }
 
     @IsTest
+    private static void testEvaluateInvoiceIfToCreatePdfAndSend_InvoiceJdeDd() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));
+        acc.aforza__Primary_Contact__c = contact.Id;
+        update acc;
+
+        Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false, RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'JDE DD'));
+
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id, aforza__Order__c = order.Id));
+
+        // get invoices with data:
+        List<aforza__Invoice__c> invoicesWithData = InvoiceEmailService.getInvoicesWithRequiredParameters(new Set<Id>{
+            invoice.Id
+        });
+
+        //testing logic to determine if to send or not
+        Test.startTest();
+        Map<Id, String> evaluatedInvoices = InvoiceEmailService.evaluateInvoiceIfToSendInvoice(invoicesWithData);
+        Test.stopTest();
+
+        Assert.isTrue(evaluatedInvoices.size() == 1);
+        Assert.isTrue(evaluatedInvoices.containsKey(invoice.Id));
+        Assert.areEqual(evaluatedInvoices.get(invoice.Id), InvoiceEmailService.INVOICE_EMAIL_NO_PAYMENT_NAME);
+    }
+
+    @IsTest
     private static void testEvaluateInvoiceIfToCreatePdfAndSend_InvoiceCardPayment() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));

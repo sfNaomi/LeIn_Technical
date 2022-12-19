@@ -116,6 +116,11 @@
           ]
           },
           {
+          "Name":"AccountStatus__c",
+          "Details":{
+          "Required":false
+          },
+          {
           "Name":"BarrDirectAppUser__c",
           "Details":{
           "Required":false

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventUsersFromUpdatedStatusAfterUnplan</fullName>
+    <active>true</active>
+    <description>Only depot team, Application support and in Sales Support can move orders to other status past unplanned.</description>
+    <errorConditionFormula>AND( ISCHANGED( Status) , ISPICKVAL( PRIORVALUE(Status) ,&apos;Unplanned&apos;), ($Permission.UpdateOrderStatusPastUnplanned == FALSE))</errorConditionFormula>
+    <errorMessage>Do not have permission to move Status past Unplanned</errorMessage>
+</ValidationRule>
