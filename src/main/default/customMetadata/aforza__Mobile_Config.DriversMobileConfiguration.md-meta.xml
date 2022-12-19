@@ -13,16 +13,16 @@
     <values>
         <field>aforza__Config_JSON__c</field>
         <value xsi:type="xsd:string">{
-          "OrderComplete":[
+          "AutoActions": {
+          "OrderCheckoutEntry": [
           {
-          "Type":"ACTION",
-          "Name":"Offline-Action",
-          "Action":{
           "Type":"ENGINE",
           "Title":"Validate Order",
           "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForDrivers.js"
           }
+          ]
           },
+          "OrderComplete":[
           {
           "Type":"FORM",
           "Title":"Section",
@@ -119,6 +119,7 @@
           "Name":"AccountStatus__c",
           "Details":{
           "Required":false
+          }
           },
           {
           "Name":"BarrDirectAppUser__c",
