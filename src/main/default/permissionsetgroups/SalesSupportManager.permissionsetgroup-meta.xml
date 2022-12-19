@@ -16,7 +16,8 @@
     <permissionSets>AccountSalesSupportManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
-    <permissionSets>AssortmentCruObjectAccess</permissionSets>
+    <permissionSets>AssortmentCruObjectAccess</permissionSets>    
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>

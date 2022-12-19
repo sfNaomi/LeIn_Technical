@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>UpdateOrderStatusPastUnplanned</name>
+    </customPermissions>
+    <description>Permission to move orders to other status past unplanned limited to the depot team, Application support and in Sales Support</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Allow Order Update Past Unplanned</label>
+</PermissionSet>
