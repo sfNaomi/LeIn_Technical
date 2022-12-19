@@ -23,6 +23,7 @@
     <permissionSets>InventoryProductBaseAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>InvoiceCreateAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>OrderBusinessDevelopmentRepAccess</permissionSets>
     <permissionSets>OutletAssetBaseAccess</permissionSets>
