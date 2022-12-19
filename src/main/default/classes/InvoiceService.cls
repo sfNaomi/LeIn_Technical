@@ -190,7 +190,7 @@ public with sharing class InvoiceService {
         // set fixed fields
         newInvoice.aforza__Issued_Date__c = computeInvoiceIssuedDate(newInvoice.aforza__Issued_Date__c);
         newInvoice.aforza__Due_Date__c = calculateInvoiceDueDate(existingOrder.Account.PaymentTerms__c, newInvoice.aforza__Issued_Date__c);
-        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c, existingOrder.RecordTypeId);
+        newInvoice.aforza__Status__c = computeInvoiceStatus(existingOrder.PaymentMethod__c, newInvoice.aforza__Status__c, existingOrder.RecordTypeId, existingOrder.TotalAmount);
 
         // populate fields on the new invoice based on mapping
         CommonUtility.populateTargetSObjectFromSourceSObjectBasedOnMapping(newInvoice, existingOrder, ORDER_TO_INVOICE_MAPPING);
@@ -241,10 +241,12 @@ public with sharing class InvoiceService {
      * @date 2022-11-10
      */
     @TestVisible
-    private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId) {
+    private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId, Decimal orderTotalAmount) {
         String invoiceStatus = '';
 
-        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID) {
+        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID ||
+        	(orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
+           ) {
             invoiceStatus = PAID_INVOICE_STATUS;
         } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD) {
             invoiceStatus = APPROVED_INVOICE_STATUS;

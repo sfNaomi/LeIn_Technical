@@ -281,23 +281,42 @@ private with sharing class InvoiceServiceTest {
 
 		String initialInvoiceStatus = null;
 		String expectedInvoiceStatus = 'Paid in Full';
-
+		Decimal orderTotalAmount = 200.00;
+        
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null, orderTotalAmount);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
 	}
+	
+    @IsTest
+	private static void testComputeInvoiceStatus_ReturnOrderZeroAmount() {
+        String paymentMethod = 'Cash';
+	
+		String initialInvoiceStatus = null;
+		String expectedInvoiceStatus = 'Paid in Full';
+		Id orderRecordTypeId = RecordTypes.ORDER_RETURN_ID;
+        Decimal orderTotalAmount = 0;
+        
+		Test.startTest();
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, orderRecordTypeId, orderTotalAmount);
+		Test.stopTest();
 
+		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
+	}
+    
 	@IsTest
 	private static void testComputeInvoiceStatus_NonDirectDebitAccount() {
 		String paymentMethod = 'Direct Debit';
 
 		String initialInvoiceStatus = null;
 		String expectedInvoiceStatus = 'Paid in Full';
+        
+        Decimal orderTotalAmount = 200.00;
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null, orderTotalAmount);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
@@ -447,9 +466,10 @@ private with sharing class InvoiceServiceTest {
 
 		String initialInvoiceStatus = null;
 		String expectedInvoiceStatus = 'Pending Payment';
+        Decimal orderTotalAmount = 200.00;
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, null, orderTotalAmount);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
@@ -462,9 +482,10 @@ private with sharing class InvoiceServiceTest {
 		String initialInvoiceStatus = null;
 		String expectedInvoiceStatus = 'Paid in Full';
 		Id orderRecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID;
+        Decimal orderTotalAmount = 200.00;
 
 		Test.startTest();
-		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, orderRecordTypeId);
+		String actualInvoiceStatus = InvoiceService.computeInvoiceStatus(paymentMethod, initialInvoiceStatus, orderRecordTypeId, orderTotalAmount);
 		Test.stopTest();
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
