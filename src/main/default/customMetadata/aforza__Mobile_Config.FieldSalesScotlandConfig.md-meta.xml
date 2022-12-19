@@ -13,6 +13,20 @@
     <values>
         <field>aforza__Config_JSON__c</field>
         <value xsi:type="xsd:string">{
+          "AutoActions": {
+          "OrderCheckoutEntry": [
+          {
+          "Type":"ENGINE",
+          "Title":"Validate Order",
+          "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForFieldSales.js"
+          },
+          {
+          "Type":"ENGINE",
+          "Title":"Check Account Credit Limit",
+          "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
+          }
+          ]
+          },
           "SideMenu":[
           {
           "Type":"ACTION",
@@ -25,24 +39,6 @@
           }
           ],
           "OrderComplete":[
-          {
-          "Type":"ACTION",
-          "Name":"Offline-Action",
-          "Action":{
-          "Type":"ENGINE",
-          "Title":"Validate Order",
-          "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForFieldSales.js"
-          }
-          },
-          {
-          "Type":"ACTION",
-          "Name":"Offline-Action2",
-          "Action":{
-          "Type":"ENGINE",
-          "Title":"Check Account Credit Limit",
-          "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
-          }
-          },
           {
           "Type":"FORM",
           "Title":"Section",
@@ -138,6 +134,7 @@
           "Name":"AccountStatus__c",
           "Details":{
           "Required":false
+          }
           },
           {
           "Name":"BarrDirectAppUser__c",
