@@ -4,6 +4,8 @@
     <label>Depot Operations</label>
     <mutingPermissionSets>DepotOperationsMuted</mutingPermissionSets>
     <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessPickSheet</permissionSets>
