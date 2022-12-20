@@ -27,7 +27,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Customer</recordType>
         <type>Flexipage</type>
-        <profile>AG Barr Platform User Driver</profile>
+        <profile>Driver AG Barr Platform</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -36,7 +36,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Customer</recordType>
         <type>Flexipage</type>
-        <profile>AG Barr Platform User Sales Rep England</profile>
+        <profile>SR Eng AG Barr Platform</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -45,7 +45,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Customer</recordType>
         <type>Flexipage</type>
-        <profile>AG Barr Platform User Sales Rep Scotland</profile>
+        <profile>SR Scot AG Barr Platform</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

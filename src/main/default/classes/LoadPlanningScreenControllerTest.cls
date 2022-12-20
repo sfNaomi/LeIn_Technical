@@ -40,7 +40,7 @@ private class LoadPlanningScreenControllerTest {
 
     @IsTest
     private static void testFetchVehicle() {
-        Profile platformUserProfile = [SELECT Id FROM Profile WHERE Name = 'AG Barr Platform User Driver'];
+        Profile platformUserProfile = [SELECT Id FROM Profile WHERE Name = 'Driver AG Barr Platform'];
         UserRole role = [SELECT Id FROM UserRole WHERE DeveloperName = 'Driver'];
         User user = (User) TdfSObjectFactory.insertSObject(new User(ProfileId = platformUserProfile.Id, UserRoleId = role.Id));
         User adminUser = [SELECT Id FROM User WHERE Id =:System.UserInfo.getUserId()];
