@@ -356,6 +356,13 @@
                 </componentInstanceProperties>
                 <componentName>bt_stripe:VirtualTerminal</componentName>
                 <identifier>bt_stripe_VirtualTerminal</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PreAuthCaptured__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
