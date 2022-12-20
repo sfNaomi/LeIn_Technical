@@ -49,6 +49,7 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>PromotionBaseAccess</permissionSets>
     <permissionSets>PromotionEditAccess</permissionSets>
+    <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationBaseAccess</permissionSets>

@@ -53,6 +53,7 @@
     <permissionSets>ProductBaseAccess</permissionSets>
     <permissionSets>ProductCrudObjectAccess</permissionSets>
     <permissionSets>PromotionAdminAccess</permissionSets>
+    <permissionSets>RecurringRecordAdminAccess</permissionSets>
     <permissionSets>RouteBaseAccess</permissionSets>
     <permissionSets>RouteEditAccess</permissionSets>
     <permissionSets>SegmentationAdminAccess</permissionSets>
