@@ -135,7 +135,8 @@ public with sharing class CommonUtility {
          for (String urlMap: mappedValuesAndParameters.keyset()) {
              parameterString += (urlMap + '=' + mappedValuesAndParameters.get(urlMap) + '&');
          }
-        
+         parameterString += ('ddplanreference=' +  mappedValuesAndParameters.get('dddebtorreference'));
+
          parameterString = parameterString.trim();
          baseUrl = String.valueOf(mapping.BaseUrl__c).trim();
          url = baseUrl + '?' + parameterString;
