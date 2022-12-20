@@ -16,4 +16,15 @@
         <senderType>CurrentUser</senderType>
         <template>AutomationEmails/RequestToCloseAccount</template>
     </alerts>
+    <alerts>
+        <fullName>SendNotificationAboutNewAccountCreated</fullName>
+        <ccEmails>fusionnewdps@agbarr.co.uk</ccEmails>
+        <description>Send Notification About New Account Created</description>
+        <protected>false</protected>
+        <recipients>
+            <type>accountOwner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>AutomationEmails/NewAccountCreatedNotification</template>
+    </alerts>
 </Workflow>
