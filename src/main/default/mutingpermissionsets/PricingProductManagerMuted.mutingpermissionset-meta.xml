@@ -453,15 +453,6 @@
         <allowEdit>false</allowEdit>
         <allowRead>false</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>aforza__Assortment_Product__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
         <object>aforza__Assortment__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
