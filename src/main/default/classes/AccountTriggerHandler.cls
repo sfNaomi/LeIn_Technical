@@ -215,43 +215,6 @@ public with sharing class AccountTriggerHandler {
         }
     }
     
-    public static void createAforzaPaymentMethodForBottomLineDdMandate(List<Account> newAccounts, Map<Id,Account> oldAccounts){
-        Set<Id> newAccountIds = new Set<Id>();
-        List<aforza__Payment_Method__c> aforzaPaymentMethodsToCreate = new List<aforza__Payment_Method__c>();
-        for (Account newAccount : newAccounts){
-            Account oldAccount = oldAccounts?.get(newAccount.Id);
-            if (((oldAccount == null && newAccount != null) || 
-                (oldAccount != null && 
-                 (
-                    (oldAccount.BottomlineRefNumber__c != newAccount.BottomlineRefNumber__c) || 
-                 	(oldAccount.DirectDebitMandateRef__c != newAccount.DirectDebitMandateRef__c) ||
-                 	(oldAccount.DdActive__c != newAccount.DdActive__c)
-                 )
-                )) &&
-                 (newAccount.BottomlineRefNumber__c != null && newAccount.DirectDebitMandateRef__c != null &&
-                 newAccount.DdActive__c == true)) 
-                {
-                    newAccountIds.add(newAccount.Id);
-            }
-        }
-        if(newAccountIds.size() > 0){
-        	for(Id accountId : newAccountIds){
-            	aforzaPaymentMethodsToCreate.add(createNewAforzaPaymentMethodAndPopulateNecessaryFields(accountId));
-        	}
-        }                                            
-        insert aforzaPaymentMethodsToCreate;
-    }
-
-    private static aforza__Payment_Method__c createNewAforzaPaymentMethodAndPopulateNecessaryFields(Id parentAccountId){
-        	aforza__Payment_Method__c newAforzaPaymentMethod = new aforza__Payment_Method__c();
-            newAforzaPaymentMethod.RecordTypeId=RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID;
-            newAforzaPaymentMethod.aforza__Account__c = parentAccountId;
-            newAforzaPaymentMethod.aforza__Active__c = true;
-            newAforzaPaymentMethod.aforza__Primary__c = true;
-        	
-            return newAforzaPaymentMethod;    
-	}
-
     public static void calculateAvailableCustomerCredit(List<Account> newAccounts, Map<Id,Account> oldAccounts) {
         Map<Id, Decimal> parentAccountIdToNewAvailableCredit = new Map<Id, Decimal>();
         for (Account newAccount : newAccounts){

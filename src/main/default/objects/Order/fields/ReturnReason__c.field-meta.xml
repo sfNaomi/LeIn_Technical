@@ -11,6 +11,62 @@
         <restricted>true</restricted>
         <valueSetName>OrderReturnReason</valueSetName>
         <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Unable to find delivery location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Delivery location inaccessible</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Shop closed within opening times</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Unable to meet opening times</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Customer did not order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Customer no longer wants order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Vehicle/Driver Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>No payment method available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Unsalable Product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Stock not on vehicle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Customer no longer wants product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Customer did not order product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Product unavailable at pick face</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Order</controllingFieldValue>
+            <valueName>Product not suitable for sale</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Return Order</controllingFieldValue>
             <valueName>Stock Damaged</valueName>
         </valueSettings>

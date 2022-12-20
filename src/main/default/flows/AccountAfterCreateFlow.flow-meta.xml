@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Notification_About_New_Account</name>
+        <label>Send Notification About New Account</label>
+        <locationX>50</locationX>
+        <locationY>815</locationY>
+        <actionName>Account.SendNotificationAboutNewAccountCreated</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>GetResultATTRec</name>
         <label>GetResultATTRec</label>
-        <locationX>324</locationX>
-        <locationY>623</locationY>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>AttributeID</assignToReference>
             <operator>Add</operator>
@@ -20,8 +35,8 @@
     <decisions>
         <name>Account_Record_Type</name>
         <label>Account Record Type</label>
-        <locationX>456</locationX>
-        <locationY>383</locationY>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>DP_Account</name>
@@ -65,7 +80,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -79,8 +94,11 @@
         <description>Create New DP attribute</description>
         <name>New_DP_Attribute_Assignment_Record_0</name>
         <label>New DP Attribute Assignment Record</label>
-        <locationX>324</locationX>
-        <locationY>743</locationY>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <connector>
+            <targetReference>Send_Notification_About_New_Account</targetReference>
+        </connector>
         <inputAssignments>
             <field>aforza__Account__c</field>
             <value>
@@ -98,8 +116,8 @@
     <recordLookups>
         <name>New_DP_Attribute</name>
         <label>New DP Attribute</label>
-        <locationX>324</locationX>
-        <locationY>503</locationY>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetResultATTRec</targetReference>
@@ -117,8 +135,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>330</locationX>
-        <locationY>48</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Account_Record_Type</targetReference>
         </connector>

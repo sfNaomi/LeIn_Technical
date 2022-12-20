@@ -3,6 +3,16 @@
     <fullName>PreventUsersFromUpdatedStatusAfterUnplan</fullName>
     <active>true</active>
     <description>Only depot team, Application support and in Sales Support can move orders to other status past unplanned.</description>
-    <errorConditionFormula>AND( ISCHANGED( Status) , ISPICKVAL( PRIORVALUE(Status) ,&apos;Unplanned&apos;), ($Permission.UpdateOrderStatusPastUnplanned == FALSE))</errorConditionFormula>
-    <errorMessage>Do not have permission to move Status past Unplanned</errorMessage>
+    <errorConditionFormula>AND( ISCHANGED( Status) ,OR ( 
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Unplanned&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Ready to Pick&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Picking in Progress&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Ready to Load&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Pending Delivery&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Delivery Failed&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Delivered&apos;),
+ISPICKVAL(PRIORVALUE(Status) ,&apos;Receipted&apos;)
+),
+($Permission.UpdateOrderStatusPastUnplanned == FALSE))</errorConditionFormula>
+    <errorMessage>Do not have permission to move Status past &apos;Unplanned&apos;</errorMessage>
 </ValidationRule>

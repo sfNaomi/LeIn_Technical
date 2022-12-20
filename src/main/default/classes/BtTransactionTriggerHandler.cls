@@ -35,7 +35,7 @@ public with sharing class BtTransactionTriggerHandler {
                 continue;
             }
             // to create aforza payment for invoice based payment creation
-            if (blackthornTransaction.Invoice__c != null && blackthornTransaction.Order__c != null) {
+            if (blackthornTransaction.Invoice__c != null) {
                 accountIds.add(blackthornTransaction.bt_stripe__Related_Account__c);
                 transactionsToProcess.get('INVOICE').add(blackthornTransaction);
                 continue;
@@ -83,11 +83,11 @@ public with sharing class BtTransactionTriggerHandler {
         List<SObject> invoicesAndPaymentsToUpdate = new List<SObject>();
         Set<Id> transactionIds = new Set<Id>();
         for (bt_stripe__Transaction__c btTransaction : transactions) {
-            bt_stripe__Transaction__c oldTransaction = oldMap.get(btTransaction.Id);
+            bt_stripe__Transaction__c oldTransaction = oldMap?.get(btTransaction.Id);
             if ((btTransaction.bt_stripe__Payment_Status__c == 'Captured' || btTransaction.bt_stripe__Payment_Status__c == 'Refunded')
                 && btTransaction.bt_stripe__Transaction_Status__c == 'Completed'
-                && (oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
-                || oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c)) {
+                && ((oldTransaction == null) || (oldTransaction.bt_stripe__Payment_Status__c <> btTransaction.bt_stripe__Payment_Status__c
+                || oldTransaction.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c))) {
                 // update invoices only when there is an invoice, try to get aforza transactions every time
                 if (btTransaction.Invoice__c != null) {
                     invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Paid in Full', CreditCardPaymentTaken__c = true));
@@ -187,5 +187,4 @@ public with sharing class BtTransactionTriggerHandler {
         }
         return paymentTransactions;
     }
-
 }

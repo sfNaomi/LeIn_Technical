@@ -15,7 +15,7 @@ public with sharing class PaymentMethodService {
        List<Account> accountsToUpdate = new List<Account>(); 
        for (aforza__Payment_Method__c newPaymentMethod : paymentMethods){
               Account parentAccount = parentAccounts.get(newPaymentMethod.aforza__Account__c);
-              if(parentAccount.PrimaryPaymentMethod__c != 'Direct Debit'){
+	      if(parentAccount != Null && parentAccount?.PrimaryPaymentMethod__c != 'Direct Debit'){
                      if (newPaymentMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_CASH_ID) {
                             parentAccount.PrimaryPaymentMethod__c = 'Cash';
                      }

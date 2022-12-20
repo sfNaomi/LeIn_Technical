@@ -11,7 +11,7 @@
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
-                <elementReference>Account.Id</elementReference>
+                <elementReference>recordId.Id</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -68,21 +68,11 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>Account</name>
+        <name>recordId</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>RecordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>$Flow.CurrentRecord</elementReference>
-        </value>
     </variables>
 </Flow>

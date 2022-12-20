@@ -203,10 +203,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PaymentMethod__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>CreditCardPaymentTaken__c</field>
             </layoutItems>
             <layoutItems>

@@ -19,7 +19,6 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
             AccountTriggerHandler.manageFocusProducts(Trigger.newMap);
             AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterInsert(Trigger.newMap);
-            AccountTriggerHandler.createAforzaPaymentMethodForBottomLineDdMandate(Trigger.new, Trigger.oldMap);
         }
         when AFTER_UPDATE {
             AccountTriggerHandler.manageReoccurrenceRecord(Trigger.new, Trigger.oldMap);
@@ -27,7 +26,6 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
             AccountTriggerHandler.pushInfoFromCustomerToRelatedDPs(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterUpdate(Trigger.New, Trigger.Old);
-            AccountTriggerHandler.createAforzaPaymentMethodForBottomLineDdMandate(Trigger.new, Trigger.oldMap);
             AccountTriggerHandler.calculateAvailableCustomerCredit(Trigger.new, Trigger.oldMap);
         }
         when BEFORE_DELETE {

@@ -280,7 +280,7 @@ private with sharing class InvoiceServiceTest {
 		String paymentMethod = 'Direct Debit';
 
 		String initialInvoiceStatus = null;
-		String expectedInvoiceStatus = 'Paid in Full';
+		String expectedInvoiceStatus = 'Approved for Payment';
 		Decimal orderTotalAmount = 200.00;
         
 		Test.startTest();
@@ -311,7 +311,7 @@ private with sharing class InvoiceServiceTest {
 		String paymentMethod = 'Direct Debit';
 
 		String initialInvoiceStatus = null;
-		String expectedInvoiceStatus = 'Paid in Full';
+		String expectedInvoiceStatus = 'Approved for Payment';
         
         Decimal orderTotalAmount = 200.00;
 

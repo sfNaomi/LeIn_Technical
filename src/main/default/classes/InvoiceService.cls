@@ -246,8 +246,7 @@ public with sharing class InvoiceService {
     private static String computeInvoiceStatus(String paymentMethod, String currentStatus, Id orderRecordTypeId, Decimal orderTotalAmount) {
         String invoiceStatus = '';
 
-        if (paymentMethod == DD_PAYMENT_METHOD || orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID ||
-        	(orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
+        if (orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID || (orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
            ) {
             invoiceStatus = PAID_INVOICE_STATUS;
         } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD || paymentMethod == JDE_DD_PAYMENT_METHOD) {
