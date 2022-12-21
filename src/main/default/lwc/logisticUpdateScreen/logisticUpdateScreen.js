@@ -88,6 +88,8 @@ const depotUserActions = [
     {"label": "Print Manifest", "value": "Print Manifest"},
     {"label": "Print Delivery Note", "value": "Print Delivery Note"},
     {"label": "Loaded", "value": "Loaded"},
+    {"label": "Delivered", "value": "Delivered"},
+    {"label": "Delivery Failed", "value": "Delivery Failed"},
     {"label": "Receipted", "value": "Receipted"},
     {"label": "Print Invoices", "value": "Print Invoices"},
     {"label": "Cancel Order", "value": "Cancel Order"},
@@ -317,6 +319,12 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                     this.updateRecordFields(this.getFieldFromSelectedOrders('Invoice__c'), {'InvoicePrinted__c' : true});
                     this.navigateToPage('AgBarrInvoice', {'p': this.getFieldFromSelectedOrders('Invoice__c').join(',')});
                     break;
+                case 'Delivered':
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Delivered'});
+                    break;
+                case 'Delivery Failed':
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Delivery Failed', 'DeliveryFailed__c': true});
+                    break;
                 case 'Cancel Order':
                     this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Cancelled', 'DeliveryFailed__c': true});
                     break;
@@ -488,6 +496,12 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                 break;
             case 'Print Invoices':
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Receipted']);
+                break;
+            case 'Delivered':
+                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Pending Delivery']);
+                break;
+            case 'Delivery Failed':
+                this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Pending Delivery']);
                 break;
             case 'Cancel Order':
                 this.checkIfSelectedOrdersHaveValidStatuses(selectedAction, ['Delivery Failed']);
