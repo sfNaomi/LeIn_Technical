@@ -4,8 +4,17 @@
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}" />
 
+	<div class="footer-container">
+		{!$Label.InvoiceFooterNote}
+		<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" id="footer-link">
+			{!$Label.InvoiceFooterNoteLink}
+		</apex:outputLink>
+	</div>
+
+	<apex:variable value="{!1}" var="counter" />
 	<apex:repeat value="{!invoices}" var="invoice">
-		<div class="page-break">
+		<div class="{!IF(counter == 1, '', 'page-break')}">
+			<div class="headline headline-absolute-top-40">Invoice</div>
 			<div class="m-bottom-small">
 				<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
 			</div>
@@ -193,12 +202,7 @@
 					{!$Label.InvoicePrintName} {!invoice.printName}
 				</apex:outputpanel>
 			</div>
-			<div class="footer-container">
-				{!$Label.InvoiceFooterNote}
-				<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" id="footer-link">
-					{!$Label.InvoiceFooterNoteLink}
-				</apex:outputLink>
-			</div>
 		</div>
+		<apex:variable value="{!counter + 1}" var="counter" />
 	</apex:repeat>
 </apex:page>

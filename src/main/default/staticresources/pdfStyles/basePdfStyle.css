@@ -86,3 +86,15 @@
 .width-100 {
     width: 100%;
 }
+
+.headline {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.headline-absolute-top-40 {
+    position: absolute; 
+    right: 12px; 
+    top: 40px !important;
+}
