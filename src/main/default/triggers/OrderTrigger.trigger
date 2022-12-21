@@ -21,6 +21,7 @@ trigger OrderTrigger on Order (before insert, before update, after insert, after
             OrderTriggerHandler.validateAndSendDeliveryNoteEmail(Trigger.new, Trigger.oldMap);
             OrderTriggerHandler.removeOrdersFromLoad(Trigger.newMap, Trigger.oldMap);
             OrderTriggerHandler.handleOrdersCancellation(Trigger.new, Trigger.oldMap);
+            new OrderRelationshipRuleValidation(Trigger.newMap);
         }
     }
 }

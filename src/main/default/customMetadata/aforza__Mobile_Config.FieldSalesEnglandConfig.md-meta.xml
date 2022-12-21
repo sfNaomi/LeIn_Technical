@@ -24,6 +24,11 @@
             "Type":"ENGINE",
             "Title":"Check Account Credit Limit",
             "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
+            },
+            {
+            "Type": "ENGINE",
+            "Title": "Weather 1",
+            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
             }
             ]
             },
@@ -47,7 +52,25 @@
             "Name":"PoNumber"
             }
             ]
+            },
+            {
+            "Type": "ACTION",
+            "Name": "Offline-Action3",
+            "Action": {
+            "Type": "ENGINE",
+            "Title": "Payload Dump",
+            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
             }
+            },
+            {
+            "Type": "ACTION",
+            "Name": "Offline-Action4",
+            "Action": {
+            "Type": "ENGINE",
+            "Title": "Return Deposit Scheme",
+            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
+            }
+            },
             ],
             "ObjectsToSync":[
             {

@@ -57,4 +57,9 @@
         notNull(RecordTypes.BT_PAYMENT_METHOD_CARD);
         notNull(RecordTypes.BT_PAYMENT_METHOD_CARD_ID);
     }
+
+    @IsTest private static void testRelationshipRuleRecordTypes() {
+        notNull(RecordTypes.RELATIONSHIP_RULE_PRODUCT);
+        notNull(RecordTypes.RELATIONSHIP_RULE_PRODUCT_ID);
+    }
 }

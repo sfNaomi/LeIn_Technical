@@ -193,8 +193,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Assert.areEqual(dpAccount.FixedDeliveryInstructions__c, loads[0].loadItems[0].deliveryInstructions);
         Assert.areEqual(dpAccount.FixedDeliveryInstructions__c, loads[0].loadItems[1].deliveryInstructions);
 
-        Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].Phone);
-        Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].Phone);
+        Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].phone);
+        Assert.areEqual(dpAccount.Phone, loads[0].loadItems[1].phone);
 
         Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[0].paymentMethod);
         Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[1].paymentMethod);
@@ -250,7 +250,6 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         PricebookEntry productPricebookEntry2 = (PricebookEntry) TdfSObjectFactory.insertSObject(
             new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id)
         );
-
         // create account
         Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(
             new Account(
@@ -279,7 +278,8 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
 
         // create orders and add products to it
-        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(
+        List<Order> ordersToInsert = new List<Order>();
+        Order newOrder1 = (Order) TdfSObjectFactory.createSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
                 AccountId = dpAccount1.Id,
@@ -292,16 +292,10 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 PaymentMethod__c = 'Card Payment'
             )
         );
-        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(
-                OrderId = newOrder1.Id,
-                Product2Id = newProduct1.Id,
-                Quantity = 10,
-                PricebookEntryId = productPricebookEntry1.Id
-            )
-        );
 
-        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(
+        ordersToInsert.add(newOrder1);
+
+        Order newOrder2 = (Order) TdfSObjectFactory.createSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
                 AccountId = dpAccount2.Id,
@@ -314,16 +308,9 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 PaymentMethod__c = 'Direct Debit'
             )
         );
-        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(
-                OrderId = newOrder2.Id,
-                Product2Id = newProduct2.Id,
-                Quantity = 10,
-                PricebookEntryId = productPricebookEntry2.Id
-            )
-        );
+        ordersToInsert.add(newOrder2);
 
-        Order newOrder3 = (Order) TdfSObjectFactory.insertSObject(
+        Order newOrder3 = (Order) TdfSObjectFactory.createSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
                 AccountId = dpAccount1.Id,
@@ -336,16 +323,10 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 PaymentMethod__c = 'Cash'
             )
         );
-        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(
-                OrderId = newOrder3.Id,
-                Product2Id = newProduct1.Id,
-                Quantity = 10,
-                PricebookEntryId = productPricebookEntry1.Id
-            )
-        );
 
-        Order newOrder4 = (Order) TdfSObjectFactory.insertSObject(
+        ordersToInsert.add(newOrder3);
+
+        Order newOrder4 = (Order) TdfSObjectFactory.createSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
                 AccountId = dpAccount2.Id,
@@ -358,7 +339,11 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 PaymentMethod__c = 'Cheque'
             )
         );
-        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(
+        ordersToInsert.add(newOrder4);
+        insert ordersToInsert;
+
+        List<OrderItem> orderItemsToInsert = new List<OrderItem>();
+        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.createSObject(
             new OrderItem(
                 OrderId = newOrder4.Id,
                 Product2Id = newProduct2.Id,
@@ -366,6 +351,35 @@ private with sharing class DeliveryManifestGenerationServiceTest {
                 PricebookEntryId = productPricebookEntry2.Id
             )
         );
+        orderItemsToInsert.add(newOrderItem4);
+        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.createSObject(
+            new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry1.Id
+            )
+        );
+        orderItemsToInsert.add(newOrderItem1);
+        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.createSObject(
+            new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry2.Id
+            )
+        );
+        orderItemsToInsert.add(newOrderItem2);
+        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.createSObject(
+            new OrderItem(
+                OrderId = newOrder3.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = productPricebookEntry1.Id
+            )
+        );
+        orderItemsToInsert.add(newOrderItem3);
+        insert orderItemsToInsert;
 
         // create Vehicle
         Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
@@ -383,7 +397,6 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
             new Load__c(DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
         );
-
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
 
@@ -435,6 +448,7 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         );
         List<DeliveryManifestGenerationService.Load> loads = service.getLoads();
         Test.stopTest();
+
 
         // Query data to be verified
         Load__c insertedLoad1 = [
@@ -527,10 +541,10 @@ private with sharing class DeliveryManifestGenerationServiceTest {
         Assert.areEqual(dpAccount1.FixedDeliveryInstructions__c, loads[1].loadItems[0].deliveryInstructions);
         Assert.areEqual(dpAccount2.FixedDeliveryInstructions__c, loads[1].loadItems[1].deliveryInstructions);
 
-        Assert.areEqual(dpAccount1.Phone, loads[0].loadItems[0].Phone);
-        Assert.areEqual(dpAccount2.Phone, loads[0].loadItems[1].Phone);
-        Assert.areEqual(dpAccount1.Phone, loads[1].loadItems[0].Phone);
-        Assert.areEqual(dpAccount2.Phone, loads[1].loadItems[1].Phone);
+        Assert.areEqual(dpAccount1.Phone, loads[0].loadItems[0].phone);
+        Assert.areEqual(dpAccount2.Phone, loads[0].loadItems[1].phone);
+        Assert.areEqual(dpAccount1.Phone, loads[1].loadItems[0].phone);
+        Assert.areEqual(dpAccount2.Phone, loads[1].loadItems[1].phone);
 
         Assert.areEqual(newOrder1.PaymentMethod__c, loads[0].loadItems[0].paymentMethod);
         Assert.areEqual(newOrder2.PaymentMethod__c, loads[0].loadItems[1].paymentMethod);

@@ -333,4 +333,19 @@ public inherited sharing class RecordTypes {
         }
         private set;
     }
+
+    public static RecordTypeInfo RELATIONSHIP_RULE_PRODUCT {
+        get {
+            return RELATIONSHIP_RULE_PRODUCT = RELATIONSHIP_RULE_PRODUCT != null
+                ? RELATIONSHIP_RULE_PRODUCT : Schema.SObjectType.aforza__Relationship_Rule__c.getRecordTypeInfosByDeveloperName().get('Product_Relationship');
+        }
+        private set;
+    }
+
+    public static Id RELATIONSHIP_RULE_PRODUCT_ID {
+        get {
+            return RELATIONSHIP_RULE_PRODUCT.getRecordTypeId();
+        }
+        private set;
+    }
 }
