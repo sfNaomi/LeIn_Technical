@@ -99,6 +99,10 @@ public with sharing class OrderTriggerHandler {
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))) {
                 continue;
             }
+            // check if card payment selected but Pre Authorization was not captured
+            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false){
+                newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
+            }
             // check if there are any full discount items
             if (newOrder.IsApproved__c == false && newOrder.TotalNumberOfFullyDiscountedItems__c > 0) {
                 newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);

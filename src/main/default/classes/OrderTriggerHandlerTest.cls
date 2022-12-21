@@ -346,6 +346,53 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testValidateOrderCreationOrCompletion_CardPaymentWithNoPreAuth() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                LastOrderDate__c = null, CreditStatus__c = 'Good', aforza__Default_Price_Book__c = newPricebook.Id,
+                aforza__Credit_Amount__c = 10
+            )
+        );
+
+        // create order with card payment as payment method type and pre authorization as false
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false,
+                PaymentMethod__c = 'Card Payment', PreAuthCaptured__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        try {
+            newOrder.Status = 'Activated';
+            update newOrder;
+            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+        } catch (Exception e) {
+            String expectedErrorMessage = Label.OrderActivationPreventedPreAuthNotCaptured;
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
     private static void testValidateUpdateOfLockedOrders_UserWithEditLockedOrdersPermission() {
         User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 
