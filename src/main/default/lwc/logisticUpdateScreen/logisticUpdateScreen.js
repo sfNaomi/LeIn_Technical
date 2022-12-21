@@ -329,7 +329,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                     this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Cancelled', 'DeliveryFailed__c': true});
                     break;
                 case 'Replan':
-                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Unplanned', 'Replanned__c': true});
+                    this.updateRecordFields(this.getFieldFromSelectedOrders('Id'), {'Status': 'Unplanned', 'Replanned__c': true, 'Load__c': null});
                     break;
                 default:
             }
