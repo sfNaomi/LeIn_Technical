@@ -7,6 +7,7 @@
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>

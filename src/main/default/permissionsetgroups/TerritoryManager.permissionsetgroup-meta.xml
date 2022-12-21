@@ -11,6 +11,7 @@
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountTerritoryManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>

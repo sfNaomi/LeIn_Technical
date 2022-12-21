@@ -10,6 +10,7 @@
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountLocalBusDevManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
