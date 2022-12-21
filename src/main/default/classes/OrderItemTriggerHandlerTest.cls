@@ -34,7 +34,7 @@ private with sharing class OrderItemTriggerHandlerTest {
 
         Test.startTest();
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10, aforza__Tax__c = 1)
+            new OrderItem(OrderId = newOrder.Id, Quantity = 12, UnitPrice = 10.43, aforza__Tax__c = 12)
         );
         Test.stopTest();
 
@@ -45,14 +45,15 @@ private with sharing class OrderItemTriggerHandlerTest {
         ];
 
         Decimal expectedVat = newOrderItem.Quantity * newOrderItem.UnitPrice * insertedOrderItem.aforza__Tax_Percent__c / 100;
-        Assert.areEqual(expectedVat, insertedOrderItem.aforza__Tax__c);
+        Decimal expectedVatRounded = expectedVat.setScale(2, RoundingMode.HALF_UP);
+        Assert.areEqual(expectedVatRounded, insertedOrderItem.aforza__Tax__c);
     }
 
     @IsTest
     private static void testCalculateVatOnOrderItemLevel_UpdateOrderItemQuantity() {
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10, aforza__Tax__c = 1)
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10.45, aforza__Tax__c = 23)
         );
 
         OrderItem insertedOrderItem = [
@@ -61,8 +62,9 @@ private with sharing class OrderItemTriggerHandlerTest {
             WHERE Id = :newOrderItem.Id
         ];
 
-        Decimal expectedVat = insertedOrderItem.Quantity * insertedOrderItem.UnitPrice * insertedOrderItem.aforza__Tax_Percent__c / 100;
-        Assert.areEqual(expectedVat, insertedOrderItem.aforza__Tax__c);
+        Decimal expectedVat = newOrderItem.Quantity * newOrderItem.UnitPrice * insertedOrderItem.aforza__Tax_Percent__c / 100;
+        Decimal expectedVatRounded = expectedVat.setScale(2, RoundingMode.HALF_UP);
+        Assert.areEqual(expectedVatRounded, insertedOrderItem.aforza__Tax__c);
 
         Test.startTest();
         insertedOrderItem.Quantity = 20;
@@ -83,7 +85,7 @@ private with sharing class OrderItemTriggerHandlerTest {
     private static void testCalculateVatOnOrderItemLevel_UpdateOrderItemUnitPrice() {
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_TELESALES_ID));
         OrderItem newOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
-            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10, aforza__Tax__c = 1)
+            new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10.45, aforza__Tax__c = 9)
         );
 
         OrderItem insertedOrderItem = [
@@ -92,8 +94,9 @@ private with sharing class OrderItemTriggerHandlerTest {
             WHERE Id = :newOrderItem.Id
         ];
 
-        Decimal expectedVat = insertedOrderItem.Quantity * insertedOrderItem.UnitPrice * insertedOrderItem.aforza__Tax_Percent__c / 100;
-        Assert.areEqual(expectedVat, insertedOrderItem.aforza__Tax__c);
+        Decimal expectedVat = newOrderItem.Quantity * newOrderItem.UnitPrice * insertedOrderItem.aforza__Tax_Percent__c / 100;
+        Decimal expectedVatRounded = expectedVat.setScale(2, RoundingMode.HALF_UP);
+        Assert.areEqual(expectedVatRounded, insertedOrderItem.aforza__Tax__c);
 
         Test.startTest();
         insertedOrderItem.UnitPrice = 20;
@@ -254,10 +257,10 @@ private with sharing class OrderItemTriggerHandlerTest {
         OrderItem newTaxOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, aforza__Type__c = 'Tax', Quantity = 1, UnitPrice = 1, aforza__Tax__c = 0)
         );
-        OrderItem newProductOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
         );
-        OrderItem newProductOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
         );
         Test.stopTest();
@@ -275,10 +278,10 @@ private with sharing class OrderItemTriggerHandlerTest {
         OrderItem newTaxOrderItem = (OrderItem) TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, aforza__Type__c = 'Tax', Quantity = 1, UnitPrice = 1, aforza__Tax__c = 0)
         );
-        OrderItem newProductOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
         );
-        OrderItem newProductOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(
+        TdfSObjectFactory.insertSObject(
             new OrderItem(OrderId = newOrder.Id, Quantity = 10, UnitPrice = 10)
         );
         Test.stopTest();
