@@ -1,8 +1,13 @@
+@page {
+    @bottom-center {
+        content: element(footer);
+    }
+}
+
 .footer-container {
-	position: fixed;
-	text-align: center;
-	bottom: 0px;
-	width: 100%;
+    min-width: 600px !important;
+    position: running(footer);
+    text-align: center;
 }
 
 .inline-block {

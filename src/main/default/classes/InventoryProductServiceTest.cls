@@ -29,10 +29,10 @@ private with sharing class InventoryProductServiceTest {
           new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
       );
       aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, JDEStockQuantity__c = 200)
+          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, JdeStockQuantity__c = 200)
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, JDEStockQuantity__c = 100)
+          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, JdeStockQuantity__c = 100)
       );
 
       Test.startTest();
@@ -42,7 +42,7 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -70,7 +70,7 @@ private with sharing class InventoryProductServiceTest {
       TdfSObjectFactory.insertSObject(new PricebookEntry(Product2Id = newProduct2.Id, Pricebook2Id = newPricebook.Id));
 
       // create account
-      Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+      TdfSObjectFactory.insertSObject(
           new Account(aforza__Default_Price_Book__c = newPricebook.Id, RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
       );
 
@@ -83,7 +83,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct1.Id,
               NonSalableStock__c = 100,
-              JDEStockQuantity__c = 200
+              JdeStockQuantity__c = 200
           )
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
@@ -91,12 +91,12 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct2.Id,
               NonSalableStock__c = 50,
-              JDEStockQuantity__c = 100
+              JdeStockQuantity__c = 100
           )
       );
 
       List<aforza__Inventory_Product__c> oldList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -105,17 +105,17 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
       //Product 1 = 200 - (100 )  = 100
-      Assert.areEqual(200, oldList[0].JDEStockQuantity__c);
+      Assert.areEqual(200, oldList[0].JdeStockQuantity__c);
       Assert.areEqual(100, oldList[0].NonSalableStock__c);
       Assert.areEqual(100, newList[0].aforza__Stock_Quantity__c);
 
       //Product 2 = 100 - (50 )  = 50
-      Assert.areEqual(100, oldList[1].JDEStockQuantity__c);
+      Assert.areEqual(100, oldList[1].JdeStockQuantity__c);
       Assert.areEqual(50, oldList[1].NonSalableStock__c);
       Assert.areEqual(50, newList[1].aforza__Stock_Quantity__c);
   }
@@ -157,7 +157,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct1.Id,
               NonSalableStock__c = 100,
-              JDEStockQuantity__c = 200
+              JdeStockQuantity__c = 200
           )
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
@@ -165,7 +165,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct2.Id,
               NonSalableStock__c = 50,
-              JDEStockQuantity__c = 100
+              JdeStockQuantity__c = 100
           )
       );
 
@@ -203,7 +203,7 @@ private with sharing class InventoryProductServiceTest {
       );
 
       List<aforza__Inventory_Product__c> oldList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -214,17 +214,17 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
       //Product 1 = 200 - (100 + 10 )  = 90
-      Assert.areEqual(200, oldList[0].JDEStockQuantity__c);
+      Assert.areEqual(200, oldList[0].JdeStockQuantity__c);
       Assert.areEqual(100, oldList[0].NonSalableStock__c);
       Assert.areEqual(90, newList[0].aforza__Stock_Quantity__c);
 
       //Product 2 = 100 - (50 + 20 )  = 30
-      Assert.areEqual(100, oldList[1].JDEStockQuantity__c);
+      Assert.areEqual(100, oldList[1].JdeStockQuantity__c);
       Assert.areEqual(50, oldList[1].NonSalableStock__c);
       Assert.areEqual(30, newList[1].aforza__Stock_Quantity__c);
   }
@@ -262,10 +262,10 @@ private with sharing class InventoryProductServiceTest {
           new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
       );
       aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, NonSalableStock__c = 100, JDEStockQuantity__c = 200)
+          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, NonSalableStock__c = 100, JdeStockQuantity__c = 200)
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, NonSalableStock__c = 50, JDEStockQuantity__c = 100)
+          new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, NonSalableStock__c = 50, JdeStockQuantity__c = 100)
       );
 
       // create orders and add products to it
@@ -302,7 +302,7 @@ private with sharing class InventoryProductServiceTest {
       );
 
       List<aforza__Inventory_Product__c> oldList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -313,22 +313,22 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
       //Product 1 = 200 - (100 + (10+30) )  = 60
-      Assert.areEqual(200, oldList[0].JDEStockQuantity__c);
+      Assert.areEqual(200, oldList[0].JdeStockQuantity__c);
       Assert.areEqual(100, oldList[0].NonSalableStock__c);
       Assert.areEqual(60, newList[0].aforza__Stock_Quantity__c);
 
       //Product 2 = 100 - (50 + (20 +40) )  = -10
-      Assert.areEqual(100, oldList[1].JDEStockQuantity__c);
+      Assert.areEqual(100, oldList[1].JdeStockQuantity__c);
       Assert.areEqual(50, oldList[1].NonSalableStock__c);
       Assert.areEqual(-10, newList[1].aforza__Stock_Quantity__c);
   }
  @IsTest
- private static void testUpdateInventoryStockReciptedAndWithhIvoiceNotPushed() {
+ private static void testUpdateInventoryStockReceiptedAndWithInvoiceNotPushed() {
       // create products
       Product2 newProduct1 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
       Product2 newProduct2 = (Product2) TdfSObjectFactory.insertSObject(new Product2());
@@ -352,7 +352,7 @@ private with sharing class InventoryProductServiceTest {
 
       // create account
       Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
-          new Account(aforza__Default_Price_Book__c = newPricebook.Id, RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID)
+          new Account(aforza__Default_Price_Book__c = newPricebook.Id, RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, aforza__Credit_Amount__c = 100000)
       );
 
       // create inventory and add products to inventory
@@ -364,7 +364,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct1.Id,
               NonSalableStock__c = 100,
-              JDEStockQuantity__c = 200
+              JdeStockQuantity__c = 200
           )
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
@@ -372,7 +372,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct2.Id,
               NonSalableStock__c = 50,
-              JDEStockQuantity__c = 100
+              JdeStockQuantity__c = 100
           )
       );
 
@@ -398,7 +398,7 @@ private with sharing class InventoryProductServiceTest {
       update newOrder;
 
       List<aforza__Inventory_Product__c> oldList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -409,17 +409,17 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
       //Product 1 = 200 - (100 + 10 )  = 90
-      Assert.areEqual(200, oldList[0].JDEStockQuantity__c);
+      Assert.areEqual(200, oldList[0].JdeStockQuantity__c);
       Assert.areEqual(100, oldList[0].NonSalableStock__c);
       Assert.areEqual(90, newList[0].aforza__Stock_Quantity__c);
 
       //Product 2 = 100 - (50 + 20 )  = 30
-      Assert.areEqual(100, oldList[1].JDEStockQuantity__c);
+      Assert.areEqual(100, oldList[1].JdeStockQuantity__c);
       Assert.areEqual(50, oldList[1].NonSalableStock__c);
       Assert.areEqual(30, newList[1].aforza__Stock_Quantity__c);
   }
@@ -460,7 +460,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct1.Id,
               NonSalableStock__c = 100,
-              JDEStockQuantity__c = 200
+              JdeStockQuantity__c = 200
           )
       );
       aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
@@ -468,7 +468,7 @@ private with sharing class InventoryProductServiceTest {
               aforza__Inventory__c = newInventory.Id,
               aforza__Product__c = newProduct2.Id,
               NonSalableStock__c = 50,
-              JDEStockQuantity__c = 100
+              JdeStockQuantity__c = 100
           )
       );
 
@@ -493,7 +493,7 @@ private with sharing class InventoryProductServiceTest {
       );
 
       List<aforza__Inventory_Product__c> oldList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
@@ -504,17 +504,17 @@ private with sharing class InventoryProductServiceTest {
       Test.stopTest();
 
       List<aforza__Inventory_Product__c> newList = [
-          SELECT Id, aforza__Stock_Quantity__c, JDEStockQuantity__c, NonSalableStock__c
+          SELECT Id, aforza__Stock_Quantity__c, JdeStockQuantity__c, NonSalableStock__c
           FROM aforza__Inventory_Product__c
       ];
 
       //Product 1 = 200 - (100 )  = 100
-      Assert.areEqual(200, oldList[0].JDEStockQuantity__c);
+      Assert.areEqual(200, oldList[0].JdeStockQuantity__c);
       Assert.areEqual(100, oldList[0].NonSalableStock__c);
       Assert.areEqual(100, newList[0].aforza__Stock_Quantity__c);
 
       //Product 2 = 100 - (50 )  = 50
-      Assert.areEqual(100, oldList[1].JDEStockQuantity__c);
+      Assert.areEqual(100, oldList[1].JdeStockQuantity__c);
       Assert.areEqual(50, oldList[1].NonSalableStock__c);
       Assert.areEqual(50, newList[1].aforza__Stock_Quantity__c);
   }

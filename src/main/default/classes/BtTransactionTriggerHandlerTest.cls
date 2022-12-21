@@ -334,4 +334,33 @@ private class BtTransactionTriggerHandlerTest {
         Assert.areEqual('Applied', updatedPaymentTransactions[0].aforza__Status__c);
         Assert.areEqual('Credit Card', updatedPaymentTransactions[0].aforza__Method__c);
     }
+    
+    @IsTest
+    private static void testUpdateInvoiceAndAforzaTransactionWhenFailed() {
+        
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+
+        TdfSObjectFactory.insertSObject(new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID,
+            aforza__Account__c = acc.Id));
+
+        aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = acc.Id));
+
+        bt_stripe__Transaction__c blackthornTransaction = (bt_stripe__Transaction__c)
+            TdfSObjectFactory.createSObject(new bt_stripe__Transaction__c(bt_stripe__Related_Account__c = acc.Id, RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID));
+        insert blackthornTransaction;
+
+        Test.startTest();
+        blackthornTransaction.bt_stripe__Transaction_Status__c = 'Failed';
+        blackthornTransaction.Invoice__c = invoice.Id;
+        update blackthornTransaction;
+        Test.stopTest();
+
+        List<aforza__Invoice__c> updatedInvoices = [SELECT Id, aforza__Status__c, CreditCardPaymentTaken__c FROM aforza__Invoice__c];
+        Assert.isTrue(updatedInvoices.size() == 1);
+        Assert.areEqual('Payment Attempt Unsuccessful', updatedInvoices[0].aforza__Status__c);
+        List<aforza__Payment_Transaction__c> updatedPaymentTransactions = [SELECT Id, aforza__Status__c, aforza__Method__c FROM aforza__Payment_Transaction__c];
+        Assert.isTrue(updatedPaymentTransactions.size() == 1);
+        Assert.areEqual('Rejected', updatedPaymentTransactions[0].aforza__Status__c);
+        Assert.areEqual('Credit Card', updatedPaymentTransactions[0].aforza__Method__c);
+    }
 }

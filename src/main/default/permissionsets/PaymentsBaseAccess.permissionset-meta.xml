@@ -154,6 +154,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>aforza__Payment_Method__c.JdeDd</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>aforza__Payment_Method__c.aforza__Bank_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

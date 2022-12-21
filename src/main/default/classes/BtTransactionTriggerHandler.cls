@@ -94,7 +94,14 @@ public with sharing class BtTransactionTriggerHandler {
                 }
                 transactionIds.add(btTransaction.Id);
             }
-        }
+            else if (btTransaction.bt_stripe__Transaction_Status__c == 'Failed'
+                && oldTransaction?.bt_stripe__Transaction_Status__c <> btTransaction.bt_stripe__Transaction_Status__c) {
+                if (btTransaction.Invoice__c != null) {
+                    invoicesAndPaymentsToUpdate.add(new aforza__Invoice__c(Id = btTransaction.Invoice__c, aforza__Status__c = 'Payment Attempt Unsuccessful'));
+                 }
+                 transactionIds.add(btTransaction.Id);
+                }
+            }
 
         if (transactionIds.size() > 0) {
             invoicesAndPaymentsToUpdate.addAll(preparePaymentsForUpdate(transactionIds));
@@ -180,10 +187,14 @@ public with sharing class BtTransactionTriggerHandler {
      */
     @TestVisible
     private static List<aforza__Payment_Transaction__c> preparePaymentsForUpdate(Set <Id> transactionIds) {
-        List<aforza__Payment_Transaction__c> paymentTransactions = [SELECT Id, aforza__Status__c FROM aforza__Payment_Transaction__c WHERE BtTransaction__c IN :transactionIds];
+        List<aforza__Payment_Transaction__c> paymentTransactions = [SELECT Id, aforza__Status__c, BtTransaction__r.bt_stripe__Transaction_Status__c FROM aforza__Payment_Transaction__c WHERE BtTransaction__c IN :transactionIds];
         for (aforza__Payment_Transaction__c paymentTransaction : paymentTransactions) {
-            paymentTransaction.aforza__Status__c = 'Applied';
-            paymentTransaction.aforza__Method__c = 'Credit Card';
+            if(paymentTransaction.BtTransaction__r.bt_stripe__Transaction_Status__c == 'Failed'){
+                paymentTransaction.aforza__Status__c = 'Rejected';
+            }
+            else{
+                paymentTransaction.aforza__Status__c = 'Applied';
+            }
         }
         return paymentTransactions;
     }

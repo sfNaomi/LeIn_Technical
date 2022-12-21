@@ -211,6 +211,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         });
         this.tableData = this.originalTableData;
         this.prepareLoadIdsForOrderFiltering();
+        this.updateSelectedRowsWithNewValues();
     }
 
     /** Method to iterate over filtered orders and to prepare load is to filter further
@@ -342,7 +343,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
     processLoadIdSelection(selectedLoadName) {
         this.selectedLoadId = selectedLoadName;
         this.tableData = [];
-        if (selectedLoadName === RESET_FILTER) {
+        if (selectedLoadName === RESET_FILTER || selectedLoadName === undefined) {
             // load all returned data
             this.tableData = this.originalTableData;
         } else {
@@ -350,7 +351,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
                 if (order.Load__rName === selectedLoadName) {
                     this.tableData.push(order);
                 }
-            })
+            });
         }
     }
 
@@ -586,6 +587,17 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
         this.tableData = basicSort(this.sortBy, this.sortDirection, this.tableData);
+    }
+
+    updateSelectedRowsWithNewValues() {
+        this.tableData.forEach((order) => {
+           const selectedRowIndex = this.selectedRows.findIndex((selectedOrder) => {
+               return selectedOrder.Id === order.Id;
+           });
+           if (selectedRowIndex >= 0) {
+               this.selectedRows[selectedRowIndex] = order;
+           }
+        });
     }
 
     /** Method to obtain text with replaced dynamic values

@@ -56,11 +56,11 @@ public with sharing class OrderItemTriggerHandler {
         }
 		
         Map<Id, Order> notClonedOrdersById = getNotClonedOrders(allOrderIdsToUpdateTaxFor);
-        Map<Id, Order> productOrderItemsByOrderId = getOrdersWithRelatedProductLineItems(notClonedOrdersById.KeySet());
-        Map<Id, Order> taxOrderItemsByOrderId = getOrdersWithRelatedTaxOrderItem(notClonedOrdersById.KeySet());
+        Map<Id, Order> productOrderItemsByOrderId = getOrdersWithRelatedProductLineItems(notClonedOrdersById.keySet());
+        Map<Id, Order> taxOrderItemsByOrderId = getOrdersWithRelatedTaxOrderItem(notClonedOrdersById.keySet());
 
         List<OrderItem> taxOrderItemsToUpdate = new List<OrderItem>();
-        for (Id orderId : notClonedOrdersById.KeySet()) {
+        for (Id orderId : notClonedOrdersById.keySet()) {
             List<OrderItem> productOrderItems = productOrderItemsByOrderId?.get(orderId)?.OrderItems;
             List<OrderItem> taxOrderItems = taxOrderItemsByOrderId?.get(orderId)?.OrderItems;
             if (!taxOrderItems.isEmpty()) {
@@ -76,7 +76,9 @@ public with sharing class OrderItemTriggerHandler {
       * @description creates a set will all order item ids
       *
       * @param newOrderItemIds ids of order items
-      * @param newOrderItemIds ids of order items
+      * @param oldOrderItemIds ids of order items
+      *
+      * @return set of IDs
       *
       * @author Magdalena Stanciu
       * @date 2022-11-23
@@ -100,7 +102,9 @@ public with sharing class OrderItemTriggerHandler {
     @TestVisible
     private static void calculateVat(OrderItem newOrderItem) {
         if (newOrderItem.UnitPrice != null && newOrderItem.aforza__Tax_Percent__c != null && newOrderItem.Quantity != null) {
-            newOrderItem.aforza__Tax__c = newOrderItem.Quantity * newOrderItem.UnitPrice * newOrderItem.aforza__Tax_Percent__c / 100;
+            Decimal calculatedVat;
+            calculatedVat = newOrderItem.Quantity * newOrderItem.UnitPrice * newOrderItem.aforza__Tax_Percent__c / 100;
+            newOrderItem.aforza__Tax__c = calculatedVat.setScale(2, RoundingMode.HALF_UP);
         } else {
             newOrderItem.aforza__Tax__c = null;
         }
@@ -180,7 +184,7 @@ public with sharing class OrderItemTriggerHandler {
             SELECT Id, Clone__c 
             FROM Order 
             WHERE Id IN :orderIds 
-            AND Clone__c = false]);
+            AND Clone__c = FALSE]);
         return notClonedOrdersById;
     }
 }

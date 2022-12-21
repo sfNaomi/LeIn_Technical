@@ -99,6 +99,10 @@ public with sharing class OrderTriggerHandler {
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))) {
                 continue;
             }
+            // check if card payment selected but Pre Authorization was not captured
+            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false){
+                newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
+            }
             // check if there are any full discount items
             if (newOrder.IsApproved__c == false && newOrder.TotalNumberOfFullyDiscountedItems__c > 0) {
                 newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
@@ -111,9 +115,9 @@ public with sharing class OrderTriggerHandler {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
                     && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                } else if (relatedAccount.AvailableCredit__c < newOrder.TotalAmount &&
-                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount &&
-                    newOrder.IsApproved__c == false) {
+                } else if (((relatedAccount.AvailableCredit__c < newOrder.TotalAmount &&
+                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount)
+                    || relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && newOrder.IsApproved__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
