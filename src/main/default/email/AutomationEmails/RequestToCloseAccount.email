@@ -1,6 +1,11 @@
 Hello!
 
-{!Account.OwningTAM__c} has just requested for the account {!Account.Name} to be closed.
+A TAM user has just requested for the account {!Account.Name} to be closed.
+
+Below are the links to the account and user who has made the request.
+
+Account: {!Account.Link}
+User: {!User.Link}
 
 
 Your SF Team
