@@ -5,6 +5,7 @@
     <mutingPermissionSets>PricingProductManagerMuted</mutingPermissionSets>
     <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
