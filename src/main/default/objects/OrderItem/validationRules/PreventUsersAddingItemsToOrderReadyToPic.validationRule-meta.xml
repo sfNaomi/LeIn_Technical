@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventUsersAddingItemsToOrderReadyToPic</fullName>
+    <active>true</active>
+    <description>Only allow certain users to add items to orders that are &apos;Ready to pick&apos;</description>
+    <errorConditionFormula>ISPICKVAL(Order.Status, &quot;Picking in Progress&quot;) &amp;&amp;
+NOT( $Permission.AllowOrderUpdatesInSpecificStatuses )</errorConditionFormula>
+    <errorMessage>User does not have permission to add items to orders in &apos;Picking in Progress&apos; Status</errorMessage>
+</ValidationRule>
