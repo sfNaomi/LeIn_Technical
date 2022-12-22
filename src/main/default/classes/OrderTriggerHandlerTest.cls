@@ -12,7 +12,7 @@ private with sharing class OrderTriggerHandlerTest {
             adminPermSetGroup.Id
         });
     }
-    
+
     @IsTest
     private static void testValidateOrderCreationOrCompletion_ProspectAccountNewOrder() {
         // create attribute for New DP attribute flow automation
@@ -500,7 +500,9 @@ private with sharing class OrderTriggerHandlerTest {
             Test.startTest();
             try {
                 newOrder.EffectiveDate = System.today().addDays(1);
-                OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
+                OrderService.updateOrdersByPreventingLockValidation(new List<Order>{
+                    newOrder
+                });
 
                 Order updatedOrder = [SELECT Id, EffectiveDate FROM Order WHERE Id = :newOrder.Id];
                 Assert.areEqual(System.today().addDays(1), updatedOrder.EffectiveDate);
@@ -1178,7 +1180,9 @@ private with sharing class OrderTriggerHandlerTest {
         // mark order as receipted
         Test.startTest();
         newOrder.Status = 'Receipted';
-        OrderService.updateOrdersByPreventingLockValidation(new List<Order>{newOrder});
+        OrderService.updateOrdersByPreventingLockValidation(new List<Order>{
+            newOrder
+        });
         Test.stopTest();
 
         // retrieve invoice and invoice line items, validate results
@@ -1455,11 +1459,11 @@ private with sharing class OrderTriggerHandlerTest {
         List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
         Assert.areEqual(0, loadAcc.size(), 'There should not be load anymore, as all orders were removed');
     }
-    
+
     @IsTest
     private static void testCreatePaymentTransactionForDirectDebit() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'Direct Debit' )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'Direct Debit')
         );
         TdfSObjectFactory.insertSObject(
             new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID, aforza__Account__c = acc.Id)
@@ -1475,16 +1479,19 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
+            SELECT Id, aforza__Status__c, aforza__Type__c
+            FROM aforza__Payment_Transaction__c
+            WHERE OrderNumber__c = :order.Id
+            LIMIT 1
         ];
-        Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
-        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
+        Assert.areEqual('Pending', pTransaction.aforza__Status__c);
+        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c);
     }
 
     @IsTest
     private static void testCreatePaymentTransactionForBacs() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'Bacs' )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'Bacs')
         );
         TdfSObjectFactory.insertSObject(
             new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT_ID, aforza__Account__c = acc.Id)
@@ -1500,16 +1507,19 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
+            SELECT Id, aforza__Status__c, aforza__Type__c
+            FROM aforza__Payment_Transaction__c
+            WHERE OrderNumber__c = :order.Id
+            LIMIT 1
         ];
-        Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
-        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
+        Assert.areEqual('Pending', pTransaction.aforza__Status__c);
+        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c);
     }
 
     @IsTest
     private static void testCreatePaymentTransactionForJdeDd() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'JDE DD' )
+            new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, PrimaryPaymentMethod__c = 'JDE DD')
         );
         TdfSObjectFactory.insertSObject(
             new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_JDE_DD_ID, aforza__Account__c = acc.Id)
@@ -1525,10 +1535,13 @@ private with sharing class OrderTriggerHandlerTest {
         Test.stopTest();
 
         aforza__Payment_Transaction__c pTransaction = [
-            SELECT Id,aforza__Status__c, aforza__Type__c FROM aforza__Payment_Transaction__c WHERE OrderNumber__c =: order.Id LIMIT 1
+            SELECT Id, aforza__Status__c, aforza__Type__c
+            FROM aforza__Payment_Transaction__c
+            WHERE OrderNumber__c = :order.Id
+            LIMIT 1
         ];
-        Assert.areEqual('Pending', pTransaction.aforza__Status__c); 
-        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c); 
+        Assert.areEqual('Pending', pTransaction.aforza__Status__c);
+        Assert.areEqual('Customer Payment', pTransaction.aforza__Type__c);
     }
 
     @IsTest
@@ -1574,18 +1587,18 @@ private with sharing class OrderTriggerHandlerTest {
         aforza__Invoice__c invoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(new aforza__Invoice__c(aforza__Account__c = dpAccount.Id));
 
         aforza__Payment_Transaction__c newPayment = (aforza__Payment_Transaction__c) TdfSObjectFactory.insertSObject(
-			new aforza__Payment_Transaction__c(aforza__Account__c = dpAccount.Id, OrderNumber__c = newOrder.Id)
-		);
+            new aforza__Payment_Transaction__c(aforza__Account__c = dpAccount.Id, OrderNumber__c = newOrder.Id)
+        );
 
         //insert BT payment
-		TdfSObjectFactory.insertSObject(
-			new bt_stripe__Transaction__c(
-				bt_stripe__Related_Account__c = dpAccount.Id,
-				RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
-				Order__c = newOrder.Id,
+        TdfSObjectFactory.insertSObject(
+            new bt_stripe__Transaction__c(
+                bt_stripe__Related_Account__c = dpAccount.Id,
+                RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID,
+                Order__c = newOrder.Id,
                 Invoice__c = invoice.Id
-			)
-		);
+            )
+        );
 
         Test.startTest();
         newOrder.Status = 'Cancelled';
@@ -1600,7 +1613,7 @@ private with sharing class OrderTriggerHandlerTest {
             WHERE OrderNumber__c = :newOrder.Id
         ]);
         Assert.areEqual('Cancelled', transactionsMap.get(newPayment.Id).aforza__Status__c, 'Expecting transaction status to be Cancelled');
-        
+
         //TODO
         // As we're excluding testing for this
         /*
@@ -1662,5 +1675,239 @@ private with sharing class OrderTriggerHandlerTest {
 
         List<Load__c> loadAcc = [SELECT Id FROM Load__c WHERE Id = :load.Id];
         Assert.areEqual(1, loadAcc.size(), 'There should be load left as only one order was removed.');
+    }
+
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_ActiveTradersNoCreditNoParent() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 0, aforza__Default_Price_Book__c = newPricebook.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        try {
+            newOrder.Status = 'Activated';
+            update newOrder;
+            Assert.isTrue(false, 'Expecting error to be thrown.');
+        } catch (Exception e) {
+            String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'The message thrown ' + e.getMessage() + ' is not correct.');
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_ActiveTradersNoCreditNoCreditParent() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        //create parent account
+        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                AvailableCustomerCredit__c = 5
+            )
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 0, aforza__Default_Price_Book__c = newPricebook.Id,
+                ParentId = parentAccount.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        try {
+            newOrder.Status = 'Activated';
+            update newOrder;
+            Assert.isTrue(false, 'Expecting error to be thrown.');
+        } catch (Exception e) {
+            String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
+            Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'The message thrown ' + e.getMessage() + ' is not correct.');
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_ActiveTradersNoCreditCreditParent() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        //create parent account
+        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                AvailableCustomerCredit__c = 5000
+            )
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 0, aforza__Default_Price_Book__c = newPricebook.Id,
+                ParentId = parentAccount.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+            newOrder.Status = 'Activated';
+            update newOrder;
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_ActiveTradersCreditNoCreditParent() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        //create parent account
+        Account parentAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, AccountStatus__c = 'Open',
+                AvailableCustomerCredit__c = 0
+            )
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 50000, aforza__Default_Price_Book__c = newPricebook.Id,
+                ParentId = parentAccount.Id
+            )
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        newOrder.Status = 'Activated';
+        update newOrder;
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_ActiveTradersCreditNoParent() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 5000, aforza__Default_Price_Book__c = newPricebook.Id)
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        Test.startTest();
+        newOrder.Status = 'Activated';
+        update newOrder;
+        Test.stopTest();
     }
 }

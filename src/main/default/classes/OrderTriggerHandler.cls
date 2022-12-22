@@ -115,9 +115,10 @@ public with sharing class OrderTriggerHandler {
                 if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
                     && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                } else if (((relatedAccount.AvailableCredit__c < newOrder.TotalAmount &&
-                    relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount)
-                    || relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
+                } else if (newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false
+                    && ((relatedAccount.AvailableCredit__c < newOrder.TotalAmount
+                    && relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount)
+                        || (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && relatedAccount.Parent == null))) {
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
                 OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
