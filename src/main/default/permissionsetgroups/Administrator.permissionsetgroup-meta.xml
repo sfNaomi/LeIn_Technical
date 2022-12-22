@@ -15,6 +15,7 @@
     <permissionSets>AccountAdminAccess</permissionSets>
     <permissionSets>AccountModifyAllAccess</permissionSets>
     <permissionSets>AllowMarkingEligibleForPerfectStore</permissionSets>
+    <permissionSets>AllowOrderUpdatesInSpecificStatuses</permissionSets>
     <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
     <permissionSets>AssortmentAdminAccess</permissionSets>
     <permissionSets>AttributeAdminAccess</permissionSets>

@@ -6,7 +6,7 @@
 
 	<div class="footer-container">
 		{!$Label.InvoiceFooterNote}
-		<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" id="footer-link">
+		<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" style="font-size: 10px;" id="footer-link">
 			{!$Label.InvoiceFooterNoteLink}
 		</apex:outputLink>
 	</div>
