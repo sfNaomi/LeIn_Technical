@@ -2,12 +2,19 @@
     @bottom-center {
         content: element(footer);
     }
+    @bottom-right {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        white-space: nowrap;
+        content: "Page " counter(page) " of " counter(pages);
+    }
 }
 
 .footer-container {
-    min-width: 600px !important;
-    position: running(footer);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
     text-align: center;
+    position: running(footer);
 }
 
 .inline-block {
