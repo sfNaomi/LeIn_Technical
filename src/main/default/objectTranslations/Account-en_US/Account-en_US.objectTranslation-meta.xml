@@ -27,6 +27,10 @@
         </sections>
     </layouts>
     <quickActions>
+        <label><!-- Finance Information Customer--></label>
+        <name>FinanceInformationCustomer</name>
+    </quickActions>
+    <quickActions>
         <label><!-- Finance Information --></label>
         <name>FinanceInformation</name>
     </quickActions>
