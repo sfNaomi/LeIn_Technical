@@ -82,6 +82,7 @@ private class OutletAssetServiceTest {
         Test.stopTest();
 
         List<aforza__Outlet_Asset__c> assetsAfter = [SELECT Id FROM aforza__Outlet_Asset__c WHERE aforza__Account__c = :acc.Id];
-        System.assertEquals(1, assetsAfter.size());
+        //One created in test, One created by default setting on account - perfectScoreEligibity = true
+        System.assertEquals(2, assetsAfter.size());
     }
 }
