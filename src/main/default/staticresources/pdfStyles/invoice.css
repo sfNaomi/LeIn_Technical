@@ -1,20 +1,31 @@
 @page {
-    @bottom-center {
-        content: element(footer);
+    margin: 230px 25px 50px 25px;
+    @top-left {
+        width: 750px;
+        content: element(pageHeader);
+    }
+    @bottom-left {
+        width: 650px;
+        content: element(pageFooter);
     }
     @bottom-right {
+        position: absolute;
+        width: 100px;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 10px;
-        white-space: nowrap;
+        text-align: center;
         content: "Page " counter(page) " of " counter(pages);
     }
 }
 
-.footer-container {
+#pageHeader {
+    position: running(pageHeader);
+}
+#pageFooter {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10px;
     text-align: center;
-    position: running(footer);
+    position: running(pageFooter);
 }
 
 .inline-block {

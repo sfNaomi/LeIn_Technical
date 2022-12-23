@@ -4,7 +4,14 @@
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}" />
 
-	<div class="footer-container">
+	<div id="pageHeader">
+		<div class="headline headline-absolute-top-40" style="z-index: 1;">Invoice</div>
+		<div class="" style="position: absolute; top: 0; z-index: 0;">
+			<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
+		</div>
+	</div>
+
+	<div id="pageFooter">
 		{!$Label.InvoiceFooterNote}
 		<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" style="font-size: 10px;" id="footer-link">
 			{!$Label.InvoiceFooterNoteLink}
@@ -14,10 +21,6 @@
 	<apex:variable value="{!1}" var="counter" />
 	<apex:repeat value="{!invoices}" var="invoice">
 		<div class="{!IF(counter == 1, '', 'page-break')}">
-			<div class="headline headline-absolute-top-40">Invoice</div>
-			<div class="m-bottom-small">
-				<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
-			</div>
 			<div class="inline-block">
 				<div class="float-left align-left">
 					<div class="m-bottom-small">
