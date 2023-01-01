@@ -25,6 +25,8 @@ import plannedDeliveryDate from '@salesforce/label/c.PlannedDeliveryDate';
 import requestedDeliveryDate from '@salesforce/label/c.RequestedDeliveryDate'
 import orderId from '@salesforce/label/c.OrderId';
 import accountName from '@salesforce/label/c.AccountName';
+import postCode from '@salesforce/label/c.PostCode';
+import quantity from '@salesforce/label/c.Quantity';
 import status from '@salesforce/label/c.Status';
 import pickingSheetPrinted from '@salesforce/label/c.PickingSheetPrinted';
 import pickingCompleted from '@salesforce/label/c.PickingCompleted';
@@ -64,6 +66,8 @@ const columns = [
         target: '_blank'
     },
     {label: accountName, fieldName: 'AccountName__c', sortable: true},
+    {label: postCode, fieldName: 'ShippingPostalCode', sortable: true},
+    {label: quantity, fieldName: 'TotalQuantity__c', sortable: true},
     {label: status, fieldName: 'Status', sortable: true},
     {label: palletSequence, fieldName: 'PalletSequence__c', sortable: true, editable: true},
     {label: pickingSheetPrinted, fieldName: 'PickingSheetPrinted__c', type: 'boolean'},
@@ -124,7 +128,8 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,OrderNumber,AccountName__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
+    queryFields = 'Id,Load__r.Name,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,' +
+        'OrderNumber,AccountName__c,ShippingPostalCode,TotalQuantity__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 
     connectedCallback() {

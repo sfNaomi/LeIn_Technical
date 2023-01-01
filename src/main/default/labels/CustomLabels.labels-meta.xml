@@ -560,7 +560,7 @@
     </labels>
     <labels>
         <fullName>Quantity</fullName>
-        <categories>LoadPlanningScreen, Delivery Note</categories>
+        <categories>LoadPlanningScreen, Delivery Note, LogisticUpdateScreen</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Quantity</shortDescription>
@@ -568,7 +568,7 @@
     </labels>
     <labels>
         <fullName>PostCode</fullName>
-        <categories>LoadPlanningScreen</categories>
+        <categories>LoadPlanningScreen, logisticUpdateScreen</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PostCode</shortDescription>
