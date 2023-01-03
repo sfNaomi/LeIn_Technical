@@ -631,11 +631,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Account__c.NextDeliveryDate__c</field>
-            <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>aforza__Account__c.NextDeliveryDateHidden__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
         </columns>
