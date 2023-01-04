@@ -49,7 +49,7 @@ export default class ResetBenchmark extends LightningElement {
 				})
 			);
 		} catch (error) {
-			processError(error);
+			processError(this, error);
 		}
 		this.closeModal();
 	}
