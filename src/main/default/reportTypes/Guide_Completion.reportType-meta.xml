@@ -324,7 +324,7 @@
             <field>aforza__Account__c.BillToName__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
         </columns>
-                <columns>
+        <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>aforza__Account__c.BillToReference__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
@@ -1232,6 +1232,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>aforza__Visit__c.aforza__Visit_Template__c</field>
+            <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Account__c.NextDeliveryDate__c</field>
             <table>aforza__Guide__c.aforza__Guide_Versions__r.aforza__Guide_Completion__r</table>
         </columns>
         <masterLabel>Guide Completion</masterLabel>
