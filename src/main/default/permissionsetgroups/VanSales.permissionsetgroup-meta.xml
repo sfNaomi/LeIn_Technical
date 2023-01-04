@@ -39,6 +39,7 @@
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleSalesAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>VisitCrudAccess</permissionSets>
     <permissionSets>VisitDirectRtAccess</permissionSets>
     <permissionSets>VisitEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
