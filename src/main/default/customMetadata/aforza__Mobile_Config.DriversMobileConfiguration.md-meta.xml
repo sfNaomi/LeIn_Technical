@@ -20,6 +20,13 @@
           "Title":"Validate Order",
           "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForDrivers.js"
           }
+          ],
+          "OrderCheckoutFinish": [
+          {
+              "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderStatusToDelivered.js",
+              "Title": "Move Status to Delivered",
+              "Type": "ENGINE"
+          }
           ]
           },
           "OrderComplete":[
@@ -682,7 +689,15 @@
           "IsSupportEnabled":true,
           "AutoDownloadVisitResources":false,
           "DisableOrderStatusValidation":true
-          }</value>
+          }
+          ],
+          "InvoiceTemplate": {  
+            "InvoiceTemplateName": "HMRCCompliant"   
+          },
+          "PrinterPaperWidthMm":102,
+          "PrinterPaperHeightMM":null
+          }
+        </value>
     </values>
     <values>
         <field>aforza__Custom_Config_JSON__c</field>

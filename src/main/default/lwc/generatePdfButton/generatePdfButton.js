@@ -29,7 +29,7 @@ export default class GeneratePdfButton extends LightningElement {
                 })
             );
         } catch (error) {
-            processError(error);
+            processError(this, error);
         }
         this.closeModal();
     }
