@@ -6,6 +6,7 @@
     <permissionSets>AccessCallManagementPage</permissionSets>
     <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountVanSalesAndEnergyRepAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
