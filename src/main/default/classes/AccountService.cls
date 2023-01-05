@@ -3,6 +3,8 @@
  **/
 
 public with sharing class AccountService {
+    @TestVisible private static Date today = System.today();
+
     public static final AccountSetting__mdt ACCOUNT_SETTING {
       get {
         if (ACCOUNT_SETTING == null) {
@@ -61,6 +63,16 @@ public with sharing class AccountService {
         return STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED;
       }
       set;
+    }
+
+    public static final List <String> STATUSES_TO_UPDATE_NEXT_DELIVERY_DATE {
+        get {
+            if (STATUSES_TO_UPDATE_NEXT_DELIVERY_DATE == null) {
+                STATUSES_TO_UPDATE_NEXT_DELIVERY_DATE = ACCOUNT_SETTING.StatusesToUpdateNextDeliveryDate__c.split(',');
+            }
+            return STATUSES_TO_UPDATE_NEXT_DELIVERY_DATE;
+        }
+        set;
     }
   
     public static final Map <String, AccountStatusUpdateSetting__mdt> ACC_STATUS_UPDATE_SETTINGS {
@@ -216,6 +228,75 @@ public with sharing class AccountService {
       }
   
       return accountsWithUpdatedStatus;
+    }
+
+    /**
+     * @description computes next delivery date for an account
+     *
+     * @param newAccount account to compute next delivery date for
+     *
+     * @return Date updated delivery date
+     *
+     * @author Magdalena Stanciu
+     * @date 2023-01-03
+     */
+    public static Date computeNextDeliveryDate(Account newAccount) {
+        if (newAccount.PrimaryStartDate__c == null || newAccount.Frequency__c == null || newAccount.PrimaryDeliveryDay__c == null) {
+            return null;
+        }
+
+        // frequency of deliveries
+        Map<String, Integer> frequencyMap = new Map<String, Integer>{'W' => 7, 'F' => 14, 'M' => 28};
+        Integer frequency = frequencyMap.get(newAccount.Frequency__c);
+
+        // next delivery week day
+        Integer deliveryWeekDay = getDeliveryWeekDay(newAccount);
+
+        // reference date based on which the next delivery date is calculated
+        Date referenceDate = newAccount.PrimaryStartDate__c;
+
+        // calculate offset (number of weeks, multiplier of the frequency, between reference date and today)
+        Integer daysOffset = 0;
+        if (referenceDate < today) {
+            Integer noOfDaysSinceReferenceDate = referenceDate.toStartOfWeek().daysBetween(today.toStartOfWeek());
+            daysOffset = Integer.valueOf(Math.floor(noOfDaysSinceReferenceDate / frequency)) * frequency;
+        }
+
+        // calculate next delivery date
+        Date nextDeliveryDate = referenceDate.addDays(daysOffset + deliveryWeekDay - 1);
+
+        // if next delivery date is in the past - add a number of weeks equal to the frequency of deliveries
+        if (nextDeliveryDate < today) {
+            nextDeliveryDate = nextDeliveryDate.addDays(frequency);
+        }
+
+        return nextDeliveryDate;
+    }
+
+    /**
+     * @description determines the next delivery week day
+     *
+     * @param newAccount account to determine the next delivery week day for
+     *
+     * @return Integer next delivery week day
+     *
+     * @author Magdalena Stanciu
+     * @date 2023-01-03
+     */
+    private static Integer getDeliveryWeekDay(Account newAccount) {
+        Integer primaryDeliveryDay = String.isNotBlank(newAccount.PrimaryDeliveryDay__c) ? Integer.valueOf(newAccount.PrimaryDeliveryDay__c)  : null;
+        Integer secondaryDeliveryDay = String.isNotBlank(newAccount.SecondaryDeliveryDay__c) ? Integer.valueOf(newAccount.SecondaryDeliveryDay__c)  : Integer.valueOf(newAccount.PrimaryDeliveryDay__c);
+
+        Integer minDeliveryWeekDay = Math.min(primaryDeliveryDay, secondaryDeliveryDay);
+        Integer maxDeliveryWeekDay = Math.max(primaryDeliveryDay, secondaryDeliveryDay);
+
+        Date referenceDate = newAccount.PrimaryStartDate__c > today ? newAccount.PrimaryStartDate__c : today;
+        Integer referenceWeekDay = referenceDate.toStartOfWeek().daysBetween(referenceDate) + 1;
+
+        if (referenceWeekDay <= minDeliveryWeekDay || referenceWeekDay > maxDeliveryWeekDay) {
+            return minDeliveryWeekDay;
+        }
+        return maxDeliveryWeekDay;
     }
   
     /**
