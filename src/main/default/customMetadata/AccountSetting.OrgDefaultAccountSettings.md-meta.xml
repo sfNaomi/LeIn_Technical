@@ -15,6 +15,10 @@
         <value xsi:type="xsd:string">Field Sales Rep,Field Sales Manager</value>
     </values>
     <values>
+        <field>StatusesToUpdateNextDeliveryDate__c</field>
+        <value xsi:type="xsd:string">Traders,At Risk,Win Back,Lapsed</value>
+    </values>
+    <values>
         <field>StatusesToUpdateTeamMembership__c</field>
         <value xsi:type="xsd:string">Traders,At Risk,Win Back,Lapsed</value>
     </values>

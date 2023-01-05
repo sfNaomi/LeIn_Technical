@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AccountNextDeliveryDate__c</fullName>
     <externalId>false</externalId>
-    <formula>aforza__Account__r.NextDeliveryDateHidden__c</formula>
+    <formula>aforza__Account__r.NextDeliveryDate__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Account Next Delivery Date</label>
     <required>false</required>
