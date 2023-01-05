@@ -2,7 +2,7 @@
  * Created by magdalena.stanciu on 03.01.2023.
  */
 
-public with sharing class AccountNextDeliveryDateUpdateBatch implements Database.Batchable<SObject>, Schedulable {
+public without sharing class AccountNextDeliveryDateUpdateBatch implements Database.Batchable<SObject>, Schedulable {
     public Database.QueryLocator start(Database.BatchableContext context) {
         String query = getQuery();
         return Database.getQueryLocator(query);
