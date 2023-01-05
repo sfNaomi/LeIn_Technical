@@ -33,6 +33,16 @@
                 <default>false</default>
                 <label>Promotion</label>
             </value>
+            <value>
+                <fullName>Perfect Store Visibility and Display</fullName>
+                <default>false</default>
+                <label>Perfect Store Visibility and Display</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Core and Energy</fullName>
+                <default>false</default>
+                <label>Perfect Store Core and Energy</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

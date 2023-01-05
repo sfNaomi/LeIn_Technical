@@ -189,8 +189,8 @@ export default class LoadPlanningAssignment extends LightningElement {
 
     removeOrdersPartOfLoad() {
         const orderIdsToRemoveSet = new Set(this.loadOrderIds);
-        return this.selectedOrdersIds.filter((order) => {
-            return !orderIdsToRemoveSet.has((order.Id));
+        return this.selectedOrdersIds.filter((orderId) => {
+            return !orderIdsToRemoveSet.has((orderId));
         });
     }
 

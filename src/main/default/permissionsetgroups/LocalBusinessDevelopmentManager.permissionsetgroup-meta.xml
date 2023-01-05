@@ -7,6 +7,7 @@
     <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountLocalBusDevManagerAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
@@ -44,7 +45,8 @@
     <permissionSets>SystemBasicPlatformFeatures</permissionSets>
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleSalesAccess</permissionSets>
-    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>    
+    <permissionSets>VisitCrudAccess</permissionSets>
     <permissionSets>VisitDirectRtAccess</permissionSets>
     <permissionSets>VisitEditAccess</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>

@@ -5,6 +5,7 @@
     <mutingPermissionSets>CreditManagerMuted</mutingPermissionSets>
     <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccountFinanceAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>
     <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>

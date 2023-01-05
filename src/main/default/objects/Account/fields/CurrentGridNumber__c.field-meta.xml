@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CurrentGridNumber__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISBLANK(SecondaryGridNumber__c), PrimaryGridNumber__c , IF(VALUE(LEFT(PrimaryGridNumber__c,1)) == WEEKDAY(NextDeliveryDate__c), PrimaryGridNumber__c, SecondaryGridNumber__c))</formula>
+    <formula>IF(ISBLANK(SecondaryGridNumber__c), PrimaryGridNumber__c , IF(VALUE(LEFT(PrimaryGridNumber__c,1)) == WEEKDAY(NextDeliveryDateHidden__c), PrimaryGridNumber__c, SecondaryGridNumber__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Current Grid Number</label>
     <required>false</required>
