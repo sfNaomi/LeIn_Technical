@@ -7,6 +7,7 @@
     <permissionSets>AccessDeliveryNote</permissionSets>
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountFieldSalesAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>

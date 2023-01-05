@@ -8,6 +8,7 @@
     <permissionSets>AccessDirectDebitWidget</permissionSets>
     <permissionSets>AccessInvoiceDocument</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountTeamLeaderAndTamAccess</permissionSets>
     <permissionSets>Aforza_Base</permissionSets>

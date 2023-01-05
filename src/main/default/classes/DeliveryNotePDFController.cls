@@ -60,7 +60,17 @@ public without sharing class DeliveryNotePDFController {
             strOrderIdsContainsOrdItem = strOrderIdsContainsOrdItem + ';' + ordItem.OrderId;
             if (mapOrderIdlstOrderItem.containsKey(ordItem.OrderId)) {
                 List<OrderItem> lstOrderItem = mapOrderIdlstOrderItem.get(ordItem.OrderId);
-                lstOrderItem.add(ordItem);
+                Boolean isItemPresent = false;
+                for(OrderItem exItem: lstOrderItem) {
+                    if(ordItem.Product2.StockKeepingUnit != null && exItem.Product2.StockKeepingUnit == ordItem.Product2.StockKeepingUnit) {
+                        exItem.Quantity += ordItem.Quantity;
+                        isItemPresent = true;
+                        break;
+                    }
+                }
+                if(!isItemPresent) {
+                    lstOrderItem.add(ordItem);    
+                } 
                 mapOrderIdlstOrderItem.put(ordItem.OrderId, lstOrderItem);
             } else {
                 mapOrderIdlstOrderItem.put(ordItem.OrderId, new List<OrderItem>{

@@ -309,7 +309,7 @@ public with sharing class SixOrderSummaryController {
                 SELECT
                     aforza__Default_Price_Book__c, BillingPostalCode, BillingCity,
                     BillingCountryCode, BillingState, BillingStateCode, BillingStreet, Depot__c,
-                    NextDeliveryDate__c, ShippingAddress, ShippingCity, ShippingCountry, ShippingCountryCode,
+                    /*NextDeliveryDate__c,*/ ShippingAddress, ShippingCity, ShippingCountry, ShippingCountryCode,
                     ShippingStateCode, ShippingStreet, Name, SalesRepresentativeCode__c, SalesRepresentative__c,
                     DefaultInventory__c, DeliveryPointReference__c, ShippingPostalCode
                 FROM Account
@@ -323,7 +323,7 @@ public with sharing class SixOrderSummaryController {
             newOrder.RecordTypeId = RecordTypes.ORDER_TELESALES_ID;
             newOrder.AccountId = accountId;
             newOrder.EffectiveDate = Date.today();
-            newOrder.DeliveryDate__c = dPData?.NextDeliveryDate__c;
+            //newOrder.DeliveryDate__c = dPData?.NextDeliveryDate__c;
             newOrder.Depot__c = dPData?.Depot__c;
             newOrder.SalesRepresentative__c = dpData?.SalesRepresentative__c;
             newOrder.SalesRepresentativeCode__c = dpData?.SalesRepresentativeCode__c;

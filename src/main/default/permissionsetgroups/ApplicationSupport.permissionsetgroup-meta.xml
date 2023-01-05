@@ -11,6 +11,7 @@
     <permissionSets>AccessLoadPlanningScreen</permissionSets>
     <permissionSets>AccessLogisticUpdateScreen</permissionSets>
     <permissionSets>AccessOrderRecalculationWidget</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
     <permissionSets>AccessPickSheet</permissionSets>
     <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountAppSupportAndIntegrationAccess</permissionSets>

@@ -5,6 +5,8 @@
 public with sharing class OrderTriggerHandler {
 
     @TestVisible private static final String ORDER_STATUS_AFTER_CLONING = 'Unplanned';
+    private static final Boolean PAYMENT_ON_INVOICE_LEVEL = InvoiceSettings__c.getOrgDefaults().CreatePaymentWhenInvoiceIsCreated__c;
+    private static final Boolean ECOMM_PAYMENT_ON_INVOICE_LEVEL = InvoiceSettings__c.getOrgDefaults().PaymentCommerceOnInvoice__c;
 
     private static final Map<String, String> STATUS_TO_FIELD_MAPPING {
         get {
@@ -99,8 +101,10 @@ public with sharing class OrderTriggerHandler {
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))) {
                 continue;
             }
-            // check if card payment selected but Pre Authorization was not captured
-            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false){
+            // check if card payment selected, Pre Authorization was not captured and payment creation on invoice level is not activated
+            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
+                    ((PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId != RecordTypes.ORDER_ECOMMERCE_ID) ||
+                    (ECOMM_PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID))){
                 newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
             }
             // check if there are any full discount items

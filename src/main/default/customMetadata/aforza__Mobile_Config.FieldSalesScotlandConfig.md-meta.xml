@@ -851,8 +851,8 @@
           "DisableOrderStatusValidation":true,
           "AuditTypes":[
           {
-          "Type":"Perfect Store Core &amp; Energy",
-          "Title":"Core &amp; Energy Range Stocked?",
+          "Type":"Perfect Store Core and Energy",
+          "Title":"Core and Energy Range Stocked?",
           "Tabs":[
           {
           "Type":"FORM",
@@ -896,7 +896,7 @@
           {
           "Filters":[
           {
-          "Value":"Perfect Store C&amp;E",
+          "Value":"Perfect Store Core and Energy",
           "Operator":"eq",
           "Key":"aforza__Type__c"
           }
@@ -906,15 +906,15 @@
           "CanTakePhotos":true,
           "CanCreateOrders":false,
           "CanAddProducts":false,
-          "Button":"Core &amp; Energy Complete"
+          "Button":"Core and Energy Complete"
           },
           {
-          "Type":"Perfect Store Visibility &amp; Display",
-          "Title":"Visibility &amp; Display?",
+          "Type":"Perfect Store Visibility and Display",
+          "Title":"Visibility and Display?",
           "Tabs":[
           {
           "Type":"FORM",
-          "Title":"Visibility &amp; Display",
+          "Title":"Visibility and Display",
           "Layout":[
           {
           "Name":"PerfectStoreMet__c",
@@ -954,7 +954,7 @@
           {
           "Filters":[
           {
-          "Value":"Perfect Store V&amp;D",
+          "Value":"Perfect Store Visibility and Display",
           "Operator":"eq",
           "Key":"aforza__Type__c"
           }
@@ -964,7 +964,7 @@
           "CanTakePhotos":true,
           "CanCreateOrders":false,
           "CanAddProducts":false,
-          "Button":"Visibility &amp; Display Complete"
+          "Button":"Visibility and Display Complete"
           },
           {
           "Type":"Call Productivity",
