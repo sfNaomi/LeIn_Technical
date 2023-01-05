@@ -33,14 +33,14 @@
                 <label>Guide</label>
             </value>
             <value>
-                <fullName>Perfect Store Core &amp; Energy</fullName>
+                <fullName>Perfect Store Core and Energy</fullName>
                 <default>false</default>
-                <label>Perfect Store Core &amp; Energy</label>
+                <label>Perfect Store Core and Energy</label>
             </value>
             <value>
-                <fullName>Perfect Store Visibility &amp; Display</fullName>
+                <fullName>Perfect Store Visibility and Display</fullName>
                 <default>false</default>
-                <label>Perfect Store Visibility &amp; Display</label>
+                <label>Perfect Store Visibility and Display</label>
             </value>
             <value>
                 <fullName>Call Productivity</fullName>
