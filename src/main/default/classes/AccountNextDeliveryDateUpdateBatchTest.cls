@@ -4,7 +4,7 @@
 @IsTest
 private with sharing class AccountNextDeliveryDateUpdateBatchTest {
     @IsTest
-    private static void testGetQuery_ExistingTradersAccounts() {
+    private static void testBatchExecution_ExistingTradersAccounts() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
                 PrimaryGridNumber__c = '3C7201MO1', PrimaryStartDate__c = Date.newInstance(2022, 1, 1),
@@ -25,7 +25,9 @@ private with sharing class AccountNextDeliveryDateUpdateBatchTest {
     }
 
     @IsTest
-    private static void testGetQuery_NoExistingTradersAccounts() {
+    private static void testBatchExecution_NoExistingTradersAccounts() {
+        TdfSObjectFactory.insertSObject(new aforza__Attribute__c(aforza__Code__c = 'New DP'));
+
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Prospect',
                 PrimaryGridNumber__c = '3C7201MO1', PrimaryStartDate__c = Date.newInstance(2022, 1, 1),
