@@ -62,10 +62,6 @@
                 <field>DefaultInventory__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NextDeliveryDate__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PreferredCallTimeTelesales__c</field>
             </layoutItems>
