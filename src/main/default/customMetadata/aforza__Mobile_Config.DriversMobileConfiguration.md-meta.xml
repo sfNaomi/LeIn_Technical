@@ -691,8 +691,8 @@
           "DisableOrderStatusValidation":true
           }
           ],
-          "InvoiceTemplate": {  
-            "InvoiceTemplateName": "HMRCCompliant"   
+          "InvoiceTemplate": {
+            "InvoiceTemplateName": "HMRCCompliant"
           },
           "PrinterPaperWidthMm":102,
           "PrinterPaperHeightMM":null

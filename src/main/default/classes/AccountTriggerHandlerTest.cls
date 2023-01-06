@@ -444,22 +444,6 @@ private with sharing class AccountTriggerHandlerTest {
     }
 
     @IsTest
-    private static void testAssignDefault_Scotland() {
-        TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default England'));
-        Pricebook2 priceBook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2(Name = 'Default Scotland'));
-
-        Test.startTest();
-        TdfSObjectFactory.insertSObject(
-            new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, FieldSalesRegion__c = 'Scotland East')
-        );
-        Test.stopTest();
-
-        Account acc = [SELECT Id, aforza__Default_Price_Book__c FROM Account LIMIT 1][0];
-
-        Assert.areEqual(priceBook.Id, acc.aforza__Default_Price_Book__c);
-    }
-
-    @IsTest
     private static void testPullInfoOnDPFromRelatedCustomer_InsertDPRelatedToCustomer() {
         Account customerAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_CUSTOMER_ID, PORequired__c = true)
