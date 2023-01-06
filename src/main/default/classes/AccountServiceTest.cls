@@ -592,7 +592,7 @@ public class AccountServiceTest {
     @IsTest
     private static void testComputeNextDeliveryDate_MonthlyFrequencyCurrentWeekDayInWeek1() {
         Date today = Date.newInstance(2023, 1, 2);
-        Date startDate = Date.newInstance(2023, 1, 2);
+        Date startDate = Date.newInstance(2023, 1, 4);
         Date expectedDeliveryDate = Date.newInstance(2023, 1, 4);
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -619,7 +619,7 @@ public class AccountServiceTest {
     @IsTest
     private static void testComputeNextDeliveryDate_MonthlyFrequencyCurrentWeekDayInWeek2() {
         Date today = Date.newInstance(2023, 1, 10);
-        Date startDate = Date.newInstance(2023, 1, 2);
+        Date startDate = Date.newInstance(2023, 1, 4);
         Date expectedDeliveryDate = Date.newInstance(2023, 2, 1);
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -646,7 +646,7 @@ public class AccountServiceTest {
     @IsTest
     private static void testComputeNextDeliveryDate_MonthlyFrequencyCurrentWeekDayInWeek3() {
         Date today = Date.newInstance(2023, 1, 18);
-        Date startDate = Date.newInstance(2023, 1, 2);
+        Date startDate = Date.newInstance(2023, 1, 4);
         Date expectedDeliveryDate = Date.newInstance(2023, 2, 1);
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -673,7 +673,7 @@ public class AccountServiceTest {
     @IsTest
     private static void testComputeNextDeliveryDate_MonthlyFrequencyCurrentWeekDayInWeek4() {
         Date today = Date.newInstance(2023, 1, 26);
-        Date startDate = Date.newInstance(2023, 1, 2);
+        Date startDate = Date.newInstance(2023, 1, 4);
         Date expectedDeliveryDate = Date.newInstance(2023, 2, 1);
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
@@ -700,7 +700,7 @@ public class AccountServiceTest {
     @IsTest
     private static void testComputeNextDeliveryDate_MonthlyFrequencyRepeatCycle() {
         Date today = Date.newInstance(2023, 2, 3);
-        Date startDate = Date.newInstance(2023, 1, 2);
+        Date startDate = Date.newInstance(2023, 1, 4);
         Date expectedDeliveryDate = Date.newInstance(2023, 3, 1);
 
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(

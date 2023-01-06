@@ -263,7 +263,7 @@ public with sharing class AccountService {
         }
 
         // calculate next delivery date
-        Date nextDeliveryDate = referenceDate.addDays(daysOffset + deliveryWeekDay - 1);
+        Date nextDeliveryDate = referenceDate.toStartOfWeek().addDays(daysOffset + deliveryWeekDay - 1);
 
         // if next delivery date is in the past - add a number of weeks equal to the frequency of deliveries
         if (nextDeliveryDate < today) {
