@@ -27,7 +27,7 @@
     <permissionSets>InventoryRuObjectAccess</permissionSets>
     <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InventoryUserRuObjectAccess</permissionSets>
-    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>InvoiceDepotAccess</permissionSets>
     <permissionSets>LoadBaseAccess</permissionSets>
     <permissionSets>LoadEditAccess</permissionSets>
     <permissionSets>OrderLogisticsAccess</permissionSets>

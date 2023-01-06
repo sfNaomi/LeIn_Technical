@@ -85,7 +85,7 @@
         <criteriaItems>
             <field>Status</field>
             <operation>equals</operation>
-            <value>Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed,Delivered</value>
+            <value>Delivered,Receipted,Unplanned,Ready to Pick,Picking in Progress,Ready to Load,Pending Delivery,Delivery Failed</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
