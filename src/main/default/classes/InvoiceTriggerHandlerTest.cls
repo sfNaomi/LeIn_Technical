@@ -71,7 +71,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new aforza__Payment_Transaction__c(aforza__Invoice__c = invoice.Id, aforza__Status__c = 'Pending'));
 
         Test.startTest();
-        invoice.aforza__Status__c = 'Paid in Full';
+        invoice.aforza__Status__c = 'Paid';
         update invoice;
         Test.stopTest();
 

@@ -241,7 +241,7 @@
                     <criteria>
                         <leftValue>{!Record.aforza__Status__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Paid in Full</rightValue>
+                        <rightValue>Paid</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

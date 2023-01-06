@@ -1,6 +1,6 @@
 public with sharing class PaymentTransactionService {
 
-    private static final String PAID_INVOICE_STATUS = 'Paid in Full';
+    private static final String PAID_INVOICE_STATUS = 'Paid';
     private static final String APPLIED_TRANSACTION_STATUS = 'Applied';
     private static final String REJECTED_TRANSACTION_STATUS = 'Rejected';
     private static final String PENDING_TRANSACTION_STATUS = 'Pending';
@@ -24,10 +24,10 @@ public with sharing class PaymentTransactionService {
             parentAccountIds.add(ord.AccountId);
         }
         Map<String, aforza__Payment_Method__c> primaryMethodToPaymentRecord = new Map<String, aforza__Payment_Method__c>();
-        for(aforza__Payment_Method__c pMethod: [SELECT ID, aforza__Account__c, RecordTypeId FROM aforza__Payment_Method__c 
+        for(aforza__Payment_Method__c pMethod: [SELECT Id, aforza__Account__c, RecordTypeId FROM aforza__Payment_Method__c
                                                 WHERE aforza__Account__c IN: parentAccountIds AND 
-                                                      aforza__Active__c = true AND
-                                                      RecordTypeId In :PAYMENT_METHOD_RT_IDS])
+                                                      aforza__Active__c = TRUE AND
+                                                      RecordTypeId IN :PAYMENT_METHOD_RT_IDS])
         {
             if (pMethod.RecordTypeId == RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID) {
                 primaryMethodToPaymentRecord.put((pMethod.aforza__Account__c+'Direct Debit'), pMethod);
@@ -41,7 +41,7 @@ public with sharing class PaymentTransactionService {
         }
 
         for( Order ord: parentOrders.values() ) {
-            String uniqueKey = ord.accountId + ord.PaymentMethod__c;
+            String uniqueKey = ord.AccountId + ord.PaymentMethod__c;
             aforza__Payment_Transaction__c pt = prepareDDAndBacsTransactionFromOrder(ord);
             pt.aforza__Payment_Method__c = primaryMethodToPaymentRecord.containsKey(uniqueKey) ? primaryMethodToPaymentRecord.get(uniqueKey).Id : null;
             newPaymentTransactions.add(pt);
@@ -78,7 +78,7 @@ public with sharing class PaymentTransactionService {
             when 'Payment Attempt Unsuccessful' {
                 return REJECTED_TRANSACTION_STATUS;
             }
-            when 'Paid in Full' {
+            when 'Paid' {
                 return APPLIED_TRANSACTION_STATUS;
             }
         }

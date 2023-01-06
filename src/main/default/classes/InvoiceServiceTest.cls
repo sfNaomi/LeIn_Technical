@@ -295,7 +295,7 @@ private with sharing class InvoiceServiceTest {
         String paymentMethod = 'Cash';
 	
 		String initialInvoiceStatus = null;
-		String expectedInvoiceStatus = 'Paid in Full';
+		String expectedInvoiceStatus = 'Paid';
 		Id orderRecordTypeId = RecordTypes.ORDER_RETURN_ID;
         Decimal orderTotalAmount = 0;
         
@@ -553,7 +553,7 @@ private with sharing class InvoiceServiceTest {
 		String paymentMethod = 'Credit Card';
 
 		String initialInvoiceStatus = null;
-		String expectedInvoiceStatus = 'Paid in Full';
+		String expectedInvoiceStatus = 'Paid';
 		Id orderRecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID;
         Decimal orderTotalAmount = 200.00;
 

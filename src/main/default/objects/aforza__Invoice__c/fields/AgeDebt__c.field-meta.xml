@@ -3,7 +3,7 @@
     <fullName>AgeDebt__c</fullName>
     <description>Field to calculate how many days have passed since the due date (for overdue invoices).</description>
     <externalId>false</externalId>
-    <formula>IF(aforza__Due_Date__c &lt; TODAY() &amp;&amp; NOT(ISPICKVAL(aforza__Status__c, &apos;Paid in Full&apos;)), TODAY() - aforza__Due_Date__c, 0)</formula>
+    <formula>IF(aforza__Due_Date__c &lt; TODAY() &amp;&amp; NOT(ISPICKVAL(aforza__Status__c, &apos;Paid&apos;)), TODAY() - aforza__Due_Date__c, 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Age Debt</label>
     <precision>18</precision>
