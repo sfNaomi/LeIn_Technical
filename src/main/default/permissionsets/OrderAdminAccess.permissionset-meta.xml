@@ -108,6 +108,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Order.DpRefInvoiceNo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.FullReturnOrder__c</field>
         <readable>true</readable>
     </fieldPermissions>
