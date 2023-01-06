@@ -174,6 +174,7 @@ public with sharing class InvoiceService {
             FROM bt_stripe__Transaction__c
             WHERE Order__c IN :orderIds
             AND Order__r.PreAuthCaptured__c = TRUE
+            AND (bt_stripe__Transaction_Status__c = 'Open' OR bt_stripe__Payment_Status__c = 'Authorized')
         ];
     }
 
