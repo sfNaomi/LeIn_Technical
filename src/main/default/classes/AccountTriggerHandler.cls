@@ -118,8 +118,8 @@ public with sharing class AccountTriggerHandler {
         for (Account acc : accounts) {
             if (Test.isRunningTest()) {
                 acc.aforza__Default_Price_Book__c = defaultPriceBooks.get('England');
-            } else if (acc.ShippingState != null){
-                acc.aforza__Default_Price_Book__c = defaultPriceBooks.get(acc.ShippingState);
+            } else if (acc.ShippingStateCode != null){
+                acc.aforza__Default_Price_Book__c = defaultPriceBooks.get(acc.ShippingStateCode.toLowerCase().capitalize());
             }
         }
     }

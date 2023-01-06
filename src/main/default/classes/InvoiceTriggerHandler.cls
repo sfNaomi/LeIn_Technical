@@ -4,7 +4,7 @@
 
 public with sharing class InvoiceTriggerHandler {
 
-    private static final String PAID_INVOICE_STATUS = 'Paid in Full';
+    private static final String PAID_INVOICE_STATUS = 'Paid';
     private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String UNSUCCESSFUL_INVOICE_STATUS = 'Payment Attempt Unsuccessful';
 

@@ -29,9 +29,9 @@
                 <label>Cash in Transit</label>
             </value>
             <value>
-                <fullName>Paid in Full</fullName>
+                <fullName>Paid</fullName>
                 <default>false</default>
-                <label>Paid in Full</label>
+                <label>Paid</label>
             </value>
             <value>
                 <fullName>Outstanding</fullName>
@@ -43,12 +43,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Approved</label>
-            </value>
-            <value>
-                <fullName>Paid</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Paid</label>
             </value>
             <value>
                 <fullName>Pending</fullName>

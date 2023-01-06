@@ -8,7 +8,7 @@ public with sharing class InvoiceService {
     private static final String DD_PAYMENT_METHOD = 'Direct Debit';
     private static final String JDE_DD_PAYMENT_METHOD = 'JDE DD';
     private static final String BACS_PAYMENT_METHOD = 'Bacs';
-    private static final String PAID_INVOICE_STATUS = 'Paid in Full';
+    private static final String PAID_INVOICE_STATUS = 'Paid';
     private static final String CREDIT_CARD_PAYMENT_METHOD = 'Credit Card';
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
     private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
@@ -174,6 +174,7 @@ public with sharing class InvoiceService {
             FROM bt_stripe__Transaction__c
             WHERE Order__c IN :orderIds
             AND Order__r.PreAuthCaptured__c = TRUE
+            AND (bt_stripe__Transaction_Status__c = 'Open' OR bt_stripe__Payment_Status__c = 'Authorized')
         ];
     }
 
@@ -236,6 +237,7 @@ public with sharing class InvoiceService {
      * @param paymentMethod payment method of related account
      * @param currentStatus current invoice status
      * @param orderRecordTypeId current order recordType Id
+     * @param orderTotalAmount total amount of order
      *
      * @return invoice status
      *
