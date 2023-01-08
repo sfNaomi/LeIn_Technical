@@ -3,13 +3,12 @@
  */
 
 public with sharing class AccountSyncService {
-    public Enum SyncOperation {
+    public enum SyncOperation {
         PUSH,
         PULL
     }
 
-    @TestVisible
-    private Enum AccountType {
+    public enum AccountType {
         CHILD,
         PARENT
     }
@@ -53,22 +52,20 @@ public with sharing class AccountSyncService {
     }
 
     public static void syncAccounts(List<Account> updatedAccounts, SyncOperation operation) {
-        AccountType accType = null;
         switch on operation {
             when PULL {
                 List<Account> parentAccounts = getRelatedAccounts(updatedAccounts, AccountType.CHILD);
                 syncAccounts(new Map<Id, Account>(parentAccounts), updatedAccounts);
             }
             when PUSH {
-                List<Account> childAccounts = getRelatedAccounts(updatedAccounts, AccountType.PARENT);
-                syncAccounts(new Map<Id, Account>(updatedAccounts), childAccounts);
-                update childAccounts;
+                if (updatedAccounts.size() > 0) {
+                    Database.executeBatch(new CopyAccountValuesToChildrenBatch(updatedAccounts));
+                }
             }
         }
     }
 
-    @TestVisible
-    private static void syncAccounts(Map<Id, Account> parentAccounts, List<Account> childAccounts) {
+    public static List<Account> syncAccounts(Map<Id, Account> parentAccounts, List<Account> childAccounts) {
         for (Account childAccount : childAccounts) {
             if (childAccount.ParentId == null) {
                 updateFieldToDefaults(childAccount);
@@ -77,6 +74,7 @@ public with sharing class AccountSyncService {
             Account parentAccount = parentAccounts?.get(childAccount.ParentId);
             updateChildFromParent(parentAccount, childAccount);
         }
+        return childAccounts;
     }
 
     @TestVisible
@@ -89,7 +87,7 @@ public with sharing class AccountSyncService {
     @TestVisible
     private static void setFieldToDefaultValue(Account newAccount, String fieldName, String defaultValue) {
         Schema.DisplayType targetFieldType =
-                Schema.SObjectType.Account.fields.getMap().get(fieldName)?.getDescribe().getType();
+            Schema.SObjectType.Account.fields.getMap().get(fieldName)?.getDescribe().getType();
 
         Object newValue = null;
         switch on targetFieldType {
@@ -103,7 +101,7 @@ public with sharing class AccountSyncService {
                 newValue = Decimal.valueOf(defaultValue);
             }
             when DATETIME {
-                newValue = DateTime.valueOf(defaultValue);
+                newValue = Datetime.valueOf(defaultValue);
             }
             when DATE {
                 newValue = Date.valueOf(defaultValue);
@@ -133,8 +131,7 @@ public with sharing class AccountSyncService {
         }
     }
 
-    @TestVisible
-    private static List<Account> getRelatedAccounts(List<Account> newAccounts, AccountType inputAccType) {
+    public static List<Account> getRelatedAccounts(List<Account> newAccounts, AccountType inputAccType) {
         String whereField = null;
         String inField = null;
         switch on inputAccType {
@@ -155,17 +152,17 @@ public with sharing class AccountSyncService {
         accountIds.remove(null);
 
         String queryString = 'SELECT Id,ParentId,' + String.join(FIELDS, ',') +
-                             ' FROM Account WHERE ' + whereField  + ' IN :accountIds';
+            ' FROM Account WHERE ' + whereField + ' IN :accountIds';
         return Database.query(queryString);
     }
 
-    public static Boolean accountRequiresSync(Account newAccount, account oldAccount, AccountSyncService.SyncOperation operation) {
+    public static Boolean accountRequiresSync(Account newAccount, Account oldAccount, AccountSyncService.SyncOperation operation) {
         switch on operation {
             when PULL {
                 if (newAccount.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID) {
                     if (
-                            (oldAccount == null && newAccount.ParentId != null) ||
-                                    (oldAccount != null && newAccount.ParentId != oldAccount.ParentId)
+                        (oldAccount == null && newAccount.ParentId != null) ||
+                            (oldAccount != null && newAccount.ParentId != oldAccount.ParentId)
                     ) {
                         return true;
                     }
