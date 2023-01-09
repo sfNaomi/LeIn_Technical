@@ -9,7 +9,7 @@
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
