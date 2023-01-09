@@ -115,6 +115,7 @@ export default class LoadPlanningScreen extends LightningElement {
     @track loadDriver;
     @track loadVehicle;
     @track route;
+    @track createRoute;
 
 
     @track initialScreen = true;
@@ -713,6 +714,17 @@ export default class LoadPlanningScreen extends LightningElement {
                 this.selectedRows = [...newLoadOrders];
                 // using time out to make sure we try to set selected rows after the table is rendered
                 setTimeout(() => this.loadOrderIds = newLoadOrders.map(record => record.Id));
+                // let user know they will not be able to add additional orders to the load as loaded one is "closed" =
+                // create route is set to true
+                if (this.createRoute === true) {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Selected Load is closed',
+                            message: 'You will not be allowed to add additional orders to this load.',
+                            variant: 'warning'
+                        })
+                    );
+                }
             } else {
                 const toastSuccess = new ShowToastEvent({
                     title: 'Load Orders',
@@ -737,6 +749,7 @@ export default class LoadPlanningScreen extends LightningElement {
         this.loadVehicle = loadData.Vehicle__c;
         this.route = loadData.RouteIdentification__c;
         this.depot = loadData.Depot__c;
+        this.createRoute = loadData.CreateRoute__c;
     }
 
     removeOrdersFromList(listToRemoveOrdersFrom, ordersToRemove) {

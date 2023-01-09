@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_Win_Back_Alert</name>
         <label>Send Win Back Alert</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>429</locationX>
+        <locationY>623</locationY>
         <actionName>Order.WinBackEmailAlert</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -17,10 +17,32 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <decisions>
+        <name>Created_or_Updated</name>
+        <label>Created or Updated</label>
+        <locationX>321</locationX>
+        <locationY>395</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Order_Completed_Metadata</targetReference>
+            </connector>
+            <label>Updated</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>To_send_Win_Back_Email</name>
         <label>To send Win Back Email</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>561</locationX>
+        <locationY>503</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>To_Send</name>
@@ -59,7 +81,8 @@
             <label>To Send</label>
         </rules>
     </decisions>
-    <description>A workflow to send emails on Order object.</description>
+    <description>A workflow to send emails on Order object. 
+Update Order Name to payment method</description>
     <environments>Default</environments>
     <formulas>
         <name>IsOrderInComleteOrderStatus</name>
@@ -77,7 +100,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -90,8 +113,8 @@
     <recordLookups>
         <name>Get_Order_Completed_Metadata</name>
         <label>Get Order Completed Metadata</label>
-        <locationX>182</locationX>
-        <locationY>335</locationY>
+        <locationX>561</locationX>
+        <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>To_send_Win_Back_Email</targetReference>
@@ -103,15 +126,56 @@
         <queriedFields>CompletedOrderStatuses__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <start>
-        <locationX>56</locationX>
-        <locationY>0</locationY>
+    <recordUpdates>
+        <name>Update_Order_Name</name>
+        <label>Update Order Name</label>
+        <locationX>269</locationX>
+        <locationY>272</locationY>
         <connector>
-            <targetReference>Get_Order_Completed_Metadata</targetReference>
+            <targetReference>Created_or_Updated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PaymentMethod__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>$Record.PaymentMethod__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>PaymentMethod</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>435</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Update_Order_Name</targetReference>
         </connector>
         <object>Order</object>
-        <recordTriggerType>Update</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>PaymentMethod</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.PaymentMethod__c</elementReference>
+        </value>
+    </variables>
 </Flow>

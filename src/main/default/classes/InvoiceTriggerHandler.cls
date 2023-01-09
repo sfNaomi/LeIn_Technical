@@ -60,11 +60,13 @@ public with sharing class InvoiceTriggerHandler {
         }
     }
 
-    public static void evaluateAndSendEmailToCustomer(List<aforza__Invoice__c> invoices) {
+    public static void evaluateAndSendEmailToCustomer(List<aforza__Invoice__c> newInvoices, Map<Id, aforza__Invoice__c> oldInvoices) {
         Set<Id> invoiceToSendEmailForIds = new Set<Id>();
-        for (aforza__Invoice__c invoice : invoices) {
-            if (invoice.InvoiceSentToCustomer__c == false && invoice.InvoiceReadyForEvaluation__c == true) {
-                invoiceToSendEmailForIds.add(invoice.Id);
+        for (aforza__Invoice__c newInvoice : newInvoices) {
+            aforza__Invoice__c oldInvoice = oldInvoices.get(newInvoice.Id);
+            if (oldInvoice.InvoiceReadyForEvaluation__c != newInvoice.InvoiceReadyForEvaluation__c &&
+                newInvoice.InvoiceReadyForEvaluation__c == true && newInvoice.InvoiceSentToCustomer__c == false) {
+                invoiceToSendEmailForIds.add(newInvoice.Id);
             }
         }
         InvoiceEmailService.sendInvoiceToCustomers(invoiceToSendEmailForIds);

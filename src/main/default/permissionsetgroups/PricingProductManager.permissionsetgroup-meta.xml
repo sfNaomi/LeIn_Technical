@@ -9,8 +9,9 @@
     <permissionSets>AssortmentBaseAccess</permissionSets>
     <permissionSets>AssortmentCruObjectAccess</permissionSets>
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
-    <permissionSets>AttributeAssignmentCruObjectAccess</permissionSets>
+    <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeRuAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactPricingProductManager</permissionSets>

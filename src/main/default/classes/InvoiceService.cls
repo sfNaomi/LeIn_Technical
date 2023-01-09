@@ -13,7 +13,7 @@ public with sharing class InvoiceService {
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
     private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String APPROVED_TRANSACTION_STATUS = 'Approved';
-    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs'};
+    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs', 'JDE DD'};
 
     private static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
         get {
@@ -50,9 +50,14 @@ public with sharing class InvoiceService {
         List<aforza__Invoice__c> existingInvoices = getInvoices(orderIdsToCreateInvoices);
 
         Map<Id, aforza__Invoice__c> orderIdExistingInvoice = new Map<Id, aforza__Invoice__c>();
+        List<aforza__Invoice_Line_Item__c> existingInvoiceLineItemsToDelete = new List<aforza__Invoice_Line_Item__c>();
         for (aforza__Invoice__c existingInvoice : existingInvoices) {
             orderIdExistingInvoice.put(existingInvoice.aforza__Order__c, existingInvoice);
+            existingInvoiceLineItemsToDelete.addAll(existingInvoice.aforza__Billing_Statement_Line_Items__r);
         }
+
+        // delete existing invoice line items from existing invoices (eventual empty line items created by mobile app)
+        delete existingInvoiceLineItemsToDelete;
 
         // generate invoices
         Map<Id, aforza__Invoice__c> invoicesByOriginalOrderId = new Map<Id, aforza__Invoice__c>();
@@ -390,7 +395,7 @@ public with sharing class InvoiceService {
 
         List<String> allQueryFields = new List<String>(invoiceFields);
 
-        String queryString = 'SELECT ' + String.join(allQueryFields, ',') + ' FROM aforza__Invoice__c WHERE aforza__Order__c IN :orderIds';
+        String queryString = 'SELECT ' + String.join(allQueryFields, ',') + ', (SELECT Id FROM aforza__Billing_Statement_Line_Items__r) FROM aforza__Invoice__c WHERE aforza__Order__c IN :orderIds';
         List<aforza__Invoice__c> invoices = Database.query(queryString);
 
         return invoices;
