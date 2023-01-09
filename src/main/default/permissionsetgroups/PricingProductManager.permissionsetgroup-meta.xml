@@ -11,6 +11,7 @@
     <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
     <permissionSets>AttributeAssignmentCrudObjectAccess</permissionSets>
     <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeRuAccess</permissionSets>
     <permissionSets>AttributeCategoryBaseAccess</permissionSets>
     <permissionSets>AuditAssetBaseAccess</permissionSets>
     <permissionSets>ContactPricingProductManager</permissionSets>
