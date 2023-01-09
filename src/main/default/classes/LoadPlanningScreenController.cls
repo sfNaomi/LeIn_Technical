@@ -24,7 +24,7 @@ public with sharing class LoadPlanningScreenController {
     @AuraEnabled
     public static Load__c fetchLoadData(String loadId) {
         try {
-            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c, RouteIdentification__c, Depot__c FROM Load__c WHERE Id = :loadId];
+            List<Load__c> load = [SELECT Id, Driver__c, Vehicle__c, DeliveryDate__c, RouteIdentification__c, Depot__c, CreateRoute__c FROM Load__c WHERE Id = :loadId];
 
             return load.isEmpty() ? null : load[0];
         } catch (Exception e) {

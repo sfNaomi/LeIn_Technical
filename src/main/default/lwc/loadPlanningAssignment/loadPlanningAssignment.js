@@ -28,6 +28,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     _vehicleId;
     _route;
     _depot;
+    _createRoute;
 
     @api get plannedDeliveryDate() {
         return this._plannedDeliveryDate;
@@ -68,6 +69,14 @@ export default class LoadPlanningAssignment extends LightningElement {
 
     set depot(value) {
         this._depot = value;
+    }
+
+    @api get createRoute() {
+        return this._createRoute;
+    }
+
+    set createRoute(value) {
+        this._createRoute = value;
     }
 
 
@@ -256,7 +265,8 @@ export default class LoadPlanningAssignment extends LightningElement {
     get createLoadButtonDisabled() {
         return Boolean(!this.plannedDeliveryDate || !this.driverId || !this.vehicleId || !this.route
             || this.remainingLoadWeight < 0 || !this.depot
-            || (this.selectedOrdersIds.length === 0 && this.operation === 'createLoad'));
+            || (this.selectedOrdersIds.length === 0 && this.operation === 'createLoad')
+            || (this.operation === 'updateLoad' && this.createRoute === true));
     }
 
     get vehicleQueryFields() {
