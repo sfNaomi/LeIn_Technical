@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BarrDirectAppUser__c</fullName>
+    <defaultValue>&quot;No&quot;</defaultValue>
+    <externalId>false</externalId>
+    <inlineHelpText>Would the customer like to use the Barr Direct App?</inlineHelpText>
+    <label>Barr Direct App User?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>YesNo</valueSetName>
+    </valueSet>
+</CustomField>

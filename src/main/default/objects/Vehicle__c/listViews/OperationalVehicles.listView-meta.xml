@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OperationalVehicles</fullName>
+    <columns>NAME</columns>
+    <columns>VehicleRegistration__c</columns>
+    <columns>LoadCapacityWeight__c</columns>
+    <columns>LoadLimitCases__c</columns>
+    <columns>DirectVisionStandard__c</columns>
+    <columns>AssociatedDepot__c</columns>
+    <columns>Driver__c</columns>
+    <columns>Operational__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Operational__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Operational Vehicles</label>
+</ListView>

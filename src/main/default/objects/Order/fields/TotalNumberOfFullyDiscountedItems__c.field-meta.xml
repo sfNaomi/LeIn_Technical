@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalNumberOfFullyDiscountedItems__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Number Of Fully Discounted Items</label>
+    <summaryFilterItems>
+        <field>OrderItem.aforza__Discount_Percent__c</field>
+        <operation>equals</operation>
+        <value>100</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#46CCC2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Aforza Admin Settings</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Aforza Admin</label>
+    <navType>Console</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Platform User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>Driver AG Barr Platform</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>SR Eng AG Barr Platform</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>SR Scot AG Barr Platform</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>AG Barr Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <tabs>aforza__Settings</tabs>
+    <tabs>aforza__Log__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>aforza__Aforza_Settings_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <tab>aforza__Log__c</tab>
+        </mappings>
+        <mappings>
+            <tab>aforza__Settings</tab>
+        </mappings>
+    </workspaceConfig>
+</CustomApplication>

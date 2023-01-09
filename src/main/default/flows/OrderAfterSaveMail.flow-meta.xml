@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Win_Back_Alert</name>
+        <label>Send Win Back Alert</label>
+        <locationX>50</locationX>
+        <locationY>575</locationY>
+        <actionName>Order.WinBackEmailAlert</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>To_send_Win_Back_Email</name>
+        <label>To send Win Back Email</label>
+        <locationX>182</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>To_Send</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsOrderInComleteOrderStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account.AccountStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lapsed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ReturnOrder</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Send_Win_Back_Alert</targetReference>
+            </connector>
+            <label>To Send</label>
+        </rules>
+    </decisions>
+    <description>A workflow to send emails on Order object.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>IsOrderInComleteOrderStatus</name>
+        <dataType>Boolean</dataType>
+        <expression>CONTAINS({!Get_Order_Completed_Metadata.CompletedOrderStatuses__c}, TEXT({!$Record.Status}))</expression>
+    </formulas>
+    <interviewLabel>OrderAfterSaveMail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>OrderAfterUpdateMail</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Order_Completed_Metadata</name>
+        <label>Get Order Completed Metadata</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>To_send_Win_Back_Email</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderSetting__mdt</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>QualifiedApiName</queriedFields>
+        <queriedFields>CompletedOrderStatuses__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Order_Completed_Metadata</targetReference>
+        </connector>
+        <object>Order</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

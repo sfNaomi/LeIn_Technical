@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CustomLookupInputController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DeliveryManifestPDFController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DynamicFilterController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogisticUpdateScreenController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PickSheetPDFController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access to tab and classes needed for Logistic Update Screen</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Access Logistic Update Screen</label>
+    <pageAccesses>
+        <apexPage>AGBarrDeliveryManifest</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>AGBarrPickSheet</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <tabSettings>
+        <tab>LogisticUpdateScreen</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

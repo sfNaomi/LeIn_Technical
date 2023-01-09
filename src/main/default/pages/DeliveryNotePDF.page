@@ -1,0 +1,148 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" renderAs="pdf" applyBodyTag="False" applyHtmlTag="false"
+    controller="DeliveryNotePDFController">
+
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'deliveryNote.css')}" />
+
+    <div id="pageHeader">
+        <div class="headline headline-absolute-top-40" style="z-index: 1;">Delivery Note</div>
+        <div class="" style="position: absolute; top: 0; z-index: 0;">
+            <apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
+        </div>
+    </div>
+
+    <apex:variable value="{!1}" var="counter" />
+    <apex:repeat value="{!mapIdOrder}" var="key">
+        <div class="{!IF(counter == 1, '', 'page-break')}">
+            <div class="inline-block m-top-small">
+                <div class="float-left width-60">
+                    <table class="document-table document-table-fixed align-center">
+                        <tr>
+                            <th>{!$Label.OrderNumber}</th>
+                            <th>{!$Label.PoReference}</th>
+                            <th>{!$Label.DeliveryDate}</th>
+                            <th>{!$Label.CustomerShopNo}</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputField value="{!mapIdOrder[key].OrderNumber}" />
+                            </td>
+                            <td>
+                                <apex:outputField value="{!mapIdOrder[key].PoNumber}" />
+                            </td>
+                            <td>
+                                <apex:outputField value="{!mapIdOrder[key].DeliveryDate__c}" />
+                            </td>
+                            <td>
+                                <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].CustomerShopNumber__c}" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="float-right width-30">
+                    <apex:outputPanel rendered="{!OR(NOT(ISNULL(mapOrderIdAccount[mapIdOrder[key].AccountId].FixedDeliveryInstructions__c)), NOT(ISNULL(mapIdOrder[key].OrderInstructions__c)))}">
+                        <table class="document-table document-table-fixed align-center">
+                            <tr>
+                                <th>{!$Label.DeliveryInstructions}</th>
+                            </tr>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapOrderIdAccount[mapIdOrder[key].AccountId].FixedDeliveryInstructions__c))}">
+                                <tr>
+                                    <td>
+                                        <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].FixedDeliveryInstructions__c}" />
+                                    </td>
+                                </tr>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].OrderInstructions__c))}">
+                                <tr>
+                                    <td>
+                                        <apex:outputField value="{!mapIdOrder[key].OrderInstructions__c}" />
+                                    </td>
+                                </tr>
+                            </apex:outputPanel>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+            </div>
+            <br/>
+            <div class="inline-block">
+                <div class="float-left width-60">
+                    <div class="text-block">
+                        <div>{!$Label.DeliveryAddress}:</div>
+                        <div>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].AccountName__c))}">
+                                <apex:outputField value="{!mapIdOrder[key].AccountName__c}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingStreet))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingStreet}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingCity))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingCity}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingState))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingState}" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(mapIdOrder[key].ShippingPostalCode))}">
+                                <apex:outputField value="{!mapIdOrder[key].ShippingPostalCode}" />
+                                <br/>
+                            </apex:outputPanel>
+                        </div>
+                        <br/>
+                        <div>{!$Label.DpRef}:</div>
+                        <div>
+                            <apex:outputField value="{!mapIdOrder[key].DeliveryPointReference__c}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="float-right width-30 align-right">
+                    <div class="align-right">
+                        <div class="headline">{!$Label.CustomerContact}:</div>
+                        <div>
+                            <apex:outputField value="{!mapOrderIdAccount[mapIdOrder[key].AccountId].Phone}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <table class="document-table align-center width-100">
+                <tr>
+                    <th>{!$Label.SkuCode}</th>
+                    <th class="align-left">{!$Label.Name}</th>
+                    <th>{!$Label.Quantity}</th>
+                </tr>
+                <apex:repeat rendered="{!contains(strOrderIdsContainsOrdItem,key)}" value="{!mapOrderIdlstOrderItem[key]}" var="orderLineItem">
+                    <tr>
+                        <td>
+                            <apex:outputField value="{!orderLineItem.product2.StockKeepingUnit}" />
+                        </td>
+                        <td class="align-left">
+                            <apex:outputField value="{!orderLineItem.product2.Name}" />
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,number, ######}">
+                                <apex:param value="{!orderLineItem.Quantity}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <div class="float-right width-30 align-right">
+                <div class="headline">{!$Label.ProofOfDelivery}</div>
+                <apex:outputPanel rendered="{!if(contains(strOrderIdsContainsSig,key),'true','false')}">
+                    <div class="headline">{!$Label.Signature}:</div>
+                    <apex:image url="/sfc/servlet.shepherd/version/download/{!mapOrderIdContentDoc[key].ContentDocument.LatestPublishedVersionId}"
+                        alt="{!signature.ContentDocument.LatestPublishedVersion.Title}" width="100px" height="50px" />
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(ISNULL(mapIdOrder[key].PrintName__c),'false','true')}">
+                    <div class="headline">{!$Label.Name}:</div>
+                    <apex:outputField value="{!mapIdOrder[key].PrintName__c}" />
+                </apex:outputPanel>
+            </div>
+        </div>
+        <apex:variable value="{!counter + 1}" var="counter" />
+    </apex:repeat>
+</apex:page>

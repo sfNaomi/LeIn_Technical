@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalAGBarrTurnover__c</fullName>
+    <description>The Annual Spend by the account on AG Barr products</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the Annual Spend by the account on AG Barr products</inlineHelpText>
+    <label>Total AG Barr Turnover</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1. Over £20k</fullName>
+                <default>false</default>
+                <label>1. Over £20k</label>
+            </value>
+            <value>
+                <fullName>2. £15k - £20k</fullName>
+                <default>false</default>
+                <label>2. £15k - £20k</label>
+            </value>
+            <value>
+                <fullName>3. £10k - £15k</fullName>
+                <default>false</default>
+                <label>3. £10k - £15k</label>
+            </value>
+            <value>
+                <fullName>4. £7k - £10k</fullName>
+                <default>false</default>
+                <label>4. £7k - £10k</label>
+            </value>
+            <value>
+                <fullName>5. £5k - £10k</fullName>
+                <default>false</default>
+                <label>5. £5k - £10k</label>
+            </value>
+            <value>
+                <fullName>6. £4k - £5k</fullName>
+                <default>false</default>
+                <label>6. £4k - £5k</label>
+            </value>
+            <value>
+                <fullName>7. £3k- £4k</fullName>
+                <default>false</default>
+                <label>7. £3k- £4k</label>
+            </value>
+            <value>
+                <fullName>8. £2k - £3k</fullName>
+                <default>false</default>
+                <label>8. £2k - £3k</label>
+            </value>
+            <value>
+                <fullName>9. £1k - £2k</fullName>
+                <default>false</default>
+                <label>9. £1k - £2k</label>
+            </value>
+            <value>
+                <fullName>10. Less than £1k</fullName>
+                <default>false</default>
+                <label>10. Less than £1k</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

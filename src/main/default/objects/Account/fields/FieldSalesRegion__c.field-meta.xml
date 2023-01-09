@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FieldSalesRegion__c</fullName>
+    <externalId>false</externalId>
+    <label>Field Sales Region</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Scotland East</fullName>
+                <default>false</default>
+                <label>Scotland East</label>
+            </value>
+            <value>
+                <fullName>Scotland West</fullName>
+                <default>false</default>
+                <label>Scotland West</label>
+            </value>
+            <value>
+                <fullName>England North</fullName>
+                <default>false</default>
+                <label>England North</label>
+            </value>
+            <value>
+                <fullName>England South</fullName>
+                <default>false</default>
+                <label>England South</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

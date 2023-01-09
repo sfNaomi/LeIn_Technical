@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>TAM</fullName>
+        <default>false</default>
+        <label>TAM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TAM Manager</fullName>
+        <default>false</default>
+        <label>TAM Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Field Sales Rep</fullName>
+        <default>false</default>
+        <label>Field Sales Rep</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Field Sales Manager</fullName>
+        <default>false</default>
+        <label>Field Sales Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Driver</fullName>
+        <default>false</default>
+        <label>Driver</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Support Manager</fullName>
+        <default>false</default>
+        <label>Sales Support Manager</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Support Exec</fullName>
+        <default>false</default>
+        <label>Sales Support Exec</label>
+    </standardValue>
+</StandardValueSet>

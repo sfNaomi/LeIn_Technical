@@ -1,0 +1,25 @@
+<!--
+ - Created by magdalena.stanciu on 22.11.2022.
+ -->
+<template>
+    <lightning-card title={labels.orderRecalculation}>
+        <template if:false={isLoading}>
+            <div class="slds-p-around_small">
+                <lightning-radio-group
+                        name="radioGroup"
+                        label={labels.chooseOrderRecalculationOption}
+                        options={options}
+                        type="radio"
+                        onchange={handleOptionChange}>
+                </lightning-radio-group>
+                <div class="slds-m-top_small">
+                    <lightning-button label={labels.recalculate} onclick={recalculate}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+        <template if:true={isLoading}>
+            <lightning-spinner size="small"></lightning-spinner>
+        </template>
+    </lightning-card>
+</template>

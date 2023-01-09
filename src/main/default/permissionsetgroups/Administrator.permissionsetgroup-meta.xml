@@ -2,13 +2,62 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>Administrator</label>
+    <permissionSets>AccessCallManagementPage</permissionSets>
+    <permissionSets>AccessDeliveryManifest</permissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
+    <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessInvoiceDocument</permissionSets>
+    <permissionSets>AccessLoadPlanningScreen</permissionSets>
+    <permissionSets>AccessLogisticUpdateScreen</permissionSets>
+    <permissionSets>AccessOrderRecalculationWidget</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
+    <permissionSets>AccessPickSheet</permissionSets>
+    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
     <permissionSets>AccountAdminAccess</permissionSets>
+    <permissionSets>AccountModifyAllAccess</permissionSets>
+    <permissionSets>AllowMarkingEligibleForPerfectStore</permissionSets>
+    <permissionSets>AllowOrderUpdatesInSpecificStatuses</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
+    <permissionSets>AssortmentAdminAccess</permissionSets>
+    <permissionSets>AttributeAdminAccess</permissionSets>
+    <permissionSets>AttributeAssignmentAdminAccess</permissionSets>
+    <permissionSets>AttributeCategoryAdminAccess</permissionSets>
+    <permissionSets>AuditAssetAdminAccess</permissionSets>
+    <permissionSets>ClassAdminAccess</permissionSets>
     <permissionSets>ContactAdminAccess</permissionSets>
-    <permissionSets>CreateAndEditReports</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>DepotUser</permissionSets>
+    <permissionSets>EditLockedOrders</permissionSets>
+    <permissionSets>EditUnitPriceOnOrderItems</permissionSets>
     <permissionSets>EventAdminAccess</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>FocusProductManagement</permissionSets>
+    <permissionSets>InventoryAdminAccess</permissionSets>
+    <permissionSets>InventoryProductAdminAccess</permissionSets>
+    <permissionSets>InventoryUserAdminAccess</permissionSets>
+    <permissionSets>InvoiceAdminAccess</permissionSets>
+    <permissionSets>LoadAdminAccess</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OpportunityAdminAccess</permissionSets>
+    <permissionSets>OrderAdminAccess</permissionSets>
+    <permissionSets>OrderModifyAllAccess</permissionSets>
+    <permissionSets>OutletAssetAdminAccess</permissionSets>
+    <permissionSets>PaymentsAdminAccess</permissionSets>
+    <permissionSets>PickingUser</permissionSets>
+    <permissionSets>PricebookAdminAccess</permissionSets>
+    <permissionSets>ProductAdminAccess</permissionSets>
+    <permissionSets>PromotionAdminAccess</permissionSets>
+    <permissionSets>RecurringRecordAdminAccess</permissionSets>
+    <permissionSets>RelationshipRuleAdminAccess</permissionSets>
+    <permissionSets>RouteAdminAccess</permissionSets>
+    <permissionSets>SegmentationAdminAccess</permissionSets>
     <permissionSets>SystemAdminFeatures</permissionSets>
     <permissionSets>TaskAdminAccess</permissionSets>
     <permissionSets>TransferRecords</permissionSets>
+    <permissionSets>VehicleAdminAccess</permissionSets>
+    <permissionSets>VisitAdminAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Admin</permissionSets>
+    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
+    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

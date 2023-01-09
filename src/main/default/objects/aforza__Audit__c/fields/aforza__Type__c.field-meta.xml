@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type or purpose of the audit.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The type or purpose of the audit.</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Stock Check</fullName>
+                <default>false</default>
+                <label>Stock Check</label>
+            </value>
+            <value>
+                <fullName>Merchandise Review</fullName>
+                <default>false</default>
+                <label>Merchandise Review</label>
+            </value>
+            <value>
+                <fullName>Promotion Compliance</fullName>
+                <default>false</default>
+                <label>Promotion Compliance</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Core and Energy</fullName>
+                <default>false</default>
+                <label>Perfect Store Core and Energy</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Visibility and Display</fullName>
+                <default>false</default>
+                <label>Perfect Store Visibility and Display</label>
+            </value>
+            <value>
+                <fullName>Call Productivity</fullName>
+                <default>false</default>
+                <label>Call Productivity</label>
+            </value>
+            <value>
+                <fullName>Marketing Audit</fullName>
+                <default>false</default>
+                <label>Marketing Audit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

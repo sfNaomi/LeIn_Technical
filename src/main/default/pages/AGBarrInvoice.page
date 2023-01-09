@@ -1,0 +1,211 @@
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyBodyTag="False" applyHtmlTag="false"
+ controller="InvoicePDFController">
+
+	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}" />
+
+	<div id="pageHeader">
+		<div class="headline headline-absolute-top-40" style="z-index: 1;">Invoice</div>
+		<div class="" style="position: absolute; top: 0; z-index: 0;">
+			<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
+		</div>
+	</div>
+
+	<div id="pageFooter">
+		{!$Label.InvoiceFooterNote}
+		<apex:outputLink value="{!$Label.InvoiceFooterNoteLink}" style="font-size: 10px;" id="footer-link">
+			{!$Label.InvoiceFooterNoteLink}
+		</apex:outputLink>
+	</div>
+
+	<apex:variable value="{!1}" var="counter" />
+	<apex:repeat value="{!invoices}" var="invoice">
+		<div class="{!IF(counter == 1, '', 'page-break')}">
+			<div class="inline-block">
+				<div class="float-left align-left">
+					<div class="m-bottom-small">
+						<b>{!IF(invoice.type == 'Credit Note', $Label.InvoiceCreditedTo, $Label.InvoiceInvoicedTo)}</b>
+					</div>
+					<div class="m-bottom-small">{!invoice.billToName}</div>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToStreet))}">
+						<div>{!invoice.billToStreet},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToCity))}">
+						<div>{!invoice.billToCity},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToState))}">
+						<div>{!invoice.billToState},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.billToPostalCode))}">
+						<div>{!invoice.billToPostalCode}</div>
+					</apex:outputPanel>
+					<div class="m-top-small">{!$Label.InvoiceBillToRef} {!invoice.billToReference}</div>
+				</div>
+				<div class="float-right align-left">
+					<div class="m-bottom-small">
+						<b>{!$Label.InvoiceDeliveredTo}</b>
+					</div>
+					<div class="m-bottom-small">{!invoice.shipToName}</div>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToStreet))}">
+						<div>{!invoice.shipToStreet},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToCity))}">
+						<div>{!invoice.shipToCity},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToState))}">
+						<div>{!invoice.shipToState},</div>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(ISNULL(invoice.shipToPostalCode))}">
+						<div>{!invoice.shipToPostalCode}</div>
+					</apex:outputPanel>
+					<div class="m-top-small">{!$Label.InvoiceDpRef} {!invoice.shipToReference}</div>
+				</div>
+			</div>
+			<br/>
+			<table class="document-table document-table-fixed">
+				<tr class="align-center">
+					<th>{!invoice.type} {!$Label.InvoiceNo}</th>
+					<th>{!$Label.InvoiceDate}</th>
+					<th>{!$Label.InvoicePoRef}</th>
+					<th>{!$Label.InvoiceCustomerShopNumber}</th>
+					<th>{!$Label.InvoicePaymentMethod}</th>
+					<th>{!$Label.InvoiceDueDate}</th>
+					<th>{!$Label.InvoicePaymentTerms}</th>
+				</tr>
+				<tr class="align-center">
+					<td>{!invoice.invoiceNumber}</td>
+					<td>
+						<apex:outputText value="{0,date,dd/MM/yyyy}">
+							<apex:param value="{!invoice.createdDate}" />
+						</apex:outputText>
+					</td>
+					<td>{!invoice.poNumber}</td>
+					<td>{!invoice.customerShopNumber}</td>
+					<td>{!invoice.paymentMethod}</td>
+					<td>
+						<apex:outputText value="{0,date,dd/MM/yyyy}">
+							<apex:param value="{!invoice.dueDate}" />
+						</apex:outputText>
+					</td>
+					<td>{!invoice.paymentTerms}</td>
+				</tr>
+			</table>
+			<br/>
+			<table class="document-table width-100">
+				<tr class="align-center">
+					<th>{!$Label.InvoiceSkuCode}</th>
+					<th>{!$Label.InvoiceDescription}</th>
+					<th>{!$Label.InvoiceQuantity}</th>
+					<th>{!$Label.InvoiceUnitPrice}</th>
+					<th>{!$Label.InvoiceVatRate}</th>
+					<th>{!$Label.InvoiceVatValue}</th>
+					<th>{!$Label.InvoiceGoodsValue}</th>
+				</tr>
+				<apex:repeat value="{!invoice.invoiceItems}" var="invoiceItem">
+					<tr class="align-right">
+						<td class="align-center">{!invoiceItem.code}</td>
+						<td class="align-left">{!invoiceItem.description}</td>
+						<td class="align-center">{!invoiceItem.quantity}</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.unitPrice}" />
+							</apex:outputText>
+						</td>
+						<td>{!invoiceItem.vatRate}%</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.vatValue}" />
+							</apex:outputText>
+						</td>
+						<td>
+							<apex:outputText value="{0,number, £#########0.00}">
+								<apex:param value="{!invoiceItem.netPrice}" />
+							</apex:outputText>
+						</td>
+					</tr>
+				</apex:repeat>
+			</table>
+			<br/>
+			<div class="align-left">
+				{!$Label.InvoiceDiscountApplied} &nbsp;
+				<apex:outputText value="{0,number, £#########0.00}">
+					<apex:param value="{!invoice.discountTotal}" />
+				</apex:outputText>
+			</div>
+			<br/>
+			<div class="inline-block">
+				<div class="float-left">
+					<apex:outputpanel rendered="{!invoice.vatDistribution.vatItems.size > 0}">
+						<div>
+							<table class="document-table document-table-fixed">
+								<tr>
+									<th colspan="3" class="align-center">VAT Analysis</th>
+								</tr>
+								<tr class="align-center">
+									<th>{!$Label.InvoiceTotalGoodsValue}</th>
+									<th>{!$Label.InvoiceVatRate}</th>
+									<th>{!$Label.InvoiceVatValue}</th>
+								</tr>
+								<apex:repeat value="{!invoice.vatDistribution.vatItems}" var="vatItem">
+									<tr class="align-right">
+										<td>
+											<apex:outputText value="{0,number, £#########0.00}">
+												<apex:param value="{!vatItem.netValue}" />
+											</apex:outputText>
+										</td>
+										<td>{!vatItem.vatRate}%</td>
+										<td>
+											<apex:outputText value="{0,number, £#########0.00}">
+												<apex:param value="{!vatItem.vatValue}" />
+											</apex:outputText>
+										</td>
+									</tr>
+								</apex:repeat>
+							</table>
+						</div>
+					</apex:outputpanel>
+				</div>
+				<div class="float-right">
+					<table class="document-table document-table-fixed">
+						<tr>
+							<th colspan="3" class="align-center">Order Summary</th>
+						</tr>
+						<tr class="align-center">
+							<th>{!$Label.InvoiceGoodsValue}</th>
+							<th>{!$Label.InvoiceVatValue}</th>
+							<th>{!$Label.InvoiceTotalPayable}</th>
+						</tr>
+						<tr class="align-right">
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.netValue}" />
+								</apex:outputText>
+							</td>
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.vatValue}" />
+								</apex:outputText>
+							</td>
+							<td>
+								<apex:outputText value="{0,number, £#########0.00}">
+									<apex:param value="{!invoice.total}" />
+								</apex:outputText>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br/>
+			<div>
+				<apex:outputpanel rendered="{!invoice.signature != null}">
+					{!$Label.InvoiceSignature}
+					<apex:image url="/sfc/servlet.shepherd/version/download/{!invoice.signature}" width="100px" height="170px" />
+				</apex:outputpanel>
+				<apex:outputpanel rendered="{!invoice.printName != null}">
+					{!$Label.InvoicePrintName} {!invoice.printName}
+				</apex:outputpanel>
+			</div>
+		</div>
+		<apex:variable value="{!counter + 1}" var="counter" />
+	</apex:repeat>
+</apex:page>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aforza__Type__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The type of outlet asset.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The type of outlet asset.</inlineHelpText>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Product</fullName>
+                <default>false</default>
+                <label>Product</label>
+            </value>
+            <value>
+                <fullName>Merchandise</fullName>
+                <default>false</default>
+                <label>Merchandise</label>
+            </value>
+            <value>
+                <fullName>Competitor Product</fullName>
+                <default>false</default>
+                <label>Competitor Product</label>
+            </value>
+            <value>
+                <fullName>Promotion</fullName>
+                <default>false</default>
+                <label>Promotion</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Visibility and Display</fullName>
+                <default>false</default>
+                <label>Perfect Store Visibility and Display</label>
+            </value>
+            <value>
+                <fullName>Perfect Store Core and Energy</fullName>
+                <default>false</default>
+                <label>Perfect Store Core and Energy</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

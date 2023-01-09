@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Product</fullName>
+        <default>false</default>
+        <label>Product</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Category</fullName>
+        <default>false</default>
+        <label>Category</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Brand</fullName>
+        <default>false</default>
+        <label>Brand</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Competitor Product</fullName>
+        <default>false</default>
+        <label>Competitor Product</label>
+    </standardValue>
+    <standardValue>
+        <fullName>UOM</fullName>
+        <default>false</default>
+        <label>UOM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bundle</fullName>
+        <default>false</default>
+        <label>Bundle</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Deposit</fullName>
+        <default>false</default>
+        <label>Deposit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Perfect Store V&amp;D</fullName>
+        <default>false</default>
+        <label>Perfect Store V&amp;D</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Perfect Store C&amp;E</fullName>
+        <default>false</default>
+        <label>Perfect Store C&amp;E</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Visit-Marketing</fullName>
+        <default>false</default>
+        <label>Visit-Marketing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Visit-Productivity</fullName>
+        <default>false</default>
+        <label>Visit-Productivity</label>
+    </standardValue>
+</StandardValueSet>

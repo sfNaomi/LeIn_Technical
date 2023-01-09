@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Credit Manager</label>
+    <mutingPermissionSets>CreditManagerMuted</mutingPermissionSets>
+    <permissionSets>AccessDeliveryNote</permissionSets>
+    <permissionSets>AccessDirectDebitWidget</permissionSets>
+    <permissionSets>AccessPDFGenerationWidget</permissionSets>
+    <permissionSets>AccountFinanceAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AuditAssetBaseAccess</permissionSets>
+    <permissionSets>ContactFinanceUsers</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
+    <permissionSets>InvoiceFinanceAccess</permissionSets>
+    <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PaymentsFinanceAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
+    <permissionSets>RouteBaseAccess</permissionSets>
+    <permissionSets>SegmentationBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>TaskBaseAccess</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <permissionSets>bt_paylink__PayLink_Admin</permissionSets>
+    <permissionSets>bt_stripe__payment360_Adminv2</permissionSets>
+    <permissionSets>bt_stripe__Stripe_Billing</permissionSets>
+    <permissionSets>icAgentConsole__inContact_Agent_Permission</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DeliveredOrderNumber__c</fullName>
+    <description>Field to identify the Original Order Number (Delivered Order) - Used for reporting.</description>
+    <externalId>false</externalId>
+    <formula>IF( 
+				AND(aforza__Original_Order__c != null, Clone__c, OR(ISPICKVAL(aforza__Original_Order__r.Status, &apos;Delivered&apos;), ISPICKVAL(aforza__Original_Order__r.Status, &apos;Receipted&apos;))),
+				aforza__Original_Order__r.OrderNumber,
+				IF(
+								AND(aforza__Original_Order__c == null, OR(ISPICKVAL(Status, &apos;Delivered&apos;), ISPICKVAL(Status, &apos;Receipted&apos;))),
+								OrderNumber,
+								&apos;&apos;
+				)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Delivered Order Number</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

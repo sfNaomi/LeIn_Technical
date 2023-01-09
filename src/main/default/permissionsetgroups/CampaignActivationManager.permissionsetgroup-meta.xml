@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Campaign Activation Manager</label>
+    <mutingPermissionSets>CampaignActivationManagerMuted</mutingPermissionSets>
+    <permissionSets>AccessSixAndSuggestedOrder</permissionSets>
+    <permissionSets>AccountPricingAndCampaignAccess</permissionSets>
+    <permissionSets>Aforza_Base</permissionSets>
+    <permissionSets>AllowOrderUpdatePastUnplanned</permissionSets>
+    <permissionSets>AssortmentBaseAccess</permissionSets>
+    <permissionSets>AttributeAssignmentBaseAccess</permissionSets>
+    <permissionSets>AttributeBaseAccess</permissionSets>
+    <permissionSets>AttributeCategoryBaseAccess</permissionSets>
+    <permissionSets>AuditAssetBaseAccess</permissionSets>
+    <permissionSets>ContactCampainActivationManagerExec</permissionSets>
+    <permissionSets>CreateEditReportsAndDashboards</permissionSets>
+    <permissionSets>ExportReports</permissionSets>
+    <permissionSets>InventoryBaseAccess</permissionSets>
+    <permissionSets>InventoryProductBaseAccess</permissionSets>
+    <permissionSets>InventoryUserBaseAccess</permissionSets>
+    <permissionSets>InvoiceBaseAccess</permissionSets>
+    <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>ManageReportsDashboardsFolders</permissionSets>
+    <permissionSets>OrderBaseAccess</permissionSets>
+    <permissionSets>OutletAssetBaseAccess</permissionSets>
+    <permissionSets>PaymentsBaseAccess</permissionSets>
+    <permissionSets>PricebookBaseAccess</permissionSets>
+    <permissionSets>ProductBaseAccess</permissionSets>
+    <permissionSets>PromotionBaseAccess</permissionSets>
+    <permissionSets>PromotionEditAccess</permissionSets>
+    <permissionSets>RouteBaseAccess</permissionSets>
+    <permissionSets>SegmentationBaseAccess</permissionSets>
+    <permissionSets>SystemBasicPlatformFeatures</permissionSets>
+    <permissionSets>VehicleBaseAccess</permissionSets>
+    <permissionSets>VisitBaseAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Plan</permissionSets>
+    <permissionSets>aforza__Aforza_Sell</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

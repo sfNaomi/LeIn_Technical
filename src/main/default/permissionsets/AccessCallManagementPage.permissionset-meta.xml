@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CallBaseManagementController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DynamicFilterController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access to tab and classes needed for Call Base Management page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Access Call Management Page</label>
+    <tabSettings>
+        <tab>CallBaseManagement</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ParentId</fullName>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Only Account of type Customer can be selected. Only from Delivery Point Record.</errorMessage>
+        <filterItems>
+            <field>Account.RecordTypeName__c</field>
+            <operation>equals</operation>
+            <value>Customer</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Customer</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Hierarchy</type>
+</CustomField>

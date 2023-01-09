@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>System permission to run flows (specifically used for Tam&apos;s to have access to a quick action calling a screen flow).</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>RunFlowsAccess</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>RunFlow</name>
+    </userPermissions>
+</PermissionSet>

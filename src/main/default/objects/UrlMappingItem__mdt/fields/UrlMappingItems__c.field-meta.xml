@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UrlMappingItems__c</fullName>
+    <description>Parent Mandate Url</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Url Mapping Items</label>
+    <referenceTo>UrlMapping__mdt</referenceTo>
+    <relationshipLabel>Url Mapping Items</relationshipLabel>
+    <relationshipName>UrlMappingItems</relationshipName>
+    <required>false</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,20 @@
+<!--
+  @description       : 
+  @author            : Roshan K (smplicity)
+  @group             : 
+  @last modified on  : 10-21-2022
+  @last modified by  : Roshan K (smplicity)
+  Modifications Log
+  Ver   Date         Author                 Modification
+  1.0   10-21-2022   Roshan K (smplicity)   Initial Version
+-->
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName">
+    <div style="margin: -20px -35px">
+        <c:generatePdfButton
+            recordId="{! v.recordId }"
+            objectApiName="{! v.sObjectName }"
+            isAura="true"
+            oncloseaction="{! c.closeAction }"
+        ></c:generatePdfButton>
+    </div>
+</aura:component>

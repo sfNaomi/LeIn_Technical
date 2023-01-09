@@ -1,0 +1,41 @@
+<!--
+ - Created by svatopluk.sejkora on 20.09.2022.
+ -->
+
+<!-- Dynamic Filter -->
+<template>
+    <div class="slds-is-relative">
+        <lightning-card>
+            <lightning-layout class="slds-m-around_medium" multiple-rows="true">
+                <lightning-layout-item
+                        for:each={filterFields}
+                        for:item="field"
+                        key={field.index}
+                        class="slds-m-around_medium"
+                        size={filterSize}>
+                    <c-dynamic-input
+                            field-definition={field}
+                            onchangeddata={handleChangedData}
+                    ></c-dynamic-input>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-align_absolute-center">
+                <lightning-button
+                        label={label.filter}
+                        onclick={handleFilterClick}
+                        disabled={isFilterActive}
+                        variant="brand"
+                ></lightning-button>
+            </div>
+            <div if:true={isFilterActive}
+                 class="slds-m-around_medium slds-align_absolute-center slds-text-heading_medium">
+                {label.noRecordsShown}
+            </div>
+            <div if:true={showDataCount}
+                 class="slds-m-around_medium slds-align_absolute-center slds-text-heading_small">
+                {totalNumberOfRecordsText}
+            </div>
+        </lightning-card>
+        <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+    </div>
+</template>

@@ -1,0 +1,20 @@
+name: 'Parse JSON'
+description: 'Gets items from config JSON and returns values for actual run'
+inputs:
+    branch:  # id of input
+        description: 'name of the branch for which values from JSON should be obtained'
+        required: true
+outputs:
+    userName:
+        description: 'userName'
+    clientId:
+        description: 'client Id'
+    instanceUrl:
+        description: 'URL of the instance'
+    certificatePath:
+        description: 'path to the certificate key'
+    runDestructive:
+        description: 'should the destructive changes be deployed'
+runs:
+    using: 'node16'
+    main: 'index.js'

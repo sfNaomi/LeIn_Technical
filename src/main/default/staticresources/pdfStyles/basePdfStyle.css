@@ -1,0 +1,103 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.document-table {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.document-table-fixed {
+	table-layout: fixed;
+}
+
+.document-table, .document-table th, .document-table td {
+    border: 1px solid #868687;
+}
+
+.document-table th, .document-table td {
+    padding: 2px 5px;
+}
+
+.document-table th, .document-table-header {
+	background-color: #e7e6e6;
+	font-weight: 600;
+}
+
+.gray-bkg {
+	background-color: #e7e6e6;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+.page-break:first-child {
+    page-break-before: avoid;
+}
+
+.avoid-break-inside {
+    break-inside: avoid;
+}
+
+.page-break-after {
+    page-break-after: always;
+}
+
+.m-bottom-small {
+    margin-bottom: 10px;
+}
+
+.m-top-small {
+    margin-top: 10px;
+}
+
+.float-right {
+    float: right;
+    padding-left: 20px;
+}
+
+.float-left {
+    float: left;
+    padding-right: 20px;
+}
+
+.display-none {
+    display: none;
+}
+
+.display-block {
+    display: none;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.headline {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.headline-absolute-top-40 {
+    position: absolute; 
+    right: 12px; 
+    top: 40px !important;
+}
+
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }

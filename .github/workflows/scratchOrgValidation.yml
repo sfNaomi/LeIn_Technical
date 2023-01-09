@@ -5,41 +5,43 @@ name: Scratch Org Validation
 on:
     workflow_dispatch:
     pull_request:
-        types: [opened, edited, synchronize]
+        types: [ opened, edited, synchronize ]
         branches:
             - 'develop'
             - 'staging'
             - 'main'
+            - 'sit'
 
 # Jobs to be executed .
 jobs:
     scratch-org-validation:
+        name: Scratch Org Validation
         runs-on: ubuntu-latest
         env:
             SCRATCH_NAME: ${{ github.event.repository.name }}
         steps:
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 16
+
             # Install Salesforce CLI.
-            - name: 'Install Salesforce CLI'
-              run: |
-                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-                  mkdir ~/sfdx
-                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-                  ~/sfdx/bin/sfdx version
+            -   name: 'Install Salesforce CLI'
+                run: npm install sfdx-cli --global
 
             # Install sfdx plugin
-            - name: 'Install plugin'
-              shell: bash
-              run: |
-                  printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
-                  printf 'y\n' | sfdx plugins:install sfdmu@latest
+            -   name: 'Install plugin'
+                shell: bash
+                run: |
+                    printf 'y\n' | sfdx plugins:install ci-sfdx-plugin@latest
+                    printf 'y\n' | sfdx plugins:install sfdmu@latest
+                    sfdx config:set apiVersion=56.0 --global
 
             # Obtain JWT certificate for DEVHUB
-            - name: 'Obtain JWT certificate from secrets'
-              env:
-                  JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
-              shell: bash
-              run: echo "$JWT" | base64 --decode > ${HOME}/server.key
+            -   name: 'Obtain JWT certificate from secrets'
+                env:
+                    JWT: ${{ secrets.DEV_HUB_CERTIFICATE }}
+                shell: bash
+                run: echo "$JWT" | base64 --decode > ${HOME}/server.key
 
             # Authenticate dev hub
             -   name: 'Authenticate Dev Hub'
@@ -50,16 +52,20 @@ jobs:
                 run: sfdx force:auth:jwt:grant --clientid ${{ secrets.DEV_HUB_CLIENT_ID_KEY}} --jwtkeyfile ${HOME}/server.key --instanceurl $SFDX_PATH --username $SF_USERNAME --setdefaultdevhubusername -a DevHub
 
             # Checkout the source code
-            - name: Checkout source code
-              uses: actions/checkout@v2
+            -   name: Checkout source code
+                uses: actions/checkout@v3
 
             # Create scratch org and push
             -   name: 'Create scratch org and push'
-                run: npm run sfci:init --alias=$SCRATCH_NAME
+                env:
+                    SFDX_DISABLE_DNS_CHECK: true
+                run: npm run sfci:init:ci --alias=$SCRATCH_NAME
 
-#            # Run Tests in scratch org
-#            -   name: 'Run Tests in scratch org'
-#                run: sfdx ci:apex:test:run
+            # Run Tests in scratch org
+            -   name: 'Run Tests in scratch org'
+                env:
+                    SFDX_DISABLE_DNS_CHECK: true
+                run: sfdx ci:apex:test:run
 
             # Delete scratch org
             -   name: 'Delete scratch org'

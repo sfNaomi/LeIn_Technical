@@ -1,0 +1,133 @@
+<template>
+    <div class="body-default">
+        <div class="slds-grid slds-gutters slds-p-bottom_small  slds-m-top_x-small">
+            <div class="slds-p-left_large input-width slds-form-element__icon  ">
+                <lightning-record-edit-form object-api-name={objName}>
+                    <template if:true={fieldName}>
+                        <label>Account</label>
+                        <div class="removeicon slds-m-top_x-small">
+                            <lightning-input-field variant="label-hidden" field-name={fieldName}
+                                onchange={handleAccountChange} class="  filters ">
+                            </lightning-input-field>
+                        </div>
+                    </template>
+                </lightning-record-edit-form>
+            </div>
+
+            <lightning-combobox name="StageName" label="Audit Status" class="slds-size_2-of-12 slds-p-left_x-small filters"
+                options={statusOptions} onchange={handleStatusChange}>
+            </lightning-combobox>
+
+            <lightning-combobox name="StageName" label="Audit Type" class="slds-size_2-of-12 slds-p-left_x-small filters"
+                options={typeOptions} onchange={handleTypeChange}>
+            </lightning-combobox>
+
+            <lightning-combobox name="StageName" label="Object" class="slds-size_2-of-12 slds-p-left_x-small filters"
+                options={objectOptions} onchange={handleObjectChange}>
+            </lightning-combobox>
+           
+            <lightning-input value={startDate} type="date" name="stDt" label="Start Date" class="slds-m-left_x-small input-date filters"
+                onchange={handleStartDateChangeEvent} >
+            </lightning-input>
+            <lightning-input value={EndDate} type="date" name="edDt" label="End Date" class="slds-m-left_x-small input-date filters"
+                onchange={handleEndDateChangeEvent} >
+            </lightning-input>
+
+            <lightning-button variant="brand" label="Search" title="Search Based On Audit Assets" onclick={handleSearch}
+                class="slds-m-left_x-small slds-m-top_large"></lightning-button>
+            
+            <lightning-button variant="brand" label="Clear" title="Clear" onclick={handleClear}
+                class="slds-m-left_x-small slds-m-top_large"></lightning-button>
+
+            <lightning-button variant="brand" label="Download" icon-name="utility:download" title="Download"
+                onclick={handleDownloadImage} class="slds-m-left_x-small slds-m-top_large"></lightning-button>
+        </div>
+
+        <div if:true={isLoaded} class="slds-is-relative">
+            <lightning-spinner alternative-text="Loading..." variant="brand"> </lightning-spinner>
+        </div>
+
+        <template if:true={showNoRecord}>
+            <c-illutration-no-record-found error-message="No records found. Please update filter..">
+            </c-illutration-no-record-found>
+        </template>
+        <template if:false={showNoRecord}>
+            <template if:true={allRecord}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                <lightning-input label="Select All" class="slds-m-left_medium" type="checkbox"
+                                    onchange={handleSelectAll}></lightning-input>
+                            </th>
+                            <th>
+                                <div>Image</div>
+                            </th>
+                            <th>
+                                <div>Account Name</div>
+                            </th>
+                            <th>
+                                <div>Record Name </div>
+                            </th>
+                            <th>
+                                <div>Status</div>
+                            </th>
+                            <th>
+                                <div>Type</div>
+                            </th>
+                            <th>
+                                <div>Object Type</div>
+                            </th>
+                            <th>
+                                <div>Created Date</div>
+                            </th>
+                            <th>
+                                <div>Created By</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <template for:each={allRecord.genericDto} for:item="record" for:index="index">
+                        <tbody key={record.id}>
+                            <tr>
+                                <td>
+                                    <lightning-input class="slds-m-left_medium " type="checkbox" data-id={record.Id}
+                                        data-check="toogle" onchange={handleRowSelection}></lightning-input>
+                                </td>
+                                <td>
+                                    <p><img class="image-cls" src={record.fileSrc} data-id={record.fileId} width="30px"
+                                            height="30px" onclick={selectFile}></img></p>
+                                </td>
+                                <td>
+                                    <lightning-button variant="Base" label={record.accountName} onclick={navigateToRecord} value={record.accountId}></lightning-button>
+                                </td>
+                                <td>
+                                    <lightning-button variant="Base" label={record.recordName} onclick={navigateToRecord} value={record.Id}></lightning-button>
+                                </td>
+                                <td>
+                                    <p>{record.status}</p>
+                                </td>
+                                <td>
+                                    <p>{record.type}</p>
+                                </td>
+                                <td>
+                                    <p>{record.objectType}</p>
+                                </td>
+                                <td>
+                                    <p>{record.createdDate}</p>
+                                </td>
+                                <td>
+                                    <lightning-button variant="Base" label={record.createdByName} onclick={navigateToRecord} value={record.createdBy}></lightning-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </table>
+            </template>
+        </template>
+        <template if:true={selectedFileId}>
+            <template if:true={showFileModal}>
+                <c-document-zoom record-id={selectedFileId} onclosemodal={closeFileModal}></c-document-zoom>
+            </template>
+        </template>
+    </div>
+</template>

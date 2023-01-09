@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DistancefromVisittoAccount__c</fullName>
+    <description>Distance, in meters, from Visit Check-in Location to Account Location</description>
+    <externalId>false</externalId>
+    <formula>IF( AND(NOT(ISNULL(aforza__Account__r.aforza__Location__c)), NOT(ISNULL(aforza__Check_In_Location__c))), DISTANCE( aforza__Check_In_Location__c, aforza__Account__r.aforza__Location__c, &apos;km&apos;) * 1000, null )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Distance from Visit to Account</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

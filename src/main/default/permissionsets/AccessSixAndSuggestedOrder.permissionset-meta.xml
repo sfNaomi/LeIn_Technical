@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>SixOrderSummaryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>AccessSixAndSuggestedOrderWidget</name>
+    </customPermissions>
+    <description>Access to tab and classes needed for Call Base Management page</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Access Six And Suggested Order</label>
+</PermissionSet>

@@ -1,0 +1,23 @@
+<template>
+	<lightning-quick-action-panel header="Generate PDF">
+		<div class="modal-height slds-is-relative">
+			<div if:false={showSpinner} class="slds-modal__content slds-var-p-around_medium">
+				<p>
+					{resetBenchmarkModalContent}
+				</p>
+			</div>
+			<div if:true={showSpinner} class="slds-is-relative spinner-height">
+				<lightning-spinner alternative-text="Loading..." variant="brand"> </lightning-spinner>
+			</div>
+		</div>
+		<div slot="footer">
+			<lightning-button variant="neutral" label={cancelButton} onclick={closeModal}></lightning-button>
+			<lightning-button
+				class="slds-var-m-left_x-small"
+				variant="brand"
+				label={confirmButton}
+				onclick={resetBenchmarks}
+			></lightning-button>
+		</div>
+	</lightning-quick-action-panel>
+</template>

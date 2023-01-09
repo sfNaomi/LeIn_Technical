@@ -1,0 +1,7 @@
+Id,Name,aforza__Code__c,aforza__Description__c,aforza__Sequence__c,aforza__Type__c
+a0B2z000001Mw15EAC,New DP Cat,erwer,,,Account
+a0B2z000001NOe1EAG,Financial,AC03,Financial Attributes of the DP,2,Account
+a0B2z000001NFlGEAW,Field Sales,FieldSales,"Segment outlets/accounts based on RTM, Affiliation, EPOS etc, for Field Sales.",4,Account
+a0B2z000001NOeBEAW,Account Demographics,AC01,Relational Attributes of the DP,1,Account
+a0B2z000001NOeLEAW,Sales Opportunities,AC02,Attributes that help Identify opportunities in a DP,2,Account
+a0B2z000001MzWJEA0,Non Stockist,NonStockis,,5,Account

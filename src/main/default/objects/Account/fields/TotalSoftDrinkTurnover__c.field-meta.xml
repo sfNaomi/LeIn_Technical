@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalSoftDrinkTurnover__c</fullName>
+    <description>The Total Annual Soft Drink turnover of the store</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter the total Annual Soft Drink turnover of the store</inlineHelpText>
+    <label>Total Soft Drink Turnover £</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1. Over £200k</fullName>
+                <default>false</default>
+                <label>1. Over £200k</label>
+            </value>
+            <value>
+                <fullName>2. £170k - £200k</fullName>
+                <default>false</default>
+                <label>2. £170k - £200k</label>
+            </value>
+            <value>
+                <fullName>3. £140k - £170k</fullName>
+                <default>false</default>
+                <label>3. £140k - £170k</label>
+            </value>
+            <value>
+                <fullName>4. £115k - £140k</fullName>
+                <default>false</default>
+                <label>4. £115k - £140k</label>
+            </value>
+            <value>
+                <fullName>5. £90k - £115k</fullName>
+                <default>false</default>
+                <label>5. £90k - £115k</label>
+            </value>
+            <value>
+                <fullName>6. £70k - £90k</fullName>
+                <default>false</default>
+                <label>6. £70k - £90k</label>
+            </value>
+            <value>
+                <fullName>7. £55k- £70k</fullName>
+                <default>false</default>
+                <label>7. £55k- £70k</label>
+            </value>
+            <value>
+                <fullName>8. £40k - £55k</fullName>
+                <default>false</default>
+                <label>8. £40k - £55k</label>
+            </value>
+            <value>
+                <fullName>9. £25k - £40k</fullName>
+                <default>false</default>
+                <label>9. £25k - £40k</label>
+            </value>
+            <value>
+                <fullName>10. Less than £25k</fullName>
+                <default>false</default>
+                <label>10. Less than £25k</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

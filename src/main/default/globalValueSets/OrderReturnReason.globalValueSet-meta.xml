@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Stock Damaged</fullName>
+        <default>false</default>
+        <label>Stock Damaged</label>
+    </customValue>
+    <customValue>
+        <fullName>Order Input Error</fullName>
+        <default>false</default>
+        <label>Order Input Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Order Pick Error</fullName>
+        <default>false</default>
+        <label>Order Pick Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery Error</fullName>
+        <default>false</default>
+        <label>Delivery Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Order Error</fullName>
+        <default>false</default>
+        <label>Customer Order Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Relationship Request</fullName>
+        <default>false</default>
+        <label>Customer Relationship Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Product Issue</fullName>
+        <default>false</default>
+        <label>Product Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Product Withdrawn</fullName>
+        <default>false</default>
+        <label>Product Withdrawn</label>
+    </customValue>
+    <customValue>
+        <fullName>Unable to find delivery location</fullName>
+        <default>false</default>
+        <label>Unable to find delivery location</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery location inaccessible</fullName>
+        <default>false</default>
+        <label>Delivery location inaccessible</label>
+    </customValue>
+    <customValue>
+        <fullName>Shop closed within opening times</fullName>
+        <default>false</default>
+        <label>Shop closed within opening times</label>
+    </customValue>
+    <customValue>
+        <fullName>Unable to meet opening times</fullName>
+        <default>false</default>
+        <label>Unable to meet opening times</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer did not order</fullName>
+        <default>false</default>
+        <label>Customer did not order</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer no longer wants order</fullName>
+        <default>false</default>
+        <label>Customer no longer wants order</label>
+    </customValue>
+    <customValue>
+        <fullName>Vehicle/Driver Issue</fullName>
+        <default>false</default>
+        <label>Vehicle/Driver Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>No payment method available</fullName>
+        <default>false</default>
+        <label>No payment method available</label>
+    </customValue>
+    <customValue>
+        <fullName>Unsalable Product</fullName>
+        <default>false</default>
+        <label>Unsalable Product</label>
+    </customValue>
+    <customValue>
+        <fullName>Stock not on vehicle</fullName>
+        <default>false</default>
+        <label>Stock not on vehicle</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer no longer wants product</fullName>
+        <default>false</default>
+        <label>Customer no longer wants product</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer did not order product</fullName>
+        <default>false</default>
+        <label>Customer did not order product</label>
+    </customValue>
+    <customValue>
+        <fullName>Product unavailable at pick face</fullName>
+        <default>false</default>
+        <label>Product unavailable at pick face</label>
+    </customValue>
+    <customValue>
+        <fullName>Product not suitable for sale</fullName>
+        <default>false</default>
+        <label>Product not suitable for sale</label>
+    </customValue>
+    <masterLabel>Order Return Reason</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

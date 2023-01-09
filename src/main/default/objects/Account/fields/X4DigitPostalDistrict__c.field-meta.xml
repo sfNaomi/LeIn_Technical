@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X4DigitPostalDistrict__c</fullName>
+    <externalId>false</externalId>
+    <formula>LEFT( ShippingPostalCode , 4)</formula>
+    <label>4 Digit Postal District</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

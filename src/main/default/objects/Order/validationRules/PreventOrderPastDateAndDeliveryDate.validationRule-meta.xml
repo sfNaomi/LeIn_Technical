@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventOrderPastDateAndDeliveryDate</fullName>
+    <active>true</active>
+    <description>Validation to prevent Order Start Date or Delivery Date to have past dates as values.</description>
+    <errorConditionFormula>AND (
+				ISNEW(),
+OR(
+					EffectiveDate &lt; TODAY(), 
+					DeliveryDate__c &lt; TODAY()
+)
+				)</errorConditionFormula>
+    <errorMessage>Order Start Date or Delivery Date field values can&apos;t be in the past.</errorMessage>
+</ValidationRule>

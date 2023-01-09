@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReturnOrder</fullName>
+    <active>true</active>
+    <label>Return Order</label>
+    <picklistValues>
+        <picklist>Depot__c</picklist>
+        <values>
+            <fullName>B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>U</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Z</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaymentMethod__c</picklist>
+        <values>
+            <fullName>Bacs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Card Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Debit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JDE DD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReturnReason__c</picklist>
+        <values>
+            <fullName>Customer Order Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Relationship Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivery Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order Input Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order Pick Error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Withdrawn</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stock Damaged</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Activated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delivery Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pending Delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ready to Load</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Receipted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unplanned</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Return Order</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

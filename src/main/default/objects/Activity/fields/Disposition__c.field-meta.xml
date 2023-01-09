@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disposition__c</fullName>
+    <externalId>false</externalId>
+    <label>Disposition</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Billing question</fullName>
+                <default>false</default>
+                <label>Billing question</label>
+            </value>
+            <value>
+                <fullName>Call transfer</fullName>
+                <default>false</default>
+                <label>Call transfer</label>
+            </value>
+            <value>
+                <fullName>Callback</fullName>
+                <default>false</default>
+                <label>Callback</label>
+            </value>
+            <value>
+                <fullName>Caller hung up / line dropped</fullName>
+                <default>false</default>
+                <label>Caller hung up / line dropped</label>
+            </value>
+            <value>
+                <fullName>Cancellation</fullName>
+                <default>false</default>
+                <label>Cancellation</label>
+            </value>
+            <value>
+                <fullName>Complaint</fullName>
+                <default>false</default>
+                <label>Complaint</label>
+            </value>
+            <value>
+                <fullName>New order</fullName>
+                <default>false</default>
+                <label>New order</label>
+            </value>
+            <value>
+                <fullName>No answer</fullName>
+                <default>false</default>
+                <label>No answer</label>
+            </value>
+            <value>
+                <fullName>Not interested</fullName>
+                <default>false</default>
+                <label>Not interested</label>
+            </value>
+            <value>
+                <fullName>Product question</fullName>
+                <default>false</default>
+                <label>Product question</label>
+            </value>
+            <value>
+                <fullName>Refund</fullName>
+                <default>false</default>
+                <label>Refund</label>
+            </value>
+            <value>
+                <fullName>Requires escalation</fullName>
+                <default>false</default>
+                <label>Requires escalation</label>
+            </value>
+            <value>
+                <fullName>Requires follow up</fullName>
+                <default>false</default>
+                <label>Requires follow up</label>
+            </value>
+            <value>
+                <fullName>Wrong number</fullName>
+                <default>false</default>
+                <label>Wrong number</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

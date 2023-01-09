@@ -1,0 +1,26 @@
+Id,aforza__Active__c,aforza__Attribute_Category__c,Name,aforza__Code__c,aforza__Description__c,aforza__Sequence__c,aforza__Type__c,aforza__Values__c,aforza__Attribute_Category__r.aforza__Code__c
+a0C2z000000BqlkEAC,true,a0B2z000001NFlGEAW,Country,country,,,Choice,"England,Scotland",FieldSales
+a0C2z000000BopTEAS,true,a0B2z000001NOe1EAG,Credit Status,Fin01,DP's Credit Status,1,Choice,"Good,On Hold,On Stop",AC03
+a0C2z000000BkstEAC,true,a0B2z000001NFlGEAW,Account Status,AccStatus,The DP Account Trading status,3,Choice,"Open,Prospect,Active Prospect,Traders,At Risk,Win Back,Lapsed,Legal,Closed",FieldSales
+a0C2z000000BcpAEAS,true,a0B2z000001NFlGEAW,Coverage,Coverage,Is this a Coverage Account?,6,Toggle,,FieldSales
+a0C2z000000BcpKEAS,true,a0B2z000001NFlGEAW,EPOS Status,EposStatus,"What Access to EPOS Data, may AG Barr get?",2,Choice,"1 - KEY Store Allowing Access to their Data,2 - KEY Store not Allowing Access to their Data,3 - EPOS Store Allowing Access to their Data,4 - EPOS Store not Allowing Access to their Data,5 - No EPOS Data Captured",FieldSales
+a0C2z000000BrFoEAK,true,a0B2z000001MzWJEA0,Training Session,TS-0001,,1,Toggle,,NonStockis
+a0C2z000000BoxjEAC,true,a0B2z000001NOeLEAW,Food to Go?,SO-002,Does the DP offer food to go?,2,Toggle,,AC02
+a0C2z000000Bl56EAC,true,a0B2z000001NFlGEAW,Perfect Store Score Eligible,PS-01,Used for the Visit Template to apply Perfect Store Audits,4,Toggle,,FieldSales
+a0C2z000000BcpPEAS,true,a0B2z000001NFlGEAW,What are the Outlet's RTM,OutletRtm,Where does the DP buy AG Barr brands from?,1,Detail,,FieldSales
+a0C2z000000BoxtEAC,true,a0B2z000001NOeBEAW,Call Priority,CallP,"Telesales Call Priority, based on Order Frequency/Opportunity",4,Choice,"P1,P2,P3",AC01
+a0C2z000000BoxPEAS,true,a0B2z000001NOeBEAW,Customer Tier,DPTier,Classification of the DP,2,Choice,"Platinum,Gold,Silver,Bronze",AC01
+a0C2z000000BoxHEAS,true,a0B2z000001NOeBEAW,Outlet Affiliation,OutletAff,To show if a DP is Affiliated to certain groups,3,Choice,"Best In,Budgens,Costcutter,Day-Today,Go Local,Independent Outlet,Keystore,Londis,McColls,NISA,One-O-One,Premier,Spar,Unitas Buying Group,Other (Detail)",AC01
+a0C2z000000BcpFEAS,true,a0B2z000001NFlGEAW,Outlet Type,OutletType,Type of outlet,5,Choice,"1 - Symbol Store (Active),2 - Large Convenience Store - Double Front Store,3 - Small Convenience Store - Single Front Store,4 - CTN (No Alcohol or Frozen Food)",FieldSales
+a0C2z000000BopdEAC,true,a0B2z000001NOe1EAG,Primary Payment,Fin02,DP's Primary method of payment,1,Choice,"Cash,Cheque,Credit Card,Direct Debit,BAC's",AC03
+a0C2z000000BoxoEAC,true,a0B2z000001NOeLEAW,Chiller Size,SO-003,What chiller does the DP have?,3,Choice,"None,Small,Medium,Large",AC02
+a0C2z000000BoxKEAS,true,a0B2z000001NOeBEAW,Regions,Region,Which country is the DP in,1,Choice,"Scotland,England,Wales",AC01
+a0C2z000000BoxUEAS,true,a0B2z000001NOeBEAW,Depot,Depot,Depot which services the DP,5,Choice,"Dagenham,Wednesbury,Moston,Scotland,Cranks,Bentleys,Murdens,Menzies",AC01
+a0C2z000000BoxeEAC,true,a0B2z000001NOeLEAW,Sells Alcohol?,SO-001,Does the DP sell Alcohol?,1,Toggle,,AC02
+a0C2z000000B9sYEAS,true,a0B2z000001MzWJEA0,500ML IRN-BRU £1,3210137,,,Toggle,,NonStockis
+a0C2z000000B9sdEAC,true,a0B2z000001MzWJEA0,500ML R/CON MANGO £1,3914123,,,Toggle,,NonStockis
+a0C2z000000B9snEAC,true,a0B2z000001MzWJEA0,500ML R/CON SPG ORNGE MANGO £1,3437110,,,Toggle,,NonStockis
+a0C2z000000BARHEA4,true,a0B2z000001MzWJEA0,1L IRN-BRU,4010142,,,Toggle,,NonStockis
+a0C2z000000C2AkEAK,true,a0B2z000001NOeBEAW,Key Account,AD07,Used by Phil, as part of targeting,7,Choice,"BAXTER STOREY,CONFEX,CJ LANG GENERAL,CENTRAL GROUP,ELIOR,ENGLAND GENERAL,ENGLAND GENERAL DIRECT DEBIT,GOLD STORES,MARTIN MCCOLL,ONE STOP STORESCOTLAND GENERAL,SCOTTISH COUNCILS,SCOTTISH VENDING CUSTOMERS,TUCO,PRICING UAT",AC01
+a0C2z000000C2AfEAK,true,a0B2z000001NOeBEAW,Assortment Type,AD06,Used by Phil, as part of targeting,6,Choice,"All Products,Own Assortment",AC01
+

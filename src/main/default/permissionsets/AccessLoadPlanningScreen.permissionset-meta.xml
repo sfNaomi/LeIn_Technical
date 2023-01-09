@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CustomLookupInputController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DynamicFilterController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoadPlanningAssignmentController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LoadPlanningScreenController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogisticUpdateScreenController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access to tab and classes needed for Load Planning Screen</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Access Load Planning Screen</label>
+    <tabSettings>
+        <tab>LoadPlanning</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>
