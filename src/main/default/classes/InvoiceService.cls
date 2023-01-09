@@ -13,7 +13,7 @@ public with sharing class InvoiceService {
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
     private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String APPROVED_TRANSACTION_STATUS = 'Approved';
-    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs'};
+    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs', 'JDE DD'};
 
     private static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
         get {
