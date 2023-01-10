@@ -1168,7 +1168,7 @@ private with sharing class OrderTriggerHandlerTest {
         Order originalOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
-                Status = 'Draft', Pricebook2Id = newPricebook.Id
+                Status = 'Receipted', Pricebook2Id = newPricebook.Id, Type = 'Product Order'
             )
         );
 
