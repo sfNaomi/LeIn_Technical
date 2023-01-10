@@ -900,6 +900,54 @@ private with sharing class OrderTriggerHandlerTest {
     }
 
     @IsTest
+    private static void testPopulateLocalId_LocalIdFilledOnCreation() {
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'At Risk',
+                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id
+            )
+        );
+
+        Test.startTest();
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, aforza__Local_Id__c = 'Test'
+            )
+        );
+        Test.stopTest();
+
+        Order updatedOrder = [SELECT Id, aforza__Local_Id__c FROM Order WHERE Id = :newOrder.Id];
+        Assert.areEqual('Test', updatedOrder.aforza__Local_Id__c);
+    }
+
+    @IsTest
+    private static void testPopulateLocalId_LocalIdNotFilledOnCreation() {
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'At Risk',
+                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id
+            )
+        );
+
+        Test.startTest();
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_TELESALES_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, aforza__Local_Id__c = null
+            )
+        );
+        Test.stopTest();
+
+        Order updatedOrder = [SELECT Id, aforza__Local_Id__c FROM Order WHERE Id = :newOrder.Id];
+        Assert.isNotNull(updatedOrder.aforza__Local_Id__c);
+    }
+
+    @IsTest
     private static void testCloneCompletedOrder_FieldDirectRecordTypeCompletedOrder() {
         // create product & add it to standard PB
         Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
