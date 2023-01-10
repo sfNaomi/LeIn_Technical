@@ -13,8 +13,8 @@
     <values>
         <field>aforza__Config_JSON__c</field>
         <value xsi:type="xsd:string">{
-            "AutoActions": {
-            "OrderCheckoutEntry": [
+            "AutoActions":{
+            "OrderCheckoutEntry":[
             {
             "Type":"ENGINE",
             "Title":"Validate Order",
@@ -24,11 +24,13 @@
             "Type":"ENGINE",
             "Title":"Check Account Credit Limit",
             "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
-            },
+            }
+            ],
+            "OrderCheckoutFinish":[
             {
-            "Type": "ENGINE",
-            "Title": "Weather 1",
-            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
+            "Type":"ENGINE",
+            "Title":"Deposit Return Scheme",
+            "Target":"https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
             }
             ]
             },
@@ -50,27 +52,12 @@
             "Fields":[
             {
             "Name":"PoNumber"
+            },
+            {
+            "Name":"PrintName__c"
             }
             ]
-            },
-            {
-            "Type": "ACTION",
-            "Name": "Offline-Action3",
-            "Action": {
-            "Type": "ENGINE",
-            "Title": "Payload Dump",
-            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
             }
-            },
-            {
-            "Type": "ACTION",
-            "Name": "Offline-Action4",
-            "Action": {
-            "Type": "ENGINE",
-            "Title": "Return Deposit Scheme",
-            "Target": "https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
-            }
-            },
             ],
             "ObjectsToSync":[
             {
@@ -1158,7 +1145,7 @@
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Header__c</field>
-      <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+        <value xsi:type="xsd:string">Issued By&lt;br /&gt;
         AG Barr LTD&lt;br /&gt;
         2 Westfield Place&lt;br /&gt;
         Cumbernauld&lt;br /&gt;
@@ -1174,12 +1161,12 @@
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Footer__c</field>
-      <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
+        <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
         Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Header__c</field>
-      <value xsi:type="xsd:string">Issued By&lt;br /&gt;
+        <value xsi:type="xsd:string">Issued By&lt;br /&gt;
         AG Barr LTD&lt;br /&gt;
         2 Westfield Place&lt;br /&gt;
         Cumbernauld&lt;br /&gt;

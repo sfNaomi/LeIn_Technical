@@ -186,7 +186,7 @@ private with sharing class InvoiceTriggerHandlerTest {
             aforza__Account__c = acc.Id));
 
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
-            RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment'));
+            RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment', Status = 'Receipted', Type = 'Product Order'));
         TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
             RecordTypeId = RecordTypes.ORDER_RETURN_ID, aforza__Original_Order__c = order.Id, PaymentMethod__c = 'Card Payment'));
 
@@ -258,7 +258,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         );
 
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
-            RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment', Pricebook2Id = newPricebook.Id));
+            RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment', Pricebook2Id = newPricebook.Id, Status = 'Receipted', Type = 'Product Order'));
         Order refundOrder = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
             RecordTypeId = RecordTypes.ORDER_RETURN_ID, aforza__Original_Order__c = order.Id, PaymentMethod__c = 'Card Payment',
             Pricebook2Id = newPricebook.Id));

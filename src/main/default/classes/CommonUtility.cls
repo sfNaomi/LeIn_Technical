@@ -178,4 +178,12 @@ public with sharing class CommonUtility {
          }
          return (mapFieldApiToFieldValue);
      }
+
+    public static String generateUniqueIdentifier(String referenceString, Integer length) {
+        Long randomNumber = Math.roundToLong(Math.random() * 100000);
+        String hashString = referenceString + randomNumber + String.valueOf(Datetime.now().formatGMT('yyyy-MM-dd HH:mm:ss.SSS'));
+        Blob hash = Crypto.generateDigest('MD5', Blob.valueOf(hashString));
+        String hexDigest = EncodingUtil.convertToHex(hash);
+        return hexDigest.right(length);
+    }
 }

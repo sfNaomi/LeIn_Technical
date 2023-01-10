@@ -66,6 +66,14 @@ public with sharing class OrderTriggerHandler {
         OrderService.updateLastOrderDateAndStatusOnParentAccount(ordersToUpdateAccountLastOrder);
     }
 
+    public static void populateLocalId(List<Order> newOrders) {
+        for (Order newOrder : newOrders) {
+            if (newOrder.aforza__Local_Id__c == null) {
+                newOrder.aforza__Local_Id__c = CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 18);
+            }
+        }
+    }
+
     public static void validateOrderCreationOrCompletion(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> relatedAccountIds = new Set<Id>();
         Set<Id> newOrderIds = new Set<Id>();

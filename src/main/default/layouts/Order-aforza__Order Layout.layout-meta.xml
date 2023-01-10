@@ -266,8 +266,16 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>OffSaleProductsWith50UnitsOrLess</customLink>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>OffSaleProductsWith5UnitsOrLess</customLink>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
@@ -413,7 +421,7 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
- <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>aforza__Account__c</fields>
         <fields>aforza__Amount__c</fields>
@@ -431,7 +439,7 @@
         <fields>bt_stripe__Processed_Date__c</fields>
         <fields>bt_stripe__Due_Date__c</fields>
         <relatedList>bt_stripe__Transaction__c.Order__c</relatedList>
-        </relatedLists>
+    </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
