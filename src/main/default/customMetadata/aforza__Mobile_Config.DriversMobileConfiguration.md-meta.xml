@@ -23,9 +23,9 @@
           ],
           "OrderCheckoutFinish": [
           {
-              "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderStatusToDelivered.js",
-              "Title": "Move Status to Delivered",
-              "Type": "ENGINE"
+          "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderStatusToDelivered.js",
+          "Title": "Move Status to Delivered",
+          "Type": "ENGINE"
           }
           ]
           },
@@ -688,11 +688,9 @@
           ],
           "IsSupportEnabled":true,
           "AutoDownloadVisitResources":false,
-          "DisableOrderStatusValidation":true
-          }
-          ],
+          "DisableOrderStatusValidation":true,
           "InvoiceTemplate": {
-            "InvoiceTemplateName": "HMRCCompliant"
+          "InvoiceTemplateName": "HMRCCompliant"
           },
           "PrinterPaperWidthMm":102,
           "PrinterPaperHeightMM":null
