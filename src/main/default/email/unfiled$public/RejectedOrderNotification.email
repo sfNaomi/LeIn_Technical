@@ -1,3 +1,6 @@
 Hello!
 
 Order number {!Order.OrderNumber} from account {!Order.AccountName__c} requires your attention as it was rejected.
+
+
+Your SF Team

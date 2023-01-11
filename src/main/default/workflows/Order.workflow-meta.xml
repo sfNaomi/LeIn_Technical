@@ -17,18 +17,11 @@
     </alerts>
     <alerts>
         <fullName>RejectedOrder</fullName>
+        <ccEmails>fusionrejected@agbarr.co.uk</ccEmails>
         <description>Rejected Order</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesSupportExec</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesSupportManager</recipient>
-            <type>role</type>
+            <type>creator</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/RejectedOrderNotification</template>
