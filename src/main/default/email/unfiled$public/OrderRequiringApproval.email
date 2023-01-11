@@ -2,5 +2,10 @@ Hello!
 
 Order number {!Order.OrderNumber} from account {!Order.AccountName__c} is requiring your approval.
 
+Comments: {!ApprovalRequest.Comments}
+
+
 To approve or reject, click here
 {!ApprovalRequest.External_URL}
+
+Your SF Team

@@ -25,7 +25,7 @@
             <column>aforza__Inventory_Product__c.aforza__Stock_Quantity__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
-            <operator>lessThan</operator>
+            <operator>lessOrEqual</operator>
             <value>5</value>
         </criteriaItems>
         <language>en_US</language>

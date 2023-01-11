@@ -110,7 +110,7 @@ public with sharing class OrderTriggerHandler {
                 continue;
             }
             // check if card payment selected, Pre Authorization was not captured and payment creation on invoice level is not activated
-            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
+            if (!OrderService.isReturnOrder(newOrder) && newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
                     ((PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId != RecordTypes.ORDER_ECOMMERCE_ID) ||
                     (ECOMM_PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID))){
                 newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
