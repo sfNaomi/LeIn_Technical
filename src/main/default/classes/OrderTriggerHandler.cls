@@ -69,7 +69,7 @@ public with sharing class OrderTriggerHandler {
     public static void populateLocalId(List<Order> newOrders) {
         for (Order newOrder : newOrders) {
             if (newOrder.aforza__Local_Id__c == null) {
-                newOrder.aforza__Local_Id__c = CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 18);
+                newOrder.aforza__Local_Id__c = 'REX_' + CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 9);
             }
         }
     }
