@@ -165,7 +165,7 @@ public with sharing class InvoiceTriggerHandler {
             }
         }
         if (!invoiceIds.isEmpty()) {
-            PaymentTransactionService.updatePaymentTransactionStatusForInvoices(invoiceIds);
+            PaymentTransactionService.updateStatusOfNonRejectedTransactionsForInvoices(invoiceIds);
         }
     }
 
