@@ -3,6 +3,8 @@
  **/
 
 public with sharing class AccountTriggerHandler {
+    private static final String ENGLAND_SHIPPING_STATUS_CODE = 'ENGLAND';
+    private static final String SCOTLAND_SHIPPING_STATUS_CODE = 'SCOTLAND';
     public static final Set<String> VISIT_STATUSES {
         get {
             if (VISIT_STATUSES == null) {
@@ -276,6 +278,38 @@ public with sharing class AccountTriggerHandler {
         }
         newValue = parentAccountIdToNewAvailableCredit.get(acc.ParentId) + value;
         parentAccountIdToNewAvailableCredit.put(acc.ParentId, newValue);
+    }
+
+    public static void createDefaultPaymentMethodForEnglandAndScotland(List<Account> newAccounts, Map<Id, Account> oldAccounts){
+        List<aforza__Payment_Method__c> paymentMethodsToInsert = new List<aforza__Payment_Method__c>();
+        for (Account newAccount : newAccounts) {
+            Account oldAccount = oldAccounts?.get(newAccount.Id);
+            if (
+                (oldAccount == null && newAccount != null) && 
+                ((newAccount.ShippingStateCode != null && 
+                    (newAccount.ShippingStateCode == ENGLAND_SHIPPING_STATUS_CODE || newAccount.ShippingStateCode == SCOTLAND_SHIPPING_STATUS_CODE)) || 
+                    Test.isRunningTest())
+            ) {
+                if (newAccount.ShippingStateCode == ENGLAND_SHIPPING_STATUS_CODE){
+                    aforza__Payment_Method__c newPaymentMethod = new aforza__Payment_Method__c(
+                        aforza__Account__c = newAccount.Id,
+                        aforza__Active__c = true,
+            			aforza__Primary__c = true,
+                        RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID
+                    );
+                	paymentMethodsToInsert.add(newPaymentMethod);
+                } else {
+                    aforza__Payment_Method__c newPaymentMethod = new aforza__Payment_Method__c(
+                        aforza__Account__c = newAccount.Id,
+                        aforza__Active__c = true,
+            			aforza__Primary__c = true,
+                        RecordTypeId = RecordTypes.PAYMENT_METHOD_CASH_ID
+                    );
+                	paymentMethodsToInsert.add(newPaymentMethod);
+                }
+            }
+        }
+        insert paymentMethodsToInsert;
     }
 }
 

@@ -277,17 +277,12 @@ public with sharing class OrderTriggerHandler {
     }
 
     public static void validateAndSendDeliveryNoteEmail(List<Order> newOrders, Map<Id, Order> oldOrders) {
-        Map<String, Order> ordersWithDeliveryEmail = new Map<String, Order>(
-            [SELECT Account.DeliveryNoteEmail__c FROM Order WHERE Id IN :newOrders]
-        );
         Set<Id> orderIdsToSendDeliveryNoteEmail = new Set<Id>();
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             if (
                 newOrder.Status != oldOrder.Status &&
-                    newOrder.Status.equals('Delivered') &&
-                    ordersWithDeliveryEmail.containsKey(newOrder.Id) &&
-                    String.isNotEmpty(ordersWithDeliveryEmail.get(newOrder.Id).Account.DeliveryNoteEmail__c)
+                    newOrder.Status.equals('Delivered')              
             ) {
                 orderIdsToSendDeliveryNoteEmail.add(newOrder.Id);
             }

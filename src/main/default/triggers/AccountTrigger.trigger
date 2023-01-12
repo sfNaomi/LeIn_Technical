@@ -18,6 +18,7 @@ trigger AccountTrigger on Account(before insert, before update, after update, af
         when AFTER_INSERT {
             AccountTriggerHandler.manageFocusProducts(Trigger.newMap);
             AccountTriggerHandler.addPerfectScoreProducts(Trigger.new, Trigger.oldMap);
+            AccountTriggerHandler.createDefaultPaymentMethodForEnglandAndScotland(Trigger.new, Trigger.oldMap);
             AforzaLabsSegmentToolAccountHandler.afterInsert(Trigger.newMap);
         }
         when AFTER_UPDATE {
