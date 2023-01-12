@@ -182,7 +182,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         Contact contact = (Contact) TdfSObjectFactory.insertSObject(new Contact(AccountId = acc.Id));
         acc.aforza__Primary_Contact__c = contact.Id;
         update acc;
-        TdfSObjectFactory.insertSObject(new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID,
+        TdfSObjectFactory.createSObject(new aforza__Payment_Method__c(RecordTypeId = RecordTypes.PAYMENT_METHOD_CREDIT_CARD_ID,
             aforza__Account__c = acc.Id));
 
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
@@ -193,7 +193,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         InvoiceSettings__c settings = new InvoiceSettings__c(CreatePaymentWhenInvoiceIsCreated__c = true);
         insert settings;
 
-        bt_stripe__Transaction__c originalTransaction = (bt_stripe__Transaction__c) TdfSObjectFactory.insertSObject(
+        bt_stripe__Transaction__c originalTransaction = (bt_stripe__Transaction__c) TdfSObjectFactory.createSObject(
             new bt_stripe__Transaction__c(bt_stripe__Related_Account__c = acc.Id, bt_stripe__Related_Contact__c = contact.Id,
                 RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID));
 

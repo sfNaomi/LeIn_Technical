@@ -14,7 +14,7 @@ public class AccountServiceTest {
         DdMandateCreationController.ddMandateCreationHandler(deliveryRef, '9');
         
         aforza__Payment_Method__c newPayment = [SELECT Id, aforza__Account__c, aforza__Active__c, aforza__Primary__c, RecordTypeId
-                                                FROM aforza__Payment_Method__c WHERE aforza__Account__c =:dpAccount.Id];
+                                                FROM aforza__Payment_Method__c WHERE aforza__Account__c =:dpAccount.Id AND RecordTypeId =: RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID];
         Account accRef2 = [SELECT Id, DeliveryPointReference__c, DdActive__c, DirectDebitMandateRef__c FROM Account WHERE Id =:dpAccount.id];
 
         Assert.areEqual(true, newPayment.aforza__Active__c);

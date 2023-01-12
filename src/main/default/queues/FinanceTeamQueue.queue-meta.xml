@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <email>accountsreceivable@agbarr.co.uk</email>
+    <email>fusionfinanceapprovals@agbarr.co.uk</email>
     <name>Finance Team Queue</name>
     <queueMembers>
         <roles>

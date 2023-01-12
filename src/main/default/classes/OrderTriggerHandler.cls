@@ -69,7 +69,7 @@ public with sharing class OrderTriggerHandler {
     public static void populateLocalId(List<Order> newOrders) {
         for (Order newOrder : newOrders) {
             if (newOrder.aforza__Local_Id__c == null) {
-                newOrder.aforza__Local_Id__c = CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 18);
+                newOrder.aforza__Local_Id__c = 'REX_' + CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 9);
             }
         }
     }
@@ -277,17 +277,12 @@ public with sharing class OrderTriggerHandler {
     }
 
     public static void validateAndSendDeliveryNoteEmail(List<Order> newOrders, Map<Id, Order> oldOrders) {
-        Map<String, Order> ordersWithDeliveryEmail = new Map<String, Order>(
-            [SELECT Account.DeliveryNoteEmail__c FROM Order WHERE Id IN :newOrders]
-        );
         Set<Id> orderIdsToSendDeliveryNoteEmail = new Set<Id>();
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             if (
                 newOrder.Status != oldOrder.Status &&
-                    newOrder.Status.equals('Delivered') &&
-                    ordersWithDeliveryEmail.containsKey(newOrder.Id) &&
-                    String.isNotEmpty(ordersWithDeliveryEmail.get(newOrder.Id).Account.DeliveryNoteEmail__c)
+                    newOrder.Status.equals('Delivered')              
             ) {
                 orderIdsToSendDeliveryNoteEmail.add(newOrder.Id);
             }

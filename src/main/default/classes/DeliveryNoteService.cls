@@ -17,7 +17,7 @@ public without sharing class DeliveryNoteService {
 	@Future(Callout=true)
 	public static void generateOrderAttachmentsAndSendDeliveryEmails(Set<Id> orderIds) {
 		List<Order> orders = new List<Order>(
-			[SELECT Account.DeliveryNoteEmail__c, Account.aforza__Primary_Contact__c FROM Order WHERE Id IN :orderIds]
+			[SELECT Account.DeliveryNoteEmail__c, Account.aforza__Primary_Contact__c FROM Order WHERE Id IN :orderIds AND Account.DeliveryNoteEmail__c != null AND Account.aforza__Primary_Contact__c != null]
 		);
 		Map<Id, ContentVersion> contentVersionByOrderId = generateOrderAttachments(orders);
 		sendOrderDeliveryEmails(orders, contentVersionByOrderId);

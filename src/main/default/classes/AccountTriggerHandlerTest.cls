@@ -994,4 +994,21 @@ private with sharing class AccountTriggerHandlerTest {
             Assert.areEqual(tamUser.Id, record.OwnerId);
         }
     }
+
+    @IsTest
+    private static void testCreateDefaultPaymentMethodForEnglandAndScotland() {
+
+        Test.startTest();
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Test.stopTest();
+
+        aforza__Payment_Method__c newPaymentMethod = [SELECT Id, aforza__Account__c, aforza__Active__c, aforza__Primary__c, RecordTypeId
+                                                        FROM aforza__Payment_Method__c
+                                                        WHERE aforza__Account__c = :acc.Id ];
+
+        Assert.areEqual(acc.Id, newPaymentMethod.aforza__Account__c);
+        Assert.areEqual(true, newPaymentMethod.aforza__Active__c);
+        Assert.areEqual(true, newPaymentMethod.aforza__Primary__c);
+        Assert.areEqual(RecordTypes.PAYMENT_METHOD_CASH_ID, newPaymentMethod.RecordTypeId);
+    }
 }
