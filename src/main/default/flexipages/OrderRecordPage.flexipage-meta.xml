@@ -567,19 +567,6 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.PaymentMethod__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Card Payment</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.PreAuthCaptured__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
