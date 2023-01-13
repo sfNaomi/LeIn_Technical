@@ -44,6 +44,10 @@
             <name>LeaveStatusAsAwaitingApproval</name>
             <type>FieldUpdate</type>
         </action>
+        <action>
+            <name>RejectedOrder</name>
+            <type>Alert</type>
+        </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
@@ -53,7 +57,7 @@
         </action>
     </initialSubmissionActions>
     <label>Order Approval Process Sales Supp Team</label>
-    <processOrder>1</processOrder>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

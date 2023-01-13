@@ -3,12 +3,6 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>fusionfinanceapprovals@agbarr.co.uk</email>
     <name>Finance Team Queue</name>
-    <queueMembers>
-        <roles>
-            <role>CreditController</role>
-            <role>CreditManager</role>
-        </roles>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Order</sobjectType>
     </queueSobject>

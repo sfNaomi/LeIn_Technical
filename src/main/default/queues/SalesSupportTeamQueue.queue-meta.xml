@@ -3,12 +3,6 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>fusionsalesapprovals@agbarr.co.uk</email>
     <name>Sales Support Team Queue</name>
-    <queueMembers>
-        <roles>
-            <role>SalesSupportExec</role>
-            <role>SalesSupportManager</role>
-        </roles>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Order</sobjectType>
     </queueSobject>
