@@ -719,9 +719,10 @@ public with sharing class PickSheetGenerationServiceTest {
         newOrder4.ShortDescription__c = PALLET_DESCRIPTION2;
         ordersToUpdate.add(newOrder4);
 
-        update ordersToUpdate;
+        
 
         Test.startTest();
+        update ordersToUpdate;
         PickSheetGenerationService service = new PickSheetGenerationService(
             new List<String>{newOrder1.Id, newOrder2.Id, newOrder3.Id, newOrder4.Id}
         );
