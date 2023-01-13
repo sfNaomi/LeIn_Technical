@@ -332,7 +332,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>OrderItem.aforza__Bundle_Discount_Rule__c</field>
         <readable>true</readable>
     </fieldPermissions>
