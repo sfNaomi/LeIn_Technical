@@ -14,6 +14,7 @@
         <field>aforza__Inventory_Product__c.aforza__Stock_Quantity__c</field>
     </columns>
     <filter>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <column>aforza__Inventory_Product__c.OffSale__c</column>
             <columnToColumn>false</columnToColumn>
@@ -25,8 +26,15 @@
             <column>aforza__Inventory_Product__c.aforza__Stock_Quantity__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
-            <operator>lessOrEqual</operator>
-            <value>5</value>
+            <operator>lessThan</operator>
+            <value>10</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_NAME</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
@@ -36,7 +44,7 @@
         <field>CUST_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>Off Sale Products With 5 Units or Less</name>
+    <name>SKUs With Less Than 10 Cases Or Off Sale</name>
     <params>
         <name>co</name>
         <value>1</value>

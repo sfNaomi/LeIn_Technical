@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OffSaleProductsWith5UnitsOrLess</fullName>
+    <fullName>SkusWithLessThan50CasesOrOffSale</fullName>
     <availability>online</availability>
     <displayType>link</displayType>
     <encodingKey>UTF-8</encodingKey>
@@ -10,11 +10,11 @@
     <height>600</height>
     <isResizable>true</isResizable>
     <linkType>url</linkType>
-    <masterLabel>Off Sale Products With 5 Units or Less</masterLabel>
+    <masterLabel>SKUs With Less Than 50 Cases Or Off Sale</masterLabel>
     <openType>newWindow</openType>
     <position>none</position>
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/r/Report/00O1X000002v4CsUAI/view?queryScope=userFolders</url>
+    <url>/lightning/r/Report/00O1X000002vGYDUA2/view?queryScope=userFolders</url>
 </WebLink>
