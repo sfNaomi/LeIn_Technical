@@ -15,7 +15,7 @@ public class AccountServiceTest {
         
         aforza__Payment_Method__c newPayment = [SELECT Id, aforza__Account__c, aforza__Active__c, aforza__Primary__c, RecordTypeId
                                                 FROM aforza__Payment_Method__c WHERE aforza__Account__c =:dpAccount.Id AND RecordTypeId =: RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID];
-        Account accRef2 = [SELECT Id, DeliveryPointReference__c, DdActive__c, DirectDebitMandateRef__c FROM Account WHERE Id =:dpAccount.id];
+        Account accRef2 = [SELECT Id, DeliveryPointReference__c, DdActive__c, PrimaryPaymentMethod__c, DirectDebitMandateRef__c FROM Account WHERE Id =:dpAccount.id];
 
         Assert.areEqual(true, newPayment.aforza__Active__c);
         Assert.areEqual(true, newPayment.aforza__Primary__c);
@@ -24,6 +24,8 @@ public class AccountServiceTest {
 
         System.assertEquals(TRUE, accRef2.DdActive__c);
         System.assertEquals(deliveryRef, accRef2.DirectDebitMandateRef__c);
+	System.assertEquals('Direct Debit', accRef2.PrimaryPaymentMethod__c);
+
     }
 	
     @IsTest
