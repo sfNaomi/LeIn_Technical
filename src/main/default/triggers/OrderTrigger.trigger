@@ -1,4 +1,5 @@
-trigger OrderTrigger on Order (before insert, before update, after insert, after update) {
+trigger OrderTrigger on Order (before insert, before update, after insert, after update, before delete, after delete, after undelete) {
+    dlrs.RollupService.triggerHandler(Order.SObjectType);
     switch on Trigger.operationType {
         when BEFORE_INSERT {
             OrderTriggerHandler.populateLocalId(Trigger.new);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalAmountOpenInvoices__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Stores the total amount of open invoices counting against the available credit.</inlineHelpText>
+    <label>Total Amount Open Invoices</label>
+    <summarizedField>aforza__Invoice__c.Gross__c</summarizedField>
+    <summaryFilterItems>
+        <field>aforza__Invoice__c.aforza__Status__c</field>
+        <operation>equals</operation>
+        <value>Payment Attempt Unsuccessful, Approved for Payment, Outstanding, Pending</value>
+    </summaryFilterItems>
+    <summaryForeignKey>aforza__Invoice__c.aforza__Account__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

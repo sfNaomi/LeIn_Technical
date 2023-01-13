@@ -1688,7 +1688,7 @@ private with sharing class OrderTriggerHandlerTest {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(
                 RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
-                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id
+                LastOrderDate__c = null, aforza__Default_Price_Book__c = newPricebook.Id, aforza__Credit_Amount__c = 20000
             )
         );
 
