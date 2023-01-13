@@ -19,6 +19,7 @@ public without sharing class DdMandateCreationController {
             if(String.isBlank(currentAccount.DirectDebitMandateRef__c)){
                 currentAccount.DirectDebitMandateRef__c = ddPlan;
                 currentAccount.DdActive__c = TRUE;
+		currentAccount.PrimaryPaymentMethod__c = 'Direct Debit';
                 
                 aforzaPaymentMethodsToCreate.add(createNewAforzaPaymentMethodAndPopulateNecessaryFields(currentAccount.Id));
 
@@ -29,7 +30,7 @@ public without sharing class DdMandateCreationController {
         }
     }
      private static aforza__Payment_Method__c createNewAforzaPaymentMethodAndPopulateNecessaryFields(Id parentAccountId){
-        	aforza__Payment_Method__c newAforzaPaymentMethod = new aforza__Payment_Method__c();
+            aforza__Payment_Method__c newAforzaPaymentMethod = new aforza__Payment_Method__c();
             newAforzaPaymentMethod.RecordTypeId=RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID;
             newAforzaPaymentMethod.aforza__Account__c = parentAccountId;
             newAforzaPaymentMethod.aforza__Active__c = true;

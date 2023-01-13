@@ -13,7 +13,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Event.RecordLink__c</field>
+        <field>Event.RecordingLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -118,7 +118,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Task.RecordLink__c</field>
+        <field>Task.RecordingLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

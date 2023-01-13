@@ -20,7 +20,11 @@
         {
             "name": "NICE inContact CXone Agent for Salesforce",
             "id": "04t5d000000YIA4AAO"
-        }           
+        },
+        {
+            "name": "Declarative Lookup Rollup Summaries Tool",
+            "id": "04t5p000000XdcIAAS "
+        }
     ],
     "apexPrePush": [
         "scripts/anonymous-apex/enableMarketingUser.apex"

@@ -229,11 +229,13 @@ public with sharing class OrderTriggerHandler {
             }
         }
 
-        // merge together new changes and existing data from DB
-        prepareLoadToOrdersMap(loadsWithOrderStatusesMap, ordersToCheck);
-        prepareLoadToOrdersMap(loadsWithOrderStatusesMap, [SELECT Id, Status, Load__c FROM Order WHERE Load__c IN :loadIds]);
+        if (!ordersToCheck.isEmpty()) {
+            // merge together new changes and existing data from DB
+            prepareLoadToOrdersMap(loadsWithOrderStatusesMap, ordersToCheck);
+            prepareLoadToOrdersMap(loadsWithOrderStatusesMap, [SELECT Id, Status, Load__c FROM Order WHERE Load__c IN :loadIds]);
 
-        processOrdersToPopulateLoadField(loadsWithOrderStatusesMap);
+            processOrdersToPopulateLoadField(loadsWithOrderStatusesMap);
+        }
     }
 
     private static Map<String, String> getOrderStatusesToLoadFieldMapping() {
