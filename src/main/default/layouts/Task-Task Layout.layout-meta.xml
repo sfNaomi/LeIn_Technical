@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RecordLink__c</field>
+                <field>RecordingLink__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
