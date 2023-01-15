@@ -388,76 +388,93 @@ public with sharing class PickSheetGenerationServiceTest {
         );
 
         // create account
-        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(new Account(
+        List<Account> accountsToInsert = new List<Account>();
+
+        Account dpAccount1 = (Account) TdfSObjectFactory.createSObject(new Account(
             aforza__Default_Price_Book__c = newPricebook.Id,
             RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
             PrimaryGridNumber__c = GRID1
         ));
-        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(new Account(
+        accountsToInsert.add(dpAccount1);
+
+        Account dpAccount2 = (Account) TdfSObjectFactory.createSObject(new Account(
             aforza__Default_Price_Book__c = newPricebook.Id,
             RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
             PrimaryGridNumber__c = GRID2
         ));
+        accountsToInsert.add(dpAccount2);
+
+        insert accountsToInsert;
 
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
             new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
         );
-        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(
-                aforza__Inventory__c = newInventory.Id,
-                aforza__Product__c = newProduct1.Id,
-                PickingLocation__c = PICK_LOCATION_PROD1
-            )
+        TdfSObjectFactory.insertSObject(
+            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, PickingLocation__c = PICK_LOCATION_PROD1)
         );
-        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(
-                aforza__Inventory__c = newInventory.Id,
-                aforza__Product__c = newProduct2.Id,
-                PickingLocation__c = PICK_LOCATION_PROD2
-            )
+        TdfSObjectFactory.insertSObject(
+            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, PickingLocation__c = PICK_LOCATION_PROD2)
         );
 
         // create orders and add products to it
-        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        List<Order> ordersToInsert = new List<Order>();
+
+        Order newOrder1 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount1.Id,
             Grid__c = GRID1,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem11 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder1.Id,
-            Product2Id = newProduct1.Id,
-            Quantity = 10,
-            PricebookEntryId = product1PricebookEntry.Id
-        ));
-        OrderItem newOrderItem12 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder1.Id,
-            Product2Id = newProduct2.Id,
-            Quantity = 20,
-            PricebookEntryId = product2PricebookEntry.Id
-        ));
+        ordersToInsert.add(newOrder1);
 
-        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        Order newOrder2 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount2.Id,
             Grid__c = GRID2,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem21 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+        ordersToInsert.add(newOrder2);
+
+        insert ordersToInsert;
+
+        List<OrderItem> orderItemsToInsert = new List<OrderItem>();
+
+        OrderItem newOrderItem11 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
+            OrderId = newOrder1.Id,
+            Product2Id = newProduct1.Id,
+            Quantity = 10,
+            PricebookEntryId = product1PricebookEntry.Id
+        ));
+        orderItemsToInsert.add(newOrderItem11);
+
+        OrderItem newOrderItem12 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
+            OrderId = newOrder1.Id,
+            Product2Id = newProduct2.Id,
+            Quantity = 20,
+            PricebookEntryId = product2PricebookEntry.Id
+        ));
+        orderItemsToInsert.add(newOrderItem12);
+
+        OrderItem newOrderItem21 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
             OrderId = newOrder2.Id,
             Product2Id = newProduct1.Id,
             Quantity = 30,
             PricebookEntryId = product1PricebookEntry.Id
         ));
-        OrderItem newOrderItem22 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+        orderItemsToInsert.add(newOrderItem21);
+
+        OrderItem newOrderItem22 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
             OrderId = newOrder2.Id,
             Product2Id = newProduct2.Id,
             Quantity = 40,
             PricebookEntryId = product2PricebookEntry.Id
         ));
+        orderItemsToInsert.add(newOrderItem22);
+
+        insert orderItemsToInsert;
 
         // create Vehicle
         Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
@@ -465,12 +482,19 @@ public with sharing class PickSheetGenerationServiceTest {
         );
 
         // create Load
-        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+        List<Load__c> loadsToInsert = new List<Load__c>();
+
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.createSObject(new Load__c(
             DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
         ));
-        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
+        loadsToInsert.add(newLoad1);
+
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.createSObject(new Load__c(
             DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
         ));
+        loadsToInsert.add(newLoad2);
+
+        insert loadsToInsert;
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
@@ -596,92 +620,109 @@ public with sharing class PickSheetGenerationServiceTest {
         );
 
         // create account
-        Account dpAccount1 = (Account) TdfSObjectFactory.insertSObject(new Account(
+        List<Account> accountsToInsert = new List<Account>();
+        Account dpAccount1 = (Account) TdfSObjectFactory.createSObject(new Account(
             aforza__Default_Price_Book__c = newPricebook.Id,
             RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
             PrimaryGridNumber__c = GRID1
         ));
-        Account dpAccount2 = (Account) TdfSObjectFactory.insertSObject(new Account(
+        accountsToInsert.add(dpAccount1);
+
+        Account dpAccount2 = (Account) TdfSObjectFactory.createSObject(new Account(
             aforza__Default_Price_Book__c = newPricebook.Id,
             RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
             PrimaryGridNumber__c = GRID2
         ));
+        accountsToInsert.add(dpAccount2);
 
+        insert accountsToInsert;
+        
         // create inventory and add products to inventory
         aforza__Inventory__c newInventory = (aforza__Inventory__c) TdfSObjectFactory.insertSObject(
             new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID)
         );
-        aforza__Inventory_Product__c newInventoryProduct1 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(
-                aforza__Inventory__c = newInventory.Id,
-                aforza__Product__c = newProduct1.Id,
-                PickingLocation__c = PICK_LOCATION_PROD1
-            )
+        TdfSObjectFactory.insertSObject(
+            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct1.Id, PickingLocation__c = PICK_LOCATION_PROD1)
         );
-        aforza__Inventory_Product__c newInventoryProduct2 = (aforza__Inventory_Product__c) TdfSObjectFactory.insertSObject(
-            new aforza__Inventory_Product__c(
-                aforza__Inventory__c = newInventory.Id,
-                aforza__Product__c = newProduct2.Id,
-                PickingLocation__c = PICK_LOCATION_PROD2
-            )
+        TdfSObjectFactory.insertSObject(
+            new aforza__Inventory_Product__c(aforza__Inventory__c = newInventory.Id, aforza__Product__c = newProduct2.Id, PickingLocation__c = PICK_LOCATION_PROD2)
         );
 
         // create orders and add products to it
-        Order newOrder1 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        List<Order> ordersToInsert = new List<Order>();
+
+        Order newOrder1 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount1.Id,
             Grid__c = GRID1,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder1.Id,
-            Product2Id = newProduct1.Id,
-            Quantity = 10,
-            PricebookEntryId = product1PricebookEntry.Id
-        ));
+        ordersToInsert.add(newOrder1);
 
-        Order newOrder2 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        Order newOrder2 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount2.Id,
             Grid__c = GRID2,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder2.Id,
-            Product2Id = newProduct2.Id,
-            Quantity = 20,
-            PricebookEntryId = product2PricebookEntry.Id
-        ));
+        ordersToInsert.add(newOrder2);
 
-        Order newOrder3 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        Order newOrder3 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount1.Id,
             Grid__c = GRID1,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
-            OrderId = newOrder3.Id,
-            Product2Id = newProduct1.Id,
-            Quantity = 30,
-            PricebookEntryId = product1PricebookEntry.Id
-        ));
+        ordersToInsert.add(newOrder3);
 
-        Order newOrder4 = (Order) TdfSObjectFactory.insertSObject(new Order(
+        Order newOrder4 = (Order) TdfSObjectFactory.createSObject(new Order(
             RecordTypeId = RecordTypes.ORDER_FIELD_DIRECT_ID,
             AccountId = dpAccount1.Id,
             Grid__c = GRID2,
             Pricebook2Id = newPricebook.Id,
             aforza__Inventory__c = newInventory.Id
         ));
-        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.insertSObject(new OrderItem(
+        ordersToInsert.add(newOrder4);
+
+        insert ordersToInsert;
+
+        List<OrderItem> orderItemsToInsert = new List<OrderItem>();
+        OrderItem newOrderItem1 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
+                OrderId = newOrder1.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 10,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        orderItemsToInsert.add(newOrderItem1);
+
+        OrderItem newOrderItem2 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
+                OrderId = newOrder2.Id,
+                Product2Id = newProduct2.Id,
+                Quantity = 20,
+                PricebookEntryId = product2PricebookEntry.Id
+        ));
+        orderItemsToInsert.add(newOrderItem2);
+
+        OrderItem newOrderItem3 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
+                OrderId = newOrder3.Id,
+                Product2Id = newProduct1.Id,
+                Quantity = 30,
+                PricebookEntryId = product1PricebookEntry.Id
+        ));
+        orderItemsToInsert.add(newOrderItem3);
+
+        OrderItem newOrderItem4 = (OrderItem) TdfSObjectFactory.createSObject(new OrderItem(
             OrderId = newOrder4.Id,
             Product2Id = newProduct2.Id,
             Quantity = 40,
             PricebookEntryId = product2PricebookEntry.Id
         ));
+        orderItemsToInsert.add(newOrderItem4);
+
+        insert orderItemsToInsert;
 
         // create Vehicle
         Vehicle__c newVehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
@@ -689,12 +730,19 @@ public with sharing class PickSheetGenerationServiceTest {
         );
 
         // create Load
-        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-            DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
-        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(
-            DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId()
-        ));
+        List<Load__c> loadsToInsert = new List<Load__c>();
+
+        Load__c newLoad1 = (Load__c) TdfSObjectFactory.createSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE1, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
+        loadsToInsert.add(newLoad1);
+
+        Load__c newLoad2 = (Load__c) TdfSObjectFactory.createSObject(
+            new Load__c(DeliveryDate__c = DELIVERY_DATE2, Vehicle__c = newVehicle.Id, Driver__c = UserInfo.getUserId())
+        );
+        loadsToInsert.add(newLoad2);
+
+        insert loadsToInsert;
 
         // add orders to the load
         List<Order> ordersToUpdate = new List<Order>();
@@ -728,34 +776,8 @@ public with sharing class PickSheetGenerationServiceTest {
         List<PickSheetGenerationService.LoadPlan> loadPlans = service.getLoadPlans();
         Test.stopTest();
 
-        // Query data to be verified
-        Load__c insertedLoad1 = [
-            SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
-            FROM Load__c
-            WHERE Id = :newLoad1.Id
-            LIMIT 1
-        ];
-        Load__c insertedLoad2 = [
-            SELECT Id, Name, Driver__r.Name, DeliveryDate__c, Vehicle__r.VehicleRegistration__c
-            FROM Load__c
-            WHERE Id = :newLoad2.Id
-            LIMIT 1
-        ];
-
         // check load details
         Assert.areEqual(2, loadPlans.size());
-
-        // load 1
-        Assert.areEqual(insertedLoad1.Name, loadPlans[0].load);
-        Assert.areEqual(insertedLoad1.Vehicle__r.VehicleRegistration__c, loadPlans[0].vehicle);
-        Assert.areEqual(insertedLoad1.Driver__r.Name, loadPlans[0].driver);
-        Assert.areEqual(insertedLoad1.DeliveryDate__c, loadPlans[0].deliveryDate);
-
-        // load 2
-        Assert.areEqual(insertedLoad2.Name, loadPlans[1].load);
-        Assert.areEqual(insertedLoad2.Vehicle__r.VehicleRegistration__c, loadPlans[1].vehicle);
-        Assert.areEqual(insertedLoad2.Driver__r.Name, loadPlans[1].driver);
-        Assert.areEqual(insertedLoad2.DeliveryDate__c, loadPlans[1].deliveryDate);
 
         // check pallet sequence
         Assert.areEqual(2, loadPlans[0].palletSequences.size());

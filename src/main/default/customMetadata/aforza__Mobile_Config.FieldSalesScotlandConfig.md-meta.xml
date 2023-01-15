@@ -13,8 +13,8 @@
     <values>
         <field>aforza__Config_JSON__c</field>
         <value xsi:type="xsd:string">{
-          "AutoActions": {
-          "OrderCheckoutEntry": [
+          "AutoActions":{
+          "OrderCheckoutEntry":[
           {
           "Type":"ENGINE",
           "Title":"Validate Order",
@@ -24,6 +24,13 @@
           "Type":"ENGINE",
           "Title":"Check Account Credit Limit",
           "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderCreditLimitExceeded.js"
+          }
+          ],
+          "OrderCheckoutFinish":[
+          {
+          "Type":"ENGINE",
+          "Title":"Deposit Return Scheme",
+          "Target":"https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
           }
           ]
           },
@@ -45,6 +52,9 @@
           "Fields":[
           {
           "Name":"PoNumber"
+          },
+          {
+          "Name":"PrintName__c"
           }
           ]
           }
@@ -73,8 +83,7 @@
           "Required":false
           },
           "ApplicableRecordTypes":[
-
-          ]
+]
           },
           {
           "Name":"PreferredCallTimeTelesales__c",
@@ -82,8 +91,7 @@
           "Required":false
           },
           "ApplicableRecordTypes":[
-
-          ]
+]
           },
           {
           "Name":"PreferredVisitTime__c",
@@ -91,8 +99,7 @@
           "Required":false
           },
           "ApplicableRecordTypes":[
-
-          ]
+]
           },
           {
           "Name":"LastOrderDate__c",
@@ -100,8 +107,7 @@
           "Required":false
           },
           "ApplicableRecordTypes":[
-
-          ]
+]
           },
           {
           "Name":"NextDeliveryDate__c",
@@ -381,112 +387,6 @@
           ]
           }
           ],
-          "Tabs":[
-          {
-          "Type":"DETAILS",
-          "Title":"Details"
-          },
-          {
-          "Type":"ATTRIBUTES",
-          "Title":"Segment"
-          },
-          {
-          "Type":"SOBJECT",
-          "Title":"Orders",
-          "ChildObjectApiName":"Order",
-          "ChildObjectLookupApiName":"AccountId",
-          "RecordLimit":10,
-          "RecordSort":{
-          "SortFieldApiName":"Name",
-          "Direction":"ASC"
-          },
-          "Layout":[
-          {
-          "Name":"Name"
-          },
-          {
-          "Name":"aforza__Status__c"
-          }
-          ]
-          },
-          {
-          "Type":"SOBJECT",
-          "Title":"Invoices",
-          "ChildObjectApiName":"aforza__Invoice__c",
-          "ChildObjectLookupApiName":"aforza__Account__c",
-          "RecordLimit":10,
-          "RecordSort":{
-          "SortFieldApiName":"Name",
-          "Direction":"ASC"
-          },
-          "Layout":[
-          {
-          "Name":"Name"
-          },
-          {
-          "Name":"aforza__Status__c"
-          },
-          {
-          "Name":"aforza__Start_Date__c"
-          }
-          ]
-          },
-          {
-          "Type":"SOBJECT",
-          "Title":"Visits",
-          "ChildObjectApiName":"aforza__Visit__c",
-          "ChildObjectLookupApiName":"aforza__Account__c",
-          "RecordLimit":10,
-          "RecordSort":{
-          "SortFieldApiName":"Name",
-          "Direction":"ASC"
-          },
-          "Layout":[
-          {
-          "Name":"Name"
-          },
-          {
-          "Name":"aforza__Planned_Time__c"
-          },
-          {
-          "Name":"aforza__Status__c"
-          }
-          ]
-          },
-          {
-          "Type":"SOBJECT",
-          "Title":"Contacts",
-          "ChildObjectApiName":"Contact",
-          "ChildObjectLookupApiName":"AccountId",
-          "RecordLimit":10,
-          "RecordSort":{
-          "SortFieldApiName":"Name",
-          "Direction":"ASC"
-          },
-          "Layout":[
-          {
-          "Name":"FirstName"
-          },
-          {
-          "Name":"LastName"
-          },
-          {
-          "Name":"Phone"
-          },
-          {
-          "Name":"Email"
-          }
-          ]
-          },
-          {
-          "Type":"RESOURCES",
-          "Title":"Resources"
-          },
-          {
-          "Type":"NOTES",
-          "Title":"Notes"
-          }
-          ],
           "InSideMenu":true,
           "FilterGroups":[
           {
@@ -637,91 +537,61 @@
           "Name":"EffectiveDate",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"AccountId",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"ShipToContactId",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"aforza__Inventory__c",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
-          "Name":"Depot__c",
+          "Name":"aforza__Original_Order__c",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"Type",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"Status",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
-          "Name":"DeliveryDate__c",
+          "Name":"ActivatedDate",
           "Details":{
           "Required":false
-          },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          }
           },
           {
           "Name":"PoNumber",
           "Details":{
           "Required":false
+          }
           },
-          "ApplicableRecordTypes":[
-          "VanSalesOrder",
-          "FieldDirectOrder"
-          ]
+          {
+          "Name":"TotalAmount",
+          "Details":{
+          "Required":false
+          }
           },
           {
           "Name":"RecordTypeId",
@@ -905,7 +775,7 @@
           ],
           "CanTakePhotos":true,
           "CanCreateOrders":false,
-          "CanAddProducts":false,
+          "CanAddProducts":true,
           "Button":"Core and Energy Complete"
           },
           {
@@ -963,7 +833,7 @@
           ],
           "CanTakePhotos":true,
           "CanCreateOrders":false,
-          "CanAddProducts":false,
+          "CanAddProducts":true,
           "Button":"Visibility and Display Complete"
           },
           {
@@ -1278,8 +1148,8 @@ Cumbernauld&lt;br /&gt;
 G68 9YH&lt;br /&gt;
 Tel: 0330 390 3584&lt;br /&gt;
 Co.Reg.No. SC005653&lt;br /&gt;
-Vat:Reg.No. 259 9895 02&lt;br /&gt;
-AWRS URN: XAAW 000 0112386</value>
+Vat:Reg.No. 259 9805 02&lt;br /&gt;
+AWRS URN: XAAW 000 0011 2386</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
@@ -1299,8 +1169,8 @@ Cumbernauld&lt;br /&gt;
 G68 9YH&lt;br /&gt;
 Tel: 0330 390 3584&lt;br /&gt;
 Co.Reg.No. SC005653&lt;br /&gt;
-Vat:Reg.No. 259 9895 02&lt;br /&gt;
-AWRS URN: XAAW 000 0112386</value>
+Vat:Reg.No. 259 9805 02&lt;br /&gt;
+AWRS URN: XAAW 000 0011 2386</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>

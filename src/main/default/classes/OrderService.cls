@@ -67,6 +67,11 @@ public with sharing class OrderService {
         return COMPLETED_ORDER_STATUSES.contains(orderStatus);
     }
 
+    public static Boolean isReturnOrder(Order newOrder) {
+        return newOrder.RecordTypeId == RecordTypes.ORDER_RETURN_ID ||
+                (newOrder.RecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID && newOrder.Type == 'Return Order');
+    }
+
     public static Boolean orderTypeCountsTowardsAccountLastOrderDate(Id orderRecordTypeId) {
         return RECORD_TYPES_TO_UPDATE_ACCOUNT_ON_ORDER_COMPLETION.contains(RecordTypes.ORDER_RT_INFO_BY_ID?.get(orderRecordTypeId)?.getDeveloperName());
     }

@@ -10,7 +10,7 @@ trigger InvoiceTrigger on aforza__Invoice__c (after insert, before update, after
             InvoiceTriggerHandler.updateFailedInvoices(Trigger.new, trigger.oldMap);
         }
         when AFTER_UPDATE {
-            InvoiceTriggerHandler.evaluateAndSendEmailToCustomer(Trigger.new);
+            InvoiceTriggerHandler.evaluateAndSendEmailToCustomer(Trigger.new, Trigger.oldMap);
             InvoiceTriggerHandler.updatePaymentTransactionsForInvoices(Trigger.new, trigger.oldMap);
         }
     }

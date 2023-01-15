@@ -50,6 +50,7 @@
     <permissionSets>VisitCrudAccess</permissionSets>
     <permissionSets>VisitDirectRtAccess</permissionSets>
     <permissionSets>VisitEditAccess</permissionSets>
+    <permissionSets>aforza__Aforza_Admin</permissionSets>
     <permissionSets>aforza__Aforza_Plan</permissionSets>
     <permissionSets>aforza__Aforza_Sell</permissionSets>
     <permissionSets>aforza__Aforza_Visit</permissionSets>

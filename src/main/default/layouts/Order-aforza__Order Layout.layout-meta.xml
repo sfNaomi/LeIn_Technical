@@ -3,6 +3,24 @@
     <customButtons>aforza__Configure</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Custom Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>SkusWithLessThan50CasesOrOffSale</customLink>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>SkusWithLessThan10CasesOrOffSale</customLink>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>CustomLinks</style>
+    </layoutSections>
+    <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
@@ -261,16 +279,6 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>CustomLinks</style>
-    </layoutSections>
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
@@ -389,6 +397,14 @@
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>CreatedDate</fields>
+        <fields>StepStatus</fields>
+        <fields>OriginalActor</fields>
+        <fields>Actor</fields>
+        <fields>Comments</fields>
+        <relatedList>RelatedProcessHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -413,7 +429,7 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
- <relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>aforza__Account__c</fields>
         <fields>aforza__Amount__c</fields>
@@ -431,7 +447,7 @@
         <fields>bt_stripe__Processed_Date__c</fields>
         <fields>bt_stripe__Due_Date__c</fields>
         <relatedList>bt_stripe__Transaction__c.Order__c</relatedList>
-        </relatedLists>
+    </relatedLists>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>SALES.ACCOUNT.NAME</fields>

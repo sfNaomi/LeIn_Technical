@@ -563,4 +563,67 @@ private with sharing class InvoiceServiceTest {
 
 		Assert.areEqual(expectedInvoiceStatus, actualInvoiceStatus);
 	}
+
+	@IsTest
+	private static void testCreateInvoicesFromOrders_ExistingInvoiceCreatedOnMobile() {
+		// create product
+		Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+
+		// add new product to standard PB
+		TdfSObjectFactory.insertSObject(
+			new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+		);
+
+		// create pricebook and add products to pricebook
+		Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+		PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+			new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id)
+		);
+
+		// create account
+		Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+			new Account(
+				RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID,
+				AccountStatus__c = 'Traders',
+				aforza__Default_Price_Book__c = newPricebook.Id
+			)
+		);
+
+		// create order and add items to the order
+		Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+			new Order(
+				RecordTypeId = RecordTypes.ORDER_TELESALES_ID,
+				AccountId = dpAccount.Id,
+				Status = 'Draft',
+				Pricebook2Id = newPricebook.Id
+			)
+		);
+		TdfSObjectFactory.insertSObject(
+			new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+		);
+
+		// create invoice and related invoice line item
+		aforza__Invoice__c newInvoice = (aforza__Invoice__c) TdfSObjectFactory.insertSObject(
+			new aforza__Invoice__c(
+				aforza__Account__c = dpAccount.Id,
+				aforza__Order__c = newOrder.Id
+			)
+		);
+		TdfSObjectFactory.insertSObject(new aforza__Invoice_Line_Item__c(aforza__Invoice__c = newInvoice.Id));
+
+		Test.startTest();
+		InvoiceService.createInvoicesFromOrders(new Set<Id>{ newOrder.Id });
+		Test.stopTest();
+
+		// retrieve invoice and invoice line items, validate results
+		List<aforza__Invoice__c> invoices = [SELECT Id FROM aforza__Invoice__c WHERE aforza__Order__c = :newOrder.Id];
+		Assert.areEqual(1, invoices.size());
+
+		List<aforza__Invoice_Line_Item__c> invoiceLineItems = [
+			SELECT Id
+			FROM aforza__Invoice_Line_Item__c
+			WHERE aforza__Invoice__c IN :invoices
+		];
+		Assert.areEqual(1, invoiceLineItems.size());
+	}
 }

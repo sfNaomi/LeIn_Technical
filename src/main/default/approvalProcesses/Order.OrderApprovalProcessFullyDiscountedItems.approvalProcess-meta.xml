@@ -48,6 +48,10 @@
     <finalApprovalRecordLock>false</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
+            <name>RejectedOrder</name>
+            <type>Alert</type>
+        </action>
+        <action>
             <name>UpdateOrderStatusBackToDraft</name>
             <type>FieldUpdate</type>
         </action>

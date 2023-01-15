@@ -1,6 +1,8 @@
-trigger OrderTrigger on Order (before insert, before update, after insert, after update) {
+trigger OrderTrigger on Order (before insert, before update, after insert, after update, before delete, after delete, after undelete) {
+    dlrs.RollupService.triggerHandler(Order.SObjectType);
     switch on Trigger.operationType {
         when BEFORE_INSERT {
+            OrderTriggerHandler.populateLocalId(Trigger.new);
             OrderTriggerHandler.validateOrderCreationOrCompletion(Trigger.new, null);
             OrderTriggerHandler.populateDefaultInventory(Trigger.new, null);
         }
@@ -10,7 +12,7 @@ trigger OrderTrigger on Order (before insert, before update, after insert, after
             OrderTriggerHandler.populateDefaultInventory(Trigger.new, Trigger.oldMap);
         }
         when AFTER_INSERT {
-            OrderTriggerHandler.updateLastOrderDateAndStatusOnParentAccount(Trigger.new, Trigger.oldMap); 
+            OrderTriggerHandler.updateLastOrderDateAndStatusOnParentAccount(Trigger.new, Trigger.oldMap);
         }
         when AFTER_UPDATE {
             OrderTriggerHandler.updateLastOrderDateAndStatusOnParentAccount(Trigger.new, Trigger.oldMap);

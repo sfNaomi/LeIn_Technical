@@ -1,11 +1,9 @@
 public with sharing class PaymentTransactionService {
 
-    private static final String PAID_INVOICE_STATUS = 'Paid';
     private static final String APPLIED_TRANSACTION_STATUS = 'Applied';
     private static final String REJECTED_TRANSACTION_STATUS = 'Rejected';
     private static final String PENDING_TRANSACTION_STATUS = 'Pending';
     private static final String CUSTOMER_PAYMENT_TRANSACTION_TYPE = 'Customer Payment';
-    private static final String UNSUCCESSFUL_INVOICE_STATUS = 'Payment Attempt Unsuccessful';
 
     private static final Set<String> PAYMENT_METHOD_RT_IDS = new Set<String>{
         RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID, RecordTypes.PAYMENT_METHOD_BANK_ACCOUNT_ID
@@ -60,15 +58,17 @@ public with sharing class PaymentTransactionService {
         return pt;
     }
 
-    public static void updatePaymentTransactionStatusForInvoices(Set<Id> invoiceIds) {
+    public static void updateStatusOfNonRejectedTransactionsForInvoices(Set<Id> invoiceIds) {
         List<aforza__Payment_Transaction__c> pTransactionsToUpdate = new List<aforza__Payment_Transaction__c>();
-        for(aforza__Payment_Transaction__c pTransaction : [SELECT aforza__Invoice__r.aforza__Status__c  FROM aforza__Payment_Transaction__c 
-                                                           WHERE aforza__Invoice__c IN :invoiceIds]) 
-        {
-            pTransactionsToUpdate.add(new aforza__Payment_Transaction__c(
-                Id = pTransaction.Id,
-                aforza__Status__c = getPaymentTransactionStatusByInvoiceStatus(pTransaction.aforza__Invoice__r.aforza__Status__c)
-            ));
+        for (aforza__Payment_Transaction__c pTransaction : [
+                SELECT aforza__Invoice__r.aforza__Status__c
+                FROM aforza__Payment_Transaction__c
+                WHERE aforza__Invoice__c IN :invoiceIds AND aforza__Status__c != :REJECTED_TRANSACTION_STATUS
+        ]) {
+            pTransactionsToUpdate.add(
+                new aforza__Payment_Transaction__c(Id = pTransaction.Id,
+                aforza__Status__c = getPaymentTransactionStatusByInvoiceStatus(pTransaction.aforza__Invoice__r.aforza__Status__c))
+            );
         }
         update pTransactionsToUpdate;
     }

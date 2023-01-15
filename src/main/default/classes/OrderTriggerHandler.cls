@@ -66,6 +66,14 @@ public with sharing class OrderTriggerHandler {
         OrderService.updateLastOrderDateAndStatusOnParentAccount(ordersToUpdateAccountLastOrder);
     }
 
+    public static void populateLocalId(List<Order> newOrders) {
+        for (Order newOrder : newOrders) {
+            if (newOrder.aforza__Local_Id__c == null) {
+                newOrder.aforza__Local_Id__c = 'REX_' + CommonUtility.generateUniqueIdentifier(newOrder.AccountId, 9);
+            }
+        }
+    }
+
     public static void validateOrderCreationOrCompletion(List<Order> newOrders, Map<Id, Order> oldOrders) {
         Set<Id> relatedAccountIds = new Set<Id>();
         Set<Id> newOrderIds = new Set<Id>();
@@ -102,7 +110,7 @@ public with sharing class OrderTriggerHandler {
                 continue;
             }
             // check if card payment selected, Pre Authorization was not captured and payment creation on invoice level is not activated
-            if (newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
+            if (!OrderService.isReturnOrder(newOrder) && newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
                     ((PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId != RecordTypes.ORDER_ECOMMERCE_ID) ||
                     (ECOMM_PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID))){
                 newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
@@ -221,11 +229,13 @@ public with sharing class OrderTriggerHandler {
             }
         }
 
-        // merge together new changes and existing data from DB
-        prepareLoadToOrdersMap(loadsWithOrderStatusesMap, ordersToCheck);
-        prepareLoadToOrdersMap(loadsWithOrderStatusesMap, [SELECT Id, Status, Load__c FROM Order WHERE Load__c IN :loadIds]);
+        if (!ordersToCheck.isEmpty()) {
+            // merge together new changes and existing data from DB
+            prepareLoadToOrdersMap(loadsWithOrderStatusesMap, ordersToCheck);
+            prepareLoadToOrdersMap(loadsWithOrderStatusesMap, [SELECT Id, Status, Load__c FROM Order WHERE Load__c IN :loadIds]);
 
-        processOrdersToPopulateLoadField(loadsWithOrderStatusesMap);
+            processOrdersToPopulateLoadField(loadsWithOrderStatusesMap);
+        }
     }
 
     private static Map<String, String> getOrderStatusesToLoadFieldMapping() {
@@ -269,17 +279,12 @@ public with sharing class OrderTriggerHandler {
     }
 
     public static void validateAndSendDeliveryNoteEmail(List<Order> newOrders, Map<Id, Order> oldOrders) {
-        Map<String, Order> ordersWithDeliveryEmail = new Map<String, Order>(
-            [SELECT Account.DeliveryNoteEmail__c FROM Order WHERE Id IN :newOrders]
-        );
         Set<Id> orderIdsToSendDeliveryNoteEmail = new Set<Id>();
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             if (
                 newOrder.Status != oldOrder.Status &&
-                    newOrder.Status.equals('Delivered') &&
-                    ordersWithDeliveryEmail.containsKey(newOrder.Id) &&
-                    String.isNotEmpty(ordersWithDeliveryEmail.get(newOrder.Id).Account.DeliveryNoteEmail__c)
+                    newOrder.Status.equals('Delivered')              
             ) {
                 orderIdsToSendDeliveryNoteEmail.add(newOrder.Id);
             }

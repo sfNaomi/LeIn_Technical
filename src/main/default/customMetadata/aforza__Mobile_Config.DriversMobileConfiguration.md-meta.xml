@@ -23,9 +23,9 @@
           ],
           "OrderCheckoutFinish": [
           {
-              "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderStatusToDelivered.js",
-              "Title": "Move Status to Delivered",
-              "Type": "ENGINE"
+          "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderStatusToDelivered.js",
+          "Title": "Move Status to Delivered",
+          "Type": "ENGINE"
           }
           ]
           },
@@ -378,82 +378,6 @@
           },
           {
           "RecordLimit":100,
-          "LayoutForm":[
-          {
-          "Name":"Name",
-          "Details":{
-          "Required":true
-          }
-          },
-          {
-          "Name":"aforza__Monday_Start_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Monday_End_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Tuesday_Start_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Tuesday_End_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Wednesday_Start_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Wednesday_End_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Thursday_Start_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Thursday_End_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Friday_Start_Time__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Friday_End_Time__c",
-          "Details":{
-          "Required":false
-          }
-          }
-          ],
-          "InSideMenu":false,
-          "CanEdit":true,
-          "CanDelete":false,
-          "CanCreate":true,
-          "APIName":"aforza__Hours__c"
-          },
-          {
-          "RecordLimit":100,
           "LayoutListView":[
           {
           "Name":"Name",
@@ -569,49 +493,7 @@
           ],
           "LayoutForm":[
           {
-          "Name":"EffectiveDate",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"AccountId",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"ShipToContactId",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Inventory__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"aforza__Original_Order__c",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"Type",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"Status",
-          "Details":{
-          "Required":false
-          }
-          },
-          {
-          "Name":"ActivatedDate",
+          "Name":"OrderInstructions__c",
           "Details":{
           "Required":false
           }
@@ -629,13 +511,19 @@
           }
           },
           {
-          "Name":"aforza__Total_Commission__c",
+          "Name":"TotalQuantity__c",
           "Details":{
           "Required":false
           }
           },
           {
-          "Name":"RecordTypeId",
+          "Name":"ShipToContactId",
+          "Details":{
+          "Required":false
+          }
+          },
+          {
+          "Name":"Status",
           "Details":{
           "Required":false
           }
@@ -688,11 +576,9 @@
           ],
           "IsSupportEnabled":true,
           "AutoDownloadVisitResources":false,
-          "DisableOrderStatusValidation":true
-          }
-          ],
+          "DisableOrderStatusValidation":true,
           "InvoiceTemplate": {
-            "InvoiceTemplateName": "HMRCCompliant"
+          "InvoiceTemplateName": "HMRCCompliant"
           },
           "PrinterPaperWidthMm":102,
           "PrinterPaperHeightMM":null
@@ -726,7 +612,12 @@
     <values>
         <field>aforza__Mobile_Invoice_Document_Footer__c</field>
         <value xsi:type="xsd:string">&lt;br /&gt;All sales are subject to A.G. Barr PLC terms and conditions of sale.&lt;br /&gt;
-Copies of which are available on request or from &lt;br /&gt; www.agbarr.co.uk/termsofbusiness</value>
+Copies of which are available on request or from &lt;br /&gt; 
+www.agbarr.co.uk/termsofbusiness&lt;br /&gt;.
+&lt;br /&gt;.
+&lt;br /&gt;.
+&lt;br /&gt;.
+&lt;br /&gt;.</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Header__c</field>
@@ -737,8 +628,8 @@ Cumbernauld&lt;br /&gt;
 G68 9YH&lt;br /&gt;
 Tel: 0330 390 3584&lt;br /&gt;
 Co.Reg.No. SC005653&lt;br /&gt;
-Vat:Reg.No. 259 9895 02&lt;br /&gt;
-AWRS URN: XAAW 000 0112386</value>
+Vat:Reg.No. 259 9805 02&lt;br /&gt;
+AWRS URN: XAAW 000 0011 2386</value>
     </values>
     <values>
         <field>aforza__Mobile_Invoice_Document_Logo__c</field>
@@ -758,8 +649,8 @@ Cumbernauld&lt;br /&gt;
 G68 9YH&lt;br /&gt;
 Tel: 0330 390 3584&lt;br /&gt;
 Co.Reg.No. SC005653&lt;br /&gt;
-Vat:Reg.No. 259 9895 02&lt;br /&gt;
-AWRS URN: XAAW 000 0112386</value>
+Vat:Reg.No. 259 9805 02&lt;br /&gt;
+AWRS URN: XAAW 000 0011 2386</value>
     </values>
     <values>
         <field>aforza__Mobile_Receipt_Document_Logo__c</field>
