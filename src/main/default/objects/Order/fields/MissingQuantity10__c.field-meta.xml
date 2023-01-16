@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PalletSequence__c</fullName>
-    <defaultValue>0</defaultValue>
+    <fullName>MissingQuantity10__c</fullName>
+    <description>Field used in aforza mobile app Smart Action to adjust order item with missing quantity</description>
     <externalId>false</externalId>
-    <label>Pallet Sequence</label>
+    <label>Missing Quantity 10</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

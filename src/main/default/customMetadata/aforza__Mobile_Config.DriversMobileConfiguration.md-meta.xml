@@ -15,6 +15,11 @@
         <value xsi:type="xsd:string">{
           "AutoActions": {
           "OrderCheckoutEntry": [
+            {
+            "Target": "https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderItemQuantityReduction.js",
+            "Title": "Adjust Promotion Quantities",
+            "Type": "ENGINE"
+            },
           {
           "Type":"ENGINE",
           "Title":"Validate Order",
@@ -42,7 +47,70 @@
           },
           {
           "Name":"ReturnReason__c"
-          }
+          },
+            {
+            "Name":"MissingProduct1__c"
+            },
+            {
+            "Name":"MissingQuantity1__c"
+            },
+            {
+            "Name":"MissingProduct2__c"
+            },
+            {
+            "Name":"MissingQuantity2__c"
+            },
+            {
+            "Name":"MissingProduct3__c"
+            },
+            {
+            "Name":"MissingQuantity3__c"
+            },
+            {
+            "Name":"MissingProduct4__c"
+            },
+            {
+            "Name":"MissingQuantity4__c"
+            },
+            {
+            "Name":"MissingProduct5__c"
+            },
+            {
+            "Name":"MissingQuantity5__c"
+            },
+            {
+            "Name":"MissingProduct6__c"
+            },
+            {
+            "Name":"MissingQuantity6__c"
+            },
+            {
+            "Name":"MissingProduct7__c"
+            },
+            {
+            "Name":"MissingQuantity7__c"
+            },
+            {
+            "Name":"MissingProduct8__c"
+            },
+            {
+            "Name":"MissingQuantity8__c"
+            },
+            {
+            "Name":"MissingProduct9__c"
+            },
+            {
+            "Name":"MissingQuantity9__c"
+            },
+            {
+            "Name":"MissingProduct10__c"
+            },
+            {
+            "Name":"MissingQuantity10__c"
+            },
+            {
+            "Name":"OrderItemQuantityAdjusted__c"
+            }
           ]
           }
           ],
