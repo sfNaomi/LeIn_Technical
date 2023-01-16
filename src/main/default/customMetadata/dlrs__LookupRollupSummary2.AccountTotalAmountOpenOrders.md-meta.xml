@@ -56,7 +56,7 @@
     </values>
     <values>
         <field>dlrs__RelationshipCriteria__c</field>
-        <value xsi:type="xsd:string">RecordType.DeveloperName!=&apos;VanSalesOrder&apos; AND (Status=&apos;Activated&apos; OR Status=&apos;Unplanned&apos; OR Status=&apos;Ready to Pick&apos; OR Status=&apos;Picking in Progress&apos; OR Status=&apos;Ready to Load&apos; OR Status=&apos;Pending Delivery&apos; OR Status=&apos;Delivered&apos; OR Status=&apos;Delivery Failed&apos;)</value>
+        <value xsi:type="xsd:string">RecordType.DeveloperName != &apos;VanSalesOrder&apos; AND Status IN (&apos;Activated&apos;, &apos;Unplanned&apos;, &apos;Ready to Pick&apos;, &apos;Picking in Progress&apos;, &apos;Ready to Load&apos;, &apos;Pending Delivery&apos;, &apos;Delivered&apos;, &apos;Delivery Failed&apos;) AND PaymentMethod__c IN (&apos;Bacs&apos;, &apos;Direct Debit&apos;, &apos;JDE DD&apos;)</value>
     </values>
     <values>
         <field>dlrs__RelationshipField__c</field>
