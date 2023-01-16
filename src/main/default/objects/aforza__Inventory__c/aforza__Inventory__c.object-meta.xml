@@ -189,7 +189,7 @@
         <searchResultsAdditionalFields>aforza__Postal_Code__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>aforza__Vehicle_Registration_Number__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Read</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>
