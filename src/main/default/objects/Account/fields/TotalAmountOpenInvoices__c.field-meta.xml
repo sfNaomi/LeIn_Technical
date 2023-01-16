@@ -10,6 +10,11 @@
         <operation>equals</operation>
         <value>Payment Attempt Unsuccessful, Approved for Payment, Outstanding, Pending</value>
     </summaryFilterItems>
+    <summaryFilterItems>
+        <field>aforza__Invoice__c.PaymentInstruction__c</field>
+        <operation>equals</operation>
+        <value>Bacs, Direct Debit, JDE DD</value>
+    </summaryFilterItems>
     <summaryForeignKey>aforza__Invoice__c.aforza__Account__c</summaryForeignKey>
     <summaryOperation>sum</summaryOperation>
     <trackHistory>false</trackHistory>

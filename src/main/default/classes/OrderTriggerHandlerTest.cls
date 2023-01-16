@@ -127,7 +127,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(
                 aforza__Reference__c = '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
-                aforza__Status__c = 'Outstanding', aforza__Amount_Due__c = 300
+                PaymentInstruction__c = 'Bacs', aforza__Status__c = 'Outstanding', Gross__c = 300
             )
         );
 
@@ -135,7 +135,7 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
@@ -238,7 +238,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(
                 aforza__Reference__c = '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
-                aforza__Status__c = 'Outstanding', aforza__Amount_Due__c = 300
+                PaymentInstruction__c = 'Direct Debit', aforza__Status__c = 'Outstanding', Gross__c = 300
             )
         );
 
@@ -246,7 +246,7 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
