@@ -22,7 +22,7 @@
     <permissionSets>InventoryUserBaseAccess</permissionSets>
     <permissionSets>InventoryUserCrudObjectAccess</permissionSets>
     <permissionSets>InvoiceIntegrationAccess</permissionSets>
-    <permissionSets>LoadBaseAccess</permissionSets>
+    <permissionSets>LoadAdminAccess</permissionSets>
     <permissionSets>ManageReportsDashboardsFolders</permissionSets>
     <permissionSets>OrderIntegrationAccess</permissionSets>
     <permissionSets>PaymentsAdminAccess</permissionSets>
