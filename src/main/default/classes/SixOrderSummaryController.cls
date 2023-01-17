@@ -310,7 +310,7 @@ public with sharing class SixOrderSummaryController {
                     aforza__Default_Price_Book__c, BillingPostalCode, BillingCity,
                     BillingCountryCode, BillingState, BillingStateCode, BillingStreet, Depot__c,
                     NextDeliveryDate__c, ShippingAddress, ShippingCity, ShippingCountry, ShippingCountryCode,
-                    ShippingStateCode, ShippingStreet, Name, SalesRepresentativeCode__c, SalesRepresentative__c,
+                    ShippingStateCode, ShippingStreet, Name, SalesRepresentative__c, SalesRepresentative__r.EmployeeNumber,
                     DefaultInventory__c, DeliveryPointReference__c, ShippingPostalCode
                 FROM Account
                 WHERE Id = :accountId
@@ -326,7 +326,7 @@ public with sharing class SixOrderSummaryController {
             newOrder.DeliveryDate__c = dPData?.NextDeliveryDate__c;
             newOrder.Depot__c = dPData?.Depot__c;
             newOrder.SalesRepresentative__c = dpData?.SalesRepresentative__c;
-            newOrder.SalesRepresentativeCode__c = dpData?.SalesRepresentativeCode__c;
+            newOrder.SalesRepresentativeCode__c = dpData?.SalesRepresentative__r.EmployeeNumber;
             newOrder.OwnerId = UserInfo.getUserId();
             newOrder.aforza__Inventory__c = dpData?.DefaultInventory__c;
             newOrder.BillingCity = dpData?.BillingCity;
