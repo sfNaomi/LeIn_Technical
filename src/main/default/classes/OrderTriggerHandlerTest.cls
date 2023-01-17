@@ -127,7 +127,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(
                 aforza__Reference__c = '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
-                aforza__Status__c = 'Outstanding', aforza__Amount_Due__c = 300
+                PaymentInstruction__c = 'Bacs', aforza__Status__c = 'Outstanding', Gross__c = 300
             )
         );
 
@@ -135,7 +135,7 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
@@ -238,7 +238,7 @@ private with sharing class OrderTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(
             new aforza__Invoice__c(
                 aforza__Reference__c = '10', aforza__Account__c = dpAccount.Id, aforza__Order__c = newOrder.Id,
-                aforza__Status__c = 'Outstanding', aforza__Amount_Due__c = 300
+                PaymentInstruction__c = 'Direct Debit', aforza__Status__c = 'Outstanding', Gross__c = 300
             )
         );
 
@@ -246,7 +246,7 @@ private with sharing class OrderTriggerHandlerTest {
         try {
             newOrder.Status = 'Activated';
             update newOrder;
-            Assert.isTrue(false, 'Expecting error to don\'t be thrown.');
+            Assert.isTrue(false, 'Expecting error to be thrown.');
         } catch (Exception e) {
             String expectedErrorMessage = Label.OrderActivationPreventedAccNotEnoughCredit;
             Assert.isTrue(e.getMessage().contains(expectedErrorMessage), 'Expecting error to be thrown.');
@@ -2366,6 +2366,87 @@ private with sharing class OrderTriggerHandlerTest {
             new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
         );
 
+        Test.startTest();
+        newOrder.Status = 'Activated';
+        update newOrder;
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_CashPaymentMethodOverridesAvailableCredit() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 0, aforza__Default_Price_Book__c = newPricebook.Id)
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false,
+                PaymentMethod__c = 'Cash'
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        // When activating no error should be thrown since we have a cash payment method
+        Test.startTest();
+        newOrder.Status = 'Activated';
+        update newOrder;
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testValidateOrderCreationOrCompletion_CashPaymentMethodOverridesOnHoldStatus() {
+        // create product & add it to standard PB
+        Product2 newProduct = (Product2) TdfSObjectFactory.insertSObject(new Product2());
+        TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = TdfPricebook2Template.standardPricebookId)
+        );
+
+        // create pricebook and add product to pricebook
+        Pricebook2 newPricebook = (Pricebook2) TdfSObjectFactory.insertSObject(new Pricebook2());
+        PricebookEntry newPricebookEntry = (PricebookEntry) TdfSObjectFactory.insertSObject(
+            new PricebookEntry(Product2Id = newProduct.Id, Pricebook2Id = newPricebook.Id, UnitPrice = 100)
+        );
+
+        // create account
+        Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
+            new Account(
+                RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders',
+                LastOrderDate__c = null, aforza__Credit_Amount__c = 1000, aforza__Default_Price_Book__c = newPricebook.Id,
+                CreditStatus__c = 'On Hold')
+        );
+
+        // create order and add items to the order
+        Order newOrder = (Order) TdfSObjectFactory.insertSObject(
+            new Order(
+                RecordTypeId = RecordTypes.ORDER_EDI_ID, AccountId = dpAccount.Id,
+                Status = 'Draft', Pricebook2Id = newPricebook.Id, IsApproved__c = false,
+                PaymentMethod__c = 'Cash'
+            )
+        );
+        TdfSObjectFactory.insertSObject(
+            new OrderItem(OrderId = newOrder.Id, Product2Id = newProduct.Id, PricebookEntryId = newPricebookEntry.Id)
+        );
+
+        // When activating no error should be thrown since we have a cash payment method
         Test.startTest();
         newOrder.Status = 'Activated';
         update newOrder;

@@ -119,7 +119,7 @@ public with sharing class OrderTriggerHandler {
             if (newOrder.IsApproved__c == false && newOrder.TotalNumberOfFullyDiscountedItems__c > 0) {
                 newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
                 // check for specific order types and some extra statuses
-            } else if ((relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED ||
+            } else if (newOrder.PaymentMethod__c != 'Cash' && (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED ||
                 relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID ||
                 newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
                 newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||

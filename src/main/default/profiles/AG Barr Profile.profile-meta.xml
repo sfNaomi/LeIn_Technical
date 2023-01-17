@@ -95,6 +95,9 @@
     <layoutAssignments>
         <layout>aforza__Recurring_Record__c-aforza__Recurring Record Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Task Layout</layout>
+    </layoutAssignments>
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>Account.Customer</recordType>
