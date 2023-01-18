@@ -2,10 +2,11 @@ Hello!
 
 A TAM user has just requested for the account {!Account.Name} to be closed.
 
-Below are the links to the account and user who has made the request.
+Below are the links to the account and user who has made the request as well as the description explaining why the request was made.
 
 Account: {!Account.Link}
 User: {!User.Link}
+Description: {!Account.Description}
 
 
 Your SF Team

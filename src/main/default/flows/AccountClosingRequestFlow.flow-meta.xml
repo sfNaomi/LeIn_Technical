@@ -3,8 +3,8 @@
     <actionCalls>
         <name>EmailAlertToSuppTeam</name>
         <label>EmailAlertToSuppTeam</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <actionName>Account.EmailAlertToRequestAccountClosing</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -16,6 +16,51 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>StoreTextFromScreen</name>
+        <label>Store Text From Screen</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Description</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ReasonToRequestAccountClosing</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recordId.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Description</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateDescriptionField</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>IfTextWasInserted</name>
+        <label>If Text Was Inserted</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>TextWasInserted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ReasonToRequestAccountClosing</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>StoreTextFromScreen</targetReference>
+            </connector>
+            <label>Text Was Inserted</label>
+        </rules>
+    </decisions>
     <description>This flow is triggered by an action button on the account object to send an email alert to the Sales Support Team.</description>
     <environments>Default</environments>
     <interviewLabel>AccountClosingRequestFlow {!$Flow.CurrentDateTime}</interviewLabel>
@@ -39,34 +84,58 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordUpdates>
+        <name>UpdateDescriptionField</name>
+        <label>Update Description Field</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>EmailAlertToSuppTeam</targetReference>
+        </connector>
+        <inputReference>recordId</inputReference>
+    </recordUpdates>
     <screens>
         <name>Screen</name>
         <label>Screen</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>EmailAlertToSuppTeam</targetReference>
+            <targetReference>IfTextWasInserted</targetReference>
         </connector>
         <fields>
             <name>Email</name>
-            <fieldText>&lt;p&gt;You are about to send a request to close this account. Do you confirm?&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;You are about to send a request to close this account. State your reason below and click &quot;Yes&quot; to send the request.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ReasonToRequestAccountClosing</name>
+            <dataType>String</dataType>
+            <fieldText>Reason To Request Account Closing</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <nextOrFinishButtonLabel>Yes</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Screen</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Description</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>SObject</dataType>
