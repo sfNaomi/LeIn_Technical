@@ -18,6 +18,15 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Customer</recordType>
         <type>Flexipage</type>
+        <profile>Sales Amb AG Barr Platform Users</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>CustomerAccountRecordPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Customer</recordType>
+        <type>Flexipage</type>
         <profile>AG Barr Platform User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
