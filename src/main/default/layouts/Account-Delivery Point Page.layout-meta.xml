@@ -752,6 +752,9 @@
         <fields>aforza__Guide_Version__c</fields>
         <relatedList>aforza__Guide_Completion__c.aforza__Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContentNoteList</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
