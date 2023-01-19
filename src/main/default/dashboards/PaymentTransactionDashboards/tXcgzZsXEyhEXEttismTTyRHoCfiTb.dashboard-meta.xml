@@ -198,17 +198,17 @@
                 <chartSummary>
                     <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>aforza__Payment_Transaction__c$aforza__Amount__c</column>
+                    <column>aforza__Invoice__c$InvoiceAmount__c</column>
                 </chartSummary>
                 <componentType>ColumnStacked</componentType>
                 <dashboardFilterColumns>
-                    <column>aforza__Payment_Transaction__c$OrderNumber__c.Depot__c</column>
+                    <column>aforza__Invoice__c$aforza__Order__c.Depot__c</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>aforza__Payment_Transaction__c$OrderNumber__c.Route__c</column>
+                    <column>aforza__Invoice__c$aforza__Order__c.Route__c</column>
                 </dashboardFilterColumns>
                 <dashboardFilterColumns>
-                    <column>aforza__Payment_Transaction__c$OrderNumber__c.DeliveryDate__c</column>
+                    <column>aforza__Invoice__c$aforza__Order__c.DeliveryDate__c</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -216,8 +216,8 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>aforza__Payment_Transaction__c$OrderNumber__c.Route__c</groupingColumn>
-                <groupingColumn>aforza__Payment_Transaction__c$aforza__Method__c</groupingColumn>
+                <groupingColumn>aforza__Invoice__c$aforza__Order__c.Route__c</groupingColumn>
+                <groupingColumn>aforza__Invoice__c$PaymentInstruction__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -230,14 +230,14 @@
                 </groupingSortProperties>
                 <header>Transactions by Route and Driver</header>
                 <legendPosition>Right</legendPosition>
-                <report>PaymentTransactionReports/Transactions_by_Route_and_Driver_pMK</report>
+                <report>PaymentTransactionReports/Payment_Transactions_by_Route_Driver_GWx</report>
                 <showPercentage>false</showPercentage>
                 <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>0</rowIndex>
-            <rowSpan>13</rowSpan>
+            <rowSpan>11</rowSpan>
         </dashboardGridComponents>
         <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>

@@ -179,6 +179,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>aforza__Invoice__c.InvoiceAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>aforza__Invoice__c.InvoicePrinted__c</field>
         <readable>true</readable>
     </fieldPermissions>
