@@ -2,7 +2,7 @@
  * Created by magdalena.stanciu on 20.09.2022.
  */
 
-public with sharing class ProductService {
+public without sharing class InsecureProductService {
     public static final ProductSetting__mdt SETTINGS {
         get {
             if (SETTINGS == null) {
@@ -15,9 +15,9 @@ public with sharing class ProductService {
 
     public static void removeOffSaleProductsFromAssortments(Set<Id> productIds) {
         List<aforza__Assortment_Product__c> assortProds = [
-                SELECT Id
-                FROM aforza__Assortment_Product__c
-                WHERE aforza__Product__c IN :productIds
+            SELECT Id
+            FROM aforza__Assortment_Product__c
+            WHERE aforza__Product__c IN :productIds
         ];
         delete assortProds;
     }
@@ -46,9 +46,9 @@ public with sharing class ProductService {
 
     public static Map<String, Product2> getProductsBasedOnProductCodes(List<String> productCodes) {
         List<Product2> drsProducts = [
-                SELECT Id, Name, ProductCode
-                FROM Product2
-                WHERE ProductCode IN :productCodes
+            SELECT Id, Name, ProductCode
+            FROM Product2
+            WHERE ProductCode IN :productCodes
         ];
 
         Map<String, Product2> productsBySKU = new Map<String, Product2>();
@@ -62,9 +62,9 @@ public with sharing class ProductService {
     public static aforza__Relationship_Rule__c createNewDRSRelationshipRule(Product2 baseProduct, Product2 drsProduct) {
         aforza__Relationship_Rule__c relationship = new aforza__Relationship_Rule__c();
         relationship.ExternalId__c = createExternalIdForRelationshipRule(
-                SETTINGS.DRSProductRelationshipRulePrefix__c,
-                baseProduct.ProductCode,
-                drsProduct.ProductCode
+            SETTINGS.DRSProductRelationshipRulePrefix__c,
+            baseProduct.ProductCode,
+            drsProduct.ProductCode
         );
         relationship.Name = baseProduct.Name + ' - ' + drsProduct.Name;
         relationship.aforza__Source_Product__c = baseProduct.Id;
@@ -80,18 +80,18 @@ public with sharing class ProductService {
         List<String> idsOfRelationshipsToBeDeleted = new List<String>();
         for (Product2 oldProduct : oldProducts) {
             idsOfRelationshipsToBeDeleted.add(
-                    createExternalIdForRelationshipRule(
-                            SETTINGS.DRSProductRelationshipRulePrefix__c,
-                            oldProduct.ProductCode,
-                            oldProduct.DRSSKUCode__c
-                    )
+                createExternalIdForRelationshipRule(
+                    SETTINGS.DRSProductRelationshipRulePrefix__c,
+                    oldProduct.ProductCode,
+                    oldProduct.DRSSKUCode__c
+                )
             );
         }
 
         List<aforza__Relationship_Rule__c> relationshipsToBeDeleted = [
-                SELECT Id
-                FROM aforza__Relationship_Rule__c
-                WHERE ExternalId__c IN :idsOfRelationshipsToBeDeleted
+            SELECT Id
+            FROM aforza__Relationship_Rule__c
+            WHERE ExternalId__c IN :idsOfRelationshipsToBeDeleted
         ];
 
         delete relationshipsToBeDeleted;
@@ -102,9 +102,9 @@ public with sharing class ProductService {
         for (Product2 newProduct : newProducts) {
             aforza__Relationship_Rule__c newRelationship = new aforza__Relationship_Rule__c();
             newRelationship.ExternalId__c = createExternalIdForRelationshipRule (
-                    SETTINGS.DRSProductRelationshipRulePrefix__c,
-                    newProduct.ProductCode,
-                    newProduct.DRSSKUCode__c
+                SETTINGS.DRSProductRelationshipRulePrefix__c,
+                newProduct.ProductCode,
+                newProduct.DRSSKUCode__c
             );
             newRelationship.aforza__Quantity__c = newProduct.DRSGrossUnits__c;
             relationshipsToBeUpdated.add(newRelationship);
