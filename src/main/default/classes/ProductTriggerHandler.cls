@@ -17,7 +17,7 @@ public with sharing class ProductTriggerHandler {
                 productIdsToRemoveFromAssortments.add(newProduct.Id);
             }
         }
-        ProductService.removeOffSaleProductsFromAssortments(productIdsToRemoveFromAssortments);
+        InsecureProductService.removeOffSaleProductsFromAssortments(productIdsToRemoveFromAssortments);
     }
 
     public static void manageRelatedDRSProducts(List<Product2> newProducts, Map<Id, Product2> oldProducts) {
@@ -50,9 +50,9 @@ public with sharing class ProductTriggerHandler {
             }
         }
 
-        ProductService.deleteDRSRelationshipRules(productsToDeleteDRSRelationshipRule);
-        ProductService.createDRSRelationshipRules(productsToCreateDRSRelationshipRule);
-        ProductService.updateDRSRelationshipRules(productsToUpdateDRSRelationshipRuleQuantity);
+        InsecureProductService.deleteDRSRelationshipRules(productsToDeleteDRSRelationshipRule);
+        InsecureProductService.createDRSRelationshipRules(productsToCreateDRSRelationshipRule);
+        InsecureProductService.updateDRSRelationshipRules(productsToUpdateDRSRelationshipRuleQuantity);
     }
 
     public static void manageFocusProducts(List<Product2> products, Map<Id, Product2> oldMap) {
