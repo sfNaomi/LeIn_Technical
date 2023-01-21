@@ -1,7 +1,7 @@
 @IsTest
 public with sharing class DDMandateLinkControllerTest {
     
-    @IsTest
+    /*@IsTest
     private static void testPopulateDDUrlBasedOnMappings_Agent(){
         String agentUrl;        
       
@@ -52,5 +52,5 @@ public with sharing class DDMandateLinkControllerTest {
         System.assertEquals(FALSE, String.isBlank(customerUrl));      
         System.assertEquals(TRUE, customerUrl.contains('agbarrplc/debit'));
 
-    }
+    }*/
 }

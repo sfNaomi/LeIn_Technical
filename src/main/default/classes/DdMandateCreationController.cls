@@ -1,11 +1,11 @@
 public without sharing class DdMandateCreationController {
 
-    public static void updateMandateOnAccount(){       
+    /*public static void updateMandateOnAccount(){       
         Map <string, string> callBackParameters = apexpages.currentPage().getParameters();
         ddMandateCreationHandler(callBackParameters.get('DdPlanReference'), callBackParameters.get('Stage'));
     }
     
-   @TestVisible
+    @TestVisible
     private static void ddMandateCreationHandler(String ddPlan, String stage) {
         Account currentAccount;
         Account[] currentAccounts = [SELECT Id, DeliveryPointReference__c, DirectDebitMandateRef__c FROM Account WHERE DeliveryPointReference__c =: ddPlan limit 1];
@@ -28,8 +28,8 @@ public without sharing class DdMandateCreationController {
         update currentAccount;
        
         }
-    }
-     private static aforza__Payment_Method__c createNewAforzaPaymentMethodAndPopulateNecessaryFields(Id parentAccountId){
+    }*/
+    private static aforza__Payment_Method__c createNewAforzaPaymentMethodAndPopulateNecessaryFields(Id parentAccountId){
             aforza__Payment_Method__c newAforzaPaymentMethod = new aforza__Payment_Method__c();
             newAforzaPaymentMethod.RecordTypeId=RecordTypes.PAYMENT_METHOD_DIRECT_CARD_ID;
             newAforzaPaymentMethod.aforza__Account__c = parentAccountId;

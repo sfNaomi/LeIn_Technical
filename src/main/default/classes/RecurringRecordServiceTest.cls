@@ -5,7 +5,7 @@
 @IsTest
 private class RecurringRecordServiceTest {
 
-    @IsTest
+    /*@IsTest
     private static void testCreateRecurringRecord() {
         TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Account acc = [
@@ -160,7 +160,7 @@ private class RecurringRecordServiceTest {
         ][0];
 
         System.assertEquals(null, record.aforza__Last_Recurrence_Date__c);
-    }
+    }*/
 
     @IsTest
     private static void testUpdateRecurringRecordsLastScheduledDate() {

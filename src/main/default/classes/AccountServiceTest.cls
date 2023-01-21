@@ -1,6 +1,6 @@
 @IsTest
 public class AccountServiceTest {	
-    @IsTest
+    /*@IsTest
     private static void testDdMandateCreationHandlerStageOver6() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
@@ -44,7 +44,7 @@ public class AccountServiceTest {
 
         System.assertEquals(FALSE, accRef2.DdActive__c, 'DD Active should be false');
         System.assertNotEquals(deliveryRef, accRef2.DirectDebitMandateRef__c);
-    }
+    }*/
 
     @IsTest
     private static void testComputeNextDeliveryDate_WeeklyFrequencyMondayForDeliveryDate() {
