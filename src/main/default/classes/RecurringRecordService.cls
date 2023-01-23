@@ -54,7 +54,7 @@ public with sharing class RecurringRecordService {
         recurring.OwnerId = accToTam.tamId;
         recurring.Status__c = CALL_SETTINGS.CallStatus__c;
         recurring.aforza__Frequency__c = accToTam.account.Frequency__c;
-        recurring.Name = /*accToTam.account.DeliveryPointReference__c + */'_' + accToTam.account.Id + '_' + priority;
+        recurring.Name = accToTam.account.DeliveryPointReference__c + '_' + accToTam.account.Id + '_' + priority;
         recurring.StartDate__c = priority == 'Primary' ? accToTam.account.PrimaryStartDate__c : accToTam.account.SecondaryStartDate__c;
         recurring.CallDayOfWeek__c = priority == 'Primary' ? accToTam.account.PrimaryCallDay__c : accToTam.account.SecondaryCallDay__c;
         recurring.aforza__Last_Recurrence_Date__c = null; // setting to null to trigger recreation of visits for any update

@@ -1,5 +1,5 @@
 public with sharing class DdMandateLinkController {
-    /*@AuraEnabled
+    @AuraEnabled
     public static String populateDDUrlBasedOnMappings(String accountId) { 
         Account thisAccount = [SELECT Id, BillingPostalCode, BillingStreet, BillingCity, DeliveryPointReference__c,
                               aforza__Primary_Contact__c, aforza__Primary_Contact__r.FirstName,aforza__Primary_Contact__r.Email,
@@ -27,5 +27,5 @@ public with sharing class DdMandateLinkController {
             returnedUrl = agentMandateUrl;
         }
         return returnedUrl;         
-    }*/
+    }
 }

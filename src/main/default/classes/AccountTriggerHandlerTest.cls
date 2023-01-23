@@ -219,7 +219,7 @@ private with sharing class AccountTriggerHandlerTest {
         Assert.areEqual(1, teamMembers.size(), 'Expecting to have team members');
     }
 
-    /*@IsTest
+    @IsTest
     private static void testManageReoccurrenceRecord_UpdateNewPrimaryStartDate() {
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
         Account createdAcc = [SELECT Id, DeliveryPointReference__c FROM Account WHERE Id = :acc.Id];
@@ -289,7 +289,7 @@ private with sharing class AccountTriggerHandlerTest {
         ][0];
 
         Assert.areEqual('3', record.CallDayOfWeek__c);
-    }*/
+    }
 
     @IsTest
     private static void testManageReoccurrenceRecord_UpdateNoCreateCalls() {
@@ -955,7 +955,7 @@ private with sharing class AccountTriggerHandlerTest {
         Assert.areEqual(400, cAccount.AvailableCustomerCredit__c);
     }
 
-    /*@IsTest
+    @IsTest
     private static void testManageReoccurrenceRecord_CheckOwnerStaysAfterAccountUpdate() {
         User tamUser = (User) TdfSObjectFactory.insertSObject(new User());
 
@@ -993,7 +993,7 @@ private with sharing class AccountTriggerHandlerTest {
 
             Assert.areEqual(tamUser.Id, record.OwnerId);
         }
-    }*/
+    }
 
     @IsTest
     private static void testCreateDefaultPaymentMethodForEnglandAndScotland() {
