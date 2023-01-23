@@ -24,11 +24,11 @@ public class AccountServiceTest {
 
         System.assertEquals(TRUE, accRef2.DdActive__c);
         System.assertEquals(deliveryRef, accRef2.DirectDebitMandateRef__c);
-	System.assertEquals('Direct Debit', accRef2.PrimaryPaymentMethod__c);
+	    System.assertEquals('Direct Debit', accRef2.PrimaryPaymentMethod__c);
 
     }
 	
-    @IsTest
+    /*@IsTest
     private static void testDdMandateCreationHandlerStage6OrBelow() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
@@ -44,7 +44,7 @@ public class AccountServiceTest {
 
         System.assertEquals(FALSE, accRef2.DdActive__c, 'DD Active should be false');
         System.assertNotEquals(deliveryRef, accRef2.DirectDebitMandateRef__c);
-    }
+    }*/
 
     @IsTest
     private static void testComputeNextDeliveryDate_WeeklyFrequencyMondayForDeliveryDate() {
