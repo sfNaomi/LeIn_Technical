@@ -130,7 +130,12 @@ public with sharing class InvoiceService {
                 invoicesWithProperPaymentMethod.add(invoice.Id);
             }
         }
-        generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
+
+        if (System.isBatch() || System.isQueueable() || System.isScheduled()) {
+            generateInvoiceDocumentSync(invoicesWithProperPaymentMethod);
+        } else {
+            generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
+        }
     }
 
     private static void updateInvoicesWithReadyForEvaluation(Set<Id> invoiceIds) {
@@ -415,6 +420,21 @@ public with sharing class InvoiceService {
         generateInvoiceDocuments(invoiceIds);
         updateInvoicesWithReadyForEvaluation(invoiceIds);
     }
+
+    /**
+     * @description sync method to generate invoice documents to be ran from batch
+     *
+     * @param invoiceIds ids of invoices to generate files for
+     *
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-25
+     */
+    private static void generateInvoiceDocumentSync(Set<Id> invoiceIds) {
+        generateInvoiceDocuments(invoiceIds);
+        updateInvoicesWithReadyForEvaluation(invoiceIds);
+    }
+
 
     /**
      * @description generates invoice documents, saves them as files related to invoices

@@ -62,7 +62,6 @@ public with sharing class OrderService {
         set;
     }
 
-
     public static Boolean isOrderCompleted(String orderStatus) {
         return COMPLETED_ORDER_STATUSES.contains(orderStatus);
     }
