@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OrderItemQuantityAdjusted__c</fullName>
+    <description>Shows if the orders quantities have been adjusted.</description>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
     <label>Order Item Quantity Adjusted</label>
