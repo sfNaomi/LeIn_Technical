@@ -133,7 +133,6 @@
                                     load-id={loadId}
                                     operation={selectedScenario}
                                     operation-label={assignmentOperationLabel}
-                                    load-order-ids={loadOrderIds}
                                     depot={depot}
                                     selected-orders-quantity={selectedOrdersQuantity}
                                     selected-orders-delivery-points={selectedOrdersDeliveryPoints}
@@ -151,7 +150,7 @@
                             sorted-direction={sortDirection}
                             data={tableData}
                             columns={columns}
-                            selected-rows={loadOrderIds}
+                            selected-rows={selectedOrderIds}
                             onrowselection={handleSelectRowsEvent}
                             onsort={doSorting}
                             onsave={handleOrderSave}
