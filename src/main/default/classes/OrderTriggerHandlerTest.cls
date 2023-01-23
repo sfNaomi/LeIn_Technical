@@ -1812,6 +1812,8 @@ private with sharing class OrderTriggerHandlerTest {
             Load__c = load.Id, Status = 'Ready To Load'), 5);
 
         Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        TdfSObjectFactory.insertSObject(new aforza__Invoice__c(
+            aforza__Account__c = acc.Id, aforza__Status__c = 'Outstanding'));
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
             Load__c = load.Id, Status = 'Ready To Load'));
         orders.add(order);
@@ -1831,7 +1833,7 @@ private with sharing class OrderTriggerHandlerTest {
         Assert.areEqual(2, visits.size());
 
         List<Task> tasks = [SELECT Id FROM Task];
-        Assert.areEqual(6, tasks.size());
+        Assert.areEqual(7, tasks.size());
 
         Test.startTest();
         orders[0].Status = 'Unplanned';
@@ -1865,7 +1867,7 @@ private with sharing class OrderTriggerHandlerTest {
         Assert.areEqual(0, visitAcc.size(), 'There should not be any visit as order was removed.');
 
         List<Task> tasksAcc = [SELECT Id FROM Task WHERE aforza__Order__r.AccountId = :acc.Id];
-        Assert.areEqual(0, tasksAcc.size(), 'There should ot be any task left for this account, as order was removed');
+        Assert.areEqual(0, tasksAcc.size(), 'There should not be any task left for this account, as order was removed');
     }
 
     @IsTest

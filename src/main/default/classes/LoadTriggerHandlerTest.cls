@@ -30,11 +30,11 @@ private class LoadTriggerHandlerTest {
         // prepare orders and assign them to load
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c());
         TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
-                Load__c = load.Id, Status = 'Pending Delivery'), 5);
+            Load__c = load.Id, Status = 'Pending Delivery'), 5);
 
         Test.startTest();
         Map<Id, List<Order>> loadToOrders = LoadTriggerHandler.prepareLoadToOrdersMap(new Set<Id>{
-                load.Id
+            load.Id
         });
         Test.stopTest();
 
@@ -58,7 +58,7 @@ private class LoadTriggerHandlerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID));
 
         Test.startTest();
-        Task task = LoadTriggerHandler.mapDataToTask(order);
+        Task task = LoadTriggerHandler.mapDataToTask(order, 'Deliver Order', 1, 'Order');
         Test.stopTest();
 
         Assert.areEqual(order.Id, task.aforza__Order__c);
@@ -76,9 +76,9 @@ private class LoadTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
 
         Order orderWithNeededData = [
-                SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
-                        Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
-                FROM Order
+            SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
+                Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
+            FROM Order
         ][0];
 
         Test.startTest();
@@ -116,9 +116,9 @@ private class LoadTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID, Load__c = load.Id));
         Map<String, Id> territories = LoadTriggerHandler.checkIfTerritoryExistsCreateNewIfNot();
         Order orderWithNeededData = [
-                SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
-                        Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
-                FROM Order
+            SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
+                Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
+            FROM Order
         ][0];
 
         Test.startTest();
@@ -138,7 +138,7 @@ private class LoadTriggerHandlerTest {
         Test.startTest();
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
         TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
-                Load__c = load.Id, Status = 'Pending Delivery'), 5);
+            Load__c = load.Id, Status = 'Pending Delivery'), 5);
 
         load.CreateRoute__c = true;
         update load;
@@ -157,7 +157,7 @@ private class LoadTriggerHandlerTest {
     private static void testCreateRouteAndVisitsAndTasks() {
         Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
         TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
-                Load__c = load.Id, Status = 'Pending Delivery'), 5);
+            Load__c = load.Id, Status = 'Pending Delivery'), 5);
 
         Test.startTest();
         load.CreateRoute__c = true;
@@ -187,37 +187,37 @@ private class LoadTriggerHandlerTest {
 
     @IsTest
     private static void testPopulateDefaultInventory() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Wednesbury', InventoryCode__c = 'W');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Wednesbury', InventoryCode__c = 'W');
         insert inventory;
-        
+
         Test.startTest();
         Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
-                new Load__c(Depot__c = 'C')
+            new Load__c(Depot__c = 'C')
         );
         Test.stopTest();
 
-        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id =:newLoad.Id];
-     
+        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id = :newLoad.Id];
+
         System.assertEquals('C', load.Depot__c);
         System.assertEquals(inventory.Id, load.SiteNo__c);
     }
 
     @IsTest
     private static void testPopulateDefaultInventory_setToNull() {
-		aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name='Moston', InventoryCode__c = 'M');
+        aforza__Inventory__c inventory = new aforza__Inventory__c(RecordTypeId = RecordTypes.INVENTORY_BUILDING_ID, Name = 'Moston', InventoryCode__c = 'M');
         insert inventory;
-        
+
         Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
-                new Load__c(Depot__c = 'M')
+            new Load__c(Depot__c = 'M')
         );
-        
+
         Test.startTest();
         newLoad.Depot__c = null;
         update newLoad;
         Test.stopTest();
 
-        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id =:newLoad.Id];
-       
+        Load__c load = [SELECT Id, Depot__c, SiteNo__c FROM Load__c WHERE Id = :newLoad.Id];
+
         System.assertEquals(null, load.Depot__c);
         System.assertEquals(null, load.SiteNo__c);
     }
@@ -294,154 +294,261 @@ private class LoadTriggerHandlerTest {
         List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
         Assert.areEqual(1, visits.size());
     }
-    
+
     @IsTest
     private static void testSetCorrectLoadName_OnInsert() {
         Test.startTest();
-        	Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
-                    new Load__c(Name='test', 
-                                Depot__c = 'M', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '10')
-        	);
+        Load__c newLoad = (Load__c) TdfSObjectFactory.insertSObject(
+            new Load__c(Name = 'test',
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10')
+        );
         Test.stopTest();
 
-        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id =:newLoad.Id];
-       
+        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id = :newLoad.Id];
+
         Assert.areEqual('M-10-16/11/22-01', load.Name);
     }
-    
+
     @IsTest
     private static void testSetCorrectLoadName_OnUpdate() {
         Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                    new Vehicle__c()
+            new Vehicle__c()
         );
-        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(
-                	new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'M', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '10')
+        TdfSObjectFactory.insertSObject(
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10')
         );
         Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
-            		new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'S', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '10')
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'S',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10')
         );
 
         Test.startTest();
-        	newLoad2.Depot__c = 'M';
-        	update newLoad2;
+        newLoad2.Depot__c = 'M';
+        update newLoad2;
         Test.stopTest();
 
-        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id =:newLoad2.Id];
-       
+        Load__c load = [SELECT Id, Name FROM Load__c WHERE Id = :newLoad2.Id];
+
         Assert.areEqual('M-10-16/11/22-02', load.Name);
     }
-    
+
     @IsTest
     private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfSameCharacteristics() {
         Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                	new Vehicle__c()
-        	);
+            new Vehicle__c()
+        );
         List<Load__c> loadList = new List<Load__c>();
-        for (Integer i = 0; i < 20; i++){
-            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
-                                            Depot__c = 'M', 
-                                            DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                            RouteIdentification__c = '10');
+        for (Integer i = 0; i < 20; i++) {
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10');
             loadList.add(newLoad);
         }
 
         Test.startTest();
-            insert loadList; 
+        insert loadList;
         Test.stopTest();
 
-		List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c =: vehicle.Id];
+        List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c = :vehicle.Id];
 
         Assert.areEqual('M-10-16/11/22-20', newLoadList[19].Name);
     }
 
-	@IsTest
+    @IsTest
     private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfDiffCharacteristicsWithExisting() {
         Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                	new Vehicle__c()
+            new Vehicle__c()
         );
-        Load__c newLoad1 = (Load__c) TdfSObjectFactory.insertSObject(
-                	new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'M', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '10')
+        TdfSObjectFactory.insertSObject(
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10')
         );
-        Load__c newLoad2 = (Load__c) TdfSObjectFactory.insertSObject(
-            		new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'S', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '11')
+        TdfSObjectFactory.insertSObject(
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'S',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '11')
         );
-        Load__c newLoad3 = (Load__c) TdfSObjectFactory.insertSObject(
-            		new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'W', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 17), 
-                                RouteIdentification__c = '12')
+        TdfSObjectFactory.insertSObject(
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'W',
+                DeliveryDate__c = Date.newInstance(2022, 11, 17),
+                RouteIdentification__c = '12')
         );
         List<Load__c> loadList = new List<Load__c>();
-        for(Integer i = 0; i < 12; i++){
-            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
-                                        Depot__c = 'D', 
-                                        DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                        RouteIdentification__c = '15');
+        for (Integer i = 0; i < 12; i++) {
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'D',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '15');
             loadList.add(newLoad);
         }
-		
+
         Test.startTest();
-        	insert loadList; 
+        insert loadList;
         Test.stopTest();
-		
-        List<Load__c> newLoadListWithoutDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c =: vehicle.Id AND Depot__c != 'D'];
-        List<Load__c> newLoadListWithDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c =: vehicle.Id AND Depot__c = 'D'];
-        
+
+        List<Load__c> newLoadListWithoutDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c = :vehicle.Id AND Depot__c != 'D'];
+        List<Load__c> newLoadListWithDagenham = [SELECT Id, Name, Vehicle__c, Depot__c FROM Load__c WHERE Vehicle__c = :vehicle.Id AND Depot__c = 'D'];
+
         Assert.areEqual('M-10-16/11/22-01', newLoadListWithoutDagenham[0].Name);
         Assert.areEqual('S-11-16/11/22-01', newLoadListWithoutDagenham[1].Name);
         Assert.areEqual('W-12-17/11/22-01', newLoadListWithoutDagenham[2].Name);
-        
-        for (Integer i = 0; i < newLoadListWithDagenham.size(); i++){
-            if (i < 9){
-                Assert.areEqual('D-15-16/11/22-0' + String.valueOf(i+1), newLoadListWithDagenham[i].Name);
+
+        for (Integer i = 0; i < newLoadListWithDagenham.size(); i++) {
+            if (i < 9) {
+                Assert.areEqual('D-15-16/11/22-0' + String.valueOf(i + 1), newLoadListWithDagenham[i].Name);
             } else {
-                Assert.areEqual('D-15-16/11/22-' + String.valueOf(i+1), newLoadListWithDagenham[i].Name);
+                Assert.areEqual('D-15-16/11/22-' + String.valueOf(i + 1), newLoadListWithDagenham[i].Name);
             }
         }
     }
-    
+
     @IsTest
     private static void testSetCorrectLoadName_OnInsertOfMultipleLoadsOfSameCharacteristicsAsExisting() {
         Vehicle__c vehicle = (Vehicle__c) TdfSObjectFactory.insertSObject(
-                	new Vehicle__c()
+            new Vehicle__c()
         );
         TdfSObjectFactory.insertSObject(
-                	new Load__c(Vehicle__c = vehicle.Id, 
-                                Depot__c = 'M', 
-                                DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                RouteIdentification__c = '10')
+            new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10')
         );
         List<Load__c> loadList = new List<Load__c>();
-        for(Integer i = 0; i < 2; i++){
-            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id, 
-                                        Depot__c = 'M', 
-                                        DeliveryDate__c = Date.newInstance(2022, 11, 16), 
-                                        RouteIdentification__c = '10');
+        for (Integer i = 0; i < 2; i++) {
+            Load__c newLoad = new Load__c(Vehicle__c = vehicle.Id,
+                Depot__c = 'M',
+                DeliveryDate__c = Date.newInstance(2022, 11, 16),
+                RouteIdentification__c = '10');
             loadList.add(newLoad);
         }
-		
+
         Test.startTest();
-        	insert loadList; 
+        insert loadList;
         Test.stopTest();
-		
-        List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c =: vehicle.Id];
-        
+
+        List<Load__c> newLoadList = [SELECT Id, Name, Vehicle__c FROM Load__c WHERE Vehicle__c = :vehicle.Id];
+
         Assert.areEqual('M-10-16/11/22-01', newLoadList[0].Name);
         Assert.areEqual('M-10-16/11/22-02', newLoadList[1].Name);
         Assert.areEqual('M-10-16/11/22-03', newLoadList[2].Name);
+    }
+
+    @IsTest
+    private static void testCreateRouteAndVisitsAndTasks_InvoiceTask() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
+        TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Pending Delivery', AccountId = acc.Id), 5);
+
+        TdfSObjectFactory.insertSObject(new aforza__Invoice__c(
+            aforza__Account__c = acc.Id, aforza__Status__c = 'Outstanding'));
+
+        Test.startTest();
+        load.CreateRoute__c = true;
+        update load;
+        Test.stopTest();
+
+        // check for route
+        List<aforza__Route__c> routes = [SELECT Id FROM aforza__Route__c];
+        Assert.isTrue(routes.size() == 1, 'There should be 1 route created');
+
+        // check for location
+        List<aforza__Route_Location__c> locations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.isTrue(locations.size() == 1, 'There should be 1 location created');
+
+        // check for visits
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.isTrue(visits.size() == 1, 'There should be 1 visit created');
+
+        // check for tasks
+        List<Task> orderTasks = [SELECT Id FROM Task WHERE Subject = 'Deliver Order'];
+        Assert.isTrue(orderTasks.size() == 5, 'There should be 5 Deliver Order tasks created');
+
+        List<Task> invoiceTasks = [SELECT Id FROM Task WHERE Subject = 'Collect Payment for unpaid invoices'];
+        Assert.isTrue(invoiceTasks.size() == 1, 'There should be single Collect Payment for unpaid invoices task created');
+    }
+
+    @IsTest
+    private static void testCreateRouteAndVisitsAndTasks_InvoiceTaskNoUnpaidInvoiceInLast90Days() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
+        TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Pending Delivery', AccountId = acc.Id), 5);
+
+        aforza__Invoice__c inv1 = (aforza__Invoice__c) TdfSObjectFactory.createSObject(new aforza__Invoice__c(
+            aforza__Account__c = acc.Id, aforza__Status__c = 'Outstanding', aforza__Issued_Date__c = Date.today().addDays(-92)));
+        List<aforza__Invoice__c> invoices = new List<aforza__Invoice__c>{inv1};
+        insert invoices;
+
+        Test.startTest();
+        load.CreateRoute__c = true;
+        update load;
+        Test.stopTest();
+
+        // check for route
+        List<aforza__Route__c> routes = [SELECT Id FROM aforza__Route__c];
+        Assert.isTrue(routes.size() == 1, 'There should be 1 route created');
+
+        // check for location
+        List<aforza__Route_Location__c> locations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.isTrue(locations.size() == 1, 'There should be 1 location created');
+
+        // check for visits
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.isTrue(visits.size() == 1, 'There should be 1 visit created');
+
+        // check for tasks
+        List<Task> orderTasks = [SELECT Id FROM Task WHERE Subject = 'Deliver Order'];
+        Assert.isTrue(orderTasks.size() == 5, 'There should be 5 Deliver Order tasks created');
+
+        List<Task> invoiceTasks = [SELECT Id FROM Task WHERE Subject = 'Collect Payment for unpaid invoices'];
+        Assert.isTrue(invoiceTasks.size() == 0, 'There should be no Collect Payment for unpaid invoices task created');
+    }
+
+    @IsTest
+    private static void testCreateRouteAndVisitsAndTasks_InvoiceTaskNoUnpaidInvoices() {
+        Account acc = (Account) TdfSObjectFactory.insertSObject(new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID));
+        Load__c load = (Load__c) TdfSObjectFactory.insertSObject(new Load__c(CreateRoute__c = false));
+        TdfSObjectFactory.insertSObjects(new Order(RecordTypeId = RecordTypes.ORDER_ECOMMERCE_ID,
+            Load__c = load.Id, Status = 'Pending Delivery', AccountId = acc.Id), 5);
+
+        TdfSObjectFactory.insertSObject(new aforza__Invoice__c(
+            aforza__Account__c = acc.Id, aforza__Status__c = 'Paid'));
+
+        Test.startTest();
+        load.CreateRoute__c = true;
+        update load;
+        Test.stopTest();
+
+        // check for route
+        List<aforza__Route__c> routes = [SELECT Id FROM aforza__Route__c];
+        Assert.isTrue(routes.size() == 1, 'There should be 1 route created');
+
+        // check for location
+        List<aforza__Route_Location__c> locations = [SELECT Id FROM aforza__Route_Location__c];
+        Assert.isTrue(locations.size() == 1, 'There should be 1 location created');
+
+        // check for visits
+        List<aforza__Visit__c> visits = [SELECT Id FROM aforza__Visit__c];
+        Assert.isTrue(visits.size() == 1, 'There should be 1 visit created');
+
+        // check for tasks
+        List<Task> orderTasks = [SELECT Id FROM Task WHERE Subject = 'Deliver Order'];
+        Assert.isTrue(orderTasks.size() == 5, 'There should be 5 Deliver Order tasks created');
+
+        List<Task> invoiceTasks = [SELECT Id FROM Task WHERE Subject = 'Collect Payment for unpaid invoices'];
+        Assert.isTrue(invoiceTasks.size() == 0, 'There should be no Collect Payment for unpaid invoices task created');
     }
 }
