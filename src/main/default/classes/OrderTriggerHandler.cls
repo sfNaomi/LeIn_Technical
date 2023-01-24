@@ -170,9 +170,12 @@ public with sharing class OrderTriggerHandler {
         Set<Id> orderIdsToCreateInvoiceFrom = new Set<Id>();
         for (Order newOrder : newOrders) {
             Order oldOrder = oldOrders?.get(newOrder.Id);
+            // if we are handling a batch inducted status change, the batch will handle the logic of invoice creation
+            // please see for reference OrderStatusUpdateBatch
             if (OrderService.orderTypeRequiresInvoiceCreation(newOrder.RecordTypeId) &&
                 oldOrder != null && newOrder.Status != oldOrder.Status &&
-                newOrder.Status == OrderService.SETTINGS.StatusToCreateInvoice__c
+                newOrder.Status == OrderService.SETTINGS.StatusToCreateInvoice__c &&
+                !System.isBatch()
             ) {
                 orderIdsToCreateInvoiceFrom.add(newOrder.Id);
             }
