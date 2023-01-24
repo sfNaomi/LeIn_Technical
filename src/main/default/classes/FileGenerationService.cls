@@ -67,7 +67,7 @@ public with sharing class FileGenerationService {
     * @date 2022-10-10
     */
     @TestVisible
-    private static ContentVersion generateContentVersion(documentType docType, sObject record) {
+    private static ContentVersion generateContentVersion(documentType docType, SObject record) {
         PageReference pageRef = null;
         String documentName = null;
         String documentType = null;
@@ -169,7 +169,7 @@ public with sharing class FileGenerationService {
     */
     @TestVisible
     private static String getSObjectType(Id recordId) {
-        return recordId.getSObjectType().getDescribe().getName();
+        return recordId.getSobjectType().getDescribe().getName();
     }
 
     /**
