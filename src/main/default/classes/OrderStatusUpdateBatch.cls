@@ -14,7 +14,7 @@ public without sharing class OrderStatusUpdateBatch implements Schedulable, Data
 
     public Iterable<SObject> start(Database.BatchableContext batchableContext) {
         // load all order records that should be moved to completed
-        String query = 'SELECT Id, Status FROM Order ' +
+        String query = 'SELECT Id, Status, RecordTypeId FROM Order ' +
             'WHERE (Status = \'Delivered\' AND RecordTypeId NOT IN :EXCLUDED_ORDER_TYPES) ' +
             'OR (Status = \'Activated\' AND RecordTypeId = :STRAIGHT_TO_JDE_RECORD_TYPE_ID)';
         return Database.getQueryLocator(query);
@@ -22,6 +22,7 @@ public without sharing class OrderStatusUpdateBatch implements Schedulable, Data
 
     public void execute(Database.BatchableContext batchableContext, List<Order> orders) {
         OrderService.updateOrderStatus(orders, 'Receipted');
+        InvoiceService.createInvoicesFromOrdersBatch(orders);
     }
 
     public void finish(Database.BatchableContext param1) {
