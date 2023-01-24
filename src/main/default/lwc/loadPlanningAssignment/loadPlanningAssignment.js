@@ -15,11 +15,9 @@ export default class LoadPlanningAssignment extends LightningElement {
     @api selectedOrdersIds = [];
     @api newOrderStatus;
     @api ordersDeselectedFromLoad = [];
-    @api ordersAssignedToLoad = [];
     @api loadId;
     @api operation;
     @api operationLabel;
-    @api loadOrderIds;
     @api selectedOrdersQuantity;
     @api selectedOrdersDeliveryPoints;
     @track vehicleLoadWeight = 0;
@@ -29,6 +27,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     _route;
     _depot;
     _createRoute;
+    _ordersAssignedToLoad;
 
     @api get plannedDeliveryDate() {
         return this._plannedDeliveryDate;
@@ -79,6 +78,13 @@ export default class LoadPlanningAssignment extends LightningElement {
         this._createRoute = value;
     }
 
+    @api get ordersAssignedToLoad() {
+        return this._ordersAssignedToLoad;
+    }
+
+    set ordersAssignedToLoad(value) {
+        this._ordersAssignedToLoad = value.map((order => order.Id))
+    }
 
     handleLookupSelection(event) {
         try {
@@ -152,7 +158,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     }
 
     filterOnlyNewlyAddedOrdersToLoad() {
-        const orderIdsToRemoveSet = new Set(this.ordersAssignedToLoad.map(order => order.Id));
+        const orderIdsToRemoveSet = new Set(this.ordersAssignedToLoad);
 
         return this.selectedOrdersIds.filter((id) => {
             return !orderIdsToRemoveSet.has((id));
@@ -182,7 +188,7 @@ export default class LoadPlanningAssignment extends LightningElement {
     }
 
     async assignNewOrdersToLoad(load) {
-        const ordersToUpdate = this.removeOrdersPartOfLoad();
+        const ordersToUpdate = this.filterOnlyNewlyAddedOrdersToLoad();
         await updateOrdersWithLoadIdAndNewStatus({
             orderIds: ordersToUpdate,
             newStatus: this.newOrderStatus,
@@ -194,13 +200,6 @@ export default class LoadPlanningAssignment extends LightningElement {
             variant: 'success'
         });
         this.dispatchEvent(toastOrdersUpdated);
-    }
-
-    removeOrdersPartOfLoad() {
-        const orderIdsToRemoveSet = new Set(this.loadOrderIds);
-        return this.selectedOrdersIds.filter((orderId) => {
-            return !orderIdsToRemoveSet.has((orderId));
-        });
     }
 
     async removeUnselectedLoadOrders(load) {
@@ -244,6 +243,7 @@ export default class LoadPlanningAssignment extends LightningElement {
         this.template.querySelector('lightning-input').value = '';
         this.vehicleLoadWeight = 0;
         this.fireResetEvent();
+        this.route = '';
     }
 
     fireResetEvent() {

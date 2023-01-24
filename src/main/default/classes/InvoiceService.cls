@@ -13,7 +13,9 @@ public with sharing class InvoiceService {
     private static final String PENDING_PAYMENT_INVOICE_STATUS = 'Pending Payment';
     private static final String APPROVED_INVOICE_STATUS = 'Approved for Payment';
     private static final String APPROVED_TRANSACTION_STATUS = 'Approved';
-    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{'Card Payment', 'Direct Debit', 'Bacs', 'JDE DD'};
+    private static final Set<String> ALLOWED_PAYMENT_METHODS_TO_GENERATE_FILES = new Set<String>{
+        'Card Payment', 'Direct Debit', 'Bacs', 'JDE DD'
+    };
 
     private static final FieldMapping__mdt ORDER_TO_INVOICE_MAPPING {
         get {
@@ -92,7 +94,7 @@ public with sharing class InvoiceService {
             Decimal amount = invoicesByOriginalOrderId?.get(newTransaction.OrderNumber__c)?.Gross__c;
             newTransaction.aforza__Invoice__c = invoiceId;
             newTransaction.aforza__Amount__c = amount;
-            if(newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD ||
+            if (newTransaction.OrderNumber__r.PaymentMethod__c == DD_PAYMENT_METHOD || newTransaction.OrderNumber__r.PaymentMethod__c == BACS_PAYMENT_METHOD ||
                 newTransaction.OrderNumber__r.PaymentMethod__c == JDE_DD_PAYMENT_METHOD) {
                 newTransaction.aforza__Status__c = APPROVED_TRANSACTION_STATUS;
             }
@@ -130,7 +132,24 @@ public with sharing class InvoiceService {
                 invoicesWithProperPaymentMethod.add(invoice.Id);
             }
         }
-        generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
+
+        if (System.isBatch()) {
+            generateInvoiceDocumentSync(invoicesWithProperPaymentMethod);
+        } else {
+            generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
+        }
+    }
+
+    public static void createInvoicesFromOrdersBatch(List<Order> orders) {
+        Set<Id> orderIdsToCreateInvoiceFrom = new Set<Id>();
+        for (Order order : orders) {
+            if (OrderService.orderTypeRequiresInvoiceCreation(order.RecordTypeId)) {
+                orderIdsToCreateInvoiceFrom.add(order.Id);
+            }
+        }
+        if (orderIdsToCreateInvoiceFrom.size() > 0) {
+            createInvoicesFromOrders(orderIdsToCreateInvoiceFrom);
+        }
     }
 
     private static void updateInvoicesWithReadyForEvaluation(Set<Id> invoiceIds) {
@@ -254,7 +273,7 @@ public with sharing class InvoiceService {
         String invoiceStatus = '';
 
         if (orderRecordTypeId == RecordTypes.ORDER_STRAIGHT_TO_JDE_ID || (orderRecordTypeId == RecordTypes.ORDER_RETURN_ID && orderTotalAmount == 0)
-           ) {
+        ) {
             invoiceStatus = PAID_INVOICE_STATUS;
         } else if (paymentMethod == DD_PAYMENT_METHOD || paymentMethod == BACS_PAYMENT_METHOD || paymentMethod == JDE_DD_PAYMENT_METHOD) {
             invoiceStatus = APPROVED_INVOICE_STATUS;
@@ -364,8 +383,8 @@ public with sharing class InvoiceService {
 
         String queryString =
             'SELECT ' + String.join(orderFields, ',') + ', RecordTypeId, ' +
-            '(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
-            'FROM Order WHERE Id IN :orderIds';
+                '(SELECT ' + String.join(orderItemFields, ',') + ' FROM OrderItems) ' +
+                'FROM Order WHERE Id IN :orderIds';
         List<Order> orders = Database.query(queryString);
 
         return orders;
@@ -415,6 +434,21 @@ public with sharing class InvoiceService {
         generateInvoiceDocuments(invoiceIds);
         updateInvoicesWithReadyForEvaluation(invoiceIds);
     }
+
+    /**
+     * @description sync method to generate invoice documents to be ran from batch
+     *
+     * @param invoiceIds ids of invoices to generate files for
+     *
+     *
+     * @author Magdalena Stanciu
+     * @date 2022-10-25
+     */
+    private static void generateInvoiceDocumentSync(Set<Id> invoiceIds) {
+        generateInvoiceDocuments(invoiceIds);
+        updateInvoicesWithReadyForEvaluation(invoiceIds);
+    }
+
 
     /**
      * @description generates invoice documents, saves them as files related to invoices

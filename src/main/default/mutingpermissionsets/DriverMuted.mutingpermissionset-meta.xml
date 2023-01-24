@@ -101,6 +101,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.Type</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Order.aforza__Automatic_Discount_Rule__c</field>
         <readable>true</readable>
@@ -118,6 +123,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.aforza__Eligible_Promotions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.aforza__Inventory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

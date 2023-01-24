@@ -17,6 +17,7 @@
         <field>Product2$OffSale__c</field>
     </columns>
     <filter>
+        <booleanFilter>(1 OR 3) AND 2 AND 4</booleanFilter>
         <criteriaItems>
             <column>Product2$CreatedDate</column>
             <columnToColumn>false</columnToColumn>
@@ -30,6 +31,20 @@
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Product2$CreatedDate</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>YESTERDAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Product2$aforza__Parent_Product__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
         </criteriaItems>
         <language>en_US</language>
     </filter>

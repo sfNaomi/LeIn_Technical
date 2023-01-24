@@ -47,7 +47,7 @@ const columns = [
     {label: originalOwnerLabel, fieldName: 'aforza__Account__rOwnerLastName'},
     {label: callOwnerLabel, fieldName: 'aforza__Owner__rLastName'},
     {label: deliveryPointNameLabel, fieldName: 'aforza__Account__rStoreName__c'},
-    {label: deliveryPointPostCodeLabel, fieldName: 'aforza__Account__rBillingPostalCode'},
+    {label: deliveryPointPostCodeLabel, fieldName: 'aforza__Account__rShippingPostalCode'},
     {label: dpReferenceLabel, fieldName: 'aforza__Account__rDeliveryPointReference__c'},
     {label: primaryGridLabel, fieldName: 'aforza__Account__rPrimaryGridNumber__c'},
     {label: secondaryGridLabel, fieldName: 'aforza__Account__rSecondaryGridNumber__c'},
@@ -76,7 +76,7 @@ export default class CallBaseManagement extends LightningElement {
     }
 
     queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Account__r.Owner.FirstName,' +
-        'aforza__Owner__r.LastName,aforza__Owner__r.FirstName,aforza__Account__r.StoreName__c,aforza__Account__r.BillingPostalCode,' +
+        'aforza__Owner__r.LastName,aforza__Owner__r.FirstName,aforza__Account__r.StoreName__c,aforza__Account__r.ShippingPostalCode,' +
         'aforza__Account__r.DeliveryPointReference__c,aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
         'toLabel(aforza__Account__r.Depot__c),aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c';
 
