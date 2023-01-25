@@ -41,6 +41,11 @@
         <label>Menzies</label>
     </customValue>
     <customValue>
+        <fullName>L</fullName>
+        <default>false</default>
+        <label>Blacks</label>
+    </customValue>
+    <customValue>
         <fullName>Cumbernauld</fullName>
         <default>false</default>
         <isActive>false</isActive>

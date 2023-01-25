@@ -53,6 +53,11 @@
                 <label>Menzies</label>
             </value>
             <value>
+                <fullName>L</fullName>
+                <default>false</default>
+                <label>Blacks</label>
+            </value>
+            <value>
                 <fullName>Cumbernauld</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
