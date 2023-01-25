@@ -1,6 +1,6 @@
 @IsTest
 public class AccountServiceTest {	
-    @IsTest
+    /*@IsTest
     private static void testDdMandateCreationHandlerStageOver6() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
@@ -28,7 +28,7 @@ public class AccountServiceTest {
 
     }
 	
-    /*@IsTest
+    @IsTest
     private static void testDdMandateCreationHandlerStage6OrBelow() {
         Account dpAccount = (Account) TdfSObjectFactory.insertSObject(
             new Account(RecordTypeId = RecordTypes.ACCOUNT_OUTLET_ID, AccountStatus__c = 'Traders')
