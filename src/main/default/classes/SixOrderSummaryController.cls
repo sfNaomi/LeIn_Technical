@@ -311,7 +311,7 @@ public with sharing class SixOrderSummaryController {
                     BillingCountryCode, BillingState, BillingStateCode, BillingStreet, Depot__c,
                     NextDeliveryDate__c, ShippingAddress, ShippingCity, ShippingCountry, ShippingCountryCode,
                     ShippingStateCode, ShippingStreet, Name, SalesRepresentative__c, SalesRepresentative__r.EmployeeNumber,
-                    DefaultInventory__c, /*DeliveryPointReference__c, */ShippingPostalCode
+                    DefaultInventory__c, DeliveryPointReference__c, ShippingPostalCode
                 FROM Account
                 WHERE Id = :accountId
             ];

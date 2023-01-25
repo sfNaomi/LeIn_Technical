@@ -1,5 +1,5 @@
 import { LightningElement, api} from 'lwc';
-/*import populateDDUrlBasedOnMappings from "@salesforce/apex/DdMandateLinkController.populateDDUrlBasedOnMappings";*/
+import populateDDUrlBasedOnMappings from "@salesforce/apex/DdMandateLinkController.populateDDUrlBasedOnMappings";
 import {processError} from 'c/errorHandlingService';
 import { NavigationMixin } from "lightning/navigation";
 
@@ -9,7 +9,7 @@ export default class DdMandateLink extends NavigationMixin(
 
     async handleClick() {
         try {
-          /*let getUrl= await populateDDUrlBasedOnMappings({
+          let getUrl= await populateDDUrlBasedOnMappings({
             accountId: this.recordId
           });
           if (getUrl) {
@@ -20,7 +20,7 @@ export default class DdMandateLink extends NavigationMixin(
               }
         };
           this[NavigationMixin.Navigate](config);
-        }*/
+        }
           
         } catch (error) {
           processError(this, error);
