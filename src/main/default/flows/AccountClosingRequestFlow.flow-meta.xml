@@ -115,7 +115,7 @@
             <dataType>String</dataType>
             <fieldText>Reason To Request Account Closing</fieldText>
             <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
         </fields>
         <nextOrFinishButtonLabel>Yes</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>

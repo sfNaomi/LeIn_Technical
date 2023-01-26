@@ -4,12 +4,16 @@
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'basePdfStyle.css')}" />
 	<apex:stylesheet value="{!URLFOR($Resource.pdfStyles, 'invoice.css')}" />
 
+	<apex:repeat value="{!invoices}" var="invoice">
 	<div id="pageHeader">
-		<div class="headline headline-absolute-top-40" style="z-index: 1;">Invoice</div>
+		<div class="headline headline-absolute-top-40" style="z-index: 1;">
+			<b style="font-size: 16px">{!IF(invoice.type == 'Credit Note', $Label.CreditNoteHeader, $Label.InvoiceHeader)}</b>
+		</div>
 		<div class="" style="position: absolute; top: 0; z-index: 0;">
 			<apex:image url="{!URLFOR($Resource.images, 'AGBarrLogo.jpg')}" width="100%" />
 		</div>
 	</div>
+	</apex:repeat>
 
 	<div id="pageFooter">
 		{!$Label.InvoiceFooterNote}

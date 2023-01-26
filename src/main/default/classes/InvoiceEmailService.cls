@@ -213,20 +213,23 @@ public without sharing class InvoiceEmailService {
         for (aforza__Invoice__c invoice : invoices) {
             ContentVersion invoiceDocument = contentVersionsByInvoiceId.get(invoice.Id);
             Id templateId = INVOICE_EMAIL_TEMPLATES?.get(invoiceIdsToEmailTemplate.get(invoice.Id));
-            Messaging.SingleEmailMessage message = EmailService.buildEmailMessage(
-                templateId,
-                false,
-                true,
-                invoice.Id,
-                invoice?.aforza__Account__r?.aforza__Primary_Contact__c,
-                new List<String>{
-                    invoice?.aforza__Account__r?.aforza__Invoice_Email_Address__c
-                },
-                new List<String>{
-                    invoiceDocument?.Id
-                }
-            );
-            emails.add(message);
+
+            if (templateId != null) {
+                Messaging.SingleEmailMessage message = EmailService.buildEmailMessage(
+                    templateId,
+                    false,
+                    true,
+                    invoice.Id,
+                    invoice?.aforza__Account__r?.aforza__Primary_Contact__c,
+                    new List<String>{
+                        invoice?.aforza__Account__r?.aforza__Invoice_Email_Address__c
+                    },
+                    new List<String>{
+                        invoiceDocument?.Id
+                    }
+                );
+                emails.add(message);
+            }
         }
         EmailService.send(emails);
     }

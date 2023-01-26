@@ -1119,6 +1119,22 @@
         <value>INVOICED TO:</value>
     </labels>
     <labels>
+        <fullName>InvoiceHeader</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Header</shortDescription>
+        <value>Invoice</value>
+    </labels>
+    <labels>
+        <fullName>CreditNoteHeader</fullName>
+        <categories>Invoice</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Note Header</shortDescription>
+        <value>Credit Note</value>
+    </labels>
+    <labels>
         <fullName>CustomerContact</fullName>
         <categories>Delivery Note</categories>
         <language>en_US</language>

@@ -89,7 +89,7 @@ export default class LoadPlanningScreen extends LightningElement {
     @track tableData = [];
     @track selectedRows = [];
     @track loadOrdersTableData = [];
-    @track loadOrderIds = [];
+    @track selectedOrderIds = [];
     @track loadOrdersTableDataDeselected = [];
     columns = columns;
     @track sortBy;
@@ -420,7 +420,7 @@ export default class LoadPlanningScreen extends LightningElement {
      * @date 2022-11-23
      */
     clearAllAttributes() {
-        this.loadOrderIds = [];
+        this.selectedOrderIds = [];
         // empty date field input field
         const inputElement = this.template.querySelector('lightning-input');
         if (inputElement) {
@@ -461,17 +461,31 @@ export default class LoadPlanningScreen extends LightningElement {
      */
     handleSelectRowsEvent(event) {
         try {
-            const selectedRows = event.detail.selectedRows;
-            // properly populate unselected rows in load related orders
-            this.processSelectionChanges(selectedRows);
-            this.selectedRows = [];
-            this.selectedRows = [...selectedRows];
-            if (this.selectedScenario === 'createLoad') {
-                if (this.selectedRows.length > 0) {
-                    this.preCalculateValues();
-                } else {
-                    this.clearPreselectedAttributes();
+            const selectedRowsEvent = event.detail.selectedRows;
+            //check if the orders being added are all the same depot, and also compare them to each other.
+            const allowAddingOfNewOrders = this.checkAllOrdersAreFromSameDepot(selectedRowsEvent);
+            if (allowAddingOfNewOrders) {
+                // properly populate unselected rows in load related orders
+                this.processSelectionChanges(selectedRowsEvent);
+                this.selectedRows = [];
+                this.selectedRows = [...selectedRowsEvent];
+                if (this.selectedScenario === 'createLoad') {
+                    if (this.selectedRows.length > 0) {
+                        this.preCalculateValues();
+                    } else {
+                        this.clearPreselectedAttributes();
+                    }
                 }
+            } else {
+                // deselect rows from the selection attempt
+                this.reselectAlreadySelectedRows();
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'We cant add selected Orders to the load',
+                        message: 'Orders selected do not share depot or depot on load is different. Please select different Orders.',
+                        variant: 'error'
+                    })
+                );
             }
         } catch (error) {
             processError(this, error);
@@ -479,6 +493,34 @@ export default class LoadPlanningScreen extends LightningElement {
         } finally {
             this.isLoading = false;
         }
+    }
+
+    /** Method to recheck only already selected orders, as the operation to add more failed on validation
+     *
+     * @author Svata Sejkora
+     * @date 2023-01-18
+     */
+    reselectAlreadySelectedRows() {
+        // using time out to make sure we try to set selected rows after the table is rendered
+        setTimeout(() => this.selectedOrderIds = this.selectedRows.map(record => record.Id));
+    }
+
+    /** Method to check if selected orders are of the same depot, if so then check that the depo from the load (if loaded)
+     * is the same as well.
+     *
+     * @author Svata Sejkora
+     * @date 2023-01-18
+     */
+    checkAllOrdersAreFromSameDepot(selectedRows) {
+        const selectedOrdersDepot = new Set(selectedRows.map(order => order.Depot__c));
+        // if there are multiple depots on orders stop processing, if the size is zero (removal) do not consider this check
+        // OR load has been loaded and there is depot value and the load depot is different to the depot on the orders
+        if (selectedOrdersDepot.size > 1 || (this.depot && selectedRows.length > 0 && !selectedOrdersDepot.has(this.depot))) {
+            return false;
+        }
+
+        // in any other scenario return true
+        return true;
     }
 
     /** Method to precalculate values based on predominant value from selected lines - active only when creating load
@@ -701,7 +743,7 @@ export default class LoadPlanningScreen extends LightningElement {
         this.tableData = this.removeOrdersFromList(this.tableData, this.loadOrdersTableData);
         this.selectedRows = [];
         this.loadOrdersTableData = [];
-        this.loadOrderIds = [];
+        this.selectedOrderIds = [];
         // check if the operation has loadId, if so do more steps, otherwise we are done.
         if (loadId) {
             // load new Load Id
@@ -713,7 +755,7 @@ export default class LoadPlanningScreen extends LightningElement {
                 this.tableData = [...this.tableData, ...newLoadOrders];
                 this.selectedRows = [...newLoadOrders];
                 // using time out to make sure we try to set selected rows after the table is rendered
-                setTimeout(() => this.loadOrderIds = newLoadOrders.map(record => record.Id));
+                setTimeout(() => this.selectedOrderIds = newLoadOrders.map(record => record.Id));
                 // let user know they will not be able to add additional orders to the load as loaded one is "closed" =
                 // create route is set to true
                 if (this.createRoute === true) {

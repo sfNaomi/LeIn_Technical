@@ -54,6 +54,10 @@
                 <field>Vehicle__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VehicleRegistration__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>JdeTimeStamp__c</field>
             </layoutItems>

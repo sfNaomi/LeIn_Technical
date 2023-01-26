@@ -36,7 +36,7 @@ public with sharing class LoadTriggerHandler {
     private static void updateTaskAndVisitWithNewDriverAndDate(Set<Id> loadIdsToTriggerChangeFor, Map<Id, Load__c> loadsMap) {
         List<SObject> taskAndVisitToUpdate = new List<SObject>();
         Set<SObject> uniqueVisitsToUpdate = new Set<SObject>();
-        for(Task task : getTasksAndVisitsForOrdersFromLoad(loadIdsToTriggerChangeFor)) {
+        for (Task task : getTasksAndVisitsForOrdersFromLoad(loadIdsToTriggerChangeFor)) {
             Load__c load = loadsMap.get(task.aforza__Order__r.Load__c);
             // set task owner to new driver and new date
             task.OwnerId = load.Driver__c;
@@ -70,7 +70,7 @@ public with sharing class LoadTriggerHandler {
         return [SELECT Id, Name, LoadId__c FROM aforza__Route__c WHERE LoadId__c IN :loadIds];
     }
 
-    private static List<Task> getTasksAndVisitsForOrdersFromLoad (Set<Id> loadIdsToTriggerChangeFor) {
+    private static List<Task> getTasksAndVisitsForOrdersFromLoad(Set<Id> loadIdsToTriggerChangeFor) {
         return [SELECT Id, aforza__Visit__c, OwnerId, aforza__Order__r.Load__c FROM Task WHERE aforza__Order__r.Load__c IN :loadIdsToTriggerChangeFor];
     }
 
@@ -78,6 +78,9 @@ public with sharing class LoadTriggerHandler {
         Map<String, aforza__Visit__c> visitsToInsertLinkedToLoad = new Map<String, aforza__Visit__c>();
         List<Task> tasksToInsert = new List<Task>();
         Map<Id, Id> ordersToOrderWithVisit = new Map<Id, Id>();
+
+        // check if the collect unpaid invoice task should be created
+        Map<Id, Boolean> accountIdToUnpaidInvoiceFlag = determineIfThereIsUnpaidInvoice(loadsWithOrderIds.values());
 
         for (List<Order> orderList : loadsWithOrderIds.values()) {
             // make sure we create visit only once per account, not for all orders
@@ -89,11 +92,15 @@ public with sharing class LoadTriggerHandler {
                     visitsToInsertLinkedToLoad.put(order.Id, mapDataToVisit(order));
                     orderWithVisit = order.Id;
                     ordersToOrderWithVisit.put(order.Id, orderWithVisit);
+                    // create invoice collection task, only one per Account
+                    if (accountIdToUnpaidInvoiceFlag.get(order.AccountId)) {
+                        tasksToInsert.add(mapDataToTask(order, 'Collect Payment for unpaid invoices', 2, 'Payment Collection'));
+                    }
                 } else {
                     ordersToOrderWithVisit.put(order.Id, orderWithVisit);
                 }
-                // create task for each order
-                tasksToInsert.add(mapDataToTask(order));
+                // create delivery task for each order
+                tasksToInsert.add(mapDataToTask(order, 'Deliver Order', 1, 'Order'));
             }
         }
         Database.insert(visitsToInsertLinkedToLoad.values());
@@ -177,14 +184,14 @@ public with sharing class LoadTriggerHandler {
     }
 
     @TestVisible
-    private static Task mapDataToTask(Order order) {
+    private static Task mapDataToTask(Order order, String subject, Integer sequence, String type) {
         Task task = new Task();
-        task.Subject = 'Deliver Order';
+        task.Subject = subject;
         task.Status = 'Not Started';
-        task.aforza__Type__c = 'Order';
+        task.aforza__Type__c = type;
         task.aforza__Order__c = order.Id;
         task.Priority = 'High';
-        task.aforza__Sequence__c = 1;
+        task.aforza__Sequence__c = sequence;
         task.WhatId = order.Id;
         task.OwnerId = order.Load__r.Driver__c;
 
@@ -204,17 +211,17 @@ public with sharing class LoadTriggerHandler {
     private static Map<Id, List<Order>> prepareLoadToOrdersMap(Set<Id> loadIds) {
         Map<Id, List<Order>> loadsWithOrderIds = new Map<Id, List<Order>>();
         for (Order order : [
-                SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
-                        Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
-                FROM Order
-                WHERE Load__c IN :loadIds
-                ORDER BY Account.ShippingPostalCode ASC
+            SELECT Id, Load__c, AccountId, Load__r.Driver__c, Load__r.DeliveryDate__c,
+                Load__r.Depot__c, Load__r.Name, Load__r.DriverFullName__c, AccountName__c
+            FROM Order
+            WHERE Load__c IN :loadIds
+            ORDER BY Account.ShippingPostalCode ASC
         ]) {
             if (loadsWithOrderIds.containsKey(order.Load__c)) {
                 loadsWithOrderIds.get(order.Load__c).add(order);
             } else {
                 loadsWithOrderIds.put(order.Load__c, new List<Order>{
-                        order
+                    order
                 });
             }
         }
@@ -273,20 +280,20 @@ public with sharing class LoadTriggerHandler {
         return Datetime.newInstance(visitDate, visitTime.time());
     }
 
-    public static void populateDefaultInventory(List<Load__c> newLoads, Map<Id, Load__c> oldLoads){
+    public static void populateDefaultInventory(List<Load__c> newLoads, Map<Id, Load__c> oldLoads) {
         Map<String, Id> inventoryIdMap = InventoryService.getDepotInventoryMapping();
         for (Load__c newLoad : newLoads) {
             Load__c oldLoad = oldLoads?.get(newLoad.Id);
             if (
                 (oldLoad == null && newLoad.Depot__c != null) ||
-                (oldLoad != null && newLoad.Depot__c != oldLoad.Depot__c)
-            ){
-            	newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
+                    (oldLoad != null && newLoad.Depot__c != oldLoad.Depot__c)
+            ) {
+                newLoad.SiteNo__c = inventoryIdMap.get(newLoad.Depot__c);
             }
-        }   
+        }
     }
-    
-    public static void setCorrectLoadName(List<Load__c> newLoads, Map<Id, Load__c> oldLoads){
+
+    public static void setCorrectLoadName(List<Load__c> newLoads, Map<Id, Load__c> oldLoads) {
         Map<Date, List<Load__c>> newLoadsMap = new Map<Date, List<Load__c>>();
         Set<String> newLoadsDepotList = new Set<String>();
         Set<String> newLoadsRouteIdentificationList = new Set<String>();
@@ -295,39 +302,41 @@ public with sharing class LoadTriggerHandler {
             if (
                 (
                     (oldLoad == null) ||
-                    (oldLoad != null && 
-                        (
-                            (newLoad.Depot__c != oldLoad.Depot__c) ||
-                            (newLoad.DeliveryDate__c != oldLoad.DeliveryDate__c) ||
-                            (newLoad.RouteIdentification__c != oldLoad.RouteIdentification__c)
+                        (oldLoad != null &&
+                            (
+                                (newLoad.Depot__c != oldLoad.Depot__c) ||
+                                    (newLoad.DeliveryDate__c != oldLoad.DeliveryDate__c) ||
+                                    (newLoad.RouteIdentification__c != oldLoad.RouteIdentification__c)
+                            )
                         )
-                    )
                 ) && (newLoad.Depot__c != null && newLoad.DeliveryDate__c != null && newLoad.RouteIdentification__c != null)
-            ){	
-                if (newLoadsMap.containsKey(newLoad.DeliveryDate__c)){
-            	    newLoadsMap.get(newLoad.DeliveryDate__c).add(newLoad);
+            ) {
+                if (newLoadsMap.containsKey(newLoad.DeliveryDate__c)) {
+                    newLoadsMap.get(newLoad.DeliveryDate__c).add(newLoad);
                 } else {
                     newLoadsMap.put(newLoad.DeliveryDate__c, new List<Load__c>{
-                        newLoad 
+                        newLoad
                     });
                 }
                 newLoadsDepotList.add(newLoad.Depot__c);
                 newLoadsRouteIdentificationList.add(newLoad.RouteIdentification__c);
             }
         }
-	    setCorrectLastTwoDigitsOnLoadName(newLoadsMap, getExistingLoadsLastTwoDigits(newLoadsMap, newLoadsDepotList, newLoadsRouteIdentificationList));
+        setCorrectLastTwoDigitsOnLoadName(newLoadsMap, getExistingLoadsLastTwoDigits(newLoadsMap, newLoadsDepotList, newLoadsRouteIdentificationList));
     }
-    
-    private static Map<String, Integer> getExistingLoadsLastTwoDigits(Map<Date, List<Load__c>> newLoadsMap, Set<String> newLoadsDepotList, Set<String> newLoadsRouteIdentificationList){
-        List<AggregateResult> existingLoadsForSameDateDepotAndRoute = [SELECT Count(Id) similarLoadsCount, Depot__c, RouteIdentification__c, DeliveryDate__c 
-                                          			  		            FROM Load__c
-                                                                        WHERE Depot__c IN :newLoadsDepotList 
-                                                                            AND RouteIdentification__c IN :newLoadsRouteIdentificationList 
-                                                                            AND DeliveryDate__c IN :newLoadsMap.keySet()
-                                          			  		            GROUP BY Depot__c, RouteIdentification__c, DeliveryDate__c];
+
+    private static Map<String, Integer> getExistingLoadsLastTwoDigits(Map<Date, List<Load__c>> newLoadsMap, Set<String> newLoadsDepotList, Set<String> newLoadsRouteIdentificationList) {
+        List<AggregateResult> existingLoadsForSameDateDepotAndRoute = [
+            SELECT COUNT(Id) similarLoadsCount, Depot__c, RouteIdentification__c, DeliveryDate__c
+            FROM Load__c
+            WHERE Depot__c IN :newLoadsDepotList
+            AND RouteIdentification__c IN :newLoadsRouteIdentificationList
+            AND DeliveryDate__c IN :newLoadsMap.keySet()
+            GROUP BY Depot__c, RouteIdentification__c, DeliveryDate__c
+        ];
 
         Map<String, Integer> loadsLastTwoDigits = new Map<String, Integer>();
-        
+
         for (AggregateResult existingLoad : existingLoadsForSameDateDepotAndRoute) {
             String loadCombinationKey = getLoadCombinationKey(existingLoad);
             Integer similarExistingLoadsCount = (Integer) existingLoad.get('similarLoadsCount');
@@ -335,32 +344,71 @@ public with sharing class LoadTriggerHandler {
         }
         return loadsLastTwoDigits;
     }
-    
-    private static void setCorrectLastTwoDigitsOnLoadName(Map<Date, List<Load__c>> newLoadsMap, Map<String, Integer> loadsLastTwoDigits){
-        for (List<Load__c> loadsList : newLoadsMap.values()){
-        	for (Load__c newLoad: loadsList) {
+
+    private static void setCorrectLastTwoDigitsOnLoadName(Map<Date, List<Load__c>> newLoadsMap, Map<String, Integer> loadsLastTwoDigits) {
+        for (List<Load__c> loadsList : newLoadsMap.values()) {
+            for (Load__c newLoad : loadsList) {
                 String newLoadCombinationKey = getLoadCombinationKey(newLoad);
-            	if(!loadsLastTwoDigits.containsKey(newLoadCombinationKey)){
+                if (!loadsLastTwoDigits.containsKey(newLoadCombinationKey)) {
                     loadsLastTwoDigits.put(newLoadCombinationKey, 1);
-            		newLoad.Name = newLoadCombinationKey + '-' + '01';
-            	} else {
-                	Integer higherExistingLoadNumber = loadsLastTwoDigits.get(newLoadCombinationKey);
+                    newLoad.Name = newLoadCombinationKey + '-' + '01';
+                } else {
+                    Integer higherExistingLoadNumber = loadsLastTwoDigits.get(newLoadCombinationKey);
                     higherExistingLoadNumber++;
                     loadsLastTwoDigits.put(newLoadCombinationKey, higherExistingLoadNumber);
-                	if (higherExistingLoadNumber < 10){
-                	    newLoad.Name = newLoadCombinationKey + '-' + '0' + (higherExistingLoadNumber);
-            		} else {
-                		newLoad.Name = newLoadCombinationKey + '-' + (higherExistingLoadNumber);
-            		}
-            	}
-        	}
-        }  
+                    if (higherExistingLoadNumber < 10) {
+                        newLoad.Name = newLoadCombinationKey + '-' + '0' + (higherExistingLoadNumber);
+                    } else {
+                        newLoad.Name = newLoadCombinationKey + '-' + (higherExistingLoadNumber);
+                    }
+                }
+            }
+        }
     }
-    
-    private static String getLoadCombinationKey(SObject loadOrAggregateResult){
-        DateTime deliveryDate = (DateTime) loadOrAggregateResult.get('DeliveryDate__c');
+
+    private static String getLoadCombinationKey(SObject loadOrAggregateResult) {
+        Datetime deliveryDate = (Datetime) loadOrAggregateResult.get('DeliveryDate__c');
         String loadCombinationKey = loadOrAggregateResult.get('Depot__c') + '-' + loadOrAggregateResult.get('RouteIdentification__c') + '-' + deliveryDate.format('dd/MM/yy');
-        
+
         return loadCombinationKey;
+    }
+
+    private static Map<Id, Boolean> determineIfThereIsUnpaidInvoice(List<List<Order>> orders) {
+        Set<Id> orderAccountIds = getAccountIdsFromOrders(orders);
+        return getAccountsWithUnpaidInvoices(orderAccountIds);
+    }
+
+    private static Set<Id> getAccountIdsFromOrders(List<List<Order>> orders) {
+        Set<Id> orderAccountIds = new Set<Id>();
+        for (List<Order> orderList : orders) {
+            for (Order order : orderList) {
+                orderAccountIds.add(order.AccountId);
+            }
+        }
+        return orderAccountIds;
+    }
+
+    private static Map<Id, Boolean> getAccountsWithUnpaidInvoices(Set<Id> accountIds) {
+        Map<Id, Boolean> accountIdToUnpaidInvoiceFlag = new Map<Id, Boolean>();
+        for (Account acc : [
+            SELECT Id, (
+                SELECT
+                    Id
+                FROM aforza__Billing_Statements__r
+                WHERE aforza__Status__c != 'Paid'
+                AND aforza__Status__c != 'Approved for Payment'
+                AND aforza__Issued_Date__c = LAST_90_DAYS
+            )
+            FROM Account
+            WHERE Id IN :accountIds
+        ]) {
+            if (acc.aforza__Billing_Statements__r.size() == 0) {
+                accountIdToUnpaidInvoiceFlag.put(acc.Id, false);
+            } else {
+                accountIdToUnpaidInvoiceFlag.put(acc.Id, true);
+            }
+        }
+
+        return accountIdToUnpaidInvoiceFlag;
     }
 }

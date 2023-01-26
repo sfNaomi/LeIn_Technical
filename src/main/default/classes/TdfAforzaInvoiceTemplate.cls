@@ -14,6 +14,8 @@
 @IsTest
 public class TdfAforzaInvoiceTemplate extends TdfSObjectTemplate {
     private Id accountId;
+    private static Integer uniqueCounter = 0;
+
     /**
      * Instance is created dynamically. This method compensates a constructor.
      *
@@ -45,8 +47,9 @@ public class TdfAforzaInvoiceTemplate extends TdfSObjectTemplate {
         aforza__Invoice__c template = new aforza__Invoice__c();
         template.aforza__Account__c = accountId;
         template.InvoiceType__c = 'Invoice';
-        template.aforza__Reference__c = 'Test';
+        template.aforza__Reference__c = 'Test ' + ++uniqueCounter ;
         template.Gross__c = 10000;
+        template.aforza__Issued_Date__c = Date.today().addDays(-10);
         return template;
     }
 }

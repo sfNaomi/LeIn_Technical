@@ -9,7 +9,7 @@
     <columns>Route__c</columns>
     <columns>TotalQuantity__c</columns>
     <columns>TotalWeight__c</columns>
-    <columns>Vehicle__c</columns>
+    <columns>VehicleRegistration__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
