@@ -188,7 +188,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
             RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment', Status = 'Receipted', Type = 'Product Order'));
         TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
-            RecordTypeId = RecordTypes.ORDER_RETURN_ID, aforza__Original_Order__c = order.Id, PaymentMethod__c = 'Card Payment'));
+            RecordTypeId = RecordTypes.ORDER_RETURN_ID, OriginalOrder__c = order.Id, PaymentMethod__c = 'Card Payment'));
 
         InvoiceSettings__c settings = new InvoiceSettings__c(CreatePaymentWhenInvoiceIsCreated__c = true);
         insert settings;
@@ -203,7 +203,7 @@ private with sharing class InvoiceTriggerHandlerTest {
             SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, PaymentLink__c,
-                aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c, aforza__Order__r.aforza__Original_Order__c
+                aforza__Order__r.OriginalOrder__r.PaymentMethod__c, aforza__Order__r.OriginalOrder__c
             FROM aforza__Invoice__c
             LIMIT 1
         ];
@@ -217,7 +217,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         Assert.areEqual('Refund', btTransaction.bt_stripe__Transaction_Type__c);
         Assert.areEqual('Open', btTransaction.bt_stripe__Transaction_Status__c);
         Assert.areEqual(invoiceWithData.Id, btTransaction.Invoice__c);
-        Assert.areEqual(invoiceWithData.aforza__Order__r.aforza__Original_Order__c, btTransaction.Order__c);
+        Assert.areEqual(invoiceWithData.aforza__Order__r.OriginalOrder__c, btTransaction.Order__c);
         Assert.areEqual(originalTransaction.Id, btTransaction.bt_stripe__Parent_Transaction__c);
         Assert.areEqual(originalTransaction.Id, btTransaction.bt_stripe__Parent_Transaction_Id__c);
         Assert.areEqual(originalTransaction.bt_stripe__Payment_Method_Billing_Email__c, btTransaction.bt_stripe__Payment_Method_Billing_Email__c);
@@ -260,7 +260,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         Order order = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
             RecordTypeId = RecordTypes.ORDER_EDI_ID, PaymentMethod__c = 'Card Payment', Pricebook2Id = newPricebook.Id, Status = 'Receipted', Type = 'Product Order'));
         Order refundOrder = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
-            RecordTypeId = RecordTypes.ORDER_RETURN_ID, aforza__Original_Order__c = order.Id, PaymentMethod__c = 'Card Payment',
+            RecordTypeId = RecordTypes.ORDER_RETURN_ID, OriginalOrder__c = order.Id, PaymentMethod__c = 'Card Payment',
             Pricebook2Id = newPricebook.Id));
 
         TdfSObjectFactory.insertSObject(
@@ -329,7 +329,7 @@ private with sharing class InvoiceTriggerHandlerTest {
         TdfSObjectFactory.insertSObject(new bt_stripe__Transaction__c(Order__c = order.Id, RecordTypeId = RecordTypes.BT_TRANSACTION_CHARGE_ID));
 
         Order refundOrder = (Order) TdfSObjectFactory.insertSObject(new Order(AccountId = acc.Id, PreAuthCaptured__c = false,
-            RecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID, Type = 'Return Order', aforza__Original_Order__c = order.Id, PaymentMethod__c = 'Card Payment',
+            RecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID, Type = 'Return Order', OriginalOrder__c = order.Id, PaymentMethod__c = 'Card Payment',
             Pricebook2Id = newPricebook.Id));
 
         TdfSObjectFactory.insertSObject(

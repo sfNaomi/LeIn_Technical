@@ -44,10 +44,10 @@ public with sharing class InvoiceTriggerHandler {
                 invoiceIds.add(invoice.Id);
                 continue;
             }
-            if (invoice.Gross__c < 0 && invoice.aforza__Order__r.aforza__Original_Order__c != null &&
-                invoice.aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c == 'Card Payment' &&
+            if (invoice.Gross__c < 0 && invoice.aforza__Order__r.OriginalOrder__c != null &&
+                invoice.aforza__Order__r.OriginalOrder__r.PaymentMethod__c == 'Card Payment' &&
                 invoice.aforza__Order__r.Type == ORDER_TYPE_RETURN) {
-                ordersToGetTransactionsFor.add(invoice.aforza__Order__r.aforza__Original_Order__c);
+                ordersToGetTransactionsFor.add(invoice.aforza__Order__r.OriginalOrder__c);
                 refundInvoices.add(invoice);
             }
         }
@@ -95,7 +95,7 @@ public with sharing class InvoiceTriggerHandler {
 
         if (originalTransaction != null) {
             btTransaction.bt_stripe__Transaction_Type__c = 'Refund';
-            btTransaction.Order__c = invoice.aforza__Order__r.aforza__Original_Order__c;
+            btTransaction.Order__c = invoice.aforza__Order__r.OriginalOrder__c;
             btTransaction.bt_stripe__Parent_Transaction__c = originalTransaction.Id;
             btTransaction.bt_stripe__Parent_Transaction_Id__c = originalTransaction.Id;
             btTransaction.bt_stripe__Payment_Method_Billing_Email__c = originalTransaction.bt_stripe__Payment_Method_Billing_Email__c;
@@ -139,7 +139,7 @@ public with sharing class InvoiceTriggerHandler {
             SELECT Id, aforza__Order__r.PaymentMethod__c, aforza__Order__r.PreAuthCaptured__c,
                 aforza__Order__r.RecordType.DeveloperName, Gross__c, aforza__Account__r.aforza__Primary_Contact__c,
                 aforza__Account__c, aforza__Order__c, aforza__Order__r.OrderNumber, PaymentLink__c,
-                aforza__Order__r.aforza__Original_Order__r.PaymentMethod__c, aforza__Order__r.aforza__Original_Order__c,
+                aforza__Order__r.OriginalOrder__r.PaymentMethod__c, aforza__Order__r.OriginalOrder__c,
                 aforza__Order__r.Type
             FROM aforza__Invoice__c
             WHERE Id IN :invoicesIds
@@ -174,7 +174,7 @@ public with sharing class InvoiceTriggerHandler {
         Map<Id, bt_stripe__Transaction__c> orderToTransactionMap = fetchOrdersWithTransactions(ordersToGetTransactionsFor);
         List<bt_stripe__Transaction__c> transactionsToCreate = new List<bt_stripe__Transaction__c>();
         for (aforza__Invoice__c invoice : refundInvoices) {
-            Id originalOrderId = invoice.aforza__Order__r.aforza__Original_Order__c;
+            Id originalOrderId = invoice.aforza__Order__r.OriginalOrder__c;
             if (orderToTransactionMap.containsKey(originalOrderId)) {
                 transactionsToCreate.add(createTransactionRecord(invoice, orderToTransactionMap.get(originalOrderId)));
             }

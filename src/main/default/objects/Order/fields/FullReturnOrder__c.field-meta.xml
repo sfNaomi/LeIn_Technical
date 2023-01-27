@@ -3,7 +3,7 @@
     <fullName>FullReturnOrder__c</fullName>
     <description>Field to identify full return orders by comparing the amount on the original order vs. the amount on the new order.</description>
     <externalId>false</externalId>
-    <formula>IF( AND(aforza__Original_Order__c != null, aforza__Original_Order__r.TotalAmount == TotalAmount), True, False )</formula>
+    <formula>IF( AND(OriginalOrder__c != null, OriginalOrder__r.TotalAmount == TotalAmount), True, False )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Full Return Order</label>
     <trackHistory>false</trackHistory>

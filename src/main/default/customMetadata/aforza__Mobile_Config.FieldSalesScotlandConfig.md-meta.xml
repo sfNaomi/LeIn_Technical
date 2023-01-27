@@ -558,7 +558,7 @@
           }
           },
           {
-          "Name":"aforza__Original_Order__c",
+          "Name":"OriginalOrder__c",
           "Details":{
           "Required":false
           }

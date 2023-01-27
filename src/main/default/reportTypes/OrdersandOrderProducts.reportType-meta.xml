@@ -322,7 +322,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Original_Order__c</field>
+            <field>OriginalOrder__c</field>
             <table>Order</table>
         </columns>
         <columns>
@@ -557,17 +557,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Original_Order__c.TotalAmount</field>
+            <field>OriginalOrder__c.TotalAmount</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Original_Order__c.aforza__Total_List_Price_Amount__c</field>
+            <field>OriginalOrder__c.aforza__Total_List_Price_Amount__c</field>
             <table>Order</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>aforza__Original_Order__c.aforza__Total_Products_In_Order__c</field>
+            <field>OriginalOrder__c.aforza__Total_Products_In_Order__c</field>
             <table>Order</table>
         </columns>
         <columns>

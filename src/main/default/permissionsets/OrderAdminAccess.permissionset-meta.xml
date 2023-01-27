@@ -458,7 +458,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.aforza__Original_Order__c</field>
+        <field>Order.OriginalOrder__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
