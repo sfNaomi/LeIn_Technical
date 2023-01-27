@@ -39,7 +39,7 @@ private class InsecureOrderCloningServiceTest {
         Test.stopTest();
 
         Order clonedOrder = [
-            SELECT Id, Clone__c, aforza__Original_Order__c, Status
+            SELECT Id, Clone__c, OriginalOrder__c, Status
             FROM Order
             WHERE Clone__c = TRUE
         ];
@@ -49,7 +49,7 @@ private class InsecureOrderCloningServiceTest {
             WHERE OrderId = :clonedOrder.Id
         ];
 
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Assert.areEqual(newOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
         Assert.areEqual(1, clonedOrderItems.size(), 'Expected one order item for the cloned order');
     }

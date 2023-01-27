@@ -5,8 +5,16 @@
     <description>Validation which ensures that Original Order is filled on return type orders.</description>
     <errorConditionFormula>AND(
     ISPICKVAL(Type, &apos;Return Order&apos;),
-    ISBLANK(aforza__Original_Order__c)
+				Clone__c = false,
+    OR(
+								ISBLANK(OriginalOrder__c), 
+							 AND(
+												NOT(ISBLANK(OriginalOrder__c)),
+												NOT(ISPICKVAL(OriginalOrder__r.Status, &apos;Receipted&apos;)),
+												NOT(ISPICKVAL(OriginalOrder__r.Type, &apos;Product Order&apos;))
+								) 
+				)
 )</errorConditionFormula>
-    <errorDisplayField>aforza__Original_Order__c</errorDisplayField>
-    <errorMessage>Please select the original order for which you are creating the return order.</errorMessage>
+    <errorDisplayField>OriginalOrder__c</errorDisplayField>
+    <errorMessage>Please select the original order for which you are creating the return order or the original order either has a Status different than &apos;Receipted&apos; or a Type different than &apos;Product Order&apos;.</errorMessage>
 </ValidationRule>

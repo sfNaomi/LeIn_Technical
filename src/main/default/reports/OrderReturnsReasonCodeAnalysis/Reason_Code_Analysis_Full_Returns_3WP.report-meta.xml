@@ -21,7 +21,7 @@
         <field>Order.OrderItems$Quantity</field>
     </columns>
     <columns>
-        <field>Order$aforza__Original_Order__c</field>
+        <field>Order$OriginalOrder__c</field>
     </columns>
     <description>Reason code analysis report for full order returns</description>
     <filter>

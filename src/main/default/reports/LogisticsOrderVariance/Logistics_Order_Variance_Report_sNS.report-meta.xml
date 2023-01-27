@@ -63,7 +63,7 @@
                 <value>Delivered,Receipted</value>
             </criteriaItems>
             <criteriaItems>
-                <column>Order$aforza__Original_Order__c</column>
+                <column>Order$OriginalOrder__c</column>
                 <columnToColumn>false</columnToColumn>
                 <isUnlocked>false</isUnlocked>
                 <operator>equals</operator>
@@ -131,7 +131,7 @@
                 <value>Product Order</value>
             </criteriaItems>
             <criteriaItems>
-                <column>Order$aforza__Original_Order__c</column>
+                <column>Order$OriginalOrder__c</column>
                 <columnToColumn>false</columnToColumn>
                 <isUnlocked>false</isUnlocked>
                 <operator>notEqual</operator>
