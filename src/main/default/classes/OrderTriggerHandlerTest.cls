@@ -727,7 +727,7 @@ private with sharing class OrderTriggerHandlerTest {
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID, AccountId = dpAccount.Id, Status = 'Draft',
-                Pricebook2Id = newPricebook.Id, IsApproved__c = false, aforza__Original_Order__c = originalOrder.Id,
+                Pricebook2Id = newPricebook.Id, IsApproved__c = false, OriginalOrder__c = originalOrder.Id,
                 PaymentMethod__c = 'Card Payment', PreAuthCaptured__c = false, Type = 'Return Order'
             )
         );
@@ -783,7 +783,7 @@ private with sharing class OrderTriggerHandlerTest {
         Order newOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_RETURN_ID, AccountId = dpAccount.Id, Status = 'Draft',
-                Pricebook2Id = newPricebook.Id, IsApproved__c = false, aforza__Original_Order__c = originalOrder.Id,
+                Pricebook2Id = newPricebook.Id, IsApproved__c = false, OriginalOrder__c = originalOrder.Id,
                 PaymentMethod__c = 'Card Payment', PreAuthCaptured__c = false
             )
         );
@@ -1147,8 +1147,8 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Order clonedOrder = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(newOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
@@ -1196,8 +1196,8 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Order clonedOrder = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(newOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
@@ -1245,8 +1245,8 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Order clonedOrder = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(newOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
@@ -1294,8 +1294,8 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(newOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Order clonedOrder = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(newOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
@@ -1338,7 +1338,7 @@ private with sharing class OrderTriggerHandlerTest {
         Order returnOrder = (Order) TdfSObjectFactory.insertSObject(
             new Order(
                 RecordTypeId = RecordTypes.ORDER_RETURN_ID, AccountId = dpAccount.Id, Status = 'Draft',
-                Pricebook2Id = newPricebook.Id, aforza__Original_Order__c = originalOrder.Id
+                Pricebook2Id = newPricebook.Id, OriginalOrder__c = originalOrder.Id
             )
         );
         TdfSObjectFactory.insertSObject(
@@ -1350,8 +1350,8 @@ private with sharing class OrderTriggerHandlerTest {
         update returnOrder;
         Test.stopTest();
 
-        Order clonedOrder = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
-        Assert.areEqual(returnOrder.Id, clonedOrder.aforza__Original_Order__c, 'Expected a different original order Id.');
+        Order clonedOrder = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
+        Assert.areEqual(returnOrder.Id, clonedOrder.OriginalOrder__c, 'Expected a different original order Id.');
         Assert.areEqual('Draft', clonedOrder.Status, 'Expected a different order status for the clone.');
 
         List<OrderItem> clonedOrderItems = [SELECT Id, OrderId, Product2Id FROM OrderItem WHERE OrderId = :clonedOrder.Id];
@@ -1441,7 +1441,7 @@ private with sharing class OrderTriggerHandlerTest {
         update newOrder;
         Test.stopTest();
 
-        List<Order> clonedOrders = [SELECT Id, Clone__c, aforza__Original_Order__c, Status FROM Order WHERE Clone__c = TRUE];
+        List<Order> clonedOrders = [SELECT Id, Clone__c, OriginalOrder__c, Status FROM Order WHERE Clone__c = TRUE];
         Assert.areEqual(0, clonedOrders.size(), 'Expected no clone orders to be created');
     }
 

@@ -4,10 +4,10 @@
     <description>Field to identify the Original Order Number (Delivered Order) - Used for reporting.</description>
     <externalId>false</externalId>
     <formula>IF( 
-				AND(aforza__Original_Order__c != null, Clone__c, OR(ISPICKVAL(aforza__Original_Order__r.Status, &apos;Delivered&apos;), ISPICKVAL(aforza__Original_Order__r.Status, &apos;Receipted&apos;))),
-				aforza__Original_Order__r.OrderNumber,
+				AND(OriginalOrder__c != null, Clone__c, OR(ISPICKVAL(OriginalOrder__r.Status, &apos;Delivered&apos;), ISPICKVAL(OriginalOrder__r.Status, &apos;Receipted&apos;))),
+				OriginalOrder__r.OrderNumber,
 				IF(
-								AND(aforza__Original_Order__c == null, OR(ISPICKVAL(Status, &apos;Delivered&apos;), ISPICKVAL(Status, &apos;Receipted&apos;))),
+								AND(OriginalOrder__c == null, OR(ISPICKVAL(Status, &apos;Delivered&apos;), ISPICKVAL(Status, &apos;Receipted&apos;))),
 								OrderNumber,
 								&apos;&apos;
 				)

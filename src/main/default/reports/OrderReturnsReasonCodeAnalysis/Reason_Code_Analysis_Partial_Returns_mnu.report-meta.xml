@@ -21,11 +21,11 @@
         <field>Order.OrderItems$Quantity</field>
     </columns>
     <columns>
-        <field>Order$aforza__Original_Order__c</field>
+        <field>Order$OriginalOrder__c</field>
     </columns>
     <columns>
         <aggregateTypes>Sum</aggregateTypes>
-        <field>Order$aforza__Original_Order__c.aforza__Total_Products_In_Order__c</field>
+        <field>Order$OriginalOrder__c.aforza__Total_Products_In_Order__c</field>
     </columns>
     <description>Reason code analysis report for partial order returns.</description>
     <filter>

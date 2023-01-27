@@ -195,6 +195,7 @@ public with sharing class InvoiceGenerationService {
                 this.invoiceItems.add(new InvoiceItem(item));
                 this.vatDistribution.add(item);
             }
+            this.invoiceItems.sort();
         }
     }
 
@@ -204,7 +205,7 @@ public with sharing class InvoiceGenerationService {
     * @author Magdalena Stanciu
     * @date 2022-11-07
     */
-    public class InvoiceItem {
+    public class InvoiceItem implements Comparable {
         public String code {get; set;}
         public String description {get; set;}
         public Integer quantity {get; set;}
@@ -221,6 +222,29 @@ public with sharing class InvoiceGenerationService {
             this.vatRate = newItem.VatRate__c;
             this.vatValue = newItem.Vat__c;
             this.netPrice = newItem.NetPrice__c;
+        }
+
+        /**
+        * @description method used to compare two invoice line items to ensure ascending sorting based on product code
+        *
+        * @param comparableObject object used to compare an invoice line item with
+        *
+        * @return Integer returns -1 if lower, 1 if higher, 0 if equal
+        *
+        * @author Magdalena Stanciu
+        * @date 2023-01-26
+        */
+        public Integer compareTo(Object comparableObject) {
+            InvoiceItem comparableInvoiceLineItem = (InvoiceItem) comparableObject;
+
+            if (this.code < comparableInvoiceLineItem.code) {
+                return -1;
+            }
+            if (this.code > comparableInvoiceLineItem.code) {
+                return 1;
+            }
+
+            return 0;
         }
     }
 

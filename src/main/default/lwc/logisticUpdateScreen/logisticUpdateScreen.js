@@ -39,7 +39,7 @@ import palletSequence from '@salesforce/label/c.PickSheetPalletSequence';
 
 const columns = [
     {label: loadId, fieldName: 'Load__rName', sortable: true},
-    {label: 'Vehicle', fieldName: 'Load__rVehicle__rName', sortable: true},
+    {label: 'Vehicle Registration', fieldName: 'Load__rVehicleRegistration__c', sortable: true},
     {label: 'Driver', fieldName: 'Load__rDriverFullName__c', sortable: true},
     {label: depot, fieldName: 'Depot__c', sortable: true},
     {
@@ -76,7 +76,8 @@ const columns = [
     {label: deliveryManifestPrinted, fieldName: 'DeliveryManifestPrinted__c', type: 'boolean'},
     {label: deliveryNotePrinted, fieldName: 'DeliveryNotePrinted__c', type: 'boolean'},
     {label: receipt, fieldName: 'Receipt__c', type: 'boolean'},
-    {label: invoicePrinted, fieldName: 'Invoice__rInvoicePrinted__c', type: 'boolean'}
+    {label: invoicePrinted, fieldName: 'Invoice__rInvoicePrinted__c', type: 'boolean'},
+    {label: 'Vehicle', fieldName: 'Load__rVehicle__rName', sortable: true}
 ];
 
 const pickingUserActions = [
@@ -128,7 +129,7 @@ export default class LogisticUpdateScreen extends NavigationMixin(LightningEleme
         action,
         printUpdate
     }
-    queryFields = 'Id,Load__r.Name,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,' +
+    queryFields = 'Id,Load__r.Name,Load__r.VehicleRegistration__c,Load__r.Vehicle__r.Name,Load__r.DriverFullName__c,toLabel(Depot__c),DeliveryDate__c,Load__r.DeliveryDate__c,' +
         'OrderNumber,AccountName__c,ShippingPostalCode,TotalQuantity__c,Status,PalletSequence__c,PickingSheetPrinted__c,PickingCompleted__c,' +
         'IsLoaded__c,DeliveryManifestPrinted__c,DeliveryNotePrinted__c,Receipt__c,Invoice__c,Invoice__r.InvoicePrinted__c';
 

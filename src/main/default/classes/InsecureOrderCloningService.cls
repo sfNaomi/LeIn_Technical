@@ -6,7 +6,7 @@ public without sharing class InsecureOrderCloningService {
             Order tempClonedOrder = newOrder.clone(false, true, false, false);
             tempClonedOrder.Status = 'Draft';
             tempClonedOrder.Clone__c = true;
-            tempClonedOrder.aforza__Original_Order__c = newOrder.Id;
+            tempClonedOrder.OriginalOrder__c = newOrder.Id;
             tempClonedOrder.aforza__Local_Id__c = null;
             clonedOrders.add(tempClonedOrder);
         }
@@ -17,7 +17,7 @@ public without sharing class InsecureOrderCloningService {
     public static void cloneOrderItemsFromOriginalOrder(List<Order> succesfullyClonedOrders) {
         Map<Id, Id> originalOrderIdsToClonedOrderIds = new Map<Id, Id>();
         for (Order order : succesfullyClonedOrders) {
-            originalOrderIdsToClonedOrderIds.put(order.aforza__Original_Order__c, order.Id);
+            originalOrderIdsToClonedOrderIds.put(order.OriginalOrder__c, order.Id);
         }
 
         List<OrderItem> orderItemsFromAllOriginalOrders = [
