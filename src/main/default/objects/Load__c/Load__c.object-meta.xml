@@ -167,7 +167,7 @@
         <searchResultsAdditionalFields>Route__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TotalQuantity__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TotalWeight__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Vehicle__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>VehicleRegistration__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
