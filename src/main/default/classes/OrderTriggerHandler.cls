@@ -367,13 +367,14 @@ public with sharing class OrderTriggerHandler {
                 });
             }
         }
-        List<aforza__Visit__c> visitsWithTasks = fetchVisitsWithTasks(visitIds);
+        List<aforza__Visit__c> visits = fetchVisits(visitIds);
+        Map<Id, List<Task>> visitToItsTask = fetchTasksForVisits(visitIds);
         List<aforza__Visit__c> visitsToDelete = new List<aforza__Visit__c>();
         Set<Id> accountIds = new Set<Id>();
-        for (aforza__Visit__c visit : visitsWithTasks) {
+        for (aforza__Visit__c visit : visits) {
             // understand if there would be any task left after deletion
             Set<Id> taskIds = visitIdToTaskIdsForDeletionSet.get(visit.Id);
-            List<LookedUpFromActivity> existingTasks = visit.aforza__Activities__r;
+            List<Task> existingTasks = visitToItsTask.get(visit.Id);
             for (Integer i = existingTasks.size() - 1; i >= 0; i--) {
                 if (taskIds.contains(existingTasks[i].Id)) {
                     existingTasks.remove(i);
@@ -400,9 +401,23 @@ public with sharing class OrderTriggerHandler {
         return [SELECT Id, aforza__Visit__c FROM Task WHERE aforza__Order__c IN :orderIds];
     }
 
-    private static List<aforza__Visit__c> fetchVisitsWithTasks(Set<Id> visitIds) {
-        return [SELECT Id, (SELECT Id FROM aforza__Activities__r), aforza__Account__c FROM aforza__Visit__c WHERE Id IN :visitIds];
+    private static List<aforza__Visit__c> fetchVisits(Set<Id> visitIds) {
+        return [SELECT Id, aforza__Account__c FROM aforza__Visit__c WHERE Id IN :visitIds];
     }
+
+    private static Map<Id, List<Task>> fetchTasksForVisits(Set<Id> visitIds) {
+        Map<Id, List<Task>> visitWithTasks = new Map<Id, List<Task>>();
+        for (Task task: [SELECT Id, aforza__Visit__c FROM Task WHERE aforza__Visit__c IN :visitIds]) {
+            if (visitWithTasks.containsKey(task.aforza__Visit__c)) {
+                visitWithTasks.get(task.aforza__Visit__c).add(task);
+            } else {
+                visitWithTasks.put(task.aforza__Visit__c, new List<Task>{task});
+            }
+        }
+        return visitWithTasks;
+    }
+
+
 
     private static void deleteRouteLocations(Set<Id> accountIds, Map<Id, Id> accountIdToLoadIdMap) {
         List<aforza__Route_Location__c> routeLocationsForDeletion = new List<aforza__Route_Location__c>();
