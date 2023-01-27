@@ -7,7 +7,7 @@
         <field>aforza__Visit__c.aforza__Status__c</field>
     </columns>
     <columns>
-        <field>USERS.NAME</field>
+        <field>Account.OwningTAM__c</field>
     </columns>
     <columns>
         <field>aforza__Visit__c.aforza__Owner__c</field>
