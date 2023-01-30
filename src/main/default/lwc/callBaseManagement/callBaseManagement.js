@@ -289,4 +289,15 @@ export default class CallBaseManagement extends LightningElement {
             this.isLoading = false;
         }
     }
+
+    /** Method to return base filter
+     *
+     * @returns {string} - formatted base not removable filter
+     *
+     * @author Svata Sejkora
+     * @date 2022-12-08
+     */
+    get callsDefaultFilter() {
+        return ` AND RecordType.DeveloperName = Remote_Visit`
+    }
 }
