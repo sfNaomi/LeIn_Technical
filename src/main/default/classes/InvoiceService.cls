@@ -43,11 +43,12 @@ public with sharing class InvoiceService {
      *
      * @param orderIdsToCreateInvoices ids of orders for which invoices must be created
      *
+     * @return invoiceIds set of Invoices that has been created
      *
      * @author Magdalena Stanciu
      * @date 2022-10-10
      */
-    public static void createInvoicesFromOrders(Set<Id> orderIdsToCreateInvoices) {
+    public static Set<Id> createInvoicesFromOrders(Set<Id> orderIdsToCreateInvoices) {
         List<Order> ordersToBeProcessed = getOrders(orderIdsToCreateInvoices);
         List<aforza__Invoice__c> existingInvoices = getInvoices(orderIdsToCreateInvoices);
 
@@ -133,23 +134,27 @@ public with sharing class InvoiceService {
             }
         }
 
-        if (System.isBatch()) {
-            generateInvoiceDocumentSync(invoicesWithProperPaymentMethod);
-        } else {
+        // when context is not batch = manual update of order, then run logic in here
+        // in case this is from batch, the invoice doc, creation logic is ran from batch
+        if (!System.isBatch()) {
             generateInvoiceDocumentsAsync(invoicesWithProperPaymentMethod);
         }
+
+        return invoicesWithProperPaymentMethod;
     }
 
-    public static void createInvoicesFromOrdersBatch(List<Order> orders) {
+    public static Set<Id> createInvoicesFromOrdersBatch(List<Order> orders) {
         Set<Id> orderIdsToCreateInvoiceFrom = new Set<Id>();
+        Set<Id> invoiceIds = new Set<Id>();
         for (Order order : orders) {
             if (OrderService.orderTypeRequiresInvoiceCreation(order.RecordTypeId)) {
                 orderIdsToCreateInvoiceFrom.add(order.Id);
             }
         }
         if (orderIdsToCreateInvoiceFrom.size() > 0) {
-            createInvoicesFromOrders(orderIdsToCreateInvoiceFrom);
+            invoiceIds.addAll(createInvoicesFromOrders(orderIdsToCreateInvoiceFrom));
         }
+        return invoiceIds;
     }
 
     private static void updateInvoicesWithReadyForEvaluation(Set<Id> invoiceIds) {
@@ -431,8 +436,7 @@ public with sharing class InvoiceService {
      */
     @Future(Callout=true)
     public static void generateInvoiceDocumentsAsync(Set<Id> invoiceIds) {
-        generateInvoiceDocuments(invoiceIds);
-        updateInvoicesWithReadyForEvaluation(invoiceIds);
+        generateInvoiceDocumentSync(invoiceIds);
     }
 
     /**
@@ -444,7 +448,7 @@ public with sharing class InvoiceService {
      * @author Magdalena Stanciu
      * @date 2022-10-25
      */
-    private static void generateInvoiceDocumentSync(Set<Id> invoiceIds) {
+    public static void generateInvoiceDocumentSync(Set<Id> invoiceIds) {
         generateInvoiceDocuments(invoiceIds);
         updateInvoicesWithReadyForEvaluation(invoiceIds);
     }
