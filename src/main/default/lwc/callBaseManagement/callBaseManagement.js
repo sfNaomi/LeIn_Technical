@@ -298,6 +298,6 @@ export default class CallBaseManagement extends LightningElement {
      * @date 2022-12-08
      */
     get callsDefaultFilter() {
-        return ` AND RecordType.DeveloperName = Remote_Visit`
+        return ` AND RecordType.DeveloperName = 'Remote_Visit'`
     }
 }
