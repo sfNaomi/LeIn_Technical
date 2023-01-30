@@ -3,7 +3,7 @@
     <fullName>RestrictTelesalesCallTime</fullName>
     <active>true</active>
     <errorConditionFormula>OR(
- PreferredCallTimeTelesales__c &lt; TIMEVALUE(&quot;9:00:00.000&quot;),
- PreferredCallTimeTelesales__c &gt; TIMEVALUE(&quot;17:00:00.000&quot;) )</errorConditionFormula>
-    <errorMessage>Please select a time for Preferred Call Time that is between 9:00am - 5:00pm to update this record</errorMessage>
+ PreferredCallTimeTelesales__c &lt; TIMEVALUE(&quot;6:00:00.000&quot;),
+ PreferredCallTimeTelesales__c &gt; TIMEVALUE(&quot;19:30:00.000&quot;) )</errorConditionFormula>
+    <errorMessage>Please select a time for Preferred Call Time that is between 6:00am - 7:30pm to update this record</errorMessage>
 </ValidationRule>

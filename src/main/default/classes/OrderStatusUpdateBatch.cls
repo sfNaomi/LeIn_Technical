@@ -5,12 +5,13 @@
  * to schedule: System.schedule('Order Status Change', '0 40 * * * ?', new OrderStatusUpdateBatch());
  */
 
-public without sharing class OrderStatusUpdateBatch implements Schedulable, Database.Batchable<SObject> {
+public without sharing class OrderStatusUpdateBatch implements Schedulable, Database.Batchable<SObject>, Database.AllowsCallouts, Database.Stateful {
 
     private static final String SCHEDULE_FORMAT = '0 m H d MM ? yyyy';
     private static final Set<String> EXCLUDED_ORDER_TYPES = new Set<String>{RecordTypes.ORDER_STRAIGHT_TO_JDE_ID, RecordTypes.ORDER_VAN_SALES_ID};
     private static final String STRAIGHT_TO_JDE_RECORD_TYPE_ID = RecordTypes.ORDER_STRAIGHT_TO_JDE_ID;
     private static final String JOB_NAME = 'Order Status Change';
+    private Set<Id> invoiceIds = new Set<Id>();
 
     public Iterable<SObject> start(Database.BatchableContext batchableContext) {
         // load all order records that should be moved to completed
@@ -22,10 +23,12 @@ public without sharing class OrderStatusUpdateBatch implements Schedulable, Data
 
     public void execute(Database.BatchableContext batchableContext, List<Order> orders) {
         OrderService.updateOrderStatus(orders, 'Receipted');
-        InvoiceService.createInvoicesFromOrdersBatch(orders);
+        this.invoiceIds.addAll(InvoiceService.createInvoicesFromOrdersBatch(orders));
     }
 
     public void finish(Database.BatchableContext param1) {
+        // run batch to create documents
+        Database.executeBatch(new InvoiceGeneratePdfBatch(this.invoiceIds));
         // delete old runs
         clearOldScheduledApexJobs();
         // schedule new run
