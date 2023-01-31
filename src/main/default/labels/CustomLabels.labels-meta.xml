@@ -19,14 +19,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OrderActivationPreventedDueToAccountOnHold</shortDescription>
-        <value>Order activation not allowed due to related DP account being "On Hold". Record needs to be submitted for approval.</value>
+        <value>Order activation not allowed due to related account being "On Hold". Record needs to be submitted for approval.</value>
     </labels>
     <labels>
         <fullName>OrderActivationPreventedAccNotEnoughCredit</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OrderActivationPreventedAccNotEnoughCredit</shortDescription>
-        <value>Order activation not allowed due to related DP account negative available credit. Record needs to be submitted for approval.</value>
+        <value>Order activation not allowed due to related account negative available credit. Record needs to be submitted for approval.</value>
     </labels>
     <labels>
         <fullName>MissingContactDetailsOnPrimaryContact</fullName>
