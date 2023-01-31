@@ -37,14 +37,14 @@
         <label>Deposit</label>
     </standardValue>
     <standardValue>
-        <fullName>Perfect Store V&amp;D</fullName>
+        <fullName>Perfect Store Visibility and Display</fullName>
         <default>false</default>
-        <label>Perfect Store V&amp;D</label>
+        <label>Perfect Store Visibility and Display</label>
     </standardValue>
     <standardValue>
-        <fullName>Perfect Store C&amp;E</fullName>
+        <fullName>Perfect Store Core and Energy</fullName>
         <default>false</default>
-        <label>Perfect Store C&amp;E</label>
+        <label>Perfect Store Core and Energy</label>
     </standardValue>
     <standardValue>
         <fullName>Visit-Marketing</fullName>
