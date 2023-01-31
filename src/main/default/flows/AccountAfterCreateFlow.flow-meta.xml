@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Send_Notification_About_New_Account</name>
-        <label>Send Notification About New Account</label>
-        <locationX>50</locationX>
-        <locationY>1391</locationY>
-        <actionName>Account.SendNotificationAboutNewAccountCreated</actionName>
-        <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>GetResultATTRec</name>
@@ -166,9 +151,6 @@
         <label>New DP Attribute Assignment Record</label>
         <locationX>50</locationX>
         <locationY>1271</locationY>
-        <connector>
-            <targetReference>Send_Notification_About_New_Account</targetReference>
-        </connector>
         <inputAssignments>
             <field>aforza__Account__c</field>
             <value>

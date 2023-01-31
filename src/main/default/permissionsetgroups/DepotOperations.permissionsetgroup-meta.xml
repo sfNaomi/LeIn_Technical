@@ -44,6 +44,7 @@
     <permissionSets>TaskBaseAccess</permissionSets>
     <permissionSets>VehicleBaseAccess</permissionSets>
     <permissionSets>VehicleEditAccess</permissionSets>
+    <permissionSets>VisitAllAccess</permissionSets>
     <permissionSets>VisitBaseAccess</permissionSets>
     <permissionSets>VisitDirectRtAccess</permissionSets>
     <permissionSets>VisitEditAccess</permissionSets>
