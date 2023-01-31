@@ -397,7 +397,7 @@ public with sharing class LoadTriggerHandler {
                 FROM aforza__Billing_Statements__r
                 WHERE aforza__Status__c != 'Paid'
                 AND aforza__Status__c != 'Approved for Payment'
-                AND aforza__Issued_Date__c = LAST_90_DAYS
+                AND aforza__Issued_Date__c = LAST_N_DAYS:62
             )
             FROM Account
             WHERE Id IN :accountIds
