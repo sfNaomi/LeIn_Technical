@@ -25,8 +25,23 @@
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <formula>AND(
-				RecordType.DeveloperName = &quot;TelesalesOrder&quot;,
-				ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;))</formula>
+	RecordType.DeveloperName = &quot;TelesalesOrder&quot;, 
+	OR(
+		AND(
+			OR(
+				ISNULL(Account.ParentId),
+				AND(NOT(ISNULL(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
+			),
+			ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;)
+		),
+		AND(
+			NOT(ISNULL(Account.ParentId)), 
+			Account.Parent.DefaultInvoiceBillingAddress__c,
+			ISPICKVAL(Account.Parent.CreditStatus__c, &apos;On Hold&apos;)
+		)
+		
+	)
+)</formula>
     </entryCriteria>
     <finalApprovalActions>
         <action>

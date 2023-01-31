@@ -517,8 +517,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalAmountOpenInvoicesCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.TotalAmountOpenInvoices__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.TotalAmountOpenOrdersCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

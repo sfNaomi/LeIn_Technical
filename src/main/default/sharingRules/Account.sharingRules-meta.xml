@@ -68,12 +68,12 @@
             <contactAccessLevel>Edit</contactAccessLevel>
             <opportunityAccessLevel>None</opportunityAccessLevel>
         </accountSettings>
-        <description>PF-29: Sharing all DP accounts with all Telesales users, so that orders can be placed for any account, independent of account team membership. Share customer accounts with telesales to enable automations.</description>
+        <description>PF-29: Sharing all DP accounts with all Telesales users, so that orders can be placed for any account, independent of account team membership.</description>
         <label>Share Accounts with Telesales Users</label>
         <sharedTo>
             <roleAndSubordinates>SalesController</roleAndSubordinates>
         </sharedTo>
-        <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
@@ -83,11 +83,6 @@
             <field>AccountStatus__c</field>
             <operation>equals</operation>
             <value>Traders,At Risk,Win Back,Lapsed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Customer</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>

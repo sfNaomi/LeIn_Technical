@@ -24,25 +24,53 @@
     <emailTemplate>unfiled$public/OrderRequiringApproval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <formula>
-            OR(
-				AND(
-				    OR(
-                        ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;), 
-                        AND(
-                            Account.AvailableCredit__c &lt; TotalAmount, 
-                            Account.Parent.AvailableCustomerCredit__c &lt; TotalAmount
-                        )
-                    ),
-                    (RecordType.DeveloperName = &quot;ECommerceOrder&quot; || RecordType.DeveloperName = &quot;EDIOrder&quot; || RecordType.DeveloperName = &quot;FieldDirectOrder&quot;)
-                ),
-                AND(
-                    Account.AvailableCredit__c &lt; TotalAmount, 
-                    Account.Parent.AvailableCustomerCredit__c &lt; TotalAmount, 
-                    RecordType.DeveloperName = &quot;TelesalesOrder&quot;
-                )
+        <formula>OR(
+	AND(
+		OR(
+			RecordType.DeveloperName = &quot;TelesalesOrder&quot;, 
+			RecordType.DeveloperName = &quot;ECommerceOrder&quot;,
+			RecordType.DeveloperName = &quot;EDIOrder&quot;, 
+			RecordType.DeveloperName = &quot;FieldDirectOrder&quot;
+		),
+		OR(
+			AND(
+				OR(
+					ISNULL(Account.ParentId),
+					AND(NOT(ISNULL(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
+				),
+				TotalAmount &gt; Account.AvailableCredit__c
+			),
+			AND(
+				NOT(ISNULL(Account.ParentId)), 
+				Account.Parent.DefaultInvoiceBillingAddress__c,
+				TotalAmount &gt; Account.Parent.AvailableCustomerCredit__c
 			)
-        </formula>
+		)
+	),
+
+	AND(
+		OR( 
+			RecordType.DeveloperName = &quot;ECommerceOrder&quot;,
+			RecordType.DeveloperName = &quot;EDIOrder&quot;, 
+			RecordType.DeveloperName = &quot;FieldDirectOrder&quot;
+		),
+		OR(
+			AND(
+				OR(
+					ISNULL(Account.ParentId),
+					AND(NOT(ISNULL(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
+				),
+				ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;)
+			),
+			AND(
+				NOT(ISNULL(Account.ParentId)), 
+				Account.Parent.DefaultInvoiceBillingAddress__c,
+				ISPICKVAL(Account.Parent.CreditStatus__c, &apos;On Hold&apos;)
+			)
+			
+		)
+	)
+)</formula>
     </entryCriteria>
     <finalApprovalActions>
         <action>

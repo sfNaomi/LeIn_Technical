@@ -219,65 +219,25 @@ public with sharing class AccountTriggerHandler {
         }
     }
     
-    public static void calculateAvailableCustomerCredit(List<Account> newAccounts, Map<Id,Account> oldAccounts) {
-        Map<Id, Decimal> parentAccountIdToNewAvailableCredit = new Map<Id, Decimal>();
-        for (Account newAccount : newAccounts){
+    public static void calculateAvailableCustomerCredit(List<Account> newAccounts, Map<Id, Account> oldAccounts) {
+        for (Account newAccount : newAccounts) {
             Account oldAccount = oldAccounts?.get(newAccount.Id);
-            Boolean isAmountChanged = newAccount.AvailableCredit__c != oldAccount.AvailableCredit__c;
-            Boolean isOldParentBlank = oldAccount.ParentId == null;
-            Boolean isNewParentBlank = newAccount.ParentId == null;
-            Boolean isParentUpdated = newAccount.ParentId != oldAccount.ParentId;
-            Boolean isAccountStatusChanged = newAccount.AccountStatus__c != oldAccount.AccountStatus__c;
-            Boolean isAccountClosed = newAccount.AccountStatus__c == 'Closed';
 
-            if (newAccount.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && (isAmountChanged || isParentUpdated)) {
-                if(!isNewParentBlank) {
-                    getUpdatedParentAccountIdToNewAvailableCreditMap(
-                        parentAccountIdToNewAvailableCredit, 
-                        newAccount, 
-                        newAccount.AvailableCredit__c
-                    );
-                }
-                if(!isOldParentBlank) {
-                    getUpdatedParentAccountIdToNewAvailableCreditMap(
-                        parentAccountIdToNewAvailableCredit, 
-                        oldAccount, 
-                        -oldAccount.AvailableCredit__c
-                    );
-                }
-            }
-            if(newAccount.RecordTypeId == RecordTypes.ACCOUNT_OUTLET_ID && isAccountStatusChanged && isAccountClosed) {
-                getUpdatedParentAccountIdToNewAvailableCreditMap(
-                    parentAccountIdToNewAvailableCredit, 
-                    newAccount, 
-                    -newAccount.AvailableCredit__c
-                );
-            }
-        }
-        List<Account> parentAccountsToUpdate = new List<Account>();
-        if(parentAccountIdToNewAvailableCredit.size() > 0) {
-            for(Account acc: [SELECT DefaultInvoiceBillingAddress__c, AvailableCustomerCredit__c FROM Account WHERE Id IN :parentAccountIdToNewAvailableCredit.keySet()]) {
-                acc.AvailableCustomerCredit__c = acc.AvailableCustomerCredit__c == null ? 0 : acc.AvailableCustomerCredit__c;
-                if(acc.DefaultInvoiceBillingAddress__c == true) {
-                    acc.AvailableCustomerCredit__c += parentAccountIdToNewAvailableCredit.get(acc.Id);
-                    parentAccountsToUpdate.add(acc);
-                }
-            }
-        }
-        update parentAccountsToUpdate;
-    }
+            if (newAccount.RecordTypeId == RecordTypes.ACCOUNT_CUSTOMER_ID && (oldAccount == null || (oldAccount != null &&
+                (newAccount.DefaultInvoiceBillingAddress__c != oldAccount.DefaultInvoiceBillingAddress__c ||
+                newAccount.aforza__Credit_Amount__c != oldAccount.aforza__Credit_Amount__c ||
+                newAccount.TotalAmountOpenInvoicesCustomer__c != oldAccount.TotalAmountOpenInvoicesCustomer__c ||
+                newAccount.TotalAmountOpenOrdersCustomer__c != oldAccount.TotalAmountOpenOrdersCustomer__c)))) {
 
-    private static void getUpdatedParentAccountIdToNewAvailableCreditMap(
-        Map<Id, Decimal> parentAccountIdToNewAvailableCredit,
-        Account acc,
-        Decimal value
-    ) {
-        Decimal newValue = 0;
-        if( !parentAccountIdToNewAvailableCredit.containsKey(acc.ParentId) ) {
-            parentAccountIdToNewAvailableCredit.put(acc.ParentId, 0);
+                if (!newAccount.DefaultInvoiceBillingAddress__c) {
+                    newAccount.AvailableCustomerCredit__c = 0;
+                } else {
+                    newAccount.AvailableCustomerCredit__c = (newAccount.aforza__Credit_Amount__c == null ? 0 : newAccount.aforza__Credit_Amount__c) -
+                        (newAccount.TotalAmountOpenOrdersCustomer__c == null ? 0 : newAccount.TotalAmountOpenOrdersCustomer__c) -
+                        (newAccount.TotalAmountOpenInvoicesCustomer__c == null ? 0 : newAccount.TotalAmountOpenInvoicesCustomer__c);
+                }
+            }
         }
-        newValue = parentAccountIdToNewAvailableCredit.get(acc.ParentId) + value;
-        parentAccountIdToNewAvailableCredit.put(acc.ParentId, newValue);
     }
 
     public static void createDefaultPaymentMethodForEnglandAndScotland(List<Account> newAccounts, Map<Id, Account> oldAccounts){

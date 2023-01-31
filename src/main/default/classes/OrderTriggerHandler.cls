@@ -5,6 +5,7 @@
 public with sharing class OrderTriggerHandler {
 
     @TestVisible private static final String ORDER_STATUS_AFTER_CLONING = 'Unplanned';
+    @TestVisible private static final List<String> PAYMENT_METHODS_REQUIRE_APPROVAL = new List<String>{'Direct Debit', 'Bacs', 'JDE DD'};
     private static final Boolean PAYMENT_ON_INVOICE_LEVEL = InvoiceSettings__c.getOrgDefaults().CreatePaymentWhenInvoiceIsCreated__c;
     private static final Boolean ECOMM_PAYMENT_ON_INVOICE_LEVEL = InvoiceSettings__c.getOrgDefaults().PaymentCommerceOnInvoice__c;
 
@@ -83,11 +84,9 @@ public with sharing class OrderTriggerHandler {
         }
 
         Map<Id, Account> relatedAccounts = new Map<Id, Account>([
-            SELECT Id, AccountStatus__c, CreditStatus__c, AvailableCredit__c, Parent.AvailableCustomerCredit__c, (
-                SELECT Id, AccountId, TeamMemberRole, UserId
-                FROM AccountTeamMembers
-                WHERE TeamMemberRole = 'TAM'
-            )
+            SELECT
+                Id, AccountStatus__c, CreditStatus__c, AvailableCredit__c, ParentId,
+                Parent.DefaultInvoiceBillingAddress__c, Parent.CreditStatus__c, Parent.AvailableCustomerCredit__c
             FROM Account
             WHERE Id IN :relatedAccountIds
         ]);
@@ -96,71 +95,78 @@ public with sharing class OrderTriggerHandler {
             Order oldOrder = oldOrders?.get(newOrder.Id);
             Account relatedAccount = relatedAccounts?.get(newOrder.AccountId);
 
-            // Account based check for order creation or update (stops anything that is for on hold customer)
+            // Account based check for order creation or update
             if (!AccountService.STATUSES_WHERE_ORDER_CREATION_ALLOWED.contains(relatedAccount.AccountStatus__c) &&
                 ((oldOrder == null) || (oldOrder != null && newOrder.Status != oldOrder.Status &&
                     !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status)))) {
                 newOrder.addError(Label.OrderCreationActivationIsNotAllowedForCurrentAccountStatus);
             }
 
-            // check for order status change, we check that the status is changed and also changed from not completed to
-            // completed status
+            // check for order status change, we check that the status is changed and
+            // also, changed from not completed to completed status
             if (!(oldOrder != null && newOrder.Status != oldOrder.Status &&
                 !OrderService.isOrderCompleted(oldOrder.Status) && OrderService.isOrderCompleted(newOrder.Status))) {
                 continue;
             }
+
             // check if card payment selected, Pre Authorization was not captured and payment creation on invoice level is not activated
             if (!OrderService.isReturnOrder(newOrder) && newOrder.PaymentMethod__c == 'Card Payment' && newOrder.PreAuthCaptured__c == false &&
-                    ((PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId != RecordTypes.ORDER_ECOMMERCE_ID) ||
-                    (ECOMM_PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID))){
+                ((PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId != RecordTypes.ORDER_ECOMMERCE_ID) ||
+                (ECOMM_PAYMENT_ON_INVOICE_LEVEL == false && newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID))){
                 newOrder.addError(Label.OrderActivationPreventedPreAuthNotCaptured);
+                continue;
             }
-            // check if there are any full discount items
+
+            // order has full discounted items -> approval needed
             if (newOrder.IsApproved__c == false && newOrder.TotalNumberOfFullyDiscountedItems__c > 0) {
+                sendNotificationToTAM(newOrder);
                 newOrder.addError(Label.OrderActivationPreventedItemFullDiscount);
-                // check for specific order types and some extra statuses
-            } else if (newOrder.PaymentMethod__c != 'Cash' && (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED ||
-                relatedAccount.AvailableCredit__c < newOrder.TotalAmount) && (newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID ||
-                newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
-                newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID ||
-                newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
-                if (relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED
-                    && newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false) {
+                continue;
+            }
+
+            // check for credit status and available credit
+            if (PAYMENT_METHODS_REQUIRE_APPROVAL.contains(newOrder.PaymentMethod__c) && newOrder.IsApproved__c == false &&
+                (newOrder.RecordTypeId == RecordTypes.ORDER_TELESALES_ID || newOrder.RecordTypeId == RecordTypes.ORDER_ECOMMERCE_ID ||
+                 newOrder.RecordTypeId == RecordTypes.ORDER_EDI_ID || newOrder.RecordTypeId == RecordTypes.ORDER_FIELD_DIRECT_ID)) {
+
+                // account is on hold -> approval needed
+                if (((relatedAccount.ParentId == null || (relatedAccount.ParentId != null && !relatedAccount.Parent.DefaultInvoiceBillingAddress__c)) && relatedAccount.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED) ||
+                    (relatedAccount.ParentId != null && relatedAccount.Parent.DefaultInvoiceBillingAddress__c && relatedAccount.Parent.CreditStatus__c == AccountService.STATUSES_WHERE_ORDER_ACTIVATION_IS_NOT_ALLOWED)) {
+                    sendNotificationToTAM(newOrder);
                     newOrder.addError(Label.OrderActivationPreventedDueToAccountOnHold);
-                } else if (newOrder.IsApproved__c == false && newOrder.PreAuthCaptured__c == false
-                    && ((relatedAccount.AvailableCredit__c < newOrder.TotalAmount
-                    && relatedAccount.Parent != null && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount)
-                        || (relatedAccount.AvailableCredit__c < newOrder.TotalAmount && relatedAccount.Parent == null))) {
+                    continue;
+                }
+
+                // account doesn't have sufficient credit available -> approval needed
+                // (if billing done at HO level, check available credit on customer; if billing done on DP level, check credit on DP)
+                if (((relatedAccount.ParentId == null || (relatedAccount.ParentId != null && !relatedAccount.Parent.DefaultInvoiceBillingAddress__c)) && relatedAccount.AvailableCredit__c < newOrder.TotalAmount) ||
+                     (relatedAccount.ParentId != null && relatedAccount.Parent.DefaultInvoiceBillingAddress__c && relatedAccount.Parent.AvailableCustomerCredit__c < newOrder.TotalAmount)) {
+                    sendNotificationToTAM(newOrder);
                     newOrder.addError(Label.OrderActivationPreventedAccNotEnoughCredit);
                 }
-                OrderTriggerHandler.sendNotificationToTAM(newOrder.OrderNumber, newOrder.AccountName__c, newOrder.Id, relatedAccount.AccountTeamMembers);
             }
         }
     }
 
-    private static void sendNotificationToTAM(String orderNumber, String orderAccountName, String orderId, List<AccountTeamMember> tamUsersIds) {
-        String notificationName = 'NotificationToTAM';
-        String notificationTitle = 'Order in need of Approval';
-        Set<String> usersToBeNotified = new Set<String>();
-
-        for (AccountTeamMember atm : tamUsersIds) {
-            usersToBeNotified.add(atm.UserId);
-        }
-
-        CustomNotificationType notificationType = [
-            SELECT Id, DeveloperName
-            FROM CustomNotificationType
-            WHERE DeveloperName = :notificationName
-        ];
-
-        Messaging.CustomNotification notification = new Messaging.CustomNotification();
-        notification.setTitle(notificationTitle);
-        notification.setBody('Order number: ' + orderNumber + ' from account ' + orderAccountName + ' needs to be submitted for approval.');
-        notification.setNotificationTypeId(notificationType.Id);
-        notification.setTargetId(orderId);
-
+    private static void sendNotificationToTAM(Order newOrder) {
         try {
-            notification.send(usersToBeNotified);
+            String notificationName = 'NotificationToTAM';
+            String notificationTitle = 'Order in need of Approval';
+
+            CustomNotificationType notificationType = [
+                SELECT Id, DeveloperName
+                FROM CustomNotificationType
+                WHERE DeveloperName = :notificationName
+            ];
+
+            Messaging.CustomNotification notification = new Messaging.CustomNotification();
+
+            notification.setNotificationTypeId(notificationType.Id);
+            notification.setTargetId(newOrder.Id);
+            notification.setTitle(notificationTitle);
+            notification.setBody('Order number: ' + newOrder.OrderNumber + ' from account ' + newOrder.AccountName__c + ' needs to be submitted for approval.');
+
+            notification.send(new Set<String>{newOrder.OwnerId});
         } catch (Exception e) {
             System.debug('Problem sending notification: ' + e.getMessage());
         }
