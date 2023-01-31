@@ -17,8 +17,9 @@
             "OrderCheckoutEntry":[
             {
             "Type":"ENGINE",
+            "BlockOnFailure":true,
             "Title":"Validate Order",
-            "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForFieldSales.js"
+            "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/James_Updates_To_Actions/engineSmartActions/public/orderValidationForFieldSales.js"
             },
             {
             "Type":"ENGINE",
@@ -30,7 +31,7 @@
             {
             "Type":"ENGINE",
             "Title":"Deposit Return Scheme",
-            "Target":"https://raw.githubusercontent.com/matthew-potter13/Offline-Smart-Action-Validate-Return-Deposit-Scheme/main/public/depositReturnScheme.js"
+            "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/James_Updates_To_Actions/engineSmartActions/public/depositReturnScheme.js"
             }
             ]
             },
