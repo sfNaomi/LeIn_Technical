@@ -35,13 +35,13 @@
 		OR(
 			AND(
 				OR(
-					ISNULL(Account.ParentId),
-					AND(NOT(ISNULL(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
+					ISBLANK(Account.ParentId),
+					AND(NOT(ISBLANK(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
 				),
 				TotalAmount &gt; Account.AvailableCredit__c
 			),
 			AND(
-				NOT(ISNULL(Account.ParentId)), 
+				NOT(ISBLANK(Account.ParentId)), 
 				Account.Parent.DefaultInvoiceBillingAddress__c,
 				TotalAmount &gt; Account.Parent.AvailableCustomerCredit__c
 			)
@@ -57,13 +57,13 @@
 		OR(
 			AND(
 				OR(
-					ISNULL(Account.ParentId),
-					AND(NOT(ISNULL(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
+					ISBLANK(Account.ParentId),
+					AND(NOT(ISBLANK(Account.ParentId)), NOT(Account.Parent.DefaultInvoiceBillingAddress__c))
 				),
 				ISPICKVAL(Account.CreditStatus__c, &apos;On Hold&apos;)
 			),
 			AND(
-				NOT(ISNULL(Account.ParentId)), 
+				NOT(ISBLANK(Account.ParentId)), 
 				Account.Parent.DefaultInvoiceBillingAddress__c,
 				ISPICKVAL(Account.Parent.CreditStatus__c, &apos;On Hold&apos;)
 			)

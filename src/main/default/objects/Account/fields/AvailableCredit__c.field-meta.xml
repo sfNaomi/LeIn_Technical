@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AvailableCredit__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( Parent.DefaultInvoiceBillingAddress__c == false, aforza__Credit_Amount__c - TotalAmountOpenOrders__c - TotalAmountOpenInvoices__c, 0)</formula>
+    <formula>IF( OR(ISBLANK(ParentId), NOT(Parent.DefaultInvoiceBillingAddress__c)), aforza__Credit_Amount__c - TotalAmountOpenOrders__c - TotalAmountOpenInvoices__c, 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Available Credit</label>
     <precision>18</precision>
