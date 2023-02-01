@@ -43,7 +43,7 @@ const columns = [
         }
     },
     {label: callStatusLabel, fieldName: 'aforza__Status__c'},
-    {label: originalOwnerLabel, fieldName: 'aforza__Account__rOwningTAM__rLastName'},
+    {label: originalOwnerLabel, fieldName: 'aforza__Account__rOwningTAM__rName'},
     {label: callOwnerLabel, fieldName: 'aforza__Owner__rLastName'},
     {label: deliveryPointNameLabel, fieldName: 'aforza__Account__rStoreName__c'},
     {label: deliveryPointPostCodeLabel, fieldName: 'aforza__Account__rShippingPostalCode'},
