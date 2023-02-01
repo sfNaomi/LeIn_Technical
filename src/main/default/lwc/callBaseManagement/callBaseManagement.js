@@ -12,7 +12,6 @@ import selectedNumberOfRowsLabel from '@salesforce/label/c.SelectedNumberOfRows'
 import successMoveMessage from '@salesforce/label/c.SuccessMoveMessage'
 import move from '@salesforce/label/c.Move'
 import newTam from '@salesforce/label/c.NewTam';
-import currentTamLabel from '@salesforce/label/c.CurrentTam';
 import dateFromLabel from '@salesforce/label/c.DateFrom';
 import dateToLabel from '@salesforce/label/c.DateTo';
 import priorityLabel from '@salesforce/label/c.Priority';
@@ -66,7 +65,7 @@ export default class CallBaseManagement extends LightningElement {
     tamUsers = [];
     limitOfRowsReturned = 900;
     sObjectApiName = 'aforza__Visit__c';
-    filterSize = 2;
+    filterSize = 1;
     @track selectedIds = [];
     @track filterFields = [];
     @track tamToMove;
@@ -75,7 +74,7 @@ export default class CallBaseManagement extends LightningElement {
         newTam
     }
 
-    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Account__r.OwningTAM__r.LastName,aforza__Account__r.Owner.FirstName,' +
+    queryFields = 'Id, aforza__Status__c,aforza__Planned_Time__c,aforza__Account__r.Owner.LastName,aforza__Account__r.OwningTAM__r.Name,aforza__Account__r.Owner.FirstName,' +
         'aforza__Owner__r.LastName,aforza__Owner__r.FirstName,aforza__Account__r.StoreName__c,aforza__Account__r.ShippingPostalCode,' +
         'aforza__Account__r.DeliveryPointReference__c,aforza__Account__r.PrimaryGridNumber__c,aforza__Account__r.SecondaryGridNumber__c,' +
         'toLabel(aforza__Account__r.Depot__c),aforza__Account__r.CreditStatus__c,aforza__Account__r.CallPriority__c,aforza__Account__r.TradingFrequencyBucketed__c';
@@ -102,8 +101,10 @@ export default class CallBaseManagement extends LightningElement {
      * @date 2022-09-20
      */
     prepareFieldDefinitionVisit() {
+        this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'OwningTAM__c',
+            originalOwnerLabel, null, this.tamUsers, 'aforza__Account__r.OwningTAM__c', 'equals'));
         this.filterFields.push(this.createInputFieldDefinitionJson('Picklist', 'aforza__Owner__c',
-            currentTamLabel, null, this.tamUsers, null, 'equals'));
+            callOwnerLabel, null, this.tamUsers, null, 'equals'));
         this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'aforza__Planned_Time__c',
             dateFromLabel, null, null, null, 'equalGreater'));
         this.filterFields.push(this.createInputFieldDefinitionJson('Date', 'aforza__Planned_Time__c',
