@@ -14,7 +14,7 @@ public with sharing class CallBaseManagementController {
     @AuraEnabled
     public static List<User> fetchTamUsers() {
         try {
-            List<User> users = [SELECT Id, FirstName, LastName FROM User WHERE UserRole.DeveloperName = 'TAM' AND IsActive = TRUE];
+            List<User> users = [SELECT Id, FirstName, LastName, Name FROM User WHERE UserRole.DeveloperName = 'TAM' AND IsActive = TRUE];
             return users.isEmpty() ? null : users;
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, e.getMessage());
