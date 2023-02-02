@@ -19,7 +19,7 @@
             "Type":"ENGINE",
             "BlockOnFailure":true,
             "Title":"Validate Order",
-            "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/James_Updates_To_Actions/engineSmartActions/public/orderValidationForDrivers.js"
+            "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderValidationForDrivers.js"
             },
             {
             "Target":"https://raw.githubusercontent.com/ag-barr/aforza-public/main/engineSmartActions/public/orderItemQuantityReduction.js",
