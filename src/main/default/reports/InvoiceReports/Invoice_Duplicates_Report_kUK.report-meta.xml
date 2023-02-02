@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
+        <field>FK_ORDER_STATUS</field>
+    </columns>
+    <columns>
         <field>CUST_NAME</field>
     </columns>
     <columns>
         <field>aforza__Invoice__c.BillToReference__c</field>
     </columns>
+    <columns>
+        <field>aforza__Invoice__c.aforza__Due_Date__c</field>
+    </columns>
+    <columns>
+        <field>FK_$Account.DriverName__c</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.aforza__Primary_Contact__c</field>
+    </columns>
     <filter>
         <criteriaItems>
-            <column>aforza__Invoice__c.BillToReference__c</column>
+            <column>FK_ORDER_STATUS</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value></value>
+            <value>Receipted</value>
         </criteriaItems>
         <language>en_US</language>
     </filter>
     <format>Summary</format>
     <groupingsDown>
+        <aggregateType>RowCount</aggregateType>
         <dateGranularity>Day</dateGranularity>
-        <field>ACCOUNT.NAME</field>
-        <sortOrder>Asc</sortOrder>
+        <field>FK_NAME</field>
+        <sortByName>RowCount</sortByName>
+        <sortOrder>Desc</sortOrder>
+        <sortType>Aggregate</sortType>
     </groupingsDown>
-    <name>Duplicate Invoices Report</name>
+    <name>Invoice Duplicates Report</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>AccountCustomEntity$aforza__Invoice__c</reportType>
+    <reportType>AccountCustomEntity$aforza__Invoice__c@aforza__Invoice__c.aforza__Order__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
-    <showSubTotals>false</showSubTotals>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>DUE_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
