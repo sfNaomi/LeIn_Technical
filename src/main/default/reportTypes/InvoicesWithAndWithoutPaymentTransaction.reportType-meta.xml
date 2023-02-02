@@ -340,6 +340,46 @@
             <field>Vat__c</field>
             <table>aforza__Invoice__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>InvoiceAmount__c</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Route__c</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.DeliveryDate__c</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Depot__c</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Load__c.Id</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Load__c.Name</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Load__c.Driver__c</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>aforza__Order__c.Load__c.Driver__c.Name</field>
+            <table>aforza__Invoice__c</table>
+        </columns>
         <masterLabel>Invoices</masterLabel>
     </sections>
     <sections>
