@@ -230,7 +230,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Trading Frequency</shortDescription>
-        <value>Trading Frequency</value>
+        <value>Trad Freq</value>
     </labels>
     <labels>
         <fullName>VisitTransferTabName</fullName>
