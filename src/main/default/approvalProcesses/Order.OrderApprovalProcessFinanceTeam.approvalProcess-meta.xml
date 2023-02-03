@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
     <active>true</active>
-    <allowRecall>false</allowRecall>
+    <allowRecall>true</allowRecall>
     <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
@@ -49,7 +49,8 @@
 	),
 
 	AND(
-		OR( 
+		OR(
+			RecordType.DeveloperName = &quot;TelesalesOrder&quot;,
 			RecordType.DeveloperName = &quot;ECommerceOrder&quot;,
 			RecordType.DeveloperName = &quot;EDIOrder&quot;, 
 			RecordType.DeveloperName = &quot;FieldDirectOrder&quot;
@@ -101,7 +102,7 @@
         </action>
     </initialSubmissionActions>
     <label>Order Approval Process Finance Team</label>
-    <processOrder>3</processOrder>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>
