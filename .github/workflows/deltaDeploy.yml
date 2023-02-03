@@ -104,8 +104,8 @@ jobs:
                 with:
                     branch: ${{ github.ref_name }}
 
-            # Deploy
-            -   name: Deploy to ${{ github.ref_name }}
+            # Authorise Dew Hub
+            -   name: Authorize Dev Hub
                 env:
                     JWT_QA: ${{ secrets.QA_CERTIFICATE }}
                     JWT_STAGING: ${{ secrets.STAGING_CERTIFICATE }}
@@ -113,7 +113,7 @@ jobs:
                     JWT_SIT: ${{ secrets.SIT_CERTIFICATE }}
                     SFDX_DISABLE_DNS_CHECK: true
                 shell: bash
-                if: env.LINES != 3
+                if: env.LINES != 3 || env.LINES_DESTRUCTIVE != 3
                 run: |
                     echo "$JWT_QA" | base64 --decode > ${HOME}/qa.key
                     echo "$JWT_STAGING" | base64 --decode > ${HOME}/staging.key
@@ -127,6 +127,16 @@ jobs:
                     echo "${{ steps.credentials-preparation.outputs.certificatePath }}"
                     
                     sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
+
+            # Deploy
+            -   name: Deploy to ${{ github.ref_name }}
+                env:
+                    SFDX_DISABLE_DNS_CHECK: true
+                shell: bash
+                if: env.LINES != 3
+                run: |
+                    echo "${{ steps.credentials-preparation.outputs.userName }}"
+                    
                     sfdx force:source:deploy -x package/package.xml -l RunLocalTests -u ${{ steps.credentials-preparation.outputs.userName }} -w 10000 --verbose --loglevel fatal
                                   
             # check destructive changes
@@ -140,11 +150,12 @@ jobs:
             # deploy destructive changes
             -   name: Deploy Destructive Changes
                 shell: bash
-                if: steps.credentials-preparation.outputs.runDestructive && env.LINES_DESTRUCTIVE != 3
+                if: ${{ steps.credentials-preparation.outputs.runDestructive }} == true && env.LINES_DESTRUCTIVE != 3
                 run: |
                     echo "Deploying destructive changes:"
+                    echo ${{ steps.credentials-preparation.outputs.runDestructive }}
                     cat destructiveChanges/destructiveChanges.xml
-                    sfdx force:auth:jwt:grant --clientid ${{ steps.credentials-preparation.outputs.clientId  }} -u ${{ steps.credentials-preparation.outputs.userName }} --jwtkeyfile ${{ steps.credentials-preparation.outputs.certificatePath }} --instanceurl ${{ steps.credentials-preparation.outputs.instanceUrl }}
+                    
                     sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u ${{ steps.credentials-preparation.outputs.userName }}
 
             # Nothing to Deploy
@@ -154,7 +165,8 @@ jobs:
 
             # Destructive changes not allowed
             -   name: Not Allowed to Deploy Destructive Changes
-                if: env.LINES_DESTRUCTIVE != 3 && steps.credentials-preparation.outputs.runDestructive == false
+                if: env.LINES_DESTRUCTIVE != 3 && ${{ steps.credentials-preparation.outputs.runDestructive }} == false
                 run: |
+                    echo ${{ steps.credentials-preparation.outputs.runDestructive }}
                     echo "There are Destructive changes to deploy but it is not allowed for this environment"
                     cat destructiveChanges/destructiveChanges.xml
